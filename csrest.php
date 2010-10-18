@@ -73,6 +73,15 @@ class CS_REST_Wrapper_Base {
 		return $this->_protocol === 'https';
 	}
 	
+	/**
+	 * Can be used to check if a call to the api resulted in a successful response.
+	 * @param $result The result of any of the wrapper methods
+	 * @return boolean False if the call failed. Check the response property for the failure reason.
+	 */
+	function was_successful($result) {
+		return $result['code'] >= 200 && $result['code'] < 300;
+	}
+	
 	function _call($call_options) {
 		$call_options = array_merge($this->_default_call_options, $call_options);	
 		$this->_log->log_message('Making '.$call_options['method'].' call to: '.$call_options['route'], get_class($this), CS_REST_LOG_WARNING);	
@@ -80,9 +89,12 @@ class CS_REST_Wrapper_Base {
 	    $call_result = $this->_transport->make_call($call_options);
 	    	    
 	    $this->_log->log_message('Call result: <pre>'.$call_result.'</pre>', get_class($this), CS_REST_LOG_VERBOSE);
-	    return  $call_options['deserialise'] ? 
-	        $this->_serialiser->deserialise($call_result) : 
-	        $call_result;
+	    
+	    if($call_options['deserialise']) {
+	    	$call_result['response'] = $this->_serialiser->deserialise($call_result['response']);
+	    }
+	    
+	    return $call_result;
 	}
 	
 	function get_timezones($call_options = array()) {

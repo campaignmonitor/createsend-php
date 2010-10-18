@@ -4,12 +4,11 @@ require_once '../csrest.php';
 
 $wrap = new CS_REST_Wrapper_Base('Your API Key');
 
-$result = $wrap->get_clients();
+$result = $wrap->get_timezones();
 
-
-echo "Result of /api/v3/clients\n<br />";
+echo "Result of /api/v3/timezones\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Got clients\n<br /><pre>";
+	echo "Got timezones\n<br /><pre>";
 	print_r($result['response']);
 } else {
 	echo 'Failed with code '.$result['code']."\n<br /><pre>";

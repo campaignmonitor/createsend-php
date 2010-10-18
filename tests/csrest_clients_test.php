@@ -72,4 +72,8 @@ class CS_REST_TestClients extends CS_REST_TestBase {
 		
 		$this->general_get_test('get_templates', $call_options, $raw_result, $deserialised);
 	}
+	
+	function testdelete() {
+		$raw_result = '';
+	}
 }

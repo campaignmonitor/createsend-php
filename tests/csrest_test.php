@@ -59,15 +59,24 @@ class CS_REST_TestBase extends UnitTestCase {
 		);
 	}
 	
-	function general_get_test($wrapper_function, $call_options, $from_transport, $from_deserialisation) {
-		$this->mock_transport->setReturnValue('make_call', $from_transport);
+	function general_get_test($wrapper_function, $call_options, $from_transport, 
+	    $from_deserialisation, $response_code = 200) {
+	    	
+	    $expected_result = array (
+	        'code' => $response_code, 
+	        'response' => $from_transport
+	    );
+	    
+		$this->mock_transport->setReturnValue('make_call', $expected_result);
 		$this->mock_transport->expectOnce('make_call', array(new IdenticalExpectation($call_options)));
 		
 		$this->mock_serialiser->setReturnValue('deserialise', $from_deserialisation);
 		$this->mock_serialiser->expectOnce('deserialise', array(new IdenticalExpectation($from_transport)));
 	    	
 	    $result = $this->wrapper->$wrapper_function();
-	    $this->assertIdentical($from_deserialisation, $result);		
+	    
+	    $expected_result['response'] = $from_deserialisation;
+	    $this->assertIdentical($expected_result, $result);		
 	}
 }
 
@@ -107,15 +116,20 @@ class CS_REST_TestWrapperBase extends CS_REST_TestBase {
 		$call_options = $this->get_call_options(
 		    $this->base_route.'apikey.'.$this->mock_serialiser->get_format().'?siteurl='.$site_url);
 		$call_options['credentials'] = $username.':'.$password;
+	    	
+	    $expected_result = array (
+	        'code' => 200, 
+	        'response' => $raw_result
+	    );	
 		    		
-		$this->mock_transport->setReturnValue('make_call', $raw_result);
+		$this->mock_transport->setReturnValue('make_call', $expected_result);
 		$this->mock_transport->expectOnce('make_call', array(new IdenticalExpectation($call_options)));
 		
 		$this->mock_serialiser->setReturnValue('deserialise', $raw_result);
 		$this->mock_serialiser->expectOnce('deserialise', array(new IdenticalExpectation($raw_result)));
 		
 		$result = $this->wrapper->get_apikey($username, $password, $site_url);
-		$this->assertIdentical($raw_result, $result);		
+		$this->assertIdentical($expected_result, $result);		
 	}
 	
 	function testget_clients() {

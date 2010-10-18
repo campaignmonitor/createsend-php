@@ -75,9 +75,24 @@ class CS_REST_CurlTransport {
         }
 		
 		$response = curl_exec($ch);
+		if(!$response) {
+			trigger_error(curl_error($ch));
+		}
+		
+		$this->_log->log_message('API Call Info for '.$call_options['method'].' '.
+		    curl_getinfo($ch, CURLINFO_EFFECTIVE_URL).': '.curl_getinfo($ch, CURLINFO_SIZE_UPLOAD).
+		    ' bytes uploaded. '.curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD).' bytes downloaded'.
+		    ' Total time (seconds): '.curl_getinfo($ch, CURLINFO_TOTAL_TIME), 
+		    get_class($this), CS_REST_LOG_VERBOSE);
+		
+		$result = array(
+			'code' => curl_getinfo($ch, CURLINFO_HTTP_CODE),
+		    'response' => $response
+		);
+		
 		curl_close($ch);
 		
-		return $response;
+		return $result;
 	}
 }
 
