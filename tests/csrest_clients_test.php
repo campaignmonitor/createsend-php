@@ -74,6 +74,15 @@ class CS_REST_TestClients extends CS_REST_TestBase {
 		$this->general_test('get_templates', $call_options, $raw_result, $deserialised);
 	}
 	
+	function testget() {
+		$raw_result = 'client data';
+		$deserialised = array('CompanyName' => 'Widget Land');
+		$call_options = $this->get_call_options(
+		    trim($this->client_base_route, '/').'.'.$this->format);
+		    
+		$this->general_test('get', $call_options, $raw_result, $deserialised);
+	}
+	
 	function testdelete() {
 		$raw_result = '';
 		

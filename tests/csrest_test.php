@@ -50,7 +50,8 @@ class CS_REST_TestBase extends UnitTestCase {
 	function get_call_options($route, $method = 'GET') {
 		return array (
 		    'credentials' => $this->api_key.':nopass',
-		    'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION,
+		    'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
+		        ' PHPv'.phpversion().' over '.$this->transport_type,
 		    'contentType' => $this->mock_serialiser->get_content_type().'; charset=utf-8',
 			'deserialise' => true,
 			'host' => $this->api_host,

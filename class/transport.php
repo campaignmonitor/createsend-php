@@ -75,8 +75,8 @@ class CS_REST_CurlTransport {
         }
 		
 		$response = curl_exec($ch);
-		if(!$response) {
-			trigger_error(curl_error($ch));
+		if(!$response && $response !== '') {
+			trigger_error('Error making request with curl_error: '.curl_error($ch));
 		}
 		
 		$this->_log->log_message('API Call Info for '.$call_options['method'].' '.
