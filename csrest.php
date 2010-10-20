@@ -5,10 +5,6 @@ require_once 'class/transport.php';
 require_once 'class/log.php';
 
 define('CS_REST_WRAPPER_VERSION', '1.0.0');
-define('CS_REST_GET', 'GET');
-define('CS_REST_POST', 'POST');
-define('CS_REST_PUT', 'PUT');
-define('CS_REST_DELETE', 'DELETE');
 
 /**
  * Base class for the create send PHP wrapper. 

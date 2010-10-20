@@ -1,5 +1,10 @@
 <?php
 
+define('CS_REST_GET', 'GET');
+define('CS_REST_POST', 'POST');
+define('CS_REST_PUT', 'PUT');
+define('CS_REST_DELETE', 'DELETE');
+
 class CS_REST_TransportFactory {
 	function get_available_transport($requires_ssl, $log) {		
 		if(@CS_REST_CurlTransport::is_available($requires_ssl)) {
@@ -60,17 +65,17 @@ class CS_REST_CurlTransport {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: '.$call_options['contentType']));
         
         switch($call_options['method']) {
-        	case 'PUT':		
-				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        	case CS_REST_PUT:		
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, CS_REST_PUT);
 				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Length: '.strlen($call_options['data'])));
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $call_options['data']);
 				break;
-        	case 'POST':		
+        	case CS_REST_POST:		
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $call_options['data']);
 				break;
-        	case 'DELETE':
-				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        	case CS_REST_DELETE:
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, CS_REST_DELETE);
 				break;
         }
 		

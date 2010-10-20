@@ -107,6 +107,8 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
 	}
 	
 	function create($client, $call_options = array()) {
+		$client = $this->_serialiser->format_item('Client', $client);
+		
 		$call_options['route'] = $this->_base_route.'clients.'.$this->_serialiser->get_format();
 		$call_options['method'] = CS_REST_POST;
 		$call_options['data'] = $this->_serialiser->serialise($client);
