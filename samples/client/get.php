@@ -5,7 +5,7 @@ require_once '../../csrest_clients.php';
 $wrap = new CS_REST_Clients('Your clients ID', 'Your API Key');
 $result = $wrap->get();
 
-echo "Result of PUT /api/v3/clients/{id}\n<br />";
+echo "Result of GET /api/v3/clients/{id}\n<br />";
 if($wrap->was_successful($result)) {
 	echo "Got client <pre>";
 	print_r($result['response']);
