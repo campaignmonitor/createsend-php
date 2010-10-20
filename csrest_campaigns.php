@@ -44,11 +44,11 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
 	
 	function create($client_id, $campaign_info, $call_options = array()) {
 		if(isset($campaign_info['ListIDs']) && is_array($campaign_info['ListIDs'])) {			
-			$campaign_info['ListIDs'] = $this->_serialiser->format_list('ListID', $campaign_info['ListIDs']);
+			$campaign_info['ListIDs'] = $this->_serialiser->format_item('ListID', $campaign_info['ListIDs']);
 		}
 		
 		if(isset($campaign_info['Segments']) && is_array($campaign_info['Segments'])) {
-			$campaign_info['Segments'] = $this->_serialiser->format_list('Segment', $campaign_info['Segments']);
+			$campaign_info['Segments'] = $this->_serialiser->format_item('Segment', $campaign_info['Segments']);
 		}
 		
 		$call_options['route'] = $this->_base_route.'campaigns/'.$client_id.'.'.$this->_serialiser->get_format();
@@ -59,6 +59,8 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
 	}
 	
 	function send($schedule, $call_options = array()) {
+		$schedule = $this->_serialiser->format_item('Scheduling', $schedule);
+		
 		$call_options['route'] = $this->_campaigns_base_route.'send.'.$this->_serialiser->get_format();
 		$call_options['method'] = CS_REST_POST;
 		$call_options['data'] = $this->_serialiser->serialise($schedule);

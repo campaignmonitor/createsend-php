@@ -48,7 +48,7 @@ class CS_REST_JsonSerialiser {
 		return $data == NULL ? $text : $data;
 	}
 	
-	function format_list($item_name, $list) {
+	function format_item($item_name, $list) {
 		return $list;
 	}
 }
@@ -91,7 +91,7 @@ class CS_REST_XmlSerialiser {
 		return function_exists('xml_parser_create');
 	}
 	
-	function format_list($item_name, $list) {
+	function format_item($item_name, $list) {
 		return array($list_name => $list);
 	}
 	

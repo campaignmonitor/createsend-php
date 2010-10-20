@@ -1,14 +1,11 @@
 <?php
 
-require_once '../../csrest_clients.php';
+require_once '../../csrest_campaigns.php';
 
-$wrap = new CS_REST_Clients(
-	'ClientID to get Lists for', 
-    'Your API Key');
-
+$wrap = new CS_REST_Campaigns('Campaign ID to get lists for', 'Your API Key');
 $result = $wrap->get_lists();
 
-echo "Result of /api/v3/clients/{id}/lists\n<br />";
+echo "Result of GET /api/v3/campaigns/{id}/lists\n<br />";
 if($wrap->was_successful($result)) {
 	echo "Got lists\n<br /><pre>";
 	print_r($result['response']);
