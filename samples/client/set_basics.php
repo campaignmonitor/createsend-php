@@ -1,10 +1,10 @@
 <?php
 
-require_once '../csrest_clients.php';
+require_once '../../csrest_clients.php';
 
-$wrap = new CS_REST_Clients(NULL, 'Your API Key');
+$wrap = new CS_REST_Clients('Your clients ID', 'Your API Key');
 
-$result = $wrap->create(array(
+$result = $wrap->set_basics(array(
     'CompanyName' => 'Clients company name',
     'ContactName' => 'Clients contact name',
     'EmailAddress' => 'Clients email',
@@ -12,9 +12,9 @@ $result = $wrap->create(array(
     'Timezone' => 'Clients timezone'
 ));
 
-echo "Result of POST /api/v3/clients\n<br />";
+echo "Result of PUT /api/v3/clients/{id}/setbasics\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Created with ID\n<br />".$result['response'];
+	echo "Updated with Code ".$result['code'];
 } else {
 	echo 'Failed with code '.$result['code']."\n<br /><pre>";
 	print_r($result['response']);

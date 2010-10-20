@@ -1,6 +1,6 @@
 <?php
 
-require_once '../csrest_clients.php';
+require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients('Your clients ID', 'Your API Key');
 $result = $wrap->get();

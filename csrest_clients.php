@@ -12,12 +12,11 @@ define('CS_REST_CLIENT_ACCESS_IMPORTURL', 0x20);
 /**
  * Class to access a clients resources from the create send API. 
  * This class includes functions to create and edit clients, 
- * along with accessing lists of client specific resources i.e campaigns
+ * along with accessing lists of client specific resources e.g campaigns
  * @author tobyb
  *
  */
-class CS_REST_Clients extends CS_REST_Wrapper_Base {
-	
+class CS_REST_Clients extends CS_REST_Wrapper_Base {	
 	
 	/**
 	 * The base route of the clients resource.

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../csrest_clients.php';
+require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients('Client ID to Delete', 'Your API Key');
 
