@@ -88,6 +88,8 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
 			$campaign_info['Segments'] = $this->_serialiser->format_item('Segment', $campaign_info['Segments']);
 		}
 		
+		$campaign_info = $this->_serialiser->format_item('Campaign', $campaign_info);
+		
 		$call_options['route'] = $this->_base_route.'campaigns/'.$client_id.'.'.$this->_serialiser->get_format();
 		$call_options['method'] = CS_REST_POST;
 		$call_options['data'] = $this->_serialiser->serialise($campaign_info);

@@ -87,7 +87,7 @@ class CS_REST_TestClients extends CS_REST_TestBase {
 		$raw_result = '';
 		
 		$call_options = $this->get_call_options(
-			$this->base_route.'clients.'.$this->format, 'DELETE');
+            trim($this->client_base_route, '/').'.'.$this->format, 'DELETE');
 			
 		$this->general_test('delete', $call_options, $raw_result, $raw_result);
 	}

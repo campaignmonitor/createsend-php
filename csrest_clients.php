@@ -266,7 +266,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
 	function delete($call_options = array()) {
-		$call_options['route'] = $this->_base_route.'clients.'.$this->_serialiser->get_format();
+		$call_options['route'] = trim($this->_clients_base_route, '/').'.'.$this->_serialiser->get_format();
 		$call_options['method'] = CS_REST_DELETE;
 		
 		return $this->_call($call_options);

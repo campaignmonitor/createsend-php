@@ -4,6 +4,7 @@ define('CS_REST_GET', 'GET');
 define('CS_REST_POST', 'POST');
 define('CS_REST_PUT', 'PUT');
 define('CS_REST_DELETE', 'DELETE');
+define('CS_REST_SOCKET_TIMEOUT', 1);
 
 class CS_REST_TransportFactory {
 	function get_available_transport($requires_ssl, $log) {		
@@ -101,12 +102,51 @@ class CS_REST_CurlTransport {
 	}
 }
 
+class CS_REST_SocketWrapper {
+	var $socket;
+	
+	function open($domain, $port) {
+		$this->socket = fsockopen($domain, $port, $errno, $errstr, CS_REST_SOCKET_TIMEOUT);
+		
+		if(!$this->socket) {
+            trigger_error('Error making request with '.$errno.': '.$errstr);	
+            return false;		
+		} else if(function_exists('stream_set_timeout')) { 
+			stream_set_timeout($this->socket, CS_REST_SOCKET_TIMEOUT);
+		}
+		
+		return true;
+	}
+	
+	function write($data) { 
+		fwrite($this->socket, $data);
+	}
+	
+	function read() {
+		ob_start();
+        fpassthru($this->socket);
+            
+        return ob_get_clean();
+	}
+	
+	function close() {
+		fclose($this->socket);
+	}
+}
+
 class CS_REST_SocketTransport {	
 	
 	var $_log;
+	var $_socket_wrapper;
 	
-	function CS_REST_SocketTransport($log) {
+	function CS_REST_SocketTransport($log, $socket_wrapper = NULL) {
 		$this->_log = $log;
+		
+		if(is_null($socket_wrapper)) {
+			$socket_wrapper = new CS_REST_SocketWrapper();
+		}
+		
+		$this->_socket_wrapper = $socket_wrapper;
 	}
 	
 	/**
@@ -134,5 +174,77 @@ class CS_REST_SocketTransport {
 		}
 		
 		return false;
-	}		
+	}	
+
+	function make_call($call_options) {
+		$start_host = strpos($call_options['route'], $call_options['host']);
+		$host_len = strlen($call_options['host']);
+		
+		$domain = substr($call_options['route'], $start_host, $host_len);
+		$host = $domain;
+		$path = substr($call_options['route'], $start_host + $host_len);
+		$protocol = substr($call_options['route'], 0, $start_host);
+		$port = 80;
+		
+		$this->_log->log_message('Creating socket to '.$domain.' over '.$protocol.' for request to '.$path,
+		    get_class($this), CS_REST_LOG_VERBOSE);
+		
+		if($protocol === 'https://') {
+			$domain = 'ssl://'.$domain;
+			$port = 443;
+		}
+		
+		if($this->_socket_wrapper->open($domain, $port)) {
+			$request = $this->_build_request($call_options, $host, $path);
+			$this->_log->log_message('Sending <pre>'.$request.'</pre> down the socket',
+			    get_class($this), CS_REST_LOG_VERBOSE);
+			    
+			$this->_socket_wrapper->write($request);
+			$response = $this->_socket_wrapper->read();
+			$this->_socket_wrapper->close();
+			
+			$this->_log->log_message('API Call Info for '.$call_options['method'].' '.
+	            $call_options['route'].': '.strlen($request).
+	            ' bytes uploaded. '.strlen($response).' bytes downloaded', 
+	            get_class($this), CS_REST_LOG_VERBOSE);
+			
+			list( $headers, $result ) = explode("\r\n\r\n", $response, 2);	
+			$this->_log->log_message('Received headers <pre>'.$headers.'</pre>', 
+			    get_class($this), CS_REST_LOG_VERBOSE);
+			
+			return array(
+			    'code' => $this->_get_status_code($headers),
+			    'response' => trim($result)
+			);
+		} 		
+	}
+	
+	function _get_status_code($headers) {
+		if (preg_match('%^\s*HTTP/1\.1 (?P<code>\d{3})%', $headers, $regs)) {
+	        $this->_log->log_message('Got HTTP Status Code: '.$regs['code'],
+	            get_class($this), CS_REST_LOG_VERBOSE);
+		    return $regs['code'];
+		} 
+
+		$this->_log->log_message('Failed to get HTTP status code from request headers <pre>'.$headers.'</pre>',
+            get_class($this), CS_REST_LOG_ERROR);
+		trigger_error('Failed to get HTTP status code from request');
+	}
+	
+	function _build_request($call_options, $host, $path) {
+		$request = 
+$call_options['method'].' '.$path." HTTP/1.1\n".
+'Host: '.$host."\n".
+'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+'User-Agent: '.$call_options['userAgent']."\n".
+'Content-Type: '.$call_options['contentType'];
+
+        if(isset($call_options['data'])) {
+        	$request .= 
+'Content-Length: '.strlen($call_options['data'])."\n\n".
+$call_options['data'];
+        }
+
+        return $request."\n\n";		
+	}
 }

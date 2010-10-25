@@ -138,13 +138,15 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
 			}
 		}
 		
-		$call_options['route'] = $this->_subscribers_base_route.'/import.'.
-		    $this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_POST;
-		$call_options['data'] = $this->_serialiser->serialise(array(
+		$subscribers = $this->_serialiser->format_item('Subscribers', array(
 		    'Resubscribe' => $resubscribe,
 		    'Subscribers' => $subscribers
 		));
+		
+		$call_options['route'] = $this->_subscribers_base_route.'/import.'.
+		    $this->_serialiser->get_format();
+		$call_options['method'] = CS_REST_POST;
+		$call_options['data'] = $this->_serialiser->serialise($subscribers);
 		
 		return $this->_call($call_options);
 	}
