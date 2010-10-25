@@ -66,6 +66,8 @@ class CS_REST_Wrapper_Base {
 	 */
 	var $_default_call_options;
 	
+	var $_call_error_handler;
+	
 	/**
 	 * Constructor. 
 	 * @param $api_key string Your api key (Ignored for get_apikey requests)
@@ -92,7 +94,7 @@ class CS_REST_Wrapper_Base {
 		$this->_base_route = $protocol.'://'.$host.'/api/v3/';
 		
 		$this->_log->log_message('Creating wrapper for '.$this->_base_route, get_class($this), CS_REST_LOG_VERBOSE);
-				
+						
 		$this->_transport = is_null($transport) ? 
 		    @CS_REST_TransportFactory::get_available_transport($this->is_secure(), $this->_log) :
 		    $transport; 
@@ -145,8 +147,9 @@ class CS_REST_Wrapper_Base {
 			
 	    $call_result = $this->_transport->make_call($call_options);
 	    	    
-	    $this->_log->log_message('Call result: <pre>'.$call_result.'</pre>', get_class($this), CS_REST_LOG_VERBOSE);
-	    
+	    $this->_log->log_message('Call result: <pre>'.var_export($call_result, true).'</pre>', 
+	        get_class($this), CS_REST_LOG_VERBOSE);
+	        	    
 	    if($call_options['deserialise']) {
 	    	$call_result['response'] = $this->_serialiser->deserialise($call_result['response']);
 	    }
@@ -204,9 +207,9 @@ class CS_REST_Wrapper_Base {
 	
 	/**
 	 * Gets your API key
-	 * @param $username Your username
-	 * @param $password Your password
-	 * @param $site_url The url you use to login from
+	 * @param string $username Your username
+	 * @param string $password Your password
+	 * @param string $site_url The url you use to login from
 	 * @param $call_options
 	 * @access public
 	 * @return array A successful call will be of the form array(

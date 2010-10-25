@@ -104,6 +104,12 @@ class CS_REST_TestClients extends CS_REST_TestBase {
 		    'EmailAddress' => 'widgets@abc.net.au'
 		); 
 		
+		$this->mock_serialiser->setReturnValue('format_item', $client_data);
+		$this->mock_serialiser->expectOnce('format_item', array( 
+		    new IdenticalExpectation('Client'),
+		    new IdenticalExpectation($client_data)
+		));
+		
 		$this->general_test_with_argument('create', $client_data, $call_options, 
 		    $raw_result, $raw_result, 'client data was serialised to this');
 	}

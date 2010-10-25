@@ -38,10 +38,43 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
 		$log = NULL,
 		$serialiser = NULL, 
 		$transport = NULL) {
+			
 		$this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
-		$this->_subscribers_base_route = $this->_base_route.'subscribers/'.$list_id;		
+		$this->set_list_id($list_id);
+		
 	}
-	
+    
+    /**
+     * Change the list id used for calls after construction
+     * @param $list_id
+     * @access public
+     */
+    function set_list_id($list_id) {
+        $this->_subscribers_base_route = $this->_base_route.'subscribers/'.$list_id;    
+    }
+    
+    /**
+     * Adds a new subscriber to the specified list
+     * @param array $subscriber The subscriber details to use during creation. 
+     *     This array should be of the form
+     *     array (
+     *         'EmailAddress' => The new subscribers email address
+     *         'Name' => The name of the new subscriber
+     *         'CustomFields' => array(
+     *             array(
+     *                 'Key' => The custom fields personalisation tag
+     *                 'Value' => The value for this subscriber
+     *             )
+     *         )
+     *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
+     *     )
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (201)
+     *     'response' => string The HTTP response (It will be empty)
+     * )
+     */
 	function add($subscriber, $call_options = array()) {
 		if(isset($subscriber['CustomFields']) && is_array($subscriber['CustomFields'])) {
 			$subscriber['CustomFields'] = $this->_serialiser->format_item('CustomField', $subscriber['CustomFields']);
@@ -56,7 +89,47 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
 		
 		return $this->_call($call_options);
 	}
-	
+    
+    /**
+     * Imports an array of subscribers into the current list
+     * @param array $subscribers An array of subscribers to import. 
+     *     This array should be of the form
+     *     array (
+     *         array (
+	 *             'EmailAddress' => The new subscribers email address
+	 *             'Name' => The name of the new subscriber
+	 *             'CustomFields' => array(
+	 *                 array(
+	 *                     'Key' => The custom fields personalisation tag
+	 *                     'Value' => The value for this subscriber
+	 *                 )
+	 *             )
+     *         )
+     *     )
+     * @param $resubscribe Whether we should resubscribe any existing subscribers
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (201)
+     *     'response' => array(
+     *         'TotalUniqueEmailsSubmitted' => The number of unique emails submitted in the call
+     *         'TotalExistingSubscribers' => The number of subscribers who already existed in the list
+     *         'TotalNewSubscribers' => The number of new subscriptions to the list
+     *         'DuplicateEmailsInSubmission' => array<string> The emails which appeared more than once in the batch
+     *         'FailureDetails' => array (
+     *             array(
+     *                 'EmailAddress' => The email address which failed
+     *                 'Code' => The Create Send API Error code
+     *                 'Message' => The reason for the failure
+     *         )
+     *     )
+     * )
+     * 
+     * For successful calls the FailureDetails element will be an empty array. Imports 'fail' when 
+     * any one subscriber submitted is not correctly subscribed, this does not mean that all 
+     * subscribers in the batch failed. Correct parsing of the response is required to 
+     * determine which subscribers were subscribed and which subscribers failed. 
+     */
 	function import($subscribers, $resubscribe, $call_options = array()) {
 		for ($i = 0; $i < count($subscribers); $i++) {
 			if(isset($subscribers[$i]['CustomFields']) && is_array($subscribers[$i]['CustomFields'])) {
@@ -75,28 +148,88 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
 		
 		return $this->_call($call_options);
 	}
-	
+    
+    /**
+     * Gets a subscriber details, including custom fields
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => array(
+     *         'EmailAddress' => The subscriber email address
+     *         'Name' => The subscribers name
+     *         'Date' => The date the subscriber was added to the list
+     *         'State' => The current state of the subscriber
+     *         'CustomFields' => array(
+     *             array(
+     *                 'Key' => The custom fields personalisation tag
+     *                 'Value' => The custom field value for this subscriber
+     *             )
+     *         )
+     *     )
+     * )
+     */
 	function get($email, $call_options = array()) {
 		$call_options['route'] = $this->_subscribers_base_route.'.'.
-		    $this->_serialiser->get_format().'?email='.$email;
+		    $this->_serialiser->get_format().'?email='.urlencode($email);
 		$call_options['method'] = CS_REST_GET;
 		
 		return $this->_call($call_options);	
 	}
-	
+    
+    /**
+     * Gets the sending history to a specific subscriber
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => array(
+     *         array(
+     *             ID => The id of the email which was sent
+     *             Type => 'Campaign'
+     *             Name => The name of the email
+     *             Actions => array(
+     *                 array(
+     *                     Event => The type of action (Click, Open, Unsubscribe etc)
+     *                     Date => The date the event occurred
+     *                     IPAddress => The IP that the event originated from
+     *                     Detail => Any available details about the event i.e the URL for clicks
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
 	function get_history($email, $call_options = array()) {
 		$call_options['route'] = $this->_subscribers_base_route.'/history.'.
-		    $this->_serialiser->get_format().'?email='.$email;
+		    $this->_serialiser->get_format().'?email='.urlencode($email);
 		$call_options['method'] = CS_REST_GET;
 		
 		return $this->_call($call_options);	
 	}
-	
+    
+    /**
+     * Unsubscribes the given subscriber from the current list
+     * @param string $email The email address to unsubscribe
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => The HTTP response (It will be empty)
+     * )
+     */
 	function unsubscribe($email, $call_options = array()) {
+		// We need to build the subscriber data structure. 
+		$email = array(
+		    'EmailAddress' => $email 
+		);
+		
+		$email = $this->_serialiser->format_item('Subscriber', $email);
+		
 		$call_options['route'] = $this->_subscribers_base_route.'/unsubscribe.'.
-		    $this->_serialiser->get_format().'?email='.$email;
+		    $this->_serialiser->get_format();
 		$call_options['method'] = CS_REST_POST;
-		$call_options['data'] = 'email='.$email;
+		$call_options['data'] = $this->_serialiser->serialise($email);
 		
 		return $this->_call($call_options);	
 	}

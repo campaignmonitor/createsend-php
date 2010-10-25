@@ -63,7 +63,7 @@ class CS_REST_CurlTransport {
         curl_setopt($ch, CURLOPT_USERPWD, $call_options['credentials']);
         curl_setopt($ch, CURLOPT_USERAGENT, $call_options['userAgent']);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: '.$call_options['contentType']));
-        
+                
         switch($call_options['method']) {
         	case CS_REST_PUT:		
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, CS_REST_PUT);

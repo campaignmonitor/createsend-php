@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../csrest_campaigns.php';
+require_once '../../csrest_lists.php';
 
 $wrap = new CS_REST_Lists('List ID', 'Your API Key');
 

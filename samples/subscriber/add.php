@@ -17,7 +17,7 @@ $result = $wrap->add(array(
 
 echo "Result of POST /api/v3/subscribers/{list id}.{format}\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Subscribed with code ".$response['code'];
+	echo "Subscribed with code ".$result['code'];
 } else {
 	echo 'Failed with code '.$result['code']."\n<br /><pre>";
 	print_r($result['response']);

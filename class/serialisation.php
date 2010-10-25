@@ -42,7 +42,7 @@ class CS_REST_JsonSerialiser {
 	}
 	
 	function deserialise($text) {
-		// Decode the string, returning an associative array instead of objects
+		// Decode the string, returning an associative array instead of objects		
 		$data = json_decode($text, true);
 		
 		return $data == NULL ? $text : $data;
@@ -92,7 +92,7 @@ class CS_REST_XmlSerialiser {
 	}
 	
 	function format_item($item_name, $list) {
-		return array($list_name => $list);
+		return array($item_name => $list);
 	}
 	
 	/**

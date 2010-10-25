@@ -37,11 +37,39 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
 		$log = NULL,
 		$serialiser = NULL, 
 		$transport = NULL) {
+			
 		$this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
-		$this->_templates_base_route = $this->_base_route.'templates/'.$template_id.
-		    '.'.$this->_serialiser->get_format();		
+		$this->set_template_id($template_id);
 	}
-	
+    
+    /**
+     * Change the template id used for calls after construction
+     * @param $template_id
+     * @access public
+     */
+    function set_template_id($template_id) {
+        $this->_templates_base_route = $this->_base_route.'templates/'.$template_id.
+            '.'.$this->_serialiser->get_format();            
+    }
+    
+    /**
+     * Creates a new template for the specified client based on the provided data
+     * @param string $client_id The client to create the template for
+     * @param array $template_details The details of the template 
+     *     This should be an array of the form 
+     *         array(
+     *             'Name' => The name of the template
+     *             'HtmlPageURL' => The url where the template html can be accessed
+     *             'ZipFileURL' => The url where the template image zip can be accessed
+     *             'ScreenshotURL' => The url of a screenshot of the template
+     *         )
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (201)
+     *     'response' => string The ID of the newly created template
+     * )
+     */
 	function create($client_id, $template_details, $call_options = array()) {
 		$list_details = $this->_serialiser->format_item('Template', $template_details);
 		
@@ -51,7 +79,24 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
 		
 		return $this->_call($call_options);		
 	}
-	
+    
+    /**
+     * Updates the current template with the provided code
+     * @param array $template_details The details of the template
+     *     This should be an array of the form 
+     *         array(
+     *             'Name' => The name of the template
+     *             'HtmlPageURL' => The url where the template html can be accessed
+     *             'ZipFileURL' => The url where the template image zip can be accessed
+     *             'ScreenshotURL' => The url of a screenshot of the template
+     *         )
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => string The http response (Will be empty)
+     * )
+     */
 	function update($template_details, $call_options = array()) {
 		$list_details = $this->_serialiser->format_item('Template', $template_details);
 		
@@ -61,7 +106,16 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
 		
 		return $this->_call($call_options);		
 	}
-	
+    
+    /**
+     * Deletes the current template from the system
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => string The http response (Will be empty)
+     * )
+     */
 	function delete($call_options = array()) {
 		$call_options['route'] = $this->_templates_base_route;
 		$call_options['method'] = CS_REST_DELETE;
@@ -69,6 +123,20 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
 		return $this->_call($call_options);
 	}
 	
+	/**
+	 * Gets the basic details of the current template
+	 * @param unknown_type $call_options
+	 * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => array(
+     *         'TemplateID' => The id of the template
+     *         'Name' => The name of the template
+     *         'PreviewURL' => A url where the template can be previewed from
+     *         'ScreenshotURL' => The url of the template screenshot if one was provided
+     *     )
+     * )
+	 */
 	function get($call_options = array()) {
 		$call_options['route'] = $this->_templates_base_route;
 		$call_options['method'] = CS_REST_GET;
