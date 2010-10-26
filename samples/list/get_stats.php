@@ -8,10 +8,10 @@ $result = $wrap->get_stats();
 
 echo "Result of GET /api/v3/lists/{ID}/stats\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Got list stats\n<br /><pre>";
-	print_r($result['response']);
+    echo "Got list stats\n<br /><pre>";
+    print_r($result['response']);
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
 }
 echo '</pre>';

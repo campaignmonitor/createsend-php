@@ -10,10 +10,10 @@ $result = $wrap->get_drafts();
 
 echo "Result of /api/v3/clients/{id}/drafts\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Got drafts\n<br /><pre>";
-	print_r($result['response']);
+    echo "Got drafts\n<br /><pre>";
+    print_r($result['response']);
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
 }
 echo '</pre>';

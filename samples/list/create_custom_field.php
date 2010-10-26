@@ -13,7 +13,7 @@ $wrap = new CS_REST_Lists('List ID', 'Your API Key');
  * CS_REST_CUSTOM_FIELD_TYPE_DATE
  * CS_REST_CUSTOM_FIELD_TYPE_COUNTRY
  * CS_REST_CUSTOM_FIELD_TYPE_USSTATE
- * 
+ *
  */
 $result = $wrap->create_custom_field(array(
     'FieldName' => 'Custom field name',
@@ -23,9 +23,9 @@ $result = $wrap->create_custom_field(array(
 
 echo "Result of POST /api/v3/lists/{ID}/customfields\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Created with ID\n<br />".$result['response'];
+    echo "Created with ID\n<br />".$result['response'];
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
     echo '</pre>';
 }

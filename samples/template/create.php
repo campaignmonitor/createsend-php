@@ -13,9 +13,9 @@ $result = $wrap->create('Templates Client ID', array(
 
 echo "Result of POST /api/v3/templates/{clientID}\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Created with ID\n<br />".$result['response'];
+    echo "Created with ID\n<br />".$result['response'];
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
     echo '</pre>';
 }

@@ -8,10 +8,10 @@ $result = $wrap->get_custom_fields();
 
 echo "Result of GET /api/v3/lists/{ID}/customfields\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Got custom fields\n<br /><pre>";
-	print_r($result['response']);
+    echo "Got custom fields\n<br /><pre>";
+    print_r($result['response']);
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
 }
 echo '</pre>';

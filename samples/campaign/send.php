@@ -11,9 +11,9 @@ $result = $wrap->send(array(
 
 echo "Result of POST /api/v3/campaigns/{id}/send\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Scheduled with code\n<br />".$result['code'];
+    echo "Scheduled with code\n<br />".$result['code'];
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
     echo '</pre>';
 }

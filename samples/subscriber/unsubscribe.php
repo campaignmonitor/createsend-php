@@ -7,9 +7,9 @@ $result = $wrap->unsubscribe('Email address');
 
 echo "Result of GET /api/v3/subscribers/{list id}/unsubscribe.{format}\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Unsubscribed with code ".$result['code'];
+    echo "Unsubscribed with code ".$result['code'];
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
     echo '</pre>';
 }

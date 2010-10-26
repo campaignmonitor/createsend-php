@@ -8,10 +8,10 @@ $result = $wrap->get_timezones();
 
 echo "Result of /api/v3/timezones\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Got timezones\n<br /><pre>";
-	print_r($result['response']);
+    echo "Got timezones\n<br /><pre>";
+    print_r($result['response']);
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
 }
 echo '</pre>';

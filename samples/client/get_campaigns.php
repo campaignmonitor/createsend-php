@@ -10,10 +10,10 @@ $result = $wrap->get_campaigns();
 
 echo "Result of /api/v3/clients/{id}/campaigns\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Got campaigns\n<br /><pre>";
-	print_r($result['response']);
+    echo "Got campaigns\n<br /><pre>";
+    print_r($result['response']);
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
 }
 echo '</pre>';

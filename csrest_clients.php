@@ -10,59 +10,59 @@ define('CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS', 0x10);
 define('CS_REST_CLIENT_ACCESS_IMPORTURL', 0x20);
 
 /**
- * Class to access a clients resources from the create send API. 
- * This class includes functions to create and edit clients, 
+ * Class to access a clients resources from the create send API.
+ * This class includes functions to create and edit clients,
  * along with accessing lists of client specific resources e.g campaigns
  * @author tobyb
  *
  */
-class CS_REST_Clients extends CS_REST_Wrapper_Base {	
-	
-	/**
-	 * The base route of the clients resource.
-	 * @var string
-	 * @access private
-	 */
-	var $_clients_base_route;
-	
-	/**
-	 * Constructor. 
-	 * @param $client_id string The client id to access (Ignored for create requests)
-	 * @param $api_key string Your api key (Ignored for get_apikey requests)
-	 * @param $protocol string The protocol to use for requests (http|https)
-	 * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
-	 * @param $host string The host to send API requests to. There is no need to change this
-	 * @param $log CS_REST_Log The logger to use. Used for dependency injection
-	 * @param $serialiser The serialiser to use. Used for dependency injection
-	 * @param $transport The transport to use. Used for dependency injection
-	 * @access public
-	 */
-	function CS_REST_Clients(
-		$client_id,
-		$api_key, 
-		$protocol = 'https', 
-		$debug_level = CS_REST_LOG_NONE,
-		$host = 'api.createsend.com', 
-		$log = NULL,
-		$serialiser = NULL, 
-		$transport = NULL) {
-			
-		$this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);	
-		$this->set_client_id($client_id);	
-	}
-    
+class CS_REST_Clients extends CS_REST_Wrapper_Base {
+
+    /**
+     * The base route of the clients resource.
+     * @var string
+     * @access private
+     */
+    var $_clients_base_route;
+
+    /**
+     * Constructor.
+     * @param $client_id string The client id to access (Ignored for create requests)
+     * @param $api_key string Your api key (Ignored for get_apikey requests)
+     * @param $protocol string The protocol to use for requests (http|https)
+     * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
+     * @param $host string The host to send API requests to. There is no need to change this
+     * @param $log CS_REST_Log The logger to use. Used for dependency injection
+     * @param $serialiser The serialiser to use. Used for dependency injection
+     * @param $transport The transport to use. Used for dependency injection
+     * @access public
+     */
+    function CS_REST_Clients(
+    $client_id,
+    $api_key,
+    $protocol = 'https',
+    $debug_level = CS_REST_LOG_NONE,
+    $host = 'api.createsend.com',
+    $log = NULL,
+    $serialiser = NULL,
+    $transport = NULL) {
+        	
+        $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        $this->set_client_id($client_id);
+    }
+
     /**
      * Change the client id used for calls after construction
      * @param $client_id
      * @access public
      */
     function set_client_id($client_id) {
-        $this->_clients_base_route = $this->_base_route.'clients/'.$client_id.'/';       
+        $this->_clients_base_route = $this->_base_route.'clients/'.$client_id.'/';
     }
-	
-	/**
-	 * Gets a list of sent campaigns for the current client
-	 * @param $call_options
+
+    /**
+     * Gets a list of sent campaigns for the current client
+     * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
@@ -77,14 +77,14 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         )
      *     )
      * )
-	 */
-	function get_campaigns($call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'campaigns.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_GET;
-	
-		return $this->_call($call_options);
-	}
-    
+     */
+    function get_campaigns($call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'campaigns.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Gets a list of sent campaigns for the current client
      * @param $call_options
@@ -101,13 +101,13 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     )
      * )
      */
-	function get_drafts($call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'drafts.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_GET;
-		
-		return $this->_call($call_options);
-	}
-    
+    function get_drafts($call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'drafts.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Gets all subscriber lists the current client has created
      * @param $call_options
@@ -122,13 +122,13 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     )
      * )
      */
-	function get_lists($call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'lists.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_GET;
-		
-		return $this->_call($call_options);
-	}
-    
+    function get_lists($call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'lists.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Gets all list segments the current client has created
      * @param $call_options
@@ -143,13 +143,13 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     )
      * )
      */
-	function get_segments($call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'segments.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_GET;
-		
-		return $this->_call($call_options);
-	}
-    
+    function get_segments($call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'segments.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Gets all email addresses on the current clients suppression list
      * @param $call_options
@@ -160,18 +160,18 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         array(
      *             'EmailAddress' => The suppressed email address
      *             'Date' => The date the email was suppressed
-     *             'State' => The state of the suppressed email 
+     *             'State' => The state of the suppressed email
      *         )
      *     )
      * )
      */
-	function get_suppressionlist($call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'suppressionlist.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_GET;
-		
-		return $this->_call($call_options);
-	}
-    
+    function get_suppressionlist($call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'suppressionlist.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Gets all templates the current client has access to
      * @param $call_options
@@ -183,18 +183,18 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *             'TemplateID' => The id of the template
      *             'Name' => The name of the template
      *             'PreviewURL' => The url to preview the template from
-     *             'ScreenshotURL' => The url of the template screenshot 
+     *             'ScreenshotURL' => The url of the template screenshot
      *         )
      *     )
      * )
      */
-	function get_templates($call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'templates.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_GET;
-		
-		return $this->_call($call_options);
-	}
-    
+    function get_templates($call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'templates.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Gets all templates the current client has access to
      * @param $call_options
@@ -211,28 +211,28 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *             'TimeZone' => The clients timezone
      *         )
      *         'AccessDetails' => array(
-     *             'AccessLevel' => The current access level of the client. 
-     *                 This will be some bitwise combination of 
-     * 
+     *             'AccessLevel' => The current access level of the client.
+     *                 This will be some bitwise combination of
+     *
      *                 CS_REST_CLIENT_ACCESS_REPORTS
      *                 CS_REST_CLIENT_ACCESS_SUBSCRIBERS
      *                 CS_REST_CLIENT_ACCESS_CREATESEND
      *                 CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST
      *                 CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS
      *                 CS_REST_CLIENT_ACCESS_IMPORTURL
-     * 
-     *                 or 
+     *
+     *                 or
      *                 CS_REST_CLIENT_ACCESS_NONE
      *             'Username' => The clients current username
      *         )
-     *         'BillingDetails' => 
+     *         'BillingDetails' =>
      *         If on monthly billing
      *         array(
      *             'CurrentTier' => The current monthly tier the client sits in
      *             'CurrentMonthlyRate' => The current pricing rate the client pays per month
      *             'MarkupPercentage' => The percentage markup applied to the base rates
      *             'Currency' => The currency paid in
-     *             'ClientPays' => Whether the client pays for themselves 
+     *             'ClientPays' => Whether the client pays for themselves
      *         )
      *         If paying per campaign
      *         array(
@@ -249,13 +249,13 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     )
      * )
      */
-	function get($call_options = array()) {
-		$call_options['route'] = trim($this->_clients_base_route, '/').'.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_GET;
-		
-		return $this->_call($call_options);
-	}	
-    
+    function get($call_options = array()) {
+        $call_options['route'] = trim($this->_clients_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Deletes an existing client from the system
      * @param $call_options
@@ -265,45 +265,45 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     'response' => string The HTTP Response (It will be empty)
      * )
      */
-	function delete($call_options = array()) {
-		$call_options['route'] = trim($this->_clients_base_route, '/').'.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_DELETE;
-		
-		return $this->_call($call_options);
-	}
-	
-	/**
-	 * Creates a new client based on the provided information
-	 * @param array $client Basic information of the new client. 
-	 *     This should be an array of the form 
-	 *         array(
+    function delete($call_options = array()) {
+        $call_options['route'] = trim($this->_clients_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_DELETE;
+
+        return $this->_call($call_options);
+    }
+
+    /**
+     * Creates a new client based on the provided information
+     * @param array $client Basic information of the new client.
+     *     This should be an array of the form
+     *         array(
      *             'CompanyName' => The company name of the client
      *             'ContactName' => The contact name of the client
      *             'EmailAddress' => The clients contact email address
      *             'Country' => The clients country
      *             'TimeZone' => The clients timezone
      *         )
-	 * @param $call_options
-	 * @access public
+     * @param $call_options
+     * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (201)
      *     'response' => string The ID of the newly created client
      * )
-	 */
-	function create($client, $call_options = array()) {
-		$client = $this->_serialiser->format_item('Client', $client);
-		
-		$call_options['route'] = $this->_base_route.'clients.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_POST;
-		$call_options['data'] = $this->_serialiser->serialise($client);
-		
-		return $this->_call($call_options);
-	}
-    
+     */
+    function create($client, $call_options = array()) {
+        $client = $this->_serialiser->format_item('Client', $client);
+
+        $call_options['route'] = $this->_base_route.'clients.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_POST;
+        $call_options['data'] = $this->_serialiser->serialise($client);
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Updates the basic information for a client
-     * @param array $client_basics Basic information of the client. 
-     *     This should be an array of the form 
+     * @param array $client_basics Basic information of the client.
+     *     This should be an array of the form
      *         array(
      *             'CompanyName' => The company name of the client
      *             'ContactName' => The contact name of the client
@@ -317,31 +317,31 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     'code' => int The HTTP Response Code (200)
      *     'response' => string The HTTP Response (It will be empty)
      * )
-     */	
-	function set_basics($client_basics, $call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'setbasics.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_PUT;
-		$call_options['data'] = $this->_serialiser->serialise($client_basics);
-		
-		return $this->_call($call_options);
-	}
-    
+     */
+    function set_basics($client_basics, $call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'setbasics.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_PUT;
+        $call_options['data'] = $this->_serialiser->serialise($client_basics);
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Updates the access details of the current client
-     * @param array $client_access Access details of the client. 
-     *     This should be an array of the form 
+     * @param array $client_access Access details of the client.
+     *     This should be an array of the form
      *         array(
-     *             'AccessLevel' => The current access level of the client. 
-     *                 This will be some bitwise combination of 
-     * 
+     *             'AccessLevel' => The current access level of the client.
+     *                 This will be some bitwise combination of
+     *
      *                 CS_REST_CLIENT_ACCESS_REPORTS
      *                 CS_REST_CLIENT_ACCESS_SUBSCRIBERS
      *                 CS_REST_CLIENT_ACCESS_CREATESEND
      *                 CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST
      *                 CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS
      *                 CS_REST_CLIENT_ACCESS_IMPORTURL
-     * 
-     *                 or 
+     *
+     *                 or
      *                 CS_REST_CLIENT_ACCESS_NONE
      *             'Username' => The clients current username
      *             'Password' => The new password for the given client
@@ -352,21 +352,21 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     'code' => int The HTTP Response Code (200)
      *     'response' => string The HTTP Response (It will be empty)
      * )
-     */ 
-	function set_access($client_access, $call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'setaccess.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_PUT;
-		$call_options['data'] = $this->_serialiser->serialise($client_access);
-		
-		return $this->_call($call_options);
-	}
-    
+     */
+    function set_access($client_access, $call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'setaccess.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_PUT;
+        $call_options['data'] = $this->_serialiser->serialise($client_access);
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Updates the billing details of the current client, setting the client to the payg billing model
      * For clients not set to pay themselves then all fields below ClientPays are ignored
-     * All Markup fields are optional 
-     * @param array $client_billing Payg billing details of the client. 
-     *     This should be an array of the form 
+     * All Markup fields are optional
+     * @param array $client_billing Payg billing details of the client.
+     *     This should be an array of the form
      *         array(
      *             'Currency' => The currency fees are paid in
      *             'ClientPays' => Whether client client pays for themselves
@@ -382,20 +382,20 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     'code' => int The HTTP Response Code (200)
      *     'response' => string The HTTP Response (It will be empty)
      * )
-     */ 
-	function set_payg_billing($client_billing, $call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'setpaygbilling.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_PUT;
-		$call_options['data'] = $this->_serialiser->serialise($client_billing);
-		
-		return $this->_call($call_options);
-	}
-    
+     */
+    function set_payg_billing($client_billing, $call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'setpaygbilling.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_PUT;
+        $call_options['data'] = $this->_serialiser->serialise($client_billing);
+
+        return $this->_call($call_options);
+    }
+
     /**
      * Updates the billing details of the current client, setting the client to the monthly billing model
      * For clients not set to pay themselves then the markup percentage field is ignored
-     * @param array $client_billing Payg billing details of the client. 
-     *     This should be an array of the form 
+     * @param array $client_billing Payg billing details of the client.
+     *     This should be an array of the form
      *         array(
      *             'Currency' => The currency fees are paid in
      *             'ClientPays' => Whether client client pays for themselves
@@ -407,12 +407,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     'code' => int The HTTP Response Code (200)
      *     'response' => string The HTTP Response (It will be empty)
      * )
-     */ 
-	function set_monthly_billing($client_billing, $call_options = array()) {
-		$call_options['route'] = $this->_clients_base_route.'setmonthlybilling.'.$this->_serialiser->get_format();
-		$call_options['method'] = CS_REST_PUT;
-		$call_options['data'] = $this->_serialiser->serialise($client_billing);
-		
-		return $this->_call($call_options);
-	}
+     */
+    function set_monthly_billing($client_billing, $call_options = array()) {
+        $call_options['route'] = $this->_clients_base_route.'setmonthlybilling.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_PUT;
+        $call_options['data'] = $this->_serialiser->serialise($client_billing);
+
+        return $this->_call($call_options);
+    }
 }

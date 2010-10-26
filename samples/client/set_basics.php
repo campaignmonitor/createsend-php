@@ -14,9 +14,9 @@ $result = $wrap->set_basics(array(
 
 echo "Result of PUT /api/v3/clients/{id}/setbasics\n<br />";
 if($wrap->was_successful($result)) {
-	echo "Updated with Code ".$result['code'];
+    echo "Updated with Code ".$result['code'];
 } else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
+    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    print_r($result['response']);
     echo '</pre>';
 }

@@ -14,22 +14,22 @@ $result = $wrap->create('Campaigns Client ID', array(
     'TextUrl' => 'Campaign Text Import URL',
     'ListIDs' => array('First List', 'Second List'),
     'Segments' => array(
-        array(
+array(
             'ListID' => 'Segment ListID',
             'Name' => 'Segment Name'
-        ),
-        array(
+            ),
+            array(
             'ListID' => 'Segment ListID',
             'Name' => 'Segment Name'
-        )
-    )
-));
+            )
+            )
+            ));
 
-echo "Result of POST /api/v3/campaigns/{clientID}\n<br />";
-if($wrap->was_successful($result)) {
-	echo "Created with ID\n<br />".$result['response'];
-} else {
-	echo 'Failed with code '.$result['code']."\n<br /><pre>";
-	print_r($result['response']);
-    echo '</pre>';
-}
+            echo "Result of POST /api/v3/campaigns/{clientID}\n<br />";
+            if($wrap->was_successful($result)) {
+                echo "Created with ID\n<br />".$result['response'];
+            } else {
+                echo 'Failed with code '.$result['code']."\n<br /><pre>";
+                print_r($result['response']);
+                echo '</pre>';
+            }
