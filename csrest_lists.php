@@ -185,7 +185,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function delete_custom_field($key, $call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'customfields/'.urlencode($key).'.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_lists_base_route.'customfields/'.rawurlencode($key).'.'.$this->_serialiser->get_format();
         $call_options['method'] = CS_REST_DELETE;
 
         return $this->_call($call_options);
@@ -304,6 +304,14 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
         $this->_serialiser->get_format().'?date='.urlencode($unsubscribed_since);
         $call_options['method'] = CS_REST_GET;
 
+        return $this->_call($call_options);
+    }
+    
+    function get_segment_subscribers($segment_name, $subscribed_since, $call_options = array()) {
+        $call_options['route'] = $this->_lists_base_route.'segments/'.rawurlencode($segment_name).
+            '/active.'.$this->_serialiser->get_format().'?date='.urlencode($subscribed_since);
+        $call_options['method'] = CS_REST_GET;
+        
         return $this->_call($call_options);
     }
 
