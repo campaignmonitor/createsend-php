@@ -117,6 +117,39 @@ class CS_REST_Wrapper_Base {
 			'host' => $host
         );
     }
+    
+    /**
+     * @param $route
+     * @param $page_number
+     * @param $page_size
+     * @param $order_field
+     * @param $order_direction
+     * @access private
+     */
+    function _add_paging_to_route($route, $page_number, $page_size, $order_field, $order_direction,
+        $join_char = '&') {         
+        if(!is_null($page_number)) {
+            $route .= $join_char.'pageNumber='.$page_number;
+            $join_char = '&';
+        }
+        
+        if(!is_null($page_size)) {
+            $route .= $join_char.'pageSize='.$page_size;
+            $join_char = '&';
+        }
+        
+        if(!is_null($order_direction)) {
+            $route .= $join_char.'orderDirection='.$order_direction;
+            $join_char = '&';
+        }
+        
+        if(!is_null($order_field)) {
+            $route .= $join_char.'orderField='.$order_field;
+            $join_char = '&';
+        }
+        
+        return $route;        
+    }
 
     /**
      * @return boolean True if the wrapper is using SSL.

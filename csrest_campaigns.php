@@ -67,10 +67,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *         'HtmlUrl' => string required A url to download the campaign HTML from
      *         'TextUrl' => string optional A url to download the campaign text version from
      *         'ListIDs' => array<string> optional An array of list ids to send the campaign to
-     *         'Segments' => array<array(
-     *                 'ListID' => string The list id of the segment
-     *                 'Name' => string The segment name
-     *             )> An array of the segments to send the campaign to.
+     *         'SegmentIDs' => array<string> optional An array of segment ids to send the campaign to.
      *     )
      * @param $call_options
      * @access public
@@ -84,8 +81,8 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
             $campaign_info['ListIDs'] = $this->_serialiser->format_item('ListID', $campaign_info['ListIDs']);
         }
 
-        if(isset($campaign_info['Segments']) && is_array($campaign_info['Segments'])) {
-            $campaign_info['Segments'] = $this->_serialiser->format_item('Segment', $campaign_info['Segments']);
+        if(isset($campaign_info['SegmentIDs']) && is_array($campaign_info['SegmentIDs'])) {
+            $campaign_info['SegmentIDs'] = $this->_serialiser->format_item('SegmentID', $campaign_info['SegmentIDs']);
         }
 
         $campaign_info = $this->_serialiser->format_item('Campaign', $campaign_info);
@@ -94,6 +91,34 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($campaign_info);
 
+        return $this->_call($call_options);
+    }
+    
+    /**
+     * Sends a preview of an existing campaign to the specified recipients. 
+     * @param array<string> $recipients The recipients to send the preview to. 
+     * @param string $personalize How to personalize the campaign content. Valid options are:
+     *     'Random': Choose a random campaign recipient and use their personalisation data
+     *     'Fallback': Use the fallback terms specified in the campaign content
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP response code (200)
+     *     'response' => string The HTTP response (It will be empty)
+     * )
+     */
+    function test($recipients, $personalize = 'Random', $call_options = array()) {
+        $recipients = $this->_serialiser->format_item('Recipient', $recipients);
+        
+        $test_data = $this->_serialiser->format_item('TestInfo', array(
+            'TestRecipients' => $recipients,
+            'Personalize' => $personalize
+        ));
+        
+        $call_options['route'] = $this->_campaigns_base_route.'test.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_POST;
+        $call_options['data'] = $this->_serialiser->serialise($test_data);
+        
         return $this->_call($call_options);
     }
 
@@ -136,6 +161,45 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
         $call_options['route'] = trim($this->_campaigns_base_route, '/').'.'.$this->_serialiser->get_format();
         $call_options['method'] = CS_REST_DELETE;
 
+        return $this->_call($call_options);
+    }
+
+    /**
+     * Gets all email addresses on the current clients suppression list
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'LIST')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => array(
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
+     *         'Results' => array(
+     *             array(
+     *                 'EmailAddress' => The suppressed email address
+     *                 'ListID' => The ID of the list this subscriber comes from
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    function get_recipients($page_number = NULL, $page_size = NULL, $order_field = NULL, 
+        $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_campaigns_base_route.'recipients.'.$this->_serialiser->get_format();
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
+            $order_field, $order_direction, '?');
+        $call_options['method'] = CS_REST_GET;
+        
         return $this->_call($call_options);
     }
 

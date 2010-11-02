@@ -137,8 +137,9 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
      *         array(
-     *             'ListID' => The id of the list on which the segment was created
-     *             'Name' => The name of the segment
+     *             'ListID' => The id of the list owning this segment
+     *             'SegmentID' => The id of this segment
+     *             'Title' => The title of this segment
      *         )
      *     )
      * )
@@ -152,21 +153,39 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
 
     /**
      * Gets all email addresses on the current clients suppression list
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
-     *         array(
-     *             'EmailAddress' => The suppressed email address
-     *             'Date' => The date the email was suppressed
-     *             'State' => The state of the suppressed email
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
+     *         'Results' => array(
+     *             array(
+     *                 'EmailAddress' => The suppressed email address
+     *                 'Date' => The date the email was suppressed
+     *                 'State' => The state of the suppressed email
+     *             )
      *         )
      *     )
      * )
      */
-    function get_suppressionlist($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'suppressionlist.'.$this->_serialiser->get_format();
+    function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL, 
+        $order_direction = NULL, $call_options = array()) {
+        
+        $route = $this->_clients_base_route.'suppressionlist.'.$this->_serialiser->get_format();
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
+            $order_field, $order_direction, '?');
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);

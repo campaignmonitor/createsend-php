@@ -215,31 +215,71 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     }
 
     /**
-     * Gets all active subscribers added since the given date
-     * @param string $added_since The date to start getting subscribers from
+     * Gets a list of all segments defined for the current list
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
      *         array(
-     *             'EmailAddress' => The email address of the subscriber
-     *             'Name' => The name of the subscriber
-     *             'Date' => The date that the subscriber was added to the list
-     *             'State' => The current state of the subscriber, will be 'Active'
-     *             'CustomFields' => array (
-     *                 array(
-     *                     'Key' => The personalisation tag of the custom field
-     *                     'Value' => The value of the custom field for this subscriber
+     *             'ListID' => The current list id
+     *             'SegmentID' => The id of this segment
+     *             'Title' => The title of this segment
+     *         )
+     *     )
+     * )
+     */
+    function get_segments($call_options = array()) {
+        $call_options['route'] = $this->_lists_base_route.'segments.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_GET;
+
+        return $this->_call($call_options);
+    }
+
+    /**
+     * Gets all active subscribers added since the given date
+     * @param string $added_since The date to start getting subscribers from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP response code (200)
+     *     'response' => array(
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
+     *         'Results' => array(
+     *             array(
+     *                 'EmailAddress' => The email address of the subscriber
+     *                 'Name' => The name of the subscriber
+     *                 'Date' => The date that the subscriber was added to the list
+     *                 'State' => The current state of the subscriber, will be 'Active'
+     *                 'CustomFields' => array (
+     *                     array(
+     *                         'Key' => The personalisation tag of the custom field
+     *                         'Value' => The value of the custom field for this subscriber
+     *                     )
      *                 )
      *             )
      *         )
      *     )
      * )
      */
-    function get_active_subscribers($added_since, $call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'active.'.
-        $this->_serialiser->get_format().'?date='.urlencode($added_since);
+    function get_active_subscribers($added_since, $page_number = NULL, 
+        $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_lists_base_route.'active.'.
+            $this->_serialiser->get_format().'?date='.urlencode($added_since);
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
+            $page_size, $order_field, $order_direction);
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -248,29 +288,47 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     /**
      * Gets all bounced subscribers who have bounced out since the given date
      * @param string $added_since The date to start getting subscribers from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
+     *     'code' => int The HTTP response code (200)
      *     'response' => array(
-     *         array(
-     *             'EmailAddress' => The email address of the subscriber
-     *             'Name' => The name of the subscriber
-     *             'Date' => The date that the subscriber bounced out of the list
-     *             'State' => The current state of the subscriber, will be 'Bounced'
-     *             'CustomFields' => array (
-     *                 array(
-     *                     'Key' => The personalisation tag of the custom field
-     *                     'Value' => The value of the custom field for this subscriber
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
+     *         'Results' => array(
+     *             array(
+     *                 'EmailAddress' => The email address of the subscriber
+     *                 'Name' => The name of the subscriber
+     *                 'Date' => The date that the subscriber bounced out of the list
+     *                 'State' => The current state of the subscriber, will be 'Bounced'
+     *                 'CustomFields' => array (
+     *                     array(
+     *                         'Key' => The personalisation tag of the custom field
+     *                         'Value' => The value of the custom field for this subscriber
+     *                     )
      *                 )
      *             )
      *         )
      *     )
      * )
      */
-    function get_bounced_subscribers($bounced_since, $call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'bounced.'.
-        $this->_serialiser->get_format().'?date='.urlencode($bounced_since);
+    function get_bounced_subscribers($bounced_since, $page_number = NULL, 
+        $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_lists_base_route.'bounced.'.
+            $this->_serialiser->get_format().'?date='.urlencode($bounced_since);
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
+            $page_size, $order_field, $order_direction);
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -279,37 +337,97 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     /**
      * Gets all unsubscribed subscribers who have unsubscribed since the given date
      * @param string $added_since The date to start getting subscribers from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
+     *     'code' => int The HTTP response code (200)
      *     'response' => array(
-     *         array(
-     *             'EmailAddress' => The email address of the subscriber
-     *             'Name' => The name of the subscriber
-     *             'Date' => The date that the subscriber unsubscribed from the list
-     *             'State' => The current state of the subscriber, will be 'Unsubscribed'
-     *             'CustomFields' => array (
-     *                 array(
-     *                     'Key' => The personalisation tag of the custom field
-     *                     'Value' => The value of the custom field for this subscriber
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
+     *         'Results' => array(
+     *             array(
+     *                 'EmailAddress' => The email address of the subscriber
+     *                 'Name' => The name of the subscriber
+     *                 'Date' => The date that the subscriber was unsubscribed from the list
+     *                 'State' => The current state of the subscriber, will be 'Unsubscribed'
+     *                 'CustomFields' => array (
+     *                     array(
+     *                         'Key' => The personalisation tag of the custom field
+     *                         'Value' => The value of the custom field for this subscriber
+     *                     )
      *                 )
      *             )
      *         )
      *     )
      * )
      */
-    function get_unsubscribed_subscribers($unsubscribed_since, $call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'unsubscribed.'.
-        $this->_serialiser->get_format().'?date='.urlencode($unsubscribed_since);
+    function get_unsubscribed_subscribers($unsubscribed_since, $page_number = NULL, 
+        $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_lists_base_route.'unsubscribed.'.
+            $this->_serialiser->get_format().'?date='.urlencode($unsubscribed_since);
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
+            $page_size, $order_field, $order_direction);            
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
     }
     
-    function get_segment_subscribers($segment_name, $subscribed_since, $call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'segments/'.rawurlencode($segment_name).
+    /**
+     * Gets a paged collection of subscribers which fall into the given segment
+     * @param string $segment_id The segment to get subscribers for
+     * @param string $subscribed_since The date to start getting subscribers from 
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP response code (200)
+     *     'response' => array(
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
+     *         'Results' => array(
+     *             array(
+     *                 'EmailAddress' => The email address of the subscriber
+     *                 'Name' => The name of the subscriber
+     *                 'Date' => The date that the subscriber was added to the list
+     *                 'State' => The current state of the subscriber, will be 'Active'
+     *                 'CustomFields' => array (
+     *                     array(
+     *                         'Key' => The personalisation tag of the custom field
+     *                         'Value' => The value of the custom field for this subscriber
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    function get_segment_subscribers($segment_id, $subscribed_since, $page_number = NULL, 
+        $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_lists_base_route.'segments/'.$segment_id.
             '/active.'.$this->_serialiser->get_format().'?date='.urlencode($subscribed_since);
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
+            $page_size, $order_field, $order_direction);
         $call_options['method'] = CS_REST_GET;
         
         return $this->_call($call_options);

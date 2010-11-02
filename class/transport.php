@@ -233,16 +233,16 @@ class CS_REST_SocketTransport {
 
     function _build_request($call_options, $host, $path) {
         $request =
-        $call_options['method'].' '.$path." HTTP/1.1\n".
+$call_options['method'].' '.$path." HTTP/1.1\n".
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
-'Content-Type: '.$call_options['contentType'];
+'Content-Type: '.$call_options['contentType']."\n";
 
         if(isset($call_options['data'])) {
             $request .=
 'Content-Length: '.strlen($call_options['data'])."\n\n".
-            $call_options['data'];
+$call_options['data'];
         }
 
         return $request."\n\n";

@@ -144,6 +144,15 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test('get_custom_fields', $call_options, $raw_result, $deserialised);
     }
 
+    function testget_segments() {
+        $raw_result = 'some segments';
+        $deserialised = array('Segment 1', 'Segment 2');
+        $call_options = $this->get_call_options(
+        $this->list_base_route.'segments.'.$this->format);
+
+        $this->general_test('get_segments', $call_options, $raw_result, $deserialised);
+    }
+
     function testget_active() {
         $raw_result = 'some subscribers';
         $since = '2020';
@@ -213,11 +222,11 @@ class CS_REST_TestLists extends CS_REST_TestBase {
     function testget_segment_subscribers() {
         $raw_result = 'some subscribers';
         $since = '2020';
-        $segment_name = 'Website Subscribers';
+        $segment_id = 'abc123';
         $response_code = 200;
         $deserialised = array('Subscriber 1', 'Subscriber 2');
         $call_options = $this->get_call_options(
-        $this->list_base_route.'segments/'.rawurlencode($segment_name).'/active.'.$this->format.'?date='.$since);
+        $this->list_base_route.'segments/'.$segment_id.'/active.'.$this->format.'?date='.$since);
 
         $expected_result = array (
             'code' => $response_code, 
@@ -227,7 +236,7 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $this->setup_transport_and_serialisation($expected_result, $call_options,
         $deserialised, $raw_result, NULL, NULL, $response_code);
 
-        $result = $this->wrapper->get_segment_subscribers($segment_name, $since);
+        $result = $this->wrapper->get_segment_subscribers($segment_id, $since);
 
         $expected_result['response'] = $deserialised;
         $this->assertIdentical($expected_result, $result);
