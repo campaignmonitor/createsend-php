@@ -382,56 +382,6 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
 
         return $this->_call($call_options);
     }
-    
-    /**
-     * Gets a paged collection of subscribers which fall into the given segment
-     * @param string $segment_id The segment to get subscribers for
-     * @param string $subscribed_since The date to start getting subscribers from 
-     * @param int $page_number The page number to get
-     * @param int $page_size The number of records per page
-     * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
-     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @param $call_options
-     * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP response code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber
-     *                 'Name' => The name of the subscriber
-     *                 'Date' => The date that the subscriber was added to the list
-     *                 'State' => The current state of the subscriber, will be 'Active'
-     *                 'CustomFields' => array (
-     *                     array(
-     *                         'Key' => The personalisation tag of the custom field
-     *                         'Value' => The value of the custom field for this subscriber
-     *                     )
-     *                 )
-     *             )
-     *         )
-     *     )
-     * )
-     */
-    function get_segment_subscribers($segment_id, $subscribed_since, $page_number = NULL, 
-        $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
-            
-        $route = $this->_lists_base_route.'segments/'.$segment_id.
-            '/active.'.$this->_serialiser->get_format().'?date='.urlencode($subscribed_since);
-        
-        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
-            $page_size, $order_field, $order_direction);
-        $call_options['method'] = CS_REST_GET;
-        
-        return $this->_call($call_options);
-    }
 
     /**
      * Gets the basic details of the current list
