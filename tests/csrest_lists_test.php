@@ -219,29 +219,6 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_segment_subscribers() {
-        $raw_result = 'some subscribers';
-        $since = '2020';
-        $segment_id = 'abc123';
-        $response_code = 200;
-        $deserialised = array('Subscriber 1', 'Subscriber 2');
-        $call_options = $this->get_call_options(
-        $this->list_base_route.'segments/'.$segment_id.'/active.'.$this->format.'?date='.$since);
-
-        $expected_result = array (
-            'code' => $response_code, 
-            'response' => $raw_result
-        );
-
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $deserialised, $raw_result, NULL, NULL, $response_code);
-
-        $result = $this->wrapper->get_segment_subscribers($segment_id, $since);
-
-        $expected_result['response'] = $deserialised;
-        $this->assertIdentical($expected_result, $result);
-    }
-
     function testget() {
         $raw_result = 'list details';
         $deserialised = array(1,23,4,5,6,7);

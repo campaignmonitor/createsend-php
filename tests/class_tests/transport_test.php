@@ -130,7 +130,7 @@ Server: Microsoft-IIS/7.0';
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
-'Content-Type: '.$call_options['contentType']."\n\n";
+'Content-Type: '.$call_options['contentType']."\n\n\n";
     	     
     	    $this->assertIdentical($this->transport->_build_request($call_options, $host, $path), $expected);
     }
@@ -152,7 +152,7 @@ Server: Microsoft-IIS/7.0';
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
-'Content-Type: '.$call_options['contentType'].
+'Content-Type: '.$call_options['contentType']."\n".
 'Content-Length: '.strlen($call_options['data'])."\n\n".
             $call_options['data']."\n\n";
 

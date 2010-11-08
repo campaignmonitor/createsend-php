@@ -32,11 +32,11 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'Name' => 'ABC Widgets',
             'Subject' => 'Widget Man!',
             'ListIDs' => array(1,2,3),
-            'Segments' => array(array(1,2), array(3,4))
+            'SegmentIDs' => array(4,5,6)
         );
 
         $this->mock_serialiser->setReturnValueAt(0, 'format_item', $campaign_data['ListIDs']);
-        $this->mock_serialiser->setReturnValueAt(1, 'format_item', $campaign_data['Segments']);
+        $this->mock_serialiser->setReturnValueAt(1, 'format_item', $campaign_data['SegmentIDs']);
         $this->mock_serialiser->setReturnValueAt(2, 'format_item', $campaign_data);
 
         $this->mock_serialiser->expectAt(0, 'format_item', array(
@@ -45,8 +45,8 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         ));
 
         $this->mock_serialiser->expectAt(1, 'format_item', array(
-        new IdenticalExpectation('Segment'),
-        new IdenticalExpectation($campaign_data['Segments'])
+        new IdenticalExpectation('SegmentID'),
+        new IdenticalExpectation($campaign_data['SegmentIDs'])
         ));
 
         $this->mock_serialiser->expectAt(2, 'format_item', array(

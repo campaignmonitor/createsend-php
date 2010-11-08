@@ -13,5 +13,6 @@ class AllTests extends TestSuite {
         $this->addFile('csrest_lists_test.php');
         $this->addFile('csrest_subscribers_test.php');
         $this->addFile('csrest_template_test.php');
+        $this->addFile('csrest_segments_test.php');
     }
 }

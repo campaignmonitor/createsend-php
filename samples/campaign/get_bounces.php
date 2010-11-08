@@ -3,7 +3,8 @@
 require_once '../../csrest_campaigns.php';
 
 $wrap = new CS_REST_Campaigns('Campaign ID to get bounces for', 'Your API Key');
-$result = $wrap->get_bounces();
+$result = $wrap->get_bounces(1, 50, 'email', 'asc');
+//$result = $wrap->get_bounces(page, page size, order field, order direction);
 
 echo "Result of GET /api/v3/campaigns/{id}/bounces\n<br />";
 if($wrap->was_successful($result)) {

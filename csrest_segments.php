@@ -8,7 +8,7 @@ require_once 'csrest.php';
  * @author tobyb
  *
  */
-class CS_REST_Lists extends CS_REST_Wrapper_Base {
+class CS_REST_Segments extends CS_REST_Wrapper_Base {
 
     /**
      * The base route of the lists resource.
@@ -29,7 +29,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function CS_REST_Lists (
+    function CS_REST_Segments (
     $segment_id,
     $api_key,
     $protocol = 'https',
@@ -50,6 +50,22 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      */
     function set_segment_id($segment_id) {
         $this->_segments_base_route = $this->_base_route.'segments/'.$segment_id.'/';
+    }
+
+    /**
+     * Deletes an existing segment from the system
+     * @param $call_options
+     * @access public
+     * @return A successful call will return an array of the form array(
+     *     'code' => int The HTTP Response Code (200)
+     *     'response' => string The HTTP Response (It will be empty)
+     * )
+     */
+    function delete($call_options = array()) {
+        $call_options['route'] = trim($this->_segments_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['method'] = CS_REST_DELETE;
+        
+        return $this->_call($call_options);
     }
     
     /**
@@ -88,7 +104,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * )
      */
-    function get_segment_subscribers($subscribed_since, $page_number = NULL, 
+    function get_subscribers($subscribed_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
             
         $route = $this->_segments_base_route.'active.'.$this->_serialiser->get_format().

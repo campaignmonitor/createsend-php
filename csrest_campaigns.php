@@ -107,15 +107,15 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'response' => string The HTTP response (It will be empty)
      * )
      */
-    function test($recipients, $personalize = 'Random', $call_options = array()) {
+    function send_preview($recipients, $personalize = 'Random', $call_options = array()) {
         $recipients = $this->_serialiser->format_item('Recipient', $recipients);
         
-        $test_data = $this->_serialiser->format_item('TestInfo', array(
-            'TestRecipients' => $recipients,
+        $test_data = $this->_serialiser->format_item('PreviewInfo', array(
+            'PreviewRecipients' => $recipients,
             'Personalize' => $personalize
         ));
         
-        $call_options['route'] = $this->_campaigns_base_route.'test.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_campaigns_base_route.'sendpreview.'.$this->_serialiser->get_format();
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($test_data);
         
@@ -205,23 +205,41 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
 
     /**
      * Gets all bounces recorded for a campaign
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
-     *         array(
-     *             'EmailAddress' => The email that bounced
-     *             'ListID' => The ID of the list the subscriber was on
-     *             'BounceType' => The type of bounce
-     *             'Date' => The date the bounce message was received
-     *             'Reason' => The reason for the bounce
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
+     *         'Results' => array(
+     *             array(
+     *                 'EmailAddress' => The email that bounced
+     *                 'ListID' => The ID of the list the subscriber was on
+     *                 'BounceType' => The type of bounce
+     *                 'Date' => The date the bounce message was received
+     *                 'Reason' => The reason for the bounce
+     *             )
      *         )
      *     )
      * )
      */
-    function get_bounces($call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'bounces.'.$this->_serialiser->get_format();
+    function get_bounces($page_number = NULL, $page_size = NULL, $order_field = NULL, 
+        $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_campaigns_base_route.'bounces.'.$this->_serialiser->get_format();
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
+            $order_field, $order_direction, '?');
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -234,15 +252,20 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
-     *         array(
+     *         'Lists' =>  array(
      *             'ListID' => The list id
      *             'Name' => The list name
+     *         ), 
+     *         'Segments' => array(
+     *             'ListID' => The list id of the segment
+     *             'SegmentID' => The id of the segment
+     *             'Title' => The title of the segment
      *         )
      *     )
      * )
      */
-    function get_lists($call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'lists.'.$this->_serialiser->get_format();
+    function get_lists_and_segments($call_options = array()) {
+        $call_options['route'] = $this->_campaigns_base_route.'listsandsegments.'.$this->_serialiser->get_format();
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -275,23 +298,41 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     /**
      * Gets all opens recorded for a campaign since the provided date
      * @param string $since The date to start getting opens from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
      *         array(
-     *             'EmailAddress' => The email address of the subscriber who opened
-     *             'ListID' => The list id of the list containing the subscriber
-     *             'Date' => The date of the open
-     *             'IPAddress' => The ip address where the open originated
+     *             array(
+     *                 'EmailAddress' => The email address of the subscriber who opened
+     *                 'ListID' => The list id of the list containing the subscriber
+     *                 'Date' => The date of the open
+     *                 'IPAddress' => The ip address where the open originated
+     *             )
      *         )
      *     )
      * )
      */
-    function get_opens($since, $call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'opens.'.
-        $this->_serialiser->get_format().'?date='.urlencode($since);
+    function get_opens($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+        $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_campaigns_base_route.'opens.'.
+            $this->_serialiser->get_format().'?date='.urlencode($since);
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
+            $order_field, $order_direction);
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -300,24 +341,42 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     /**
      * Gets all clicks recorded for a campaign since the provided date
      * @param string $since The date to start getting clicks from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
      *         array(
-     *             'EmailAddress' => The email address of the subscriber who clicked
-     *             'ListID' => The list id of the list containing the subscriber
-     *             'Date' => The date of the click
-     *             'IPAddress' => The ip address where the click originated
-     *             'URL' => The url that the subscriber clicked on
+     *             array(
+     *                 'EmailAddress' => The email address of the subscriber who clicked
+     *                 'ListID' => The list id of the list containing the subscriber
+     *                 'Date' => The date of the click
+     *                 'IPAddress' => The ip address where the click originated
+     *                 'URL' => The url that the subscriber clicked on
+     *             )
      *         )
      *     )
      * )
      */
-    function get_clicks($since, $call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'clicks.'.
-        $this->_serialiser->get_format().'?date='.urlencode($since);
+    function get_clicks($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+        $order_direction = NULL, $call_options = array()) {
+            
+        $route = $this->_campaigns_base_route.'clicks.'.
+            $this->_serialiser->get_format().'?date='.urlencode($since);
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
+            $order_field, $order_direction);
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -326,23 +385,41 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     /**
      * Gets all unsubscribes recorded for a campaign since the provided date
      * @param string $since The date to start getting unsubscribes from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
      * @return A successful call will return an array of the form array(
      *     'code' => int The HTTP Response Code (200)
      *     'response' => array(
+     *         'ResultsOrderedBy' => The field the results are ordered by
+     *         'OrderDirection' => The order direction
+     *         'PageNumber' => The page number for the result set
+     *         'PageSize' => The page size used
+     *         'RecordsOnThisPage' => The number of records returned
+     *         'TotalNumberOfRecords' => The total number of records available
+     *         'NumberOfPages' => The total number of pages for this collection
      *         array(
-     *             'EmailAddress' => The email address of the subscriber who unsubscribed
-     *             'ListID' => The list id of the list containing the subscriber
-     *             'Date' => The date of the unsubscribe
-     *             'IPAddress' => The ip address where the unsubscribe originated
+     *             array(
+     *                 'EmailAddress' => The email address of the subscriber who unsubscribed
+     *                 'ListID' => The list id of the list containing the subscriber
+     *                 'Date' => The date of the unsubscribe
+     *                 'IPAddress' => The ip address where the unsubscribe originated
+     *             )
      *         )
      *     )
      * )
      */
-    function get_unsubscribes($since, $call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'unsubscribes.'.
-        $this->_serialiser->get_format().'?date='.urlencode($since);
+    function get_unsubscribes($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+        $order_direction = NULL, $call_options = array()) {
+        
+        $route = $this->_campaigns_base_route.'unsubscribes.'.
+            $this->_serialiser->get_format().'?date='.urlencode($since);
+        
+        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
+            $order_field, $order_direction);
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
