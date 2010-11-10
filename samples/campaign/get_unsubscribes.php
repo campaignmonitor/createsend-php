@@ -11,7 +11,7 @@ if($result->was_successful()) {
     echo "Got unsubscribes\n<br /><pre>";
     var_dump($result->response);
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
     var_dump($result->response);
 }
 echo '</pre>';

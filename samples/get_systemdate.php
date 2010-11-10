@@ -10,7 +10,7 @@ echo "Result of /api/v3/systemdate\n<br />";
 if($result->was_successful()) {
     echo "Got system date\n<br />".$result->response;
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
     var_dump($result->response);
     echo '</pre>';
 }
