@@ -1,0 +1,20 @@
+{
+  "EmailAddress": "subscriber@example.com",
+  "Name": "Subscriber One",
+  "Date": "2010-10-25 10:28:00",
+  "State": "Active",
+  "CustomFields": [
+    {
+      "Key": "website",
+      "Value": "http://example.com"
+    },
+    {
+      "Key": "age",
+      "Value": "24"
+    },
+    {
+      "Key": "subscription date",
+      "Value": "2010-03-09"
+    }
+  ]
+}

@@ -48,8 +48,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      * @access public
      */
     function set_template_id($template_id) {
-        $this->_templates_base_route = $this->_base_route.'templates/'.$template_id.
-            '.'.$this->_serialiser->get_format();            
+        $this->_templates_base_route = $this->_base_route.'templates/'.$template_id.'.json';            
     }
 
     /**
@@ -71,9 +70,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      * )
      */
     function create($client_id, $template_details, $call_options = array()) {
-        $list_details = $this->_serialiser->format_item('Template', $template_details);
-
-        $call_options['route'] = $this->_base_route.'templates/'.$client_id.'.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'templates/'.$client_id.'.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($template_details);
 
@@ -98,8 +95,6 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      * )
      */
     function update($template_details, $call_options = array()) {
-        $list_details = $this->_serialiser->format_item('Template', $template_details);
-
         $call_options['route'] = $this->_templates_base_route;
         $call_options['method'] = CS_REST_PUT;
         $call_options['data'] = $this->_serialiser->serialise($template_details);

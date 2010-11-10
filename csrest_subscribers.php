@@ -76,14 +76,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * )
      */
     function add($subscriber, $call_options = array()) {
-        if(isset($subscriber['CustomFields']) && is_array($subscriber['CustomFields'])) {
-            $subscriber['CustomFields'] = $this->_serialiser->format_item('CustomField', $subscriber['CustomFields']);
-        }
-
-        $subscriber = $this->_serialiser->format_item('Subscriber', $subscriber);
-
-        $call_options['route'] = $this->_subscribers_base_route.'.'.
-        $this->_serialiser->get_format();
+        $call_options['route'] = $this->_subscribers_base_route.'.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($subscriber);
 
@@ -131,20 +124,12 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * determine which subscribers were subscribed and which subscribers failed.
      */
     function import($subscribers, $resubscribe, $call_options = array()) {
-        for ($i = 0; $i < count($subscribers); $i++) {
-            if(isset($subscribers[$i]['CustomFields']) && is_array($subscribers[$i]['CustomFields'])) {
-                $subscribers[$i]['CustomFields'] =
-                $this->_serialiser->format_item('CustomField', $subscribers[$i]['CustomFields']);
-            }
-        }
-
-        $subscribers = $this->_serialiser->format_item('Subscribers', array(
+        $subscribers = array(
 		    'Resubscribe' => $resubscribe,
 		    'Subscribers' => $subscribers
-        ));
+        );
 
-        $call_options['route'] = $this->_subscribers_base_route.'/import.'.
-        $this->_serialiser->get_format();
+        $call_options['route'] = $this->_subscribers_base_route.'/import.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($subscribers);
 
@@ -172,8 +157,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * )
      */
     function get($email, $call_options = array()) {
-        $call_options['route'] = $this->_subscribers_base_route.'.'.
-        $this->_serialiser->get_format().'?email='.urlencode($email);
+        $call_options['route'] = $this->_subscribers_base_route.'.json?email='.urlencode($email);
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -203,8 +187,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * )
      */
     function get_history($email, $call_options = array()) {
-        $call_options['route'] = $this->_subscribers_base_route.'/history.'.
-        $this->_serialiser->get_format().'?email='.urlencode($email);
+        $call_options['route'] = $this->_subscribers_base_route.'/history.json?email='.urlencode($email);
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -226,10 +209,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
 		    'EmailAddress' => $email 
         );
 
-        $email = $this->_serialiser->format_item('Subscriber', $email);
-
-        $call_options['route'] = $this->_subscribers_base_route.'/unsubscribe.'.
-        $this->_serialiser->get_format();
+        $call_options['route'] = $this->_subscribers_base_route.'/unsubscribe.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($email);
 

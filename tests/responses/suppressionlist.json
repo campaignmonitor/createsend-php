@@ -1,0 +1,36 @@
+{
+  "Results": [
+    {
+      "EmailAddress": "example+1@example.com",
+      "Date": "2010-10-26 10:55:31",
+      "State": "Suppressed"
+    },
+    {
+      "EmailAddress": "example+2@example.com",
+      "Date": "2010-10-26 10:55:31",
+      "State": "Suppressed"
+    },
+    {
+      "EmailAddress": "example+3@example.com",
+      "Date": "2010-10-26 10:55:31",
+      "State": "Suppressed"
+    },
+    {
+      "EmailAddress": "subscriber@example.com",
+      "Date": "2010-10-25 13:11:04",
+      "State": "Suppressed"
+    },
+    {
+      "EmailAddress": "subscriberone@example.com",
+      "Date": "2010-10-25 13:04:15",
+      "State": "Suppressed"
+    }
+  ],
+  "ResultsOrderedBy": "email",
+  "OrderDirection": "asc",
+  "PageNumber": 1,
+  "PageSize": 1000,
+  "RecordsOnThisPage": 5,
+  "TotalNumberOfRecords": 5,
+  "NumberOfPages": 1
+}

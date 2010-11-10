@@ -6,11 +6,11 @@ $wrap = new CS_REST_Subscribers('Your list ID', 'Your API Key');
 $result = $wrap->get('Email address');
 
 echo "Result of GET /api/v3/subscribers/{list id}.{format}?email={email}\n<br />";
-if($wrap->was_successful($result)) {
+if($result->was_successful()) {
     echo "Got subscriber <pre>";
-    print_r($result['response']);
+    var_dump($result->response);
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
-    print_r($result['response']);
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
+    var_dump($result->response);
 }
 echo '</pre>';

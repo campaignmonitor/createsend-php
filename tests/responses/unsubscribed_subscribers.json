@@ -1,0 +1,51 @@
+{
+  "Results": [
+    {
+      "EmailAddress": "subscriber@example.com",
+      "Name": "Unsub One",
+      "Date": "2010-10-25 13:11:00",
+      "State": "Unsubscribed",
+      "CustomFields": []
+    },
+    {
+      "EmailAddress": "subscriberone@example.com",
+      "Name": "Subscriber",
+      "Date": "2010-10-25 13:04:00",
+      "State": "Unsubscribed",
+      "CustomFields": [
+        {
+          "Key": "website",
+          "Value": "http://google.com"
+        }
+      ]
+    },
+    {
+      "EmailAddress": "example+1@example.com",
+      "Name": "Example One",
+      "Date": "2010-10-26 10:56:00",
+      "State": "Unsubscribed",
+      "CustomFields": []
+    },
+    {
+      "EmailAddress": "example+2@example.com",
+      "Name": "Example Two",
+      "Date": "2010-10-26 10:56:00",
+      "State": "Unsubscribed",
+      "CustomFields": []
+    },
+    {
+      "EmailAddress": "example+3@example.com",
+      "Name": "Example Three",
+      "Date": "2010-10-26 10:56:00",
+      "State": "Unsubscribed",
+      "CustomFields": []
+    }
+  ],
+  "ResultsOrderedBy": "email",
+  "OrderDirection": "asc",
+  "PageNumber": 1,
+  "PageSize": 1000,
+  "RecordsOnThisPage": 5,
+  "TotalNumberOfRecords": 5,
+  "NumberOfPages": 1
+}

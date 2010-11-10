@@ -62,7 +62,7 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      * )
      */
     function delete($call_options = array()) {
-        $call_options['route'] = trim($this->_segments_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['route'] = trim($this->_segments_base_route, '/').'.json';
         $call_options['method'] = CS_REST_DELETE;
         
         return $this->_call($call_options);
@@ -107,8 +107,7 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
     function get_subscribers($subscribed_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_segments_base_route.'active.'.$this->_serialiser->get_format().
-            '?date='.urlencode($subscribed_since);
+        $route = $this->_segments_base_route.'active.json?date='.urlencode($subscribed_since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
             $page_size, $order_field, $order_direction);

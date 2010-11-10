@@ -7,7 +7,7 @@ require_once '../class/log.php';
 require_once '../csrest_subscribers.php';
 
 @Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_JsonSerialiser');
+@Mock::generate('CS_REST_NativeJsonSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_TestSubscribers extends CS_REST_TestBase {
@@ -23,26 +23,13 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
     function testadd() {
         $raw_result = '';
 
-        $call_options = $this->get_call_options(
-        $this->list_base_route.'.'.$this->format, 'POST');
+        $call_options = $this->get_call_options($this->list_base_route.'.json', 'POST');
 
         $subscriber = array (
             'Email' => 'test@test.com',
             'Name' => 'Widget Man!',
             'CustomFields' => array(array(1,2), array(3,4))
         );
-
-        $this->mock_serialiser->setReturnValueAt(0, 'format_item', $subscriber['CustomFields']);
-        $this->mock_serialiser->setReturnValueAt(1, 'format_item', $subscriber);
-
-        $this->mock_serialiser->expectAt(0, 'format_item', array(
-        new IdenticalExpectation('CustomField'),
-        new IdenticalExpectation($subscriber['CustomFields'])
-        ));
-        $this->mock_serialiser->expectAt(1, 'format_item', array(
-        new IdenticalExpectation('Subscriber'),
-        new IdenticalExpectation($subscriber)
-        ));
 
         $this->general_test_with_argument('add', $subscriber, $call_options,
         $raw_result, $raw_result, 'subscriber was serialised to this');
@@ -53,43 +40,25 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $response_code = 200;
         $resubscribe = true;
 
-        $call_options = $this->get_call_options(
-        $this->list_base_route.'/import.'.$this->format, 'POST');
+        $call_options = $this->get_call_options($this->list_base_route.'/import.json', 'POST');
 
         $subscribers = array(
-        array (
-	            'Email' => 'test@test.com',
-	            'Name' => 'Widget Man!',
-	            'CustomFields' => array(array(1,2), array(3,4))
-        ),
-        array (
-                'Email' => 'test@test.com',
-                'Name' => 'Widget Man!',
-                'CustomFields' => array(array(1,2), array(3,4))
-        )
+            array (
+    	            'Email' => 'test@test.com',
+    	            'Name' => 'Widget Man!',
+    	            'CustomFields' => array(array(1,2), array(3,4))
+            ),
+            array (
+                    'Email' => 'test@test.com',
+                    'Name' => 'Widget Man!',
+                    'CustomFields' => array(array(1,2), array(3,4))
+            )
         );
 
         $data = array(
                 'Resubscribe' => $resubscribe,
                 'Subscribers' => $subscribers 
         );
-
-        $this->mock_serialiser->setReturnValueAt(0, 'format_item', $subscribers[0]['CustomFields']);
-        $this->mock_serialiser->setReturnValueAt(1, 'format_item', $subscribers[1]['CustomFields']);
-        $this->mock_serialiser->setReturnValueAt(2, 'format_item', $data);
-
-        $this->mock_serialiser->expectAt(0, 'format_item', array(
-        new IdenticalExpectation('CustomField'),
-        new IdenticalExpectation($subscribers[0]['CustomFields'])
-        ));
-        $this->mock_serialiser->expectAt(1, 'format_item', array(
-        new IdenticalExpectation('CustomField'),
-        new IdenticalExpectation($subscribers[1]['CustomFields'])
-        ));
-        $this->mock_serialiser->expectAt(2, 'format_item', array(
-        new IdenticalExpectation('Subscribers'),
-        new IdenticalExpectation($data)
-        ));
 
         $expected_result = array (
             'code' => $response_code, 
@@ -98,8 +67,8 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
 
         $call_options['data'] = 'subscribers were serialised to this';
         $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $raw_result, $raw_result,
-            'subscribers were serialised to this', $data, $response_code);
+            $raw_result, $raw_result, 'subscribers were serialised to this', 
+            $data, $response_code);
 
         $result = $this->wrapper->import($subscribers, $resubscribe);
 
@@ -114,7 +83,7 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $email = 'test@test.com';
 
         $call_options = $this->get_call_options(
-        $this->list_base_route.'.'.$this->format.'?email='.urlencode($email), 'GET');
+            $this->list_base_route.'.json?email='.urlencode($email), 'GET');
 
         $expected_result = array (
             'code' => $response_code, 
@@ -122,7 +91,7 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         );
 
         $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get($email);
 
@@ -137,7 +106,7 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $email = 'test@test.com';
 
         $call_options = $this->get_call_options(
-        $this->list_base_route.'/history.'.$this->format.'?email='.urlencode($email), 'GET');
+            $this->list_base_route.'/history.json?email='.urlencode($email), 'GET');
 
         $expected_result = array (
             'code' => $response_code, 
@@ -158,16 +127,9 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $response_code = 200;
         $email = 'test@test.com';
 
-        $call_options = $this->get_call_options(
-        $this->list_base_route.'/unsubscribe.'.$this->format, 'POST');
+        $call_options = $this->get_call_options($this->list_base_route.'/unsubscribe.json', 'POST');
          
         $subscriber = array('EmailAddress' => $email);
-        $this->mock_serialiser->setReturnValue('format_item', $subscriber);
-        $this->mock_serialiser->expectOnce('format_item', array(
-        new IdenticalExpectation('Subscriber'),
-        new IdenticalExpectation($subscriber)
-        )
-        );
 
         $expected_result = array (
             'code' => $response_code, 

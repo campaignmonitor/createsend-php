@@ -1,0 +1,15 @@
+{
+  "Lists": [
+    {
+      "ListID": "a58ee1d3039b8bec838e6d1482a8a965",
+      "Name": "List One"
+    }
+  ],
+  "Segments": [
+    {
+      "ListID": "2bea949d0bf96148c3e6a209d2e82060",
+      "SegmentID": "dba84a225d5ce3d19105d7257baac46f",
+      "Title": "Segment for campaign"
+    }
+  ]
+}

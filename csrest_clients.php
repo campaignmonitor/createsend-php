@@ -79,7 +79,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function get_campaigns($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'campaigns.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'campaigns.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -102,7 +102,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function get_drafts($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'drafts.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'drafts.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -123,7 +123,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function get_lists($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'lists.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'lists.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -145,7 +145,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function get_segments($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'segments.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'segments.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -182,7 +182,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
         
-        $route = $this->_clients_base_route.'suppressionlist.'.$this->_serialiser->get_format();
+        $route = $this->_clients_base_route.'suppressionlist.json';
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
             $order_field, $order_direction, '?');
@@ -208,7 +208,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function get_templates($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'templates.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'templates.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -269,7 +269,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function get($call_options = array()) {
-        $call_options['route'] = trim($this->_clients_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['route'] = trim($this->_clients_base_route, '/').'.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -285,7 +285,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function delete($call_options = array()) {
-        $call_options['route'] = trim($this->_clients_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['route'] = trim($this->_clients_base_route, '/').'.json';
         $call_options['method'] = CS_REST_DELETE;
 
         return $this->_call($call_options);
@@ -310,9 +310,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function create($client, $call_options = array()) {
-        $client = $this->_serialiser->format_item('Client', $client);
-
-        $call_options['route'] = $this->_base_route.'clients.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'clients.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($client);
 
@@ -338,7 +336,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function set_basics($client_basics, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setbasics.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'setbasics.json';
         $call_options['method'] = CS_REST_PUT;
         $call_options['data'] = $this->_serialiser->serialise($client_basics);
 
@@ -373,7 +371,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function set_access($client_access, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setaccess.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'setaccess.json';
         $call_options['method'] = CS_REST_PUT;
         $call_options['data'] = $this->_serialiser->serialise($client_access);
 
@@ -403,7 +401,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function set_payg_billing($client_billing, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setpaygbilling.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'setpaygbilling.json';
         $call_options['method'] = CS_REST_PUT;
         $call_options['data'] = $this->_serialiser->serialise($client_billing);
 
@@ -428,7 +426,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function set_monthly_billing($client_billing, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setmonthlybilling.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_clients_base_route.'setmonthlybilling.json';
         $call_options['method'] = CS_REST_PUT;
         $call_options['data'] = $this->_serialiser->serialise($client_billing);
 

@@ -7,11 +7,11 @@ $wrap = new CS_REST_Wrapper_Base('Your API Key');
 $result = $wrap->get_countries();
 
 echo "Result of /api/v3/countries\n<br />";
-if($wrap->was_successful($result)) {
+if($result->was_successful()) {
     echo "Got countries\n<br /><pre>";
-    print_r($result['response']);
+    var_dump($result->response);
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
-    print_r($result['response']);
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
+    var_dump($result->response);
 }
 echo '</pre>';

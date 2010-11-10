@@ -7,7 +7,7 @@ require_once '../class/log.php';
 require_once '../csrest.php';
 
 @Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_JsonSerialiser');
+@Mock::generate('CS_REST_NativeJsonSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_TestBase extends UnitTestCase {
@@ -17,8 +17,7 @@ class CS_REST_TestBase extends UnitTestCase {
 
     var $wrapper;
 
-    var $format = 'mockjson';
-    var $content_type = 'mock/json';
+    var $serialisation_type = 'mockjson';
     var $transport_type = 'mock_cURL';
     var $api_key = 'not a real api key';
     var $protocol = 'hotpotatoes';
@@ -29,13 +28,11 @@ class CS_REST_TestBase extends UnitTestCase {
 
     function setUp() {
         $this->mock_log = &new MockCS_REST_Log();
-        $this->mock_serialiser = &new MockCS_REST_JsonSerialiser();
+        $this->mock_serialiser = &new MockCS_REST_NativeJsonSerialiser();
         $this->mock_transport = &new MockCS_REST_CurlTransport();
 
         $this->mock_transport->setReturnValue('get_type', $this->transport_type);
-
-        $this->mock_serialiser->setReturnValue('get_format', $this->format);
-        $this->mock_serialiser->setReturnValue('get_content_type', $this->content_type);
+        $this->mock_serialiser->setReturnValue('get_type', $this->serialisation_type);
 
         $this->base_route = $this->protocol.'://'.$this->api_host.'/api/v3/';
 
@@ -51,8 +48,8 @@ class CS_REST_TestBase extends UnitTestCase {
         return array (
 		    'credentials' => $this->api_key.':nopass',
 		    'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
-		        ' PHPv'.phpversion().' over '.$this->transport_type,
-		    'contentType' => $this->mock_serialiser->get_content_type().'; charset=utf-8',
+		        ' PHPv'.phpversion().' over '.$this->transport_type.' with '.$this->serialisation_type,
+		    'contentType' => 'application/json; charset=utf-8',
 			'deserialise' => true,
 			'host' => $this->api_host,
 		    'route' => $route,
@@ -61,8 +58,7 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     function setup_transport_and_serialisation($make_call_result, $call_options,
-    $deserialise_result, $deserialise_input,
-    $serialise_result = NULL, $serialise_input = NULL) {
+        $deserialise_result, $deserialise_input, $serialise_result = NULL, $serialise_input = NULL) {
         	
         $this->mock_transport->setReturnValue('make_call', $make_call_result);
         $this->mock_transport->expectOnce('make_call', array(new IdenticalExpectation($call_options)));
@@ -115,19 +111,43 @@ class CS_REST_TestBase extends UnitTestCase {
 }
 
 class CS_REST_TestWrapperBase extends CS_REST_TestBase {
+    function test_add_paging_to_route() {
+        $this->assertIdentical('route', $this->wrapper->_add_paging_to_route('route', NULL, NULL, NULL, NULL));
+        $this->assertIdentical('route?qs&page=1', 
+            $this->wrapper->_add_paging_to_route('route?qs', 1, NULL, NULL, NULL));
+        $this->assertIdentical('route?qs&pageSize=20', 
+            $this->wrapper->_add_paging_to_route('route?qs', NULL, 20, NULL, NULL));
+        $this->assertIdentical('route?qs&orderField=email', 
+            $this->wrapper->_add_paging_to_route('route?qs', NULL, NULL, 'email', NULL));
+        $this->assertIdentical('route?qs&orderDirection=desc', 
+            $this->wrapper->_add_paging_to_route('route?qs', NULL, NULL, NULL, 'desc'));
+        $this->assertIdentical('route?qs&page=1&pageSize=20&orderField=email&orderDirection=desc', 
+            $this->wrapper->_add_paging_to_route('route?qs', 1, 20, 'email', 'desc'));
+            
+        $this->assertIdentical('route', $this->wrapper->_add_paging_to_route('route', NULL, NULL, NULL, NULL, '?'));
+        $this->assertIdentical('route?page=1', 
+            $this->wrapper->_add_paging_to_route('route', 1, NULL, NULL, NULL, '?'));
+        $this->assertIdentical('route?pageSize=20', 
+            $this->wrapper->_add_paging_to_route('route', NULL, 20, NULL, NULL, '?'));
+        $this->assertIdentical('route?orderField=email', 
+            $this->wrapper->_add_paging_to_route('route', NULL, NULL, 'email', NULL, '?'));
+        $this->assertIdentical('route?orderDirection=desc', 
+            $this->wrapper->_add_paging_to_route('route', NULL, NULL, NULL, 'desc', '?'));
+        $this->assertIdentical('route?page=1&pageSize=20&orderField=email&orderDirection=desc', 
+            $this->wrapper->_add_paging_to_route('route', 1, 20, 'email', 'desc', '?'));
+    }
+    
     function testget_timezones() {
         $raw_result = 'some timezones';
         $deserialised = array('timezone1', 'timezone2');
-        $call_options = $this->get_call_options(
-        $this->base_route.'timezones.'.$this->format);
+        $call_options = $this->get_call_options($this->base_route.'timezones.json');
 
         $this->general_test('get_timezones', $call_options, $raw_result, $deserialised);
     }
 
     function testget_systemdate() {
         $raw_result = 'system date';
-        $call_options = $this->get_call_options(
-        $this->base_route.'systemdate.'.$this->format);
+        $call_options = $this->get_call_options($this->base_route.'systemdate.json');
 
         $this->general_test('get_systemdate', $call_options, $raw_result, $raw_result);
     }
@@ -135,8 +155,7 @@ class CS_REST_TestWrapperBase extends CS_REST_TestBase {
     function testget_countries() {
         $raw_result = 'some countries';
         $deserialised = array('Australia', 'Suid Afrika');
-        $call_options = $this->get_call_options(
-        $this->base_route.'countries.'.$this->format);
+        $call_options = $this->get_call_options($this->base_route.'countries.json');
 
         $this->general_test('get_countries', $call_options, $raw_result, $deserialised);
     }
@@ -147,8 +166,7 @@ class CS_REST_TestWrapperBase extends CS_REST_TestBase {
         $password = 'password';
         $site_url = 'unit.test.createsend.com';
 
-        $call_options = $this->get_call_options(
-        $this->base_route.'apikey.'.$this->format.'?siteurl='.$site_url);
+        $call_options = $this->get_call_options($this->base_route.'apikey.json?siteurl='.$site_url);
         $call_options['credentials'] = $username.':'.$password;
 
         $expected_result = array (
@@ -166,8 +184,7 @@ class CS_REST_TestWrapperBase extends CS_REST_TestBase {
     function testget_clients() {
         $raw_result = 'some clients';
         $deserialised = array('Curran & Hughes', 'Repsol');
-        $call_options = $this->get_call_options(
-        $this->base_route.'clients.'.$this->format);
+        $call_options = $this->get_call_options($this->base_route.'clients.json');
 
         $this->general_test('get_clients', $call_options, $raw_result, $deserialised);
     }

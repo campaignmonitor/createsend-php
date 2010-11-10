@@ -6,10 +6,10 @@ $wrap = new CS_REST_Subscribers('Your list ID', 'Your API Key');
 $result = $wrap->unsubscribe('Email address');
 
 echo "Result of GET /api/v3/subscribers/{list id}/unsubscribe.{format}\n<br />";
-if($wrap->was_successful($result)) {
-    echo "Unsubscribed with code ".$result['code'];
+if($result->was_successful()) {
+    echo "Unsubscribed with code ".$result->http_status_code;
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
-    print_r($result['response']);
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
+    var_dump($result->response);
     echo '</pre>';
 }

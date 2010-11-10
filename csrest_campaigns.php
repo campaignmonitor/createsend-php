@@ -77,17 +77,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * )
      */
     function create($client_id, $campaign_info, $call_options = array()) {
-        if(isset($campaign_info['ListIDs']) && is_array($campaign_info['ListIDs'])) {
-            $campaign_info['ListIDs'] = $this->_serialiser->format_item('ListID', $campaign_info['ListIDs']);
-        }
-
-        if(isset($campaign_info['SegmentIDs']) && is_array($campaign_info['SegmentIDs'])) {
-            $campaign_info['SegmentIDs'] = $this->_serialiser->format_item('SegmentID', $campaign_info['SegmentIDs']);
-        }
-
-        $campaign_info = $this->_serialiser->format_item('Campaign', $campaign_info);
-
-        $call_options['route'] = $this->_base_route.'campaigns/'.$client_id.'.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'campaigns/'.$client_id.'.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($campaign_info);
 
@@ -107,15 +97,8 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'response' => string The HTTP response (It will be empty)
      * )
      */
-    function send_preview($recipients, $personalize = 'Random', $call_options = array()) {
-        $recipients = $this->_serialiser->format_item('Recipient', $recipients);
-        
-        $test_data = $this->_serialiser->format_item('PreviewInfo', array(
-            'PreviewRecipients' => $recipients,
-            'Personalize' => $personalize
-        ));
-        
-        $call_options['route'] = $this->_campaigns_base_route.'sendpreview.'.$this->_serialiser->get_format();
+    function send_preview($recipients, $personalize = 'Random', $call_options = array()) {        
+        $call_options['route'] = $this->_campaigns_base_route.'sendpreview.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($test_data);
         
@@ -139,9 +122,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * )
      */
     function send($schedule, $call_options = array()) {
-        $schedule = $this->_serialiser->format_item('Scheduling', $schedule);
-
-        $call_options['route'] = $this->_campaigns_base_route.'send.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_campaigns_base_route.'send.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($schedule);
 
@@ -158,7 +139,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * )
      */
     function delete($call_options = array()) {
-        $call_options['route'] = trim($this->_campaigns_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['route'] = trim($this->_campaigns_base_route, '/').'.json';
         $call_options['method'] = CS_REST_DELETE;
 
         return $this->_call($call_options);
@@ -194,7 +175,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     function get_recipients($page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_campaigns_base_route.'recipients.'.$this->_serialiser->get_format();
+        $route = $this->_campaigns_base_route.'recipients.json';
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
             $order_field, $order_direction, '?');
@@ -236,7 +217,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     function get_bounces($page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_campaigns_base_route.'bounces.'.$this->_serialiser->get_format();
+        $route = $this->_campaigns_base_route.'bounces.json';
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
             $order_field, $order_direction, '?');
@@ -265,7 +246,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * )
      */
     function get_lists_and_segments($call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'listsandsegments.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_campaigns_base_route.'listsandsegments.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -289,7 +270,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * )
      */
     function get_summary($call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'summary.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_campaigns_base_route.'summary.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -328,8 +309,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     function get_opens($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_campaigns_base_route.'opens.'.
-            $this->_serialiser->get_format().'?date='.urlencode($since);
+        $route = $this->_campaigns_base_route.'opens.json?date='.urlencode($since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
             $order_field, $order_direction);
@@ -372,8 +352,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     function get_clicks($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_campaigns_base_route.'clicks.'.
-            $this->_serialiser->get_format().'?date='.urlencode($since);
+        $route = $this->_campaigns_base_route.'clicks.json?date='.urlencode($since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
             $order_field, $order_direction);
@@ -415,8 +394,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     function get_unsubscribes($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
         
-        $route = $this->_campaigns_base_route.'unsubscribes.'.
-            $this->_serialiser->get_format().'?date='.urlencode($since);
+        $route = $this->_campaigns_base_route.'unsubscribes.json?date='.urlencode($since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
             $order_field, $order_direction);

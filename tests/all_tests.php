@@ -6,7 +6,7 @@ class AllTests extends TestSuite {
     function AllTests() {
         $this->TestSuite('All Tests');
         $this->addFile('class_tests/transport_test.php');
-        $this->addFile('class_tests/serialisation_test.php');
+        $this->addFile('class_tests/response_tests.php');
         $this->addFile('csrest_test.php');
         $this->addFile('csrest_clients_test.php');
         $this->addFile('csrest_campaigns_test.php');

@@ -1,0 +1,18 @@
+{
+  "Results": [
+    {
+      "EmailAddress": "bouncedsubscriber@example.com",
+      "Name": "Bounced One",
+      "Date": "2010-10-25 13:11:00",
+      "State": "Bounced",
+      "CustomFields": []
+    }
+  ],
+  "ResultsOrderedBy": "email",
+  "OrderDirection": "asc",
+  "PageNumber": 1,
+  "PageSize": 1000,
+  "RecordsOnThisPage": 1,
+  "TotalNumberOfRecords": 1,
+  "NumberOfPages": 1
+}

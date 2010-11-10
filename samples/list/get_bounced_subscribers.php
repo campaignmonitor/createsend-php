@@ -8,11 +8,11 @@ $result = $wrap->get_bounced_subscribers('Bounced since');
 //$result = $wrap->get_bounced_subscribers(date('Y-m-d', strtotime('-30 days')));
 
 echo "Result of GET /api/v3/lists/{ID}/bounced\n<br />";
-if($wrap->was_successful($result)) {
+if($result->was_successful()) {
     echo "Got subscribers\n<br /><pre>";
-    print_r($result['response']);
+    var_dump($result->response);
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
-    print_r($result['response']);
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
+    var_dump($result->response);
 }
 echo '</pre>';

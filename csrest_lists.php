@@ -81,9 +81,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function create($client_id, $list_details, $call_options = array()) {
-        $list_details = $this->_serialiser->format_item('List', $list_details);
-
-        $call_options['route'] = $this->_base_route.'lists/'.$client_id.'.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'lists/'.$client_id.'.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($list_details);
 
@@ -111,9 +109,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function update($list_details, $call_options = array()) {
-        $list_details = $this->_serialiser->format_item('List', $list_details);
-
-        $call_options['route'] = trim($this->_lists_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['route'] = trim($this->_lists_base_route, '/').'.json';
         $call_options['method'] = CS_REST_PUT;
         $call_options['data'] = $this->_serialiser->serialise($list_details);
 
@@ -145,14 +141,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function create_custom_field($custom_field_details, $call_options = array()) {
-        if(isset($custom_field_details['Options']) && is_array($custom_field_details['Options'])) {
-            $custom_field_details['Options'] =
-            $this->_serialiser->format_item('Option', $custom_field_details['Options']);
-        }
-
-        $custom_field_details = $this->_serialiser->format_item('CustomField', $custom_field_details);
-
-        $call_options['route'] = $this->_lists_base_route.'customfields.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_lists_base_route.'customfields.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($custom_field_details);
 
@@ -169,7 +158,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function delete($call_options = array()) {
-        $call_options['route'] = trim($this->_lists_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['route'] = trim($this->_lists_base_route, '/').'.json';
         $call_options['method'] = CS_REST_DELETE;
 
         return $this->_call($call_options);
@@ -185,7 +174,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function delete_custom_field($key, $call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'customfields/'.rawurlencode($key).'.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_lists_base_route.'customfields/'.rawurlencode($key).'.json';
         $call_options['method'] = CS_REST_DELETE;
 
         return $this->_call($call_options);
@@ -208,7 +197,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function get_custom_fields($call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'customfields.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_lists_base_route.'customfields.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -230,7 +219,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function get_segments($call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'segments.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_lists_base_route.'segments.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -275,8 +264,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function get_active_subscribers($added_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_lists_base_route.'active.'.
-            $this->_serialiser->get_format().'?date='.urlencode($added_since);
+        $route = $this->_lists_base_route.'active.json?date='.urlencode($added_since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
             $page_size, $order_field, $order_direction);
@@ -324,8 +312,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function get_bounced_subscribers($bounced_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_lists_base_route.'bounced.'.
-            $this->_serialiser->get_format().'?date='.urlencode($bounced_since);
+        $route = $this->_lists_base_route.'bounced.json?date='.urlencode($bounced_since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
             $page_size, $order_field, $order_direction);
@@ -373,8 +360,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function get_unsubscribed_subscribers($unsubscribed_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_lists_base_route.'unsubscribed.'.
-            $this->_serialiser->get_format().'?date='.urlencode($unsubscribed_since);
+        $route = $this->_lists_base_route.'unsubscribed.json?date='.urlencode($unsubscribed_since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
             $page_size, $order_field, $order_direction);            
@@ -400,7 +386,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function get($call_options = array()) {
-        $call_options['route'] = trim($this->_lists_base_route, '/').'.'.$this->_serialiser->get_format();
+        $call_options['route'] = trim($this->_lists_base_route, '/').'.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);
@@ -441,7 +427,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * )
      */
     function get_stats($call_options = array()) {
-        $call_options['route'] = $this->_lists_base_route.'stats.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_lists_base_route.'stats.json';
         $call_options['method'] = CS_REST_GET;
 
         return $this->_call($call_options);

@@ -7,7 +7,7 @@ require_once '../class/log.php';
 require_once '../csrest_segments.php';
 
 @Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_JsonSerialiser');
+@Mock::generate('CS_REST_NativeJsonSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_TestSegments extends CS_REST_TestBase {
@@ -26,8 +26,7 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
         $segment_id = 'abc123';
         $response_code = 200;
         $deserialised = array('Subscriber 1', 'Subscriber 2');
-        $call_options = $this->get_call_options(
-        $this->segment_base_route.'active.'.$this->format.'?date='.$since);
+        $call_options = $this->get_call_options($this->segment_base_route.'active.json?date='.$since);
 
         $expected_result = array (
             'code' => $response_code, 

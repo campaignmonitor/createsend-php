@@ -1,0 +1,25 @@
+{
+  "Results": [
+    {
+      "EmailAddress": "personone@example.com",
+      "Name": "Person One",
+      "Date": "2010-10-27 13:13:00",
+      "State": "Active",
+      "CustomFields": []
+    },
+    {
+      "EmailAddress": "persontwo@example.com",
+      "Name": "Person Two",
+      "Date": "2010-10-27 13:13:00",
+      "State": "Active",
+      "CustomFields": []
+    }
+  ],
+  "ResultsOrderedBy": "email",
+  "OrderDirection": "asc",
+  "PageNumber": 1,
+  "PageSize": 1000,
+  "RecordsOnThisPage": 2,
+  "TotalNumberOfRecords": 2,
+  "NumberOfPages": 1
+}

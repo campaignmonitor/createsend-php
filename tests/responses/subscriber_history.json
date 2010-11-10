@@ -1,0 +1,45 @@
+[
+  {
+    "ID": "fc0ce7105baeaf97f47c99be31d02a91",
+    "Type": "Campaign",
+    "Name": "Campaign One",
+    "Actions": [
+      {
+        "Event": "Open",
+        "Date": "2010-10-12 13:18:00",
+        "IPAddress": "192.168.126.87",
+        "Detail": ""
+      },
+      {
+        "Event": "Click",
+        "Date": "2010-10-12 13:16:00",
+        "IPAddress": "192.168.126.87",
+        "Detail": "http://example.com/post/12323/"
+      },
+      {
+        "Event": "Click",
+        "Date": "2010-10-12 13:15:00",
+        "IPAddress": "192.168.126.87",
+        "Detail": "http://example.com/post/29889/"
+      },
+      {
+        "Event": "Open",
+        "Date": "2010-10-12 13:15:00",
+        "IPAddress": "192.168.126.87",
+        "Detail": ""
+      },
+      {
+        "Event": "Click",
+        "Date": "2010-10-12 13:01:00",
+        "IPAddress": "192.168.126.87",
+        "Detail": "http://example.com/post/82211/"
+      },
+      {
+        "Event": "Open",
+        "Date": "2010-10-12 13:01:00",
+        "IPAddress": "192.168.126.87",
+        "Detail": ""
+      }
+    ]
+  }
+]

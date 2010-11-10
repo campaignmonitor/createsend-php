@@ -12,10 +12,10 @@ $result = $wrap->update(array(
 ));
 
 echo "Result of PUT /api/v3/lists/{ID}\n<br />";
-if($wrap->was_successful($result)) {
-    echo "Updated with code\n<br />".$result['code'];
+if($result->was_successful()) {
+    echo "Updated with code\n<br />".$result->http_status_code;
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
-    print_r($result['response']);
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
+    var_dump($result->response);
     echo '</pre>';
 }

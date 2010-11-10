@@ -13,10 +13,10 @@ $result = $wrap->create(array(
 ));
 
 echo "Result of POST /api/v3/clients\n<br />";
-if($wrap->was_successful($result)) {
-    echo "Created with ID\n<br />".$result['response'];
+if($result->was_successful()) {
+    echo "Created with ID\n<br />".$result->response;
 } else {
-    echo 'Failed with code '.$result['code']."\n<br /><pre>";
-    print_r($result['response']);
+    echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
+    var_dump($result->response);
     echo '</pre>';
 }

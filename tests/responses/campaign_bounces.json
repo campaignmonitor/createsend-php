@@ -1,0 +1,25 @@
+{
+  "Results": [
+    {
+      "EmailAddress": "asdf@softbouncemyemail.com",
+      "ListID": "654523a5855b4a440bae3fb295641546",
+      "BounceType": "Soft",
+      "Date": "2010-07-02 16:46:00",
+      "Reason": "Bounce - But No Email Address Returned "
+    },
+    {
+      "EmailAddress": "asdf@hardbouncemyemail.com",
+      "ListID": "654523a5855b4a440bae3fb295641546",
+      "BounceType": "Soft",
+      "Date": "2010-07-02 16:46:00",
+      "Reason": "Soft Bounce - General"
+    }
+  ],
+  "ResultsOrderedBy": "date",
+  "OrderDirection": "asc",
+  "PageNumber": 1,
+  "PageSize": 1000,
+  "RecordsOnThisPage": 2,
+  "TotalNumberOfRecords": 2,
+  "NumberOfPages": 1
+}

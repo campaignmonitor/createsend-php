@@ -1,0 +1,20 @@
+[
+  {
+    "FieldName": "website",
+    "Key": "[website]",
+    "DataType": "Text",
+    "FieldOptions": []
+  },
+  {
+    "FieldName": "age",
+    "Key": "[age]",
+    "DataType": "Number",
+    "FieldOptions": []
+  },
+  {
+    "FieldName": "subscription date",
+    "Key": "[subscriptiondate]",
+    "DataType": "Date",
+    "FieldOptions": []
+  }
+]

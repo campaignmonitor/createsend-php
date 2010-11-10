@@ -1,0 +1,91 @@
+{
+  "Results": [
+    {
+      "EmailAddress": "subs+6g76t7t0@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t10@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t100@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1000@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1001@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1002@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1003@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1004@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1005@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1006@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1007@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1008@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1009@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t101@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1010@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1011@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1012@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1013@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    },
+    {
+      "EmailAddress": "subs+6g76t7t1014@example.com",
+      "ListID": "a994a3caf1328a16af9a69a730eaa706"
+    }
+  ],
+  "ResultsOrderedBy": "email",
+  "OrderDirection": "asc",
+  "PageNumber": 1,
+  "PageSize": 20,
+  "RecordsOnThisPage": 20,
+  "TotalNumberOfRecords": 2200,
+  "NumberOfPages": 110
+}

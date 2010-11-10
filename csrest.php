@@ -6,6 +6,34 @@ require_once 'class/log.php';
 
 define('CS_REST_WRAPPER_VERSION', '1.0.0');
 
+class CS_REST_Wrapper_Result {
+    /**
+     * The deserialised result of the API call
+     * @var mixed
+     */
+    var $response;
+    
+    /**
+     * The http status code of the API call
+     * @var int
+     */
+    var $http_status_code;
+    
+    function CS_REST_Wrapper_Result($response, $code) {
+        $this->response = $response;
+        $this->http_status_code = $code;
+    }
+
+    /**
+     * Can be used to check if a call to the api resulted in a successful response.
+     * @return boolean False if the call failed. Check the response property for the failure reason.
+     * @access public
+     */
+    function was_successful() {
+        return $this->http_status_code >= 200 && $this->http_status_code < 300;
+    }
+}
+
 /**
  * Base class for the create send PHP wrapper.
  * This class includes functions to access the general data,
@@ -103,16 +131,15 @@ class CS_REST_Wrapper_Base {
         $this->_log->log_message('Using '.$transport_type.' for transport', get_class($this), CS_REST_LOG_WARNING);
 
         $this->_serialiser = is_null($serialiser) ?
-        @CS_REST_SerialiserFactory::get_available_serialiser($this->_log) :
-        $serialiser;
+            @CS_REST_SerialiserFactory::get_available_serialiser($this->_log) : $serialiser;
         	
-        $this->_log->log_message('Using '.$this->_serialiser->get_format().' data format', get_class($this), CS_REST_LOG_WARNING);
+        $this->_log->log_message('Using '.$this->_serialiser->get_type().' data format', get_class($this), CS_REST_LOG_WARNING);
 
         $this->_default_call_options = array (
 		    'credentials' => $api_key.':nopass',
 		    'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
-		        ' PHPv'.phpversion().' over '.$transport_type,
-		    'contentType' => $this->_serialiser->get_content_type().'; charset=utf-8', 
+		        ' PHPv'.phpversion().' over '.$transport_type.' with '.$this->_serialiser->get_type(),
+		    'contentType' => 'application/json; charset=utf-8', 
 			'deserialise' => true,
 			'host' => $host
         );
@@ -129,7 +156,7 @@ class CS_REST_Wrapper_Base {
     function _add_paging_to_route($route, $page_number, $page_size, $order_field, $order_direction,
         $join_char = '&') {         
         if(!is_null($page_number)) {
-            $route .= $join_char.'pageNumber='.$page_number;
+            $route .= $join_char.'page='.$page_number;
             $join_char = '&';
         }
         
@@ -138,13 +165,13 @@ class CS_REST_Wrapper_Base {
             $join_char = '&';
         }
         
-        if(!is_null($order_direction)) {
-            $route .= $join_char.'orderDirection='.$order_direction;
+        if(!is_null($order_field)) {
+            $route .= $join_char.'orderField='.$order_field;
             $join_char = '&';
         }
         
-        if(!is_null($order_field)) {
-            $route .= $join_char.'orderField='.$order_field;
+        if(!is_null($order_direction)) {
+            $route .= $join_char.'orderDirection='.$order_direction;
             $join_char = '&';
         }
         
@@ -157,16 +184,6 @@ class CS_REST_Wrapper_Base {
      */
     function is_secure() {
         return $this->_protocol === 'https';
-    }
-
-    /**
-     * Can be used to check if a call to the api resulted in a successful response.
-     * @param $result The result of any of the wrapper methods
-     * @return boolean False if the call failed. Check the response property for the failure reason.
-     * @access public
-     */
-    function was_successful($result) {
-        return $result['code'] >= 200 && $result['code'] < 300;
     }
 
     /**
@@ -187,7 +204,7 @@ class CS_REST_Wrapper_Base {
             $call_result['response'] = $this->_serialiser->deserialise($call_result['response']);
         }
          
-        return $call_result;
+        return new CS_REST_Wrapper_Result($call_result['response'], $call_result['code']);
     }
 
     /**
@@ -200,7 +217,7 @@ class CS_REST_Wrapper_Base {
      * )
      */
     function get_timezones($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'timezones.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'timezones.json';
         $call_options['method'] = CS_REST_GET;
         	
         return $this->_call($call_options);
@@ -216,7 +233,7 @@ class CS_REST_Wrapper_Base {
      * )
      */
     function get_systemdate($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'systemdate.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'systemdate.json';
         $call_options['method'] = CS_REST_GET;
         	
         return $this->_call($call_options);
@@ -232,7 +249,7 @@ class CS_REST_Wrapper_Base {
      * )
      */
     function get_countries($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'countries.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'countries.json';
         $call_options['method'] = CS_REST_GET;
         	
         return $this->_call($call_options);
@@ -251,8 +268,7 @@ class CS_REST_Wrapper_Base {
      * )
      */
     function get_apikey($username, $password, $site_url, $call_options = array()) {
-        $call_options['route'] = $this->_base_route.'apikey.'.$this->_serialiser->get_format().
-		    '?siteurl='.$site_url;
+        $call_options['route'] = $this->_base_route.'apikey.json?siteurl='.$site_url;
         $call_options['method'] = CS_REST_GET;
 
         $call_options['credentials'] = $username.':'.$password;
@@ -275,7 +291,7 @@ class CS_REST_Wrapper_Base {
      * )
      */
     function get_clients($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'clients.'.$this->_serialiser->get_format();
+        $call_options['route'] = $this->_base_route.'clients.json';
         $call_options['method'] = CS_REST_GET;
         	
         return $this->_call($call_options);

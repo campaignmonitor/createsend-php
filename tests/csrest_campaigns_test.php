@@ -7,7 +7,7 @@ require_once '../class/log.php';
 require_once '../csrest_campaigns.php';
 
 @Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_JsonSerialiser');
+@Mock::generate('CS_REST_NativeJsonSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_TestCampaigns extends CS_REST_TestBase {
@@ -26,7 +26,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $response_code = 200;
 
         $call_options = $this->get_call_options(
-        $this->base_route.'campaigns/'.$client_id.'.'.$this->format, 'POST');
+            $this->base_route.'campaigns/'.$client_id.'.json', 'POST');
 
         $campaign_data = array (
             'Name' => 'ABC Widgets',
@@ -35,60 +35,35 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'SegmentIDs' => array(4,5,6)
         );
 
-        $this->mock_serialiser->setReturnValueAt(0, 'format_item', $campaign_data['ListIDs']);
-        $this->mock_serialiser->setReturnValueAt(1, 'format_item', $campaign_data['SegmentIDs']);
-        $this->mock_serialiser->setReturnValueAt(2, 'format_item', $campaign_data);
-
-        $this->mock_serialiser->expectAt(0, 'format_item', array(
-        new IdenticalExpectation('ListID'),
-        new IdenticalExpectation($campaign_data['ListIDs'])
-        ));
-
-        $this->mock_serialiser->expectAt(1, 'format_item', array(
-        new IdenticalExpectation('SegmentID'),
-        new IdenticalExpectation($campaign_data['SegmentIDs'])
-        ));
-
-        $this->mock_serialiser->expectAt(2, 'format_item', array(
-        new IdenticalExpectation('Campaign'),
-        new IdenticalExpectation($campaign_data)
-        ));
-
         $expected_result = array (
             'code' => $response_code, 
             'response' => 'the new campaign id'
-            );
+        );
 
-            $call_options['data'] = 'campaign data was serialised to this';
-            $this->setup_transport_and_serialisation($expected_result, $call_options,
-            $raw_result, $raw_result,
-            'campaign data was serialised to this', $campaign_data, $response_code);
+        $call_options['data'] = 'campaign data was serialised to this';
+        $this->setup_transport_and_serialisation($expected_result, $call_options,
+            $raw_result, $raw_result, 'campaign data was serialised to this', 
+            $campaign_data, $response_code);
 
-            $result = $this->wrapper->create($client_id, $campaign_data);
+        $result = $this->wrapper->create($client_id, $campaign_data);
 
-            $expected_result['response'] = $raw_result;
-            $this->assertIdentical($expected_result, $result);
+        $expected_result['response'] = $raw_result;
+        $this->assertIdentical($expected_result, $result);
     }
 
     function testsend() {
         $raw_result = '';
 
         $call_options = $this->get_call_options(
-        $this->campaign_base_route.'send.'.$this->format, 'POST');
+            $this->campaign_base_route.'send.json', 'POST');
 
         $schedule = array (
             'CompanyName' => 'ABC Widgets',
             'ContactName' => 'Widget Man!',
             'EmailAddress' => 'widgets@abc.net.au'
-            );
+        );
 
-            $this->mock_serialiser->setReturnValue('format_item', $schedule);
-            $this->mock_serialiser->expectOnce('format_item', array(
-            new IdenticalExpectation('Scheduling'),
-            new IdenticalExpectation($schedule)
-            ));
-
-            $this->general_test_with_argument('send', $schedule, $call_options,
+        $this->general_test_with_argument('send', $schedule, $call_options,
             $raw_result, $raw_result, 'scheduling was serialised to this');
     }
 
@@ -96,7 +71,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $raw_result = '';
 
         $call_options = $this->get_call_options(
-        trim($this->campaign_base_route, '/').'.'.$this->format, 'DELETE');
+            trim($this->campaign_base_route, '/').'.json', 'DELETE');
 
         $this->general_test('delete', $call_options, $raw_result, $raw_result);
     }
@@ -104,26 +79,25 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
     function testget_bounces() {
         $raw_result = 'some bounces';
         $deserialised = array('Bounce 1', 'Bounce 2');
-        $call_options = $this->get_call_options(
-        $this->campaign_base_route.'bounces.'.$this->format);
+        $call_options = $this->get_call_options($this->campaign_base_route.'bounces.json');
 
         $this->general_test('get_bounces', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_lists() {
+    function testget_lists_and_segments() {
         $raw_result = 'some lists';
         $deserialised = array('List 1', 'List 2');
         $call_options = $this->get_call_options(
-        $this->campaign_base_route.'lists.'.$this->format);
+            $this->campaign_base_route.'listsandsegments.json');
 
-        $this->general_test('get_lists', $call_options, $raw_result, $deserialised);
+        $this->general_test('get_lists_and_segments', $call_options, $raw_result, $deserialised);
     }
 
     function testget_summary() {
         $raw_result = 'campaign summary';
         $deserialised = array(1,2,3,4,5);
         $call_options = $this->get_call_options(
-        $this->campaign_base_route.'summary.'.$this->format);
+            $this->campaign_base_route.'summary.json');
 
         $this->general_test('get_summary', $call_options, $raw_result, $deserialised);
     }
@@ -134,7 +108,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $response_code = 200;
         $deserialised = array('Open 1', 'Open 2');
         $call_options = $this->get_call_options(
-        $this->campaign_base_route.'opens.'.$this->format.'?date='.$since);
+            $this->campaign_base_route.'opens.json?date='.$since);
 
         $expected_result = array (
             'code' => $response_code, 
@@ -142,7 +116,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         );
 
         $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_opens($since);
 
@@ -156,7 +130,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $response_code = 200;
         $deserialised = array('Click 1', 'Click 2');
         $call_options = $this->get_call_options(
-        $this->campaign_base_route.'clicks.'.$this->format.'?date='.$since);
+            $this->campaign_base_route.'clicks.json?date='.$since);
 
         $expected_result = array (
             'code' => $response_code, 
@@ -164,7 +138,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         );
 
         $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_clicks($since);
 
@@ -178,7 +152,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $response_code = 200;
         $deserialised = array('Unsubscribe 1', 'Unsubscribe 2');
         $call_options = $this->get_call_options(
-        $this->campaign_base_route.'unsubscribes.'.$this->format.'?date='.$since);
+            $this->campaign_base_route.'unsubscribes.json?date='.$since);
 
         $expected_result = array (
             'code' => $response_code, 
@@ -186,7 +160,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         );
 
         $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_unsubscribes($since);
 
