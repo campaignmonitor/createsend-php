@@ -56,10 +56,7 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      * Deletes an existing segment from the system
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete($call_options = array()) {
         $call_options['route'] = trim($this->_segments_base_route, '/').'.json';
@@ -77,32 +74,30 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP response code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber
-     *                 'Name' => The name of the subscriber
-     *                 'Date' => The date that the subscriber was added to the list
-     *                 'State' => The current state of the subscriber, will be 'Active'
-     *                 'CustomFields' => array (
-     *                     array(
-     *                         'Key' => The personalisation tag of the custom field
-     *                         'Value' => The value of the custom field for this subscriber
-     *                     )
-     *                 )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber
+     *             'Name' => The name of the subscriber
+     *             'Date' => The date that the subscriber was added to the list
+     *             'State' => The current state of the subscriber, will be 'Active'
+     *             'CustomFields' => array (
+     *                 {
+     *                     'Key' => The personalisation tag of the custom field
+     *                     'Value' => The value of the custom field for this subscriber
+     *                 }
      *             )
-     *         )
+     *         }
      *     )
-     * )
+     * }
      */
     function get_subscribers($subscribed_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
