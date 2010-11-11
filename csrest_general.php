@@ -91,7 +91,7 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
     }
 
     /**
-     * Gets an array of valid countries
+     * Gets an array of clients
      * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form

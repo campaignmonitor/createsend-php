@@ -141,6 +141,28 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     }
 
     /**
+     * Updates the optios for the given multi-optioned custom field
+     * @param string $key The personalisation tag of the field to update
+     * @param array<string> $new_options The set of options to add to the custom field
+     * @param boolean $keep_existing Whether to remove any existing options not contained in $new_options
+     * @param $call_options
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function update_field_options($key, $new_options, $keep_existing, $call_options = array()) {
+        $options = array(
+            'KeepExistingOptions' => $keep_existing,
+            'Options' => $new_options
+        );
+        
+        $call_options['route'] = $this->_lists_base_route.'customfields/'.rawurlencode($key).'/options.json';
+        $call_options['method'] = CS_REST_PUT;
+        $call_options['data'] = $this->_serialiser->serialise($options);
+        
+        return $this->_call($call_options);
+    }
+
+    /**
      * Deletes an existing list from the system
      * @param $call_options
      * @access public
