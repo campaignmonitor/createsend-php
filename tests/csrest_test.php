@@ -112,7 +112,7 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 }
 
-class CS_REST_TestWrapperBase extends CS_REST_TestBase {
+class CS_REST_TestGeneral extends CS_REST_TestBase {
     function test_add_paging_to_route() {
         $this->assertIdentical('route', $this->wrapper->_add_paging_to_route('route', NULL, NULL, NULL, NULL));
         $this->assertIdentical('route?qs&page=1', 

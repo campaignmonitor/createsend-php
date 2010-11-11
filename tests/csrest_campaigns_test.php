@@ -51,6 +51,40 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
+    function testsend_preview() {
+        $raw_result = '';
+        $response_code = 200;
+
+        $call_options = $this->get_call_options(
+            $this->campaign_base_route.'sendpreview.json', 'POST');
+
+        $recipients = array (
+            'test1@test.com',
+            'test1@test.com'
+        );
+        $personalise = 'Random';
+        
+        $preview_info = array(
+            'PreviewRecipients' => $recipients,
+            'Personalize' => $personalise
+        );
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $call_options['data'] = 'campaign data was serialised to this';
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, 'campaign data was serialised to this', 
+            $preview_info);
+
+        $result = $this->wrapper->send_preview($recipients, $personalise);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
     function testsend() {
         $raw_result = '';
 
@@ -74,6 +108,14 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
             trim($this->campaign_base_route, '/').'.json', 'DELETE');
 
         $this->general_test('delete', $call_options, $raw_result, $raw_result);
+    }
+
+    function testget_recipients() {
+        $raw_result = 'some recipients';
+        $deserialised = array('Recipient 1', 'Recipient 2');
+        $call_options = $this->get_call_options($this->campaign_base_route.'recipients.json');
+
+        $this->general_test('get_recipients', $call_options, $raw_result, $deserialised);
     }
 
     function testget_bounces() {

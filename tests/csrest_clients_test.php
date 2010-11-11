@@ -99,4 +99,64 @@ class CS_REST_TestClients extends CS_REST_TestBase {
 	    $this->general_test_with_argument('create', $client_data, $call_options,
 	        $raw_result, $raw_result, 'client data was serialised to this');
     }
+
+    function testset_basics() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->client_base_route.'setbasics.json', 'PUT');
+         
+        $client_data = array (
+            'CompanyName' => 'ABC Widgets',
+            'ContactName' => 'Widget Man!',
+            'EmailAddress' => 'widgets@abc.net.au'
+        );
+
+        $this->general_test_with_argument('set_basics', $client_data, $call_options,
+            $raw_result, $raw_result, 'client data was serialised to this');
+    }
+
+    function testset_access() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->client_base_route.'setaccess.json', 'PUT');
+         
+        $client_data = array (
+            'Username' => 'ABCWidgets',
+            'Password' => 'Widget Man!',
+            'AccessLevel' => 4
+        );
+
+        $this->general_test_with_argument('set_access', $client_data, $call_options,
+            $raw_result, $raw_result, 'client data was serialised to this');
+    }
+
+    function testset_payg() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->client_base_route.'setpaygbilling.json', 'PUT');
+         
+        $client_data = array (
+            'Current' => 'PZD',
+            'ClientPays' => true,
+            'MarkupPercentage' => 1000
+        );
+
+        $this->general_test_with_argument('set_payg_billing', $client_data, $call_options,
+            $raw_result, $raw_result, 'client data was serialised to this');
+    }
+
+    function testset_monthly() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->client_base_route.'setmonthlybilling.json', 'PUT');
+         
+        $client_data = array (
+            'Current' => 'PZD',
+            'ClientPays' => true,
+            'MarkupPercentage' => 1000
+        );
+
+        $this->general_test_with_argument('set_monthly_billing', $client_data, $call_options,
+            $raw_result, $raw_result, 'client data was serialised to this');
+    }
 }
