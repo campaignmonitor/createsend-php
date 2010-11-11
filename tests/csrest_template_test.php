@@ -33,19 +33,20 @@ class CS_REST_TestTemplates extends CS_REST_TestBase {
             'HtmlURL' => 'http://test.abc.net.au'
         );
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
-            'response' => 'the new template id'
+            'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
         $call_options['data'] = 'template was serialised to this';
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
         $raw_result, $raw_result,
         'template was serialised to this', $template, $response_code);
 
         $result = $this->wrapper->create($client_id, $template);
 
-        $expected_result['response'] = $raw_result;
         $this->assertIdentical($expected_result, $result);
     }
 

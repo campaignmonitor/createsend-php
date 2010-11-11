@@ -1,5 +1,5 @@
 <?php
-require_once 'csrest.php';
+require_once 'class/base_classes.php';
 
 /**
  * Class to access a segments resources from the create send API.

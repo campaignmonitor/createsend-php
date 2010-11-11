@@ -1,5 +1,5 @@
 <?php
-require_once 'csrest.php';
+require_once 'class/base_classes.php';
 
 /**
  * Class to access a campaigns resources from the create send API.
@@ -71,10 +71,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (201)
-     *     'response' => string The ID of the newly created campaign
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created campaign
      */
     function create($client_id, $campaign_info, $call_options = array()) {
         $call_options['route'] = $this->_base_route.'campaigns/'.$client_id.'.json';
@@ -92,15 +89,17 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'Fallback': Use the fallback terms specified in the campaign content
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP response code (200)
-     *     'response' => string The HTTP response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function send_preview($recipients, $personalize = 'Random', $call_options = array()) {        
+    function send_preview($recipients, $personalize = 'Random', $call_options = array()) { 
+        $preview_data = array(
+            'PreviewRecipients' => $recipients,
+            'Personalize' => $personalize
+        );
+        
         $call_options['route'] = $this->_campaigns_base_route.'sendpreview.json';
         $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($test_data);
+        $call_options['data'] = $this->_serialiser->serialise($preview_data);
         
         return $this->_call($call_options);
     }
@@ -116,10 +115,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function send($schedule, $call_options = array()) {
         $call_options['route'] = $this->_campaigns_base_route.'send.json';
@@ -133,10 +129,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * Deletes an existing campaign from the system
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete($call_options = array()) {
         $call_options['route'] = trim($this->_campaigns_base_route, '/').'.json';
@@ -153,24 +146,22 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The suppressed email address
-     *                 'ListID' => The ID of the list this subscriber comes from
-     *             )
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The suppressed email address
+     *             'ListID' => The ID of the list this subscriber comes from
+     *         }
      *     )
-     * )
+     * }
      */
     function get_recipients($page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
@@ -192,26 +183,25 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The email that bounced
-     *                 'ListID' => The ID of the list the subscriber was on
-     *                 'BounceType' => The type of bounce
-     *                 'Date' => The date the bounce message was received
-     *                 'Reason' => The reason for the bounce
-     *             )
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email that bounced
+     *             'ListID' => The ID of the list the subscriber was on
+     *             'BounceType' => The type of bounce
+     *             'Date' => The date the bounce message was received
+     *             'Reason' => The reason for the bounce
+     *         }
      *     )
+     * }
      * )
      */
     function get_bounces($page_number = NULL, $page_size = NULL, $order_field = NULL, 
@@ -230,20 +220,22 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * Gets the lists a campaign was sent to
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'Lists' =>  array(
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'Lists' =>  array(
+     *         {
      *             'ListID' => The list id
      *             'Name' => The list name
-     *         ), 
-     *         'Segments' => array(
+     *         }
+     *     ), 
+     *     'Segments' => array(
+     *         {
      *             'ListID' => The list id of the segment
      *             'SegmentID' => The id of the segment
      *             'Title' => The title of the segment
-     *         )
+     *         }
      *     )
-     * )
+     * }
      */
     function get_lists_and_segments($call_options = array()) {
         $call_options['route'] = $this->_campaigns_base_route.'listsandsegments.json';
@@ -256,18 +248,16 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * Gets a summary of all campaign reporting statistics
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'Recipients' => The total recipients of the campaign
-     *         'TotalOpened' => The total number of opens recorded
-     *         'Clicks' => The total number of recorded clicks
-     *         'Unsubscribed' => The number of recipients who unsubscribed
-     *         'Bounced' => The number of recipients who bounced
-     *         'UniqueOpened' => The number of recipients who opened
-     *         'WebVersionURL' => The url of the webversion of the campaign
-     *     )
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'Recipients' => The total recipients of the campaign
+     *     'TotalOpened' => The total number of opens recorded
+     *     'Clicks' => The total number of recorded clicks
+     *     'Unsubscribed' => The number of recipients who unsubscribed
+     *     'Bounced' => The number of recipients who bounced
+     *     'UniqueOpened' => The number of recipients who opened
+     *     'WebVersionURL' => The url of the webversion of the campaign
+     * }
      */
     function get_summary($call_options = array()) {
         $call_options['route'] = $this->_campaigns_base_route.'summary.json';
@@ -285,26 +275,24 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber who opened
-     *                 'ListID' => The list id of the list containing the subscriber
-     *                 'Date' => The date of the open
-     *                 'IPAddress' => The ip address where the open originated
-     *             )
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber who opened
+     *             'ListID' => The list id of the list containing the subscriber
+     *             'Date' => The date of the open
+     *             'IPAddress' => The ip address where the open originated
+     *         }
      *     )
-     * )
+     * }
      */
     function get_opens($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
@@ -327,27 +315,25 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber who clicked
-     *                 'ListID' => The list id of the list containing the subscriber
-     *                 'Date' => The date of the click
-     *                 'IPAddress' => The ip address where the click originated
-     *                 'URL' => The url that the subscriber clicked on
-     *             )
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber who clicked
+     *             'ListID' => The list id of the list containing the subscriber
+     *             'Date' => The date of the click
+     *             'IPAddress' => The ip address where the click originated
+     *             'URL' => The url that the subscriber clicked on
+     *         }
      *     )
-     * )
+     * }
      */
     function get_clicks($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
@@ -370,26 +356,24 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber who unsubscribed
-     *                 'ListID' => The list id of the list containing the subscriber
-     *                 'Date' => The date of the unsubscribe
-     *                 'IPAddress' => The ip address where the unsubscribe originated
-     *             )
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber who unsubscribed
+     *             'ListID' => The list id of the list containing the subscriber
+     *             'Date' => The date of the unsubscribe
+     *             'IPAddress' => The ip address where the unsubscribe originated
+     *         }
      *     )
-     * )
+     * }
      */
     function get_unsubscribes($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {

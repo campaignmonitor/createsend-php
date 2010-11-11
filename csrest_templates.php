@@ -1,5 +1,5 @@
 <?php
-require_once 'csrest.php';
+require_once 'class/base_classes.php';
 
 /**
  * Class to access a templates resources from the create send API.
@@ -64,10 +64,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      *         )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (201)
-     *     'response' => string The ID of the newly created template
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created template
      */
     function create($client_id, $template_details, $call_options = array()) {
         $call_options['route'] = $this->_base_route.'templates/'.$client_id.'.json';
@@ -89,10 +86,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      *         )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The http response (Will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function update($template_details, $call_options = array()) {
         $call_options['route'] = $this->_templates_base_route;
@@ -106,10 +100,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      * Deletes the current template from the system
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The http response (Will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete($call_options = array()) {
         $call_options['route'] = $this->_templates_base_route;
@@ -122,15 +113,13 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      * Gets the basic details of the current template
      * @param unknown_type $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'TemplateID' => The id of the template
-     *         'Name' => The name of the template
-     *         'PreviewURL' => A url where the template can be previewed from
-     *         'ScreenshotURL' => The url of the template screenshot if one was provided
-     *     )
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'TemplateID' => The id of the template
+     *     'Name' => The name of the template
+     *     'PreviewURL' => A url where the template can be previewed from
+     *     'ScreenshotURL' => The url of the template screenshot if one was provided
+     * }
      */
     function get($call_options = array()) {
         $call_options['route'] = $this->_templates_base_route;

@@ -6,7 +6,8 @@ $wrap = new CS_REST_Clients(
 	'ClientID to get the suppression list of', 
     'Your API Key');
 
-$result = $wrap->get_suppressionlist();
+$result = $wrap->get_suppressionlist(1, 50, 'email', 'asc');
+//$result = $wrap->get_suppressionlist(page number, page size, order by, order direction);
 
 echo "Result of /api/v3/clients/{id}/suppressionlist\n<br />";
 if($result->was_successful()) {

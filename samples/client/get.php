@@ -10,7 +10,7 @@ if($result->was_successful()) {
     echo "Got client <pre>";
     var_dump($result->response);
 
-    $access_level = $result->response->AccessAndBilling->AccessLevel;
+    $access_level = $result->response->AccessDetails->AccessLevel;
     if($access_level & CS_REST_CLIENT_ACCESS_CREATESEND === CS_REST_CLIENT_ACCESS_CREATESEND) {
         echo 'Client has Create Send access';
     }

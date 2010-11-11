@@ -1,8 +1,8 @@
 <?php
 
-require_once '../csrest.php';
+require_once '../csrest_general.php';
 
-$wrap = new CS_REST_Wrapper_Base('Your API Key');
+$wrap = new CS_REST_General('Your API Key');
 
 $result = $wrap->get_countries();
 

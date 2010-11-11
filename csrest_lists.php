@@ -1,5 +1,5 @@
 <?php
-require_once 'csrest.php';
+require_once 'class/base_classes.php';
 
 define('CS_REST_CUSTOM_FIELD_TYPE_TEXT', 'Text');
 define('CS_REST_CUSTOM_FIELD_TYPE_NUMBER', 'Number');
@@ -75,10 +75,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (201)
-     *     'response' => string The ID of the newly created list
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created list
      */
     function create($client_id, $list_details, $call_options = array()) {
         $call_options['route'] = $this->_base_route.'lists/'.$client_id.'.json';
@@ -103,10 +100,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function update($list_details, $call_options = array()) {
         $call_options['route'] = trim($this->_lists_base_route, '/').'.json';
@@ -135,10 +129,8 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (201)
-     *     'response' => string The Personalisation tag of the newly created custom field
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be the 
+     * personalisation tag of the newly created custom field
      */
     function create_custom_field($custom_field_details, $call_options = array()) {
         $call_options['route'] = $this->_lists_base_route.'customfields.json';
@@ -152,10 +144,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * Deletes an existing list from the system
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete($call_options = array()) {
         $call_options['route'] = trim($this->_lists_base_route, '/').'.json';
@@ -168,10 +157,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * Deletes an existing custom field from the system
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete_custom_field($key, $call_options = array()) {
         $call_options['route'] = $this->_lists_base_route.'customfields/'.rawurlencode($key).'.json';
@@ -184,16 +170,14 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * Gets a list of all custom fields defined for the current list
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             'FieldName' => The name of the custom field
-     *             'Key' => The personalisation tag of the custom field
-     *             'DataType' => The data type of the custom field
-     *             'FieldOptions' => Valid options for a multi-optioned custom field
-     *         )
-     *     )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'FieldName' => The name of the custom field
+     *         'Key' => The personalisation tag of the custom field
+     *         'DataType' => The data type of the custom field
+     *         'FieldOptions' => Valid options for a multi-optioned custom field
+     *     }
      * )
      */
     function get_custom_fields($call_options = array()) {
@@ -207,15 +191,13 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * Gets a list of all segments defined for the current list
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             'ListID' => The current list id
-     *             'SegmentID' => The id of this segment
-     *             'Title' => The title of this segment
-     *         )
-     *     )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'ListID' => The current list id
+     *         'SegmentID' => The id of this segment
+     *         'Title' => The title of this segment
+     *     }
      * )
      */
     function get_segments($call_options = array()) {
@@ -234,32 +216,30 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP response code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber
-     *                 'Name' => The name of the subscriber
-     *                 'Date' => The date that the subscriber was added to the list
-     *                 'State' => The current state of the subscriber, will be 'Active'
-     *                 'CustomFields' => array (
-     *                     array(
-     *                         'Key' => The personalisation tag of the custom field
-     *                         'Value' => The value of the custom field for this subscriber
-     *                     )
-     *                 )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber
+     *             'Name' => The name of the subscriber
+     *             'Date' => The date that the subscriber was added to the list
+     *             'State' => The current state of the subscriber, will be 'Active'
+     *             'CustomFields' => array (
+     *                 {
+     *                     'Key' => The personalisation tag of the custom field
+     *                     'Value' => The value of the custom field for this subscriber
+     *                 }
      *             )
-     *         )
+     *         }
      *     )
-     * )
+     * }
      */
     function get_active_subscribers($added_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
@@ -282,32 +262,30 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP response code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber
-     *                 'Name' => The name of the subscriber
-     *                 'Date' => The date that the subscriber bounced out of the list
-     *                 'State' => The current state of the subscriber, will be 'Bounced'
-     *                 'CustomFields' => array (
-     *                     array(
-     *                         'Key' => The personalisation tag of the custom field
-     *                         'Value' => The value of the custom field for this subscriber
-     *                     )
-     *                 )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber
+     *             'Name' => The name of the subscriber
+     *             'Date' => The date that the subscriber bounced out of the list
+     *             'State' => The current state of the subscriber, will be 'Bounced'
+     *             'CustomFields' => array (
+     *                 {
+     *                     'Key' => The personalisation tag of the custom field
+     *                     'Value' => The value of the custom field for this subscriber
+     *                 }
      *             )
-     *         )
+     *         }
      *     )
-     * )
+     * }
      */
     function get_bounced_subscribers($bounced_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
@@ -317,7 +295,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
             $page_size, $order_field, $order_direction);
         $call_options['method'] = CS_REST_GET;
-
+        
         return $this->_call($call_options);
     }
 
@@ -330,32 +308,30 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP response code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The email address of the subscriber
-     *                 'Name' => The name of the subscriber
-     *                 'Date' => The date that the subscriber was unsubscribed from the list
-     *                 'State' => The current state of the subscriber, will be 'Unsubscribed'
-     *                 'CustomFields' => array (
-     *                     array(
-     *                         'Key' => The personalisation tag of the custom field
-     *                         'Value' => The value of the custom field for this subscriber
-     *                     )
-     *                 )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber
+     *             'Name' => The name of the subscriber
+     *             'Date' => The date that the subscriber was unsubscribed from the list
+     *             'State' => The current state of the subscriber, will be 'Unsubscribed'
+     *             'CustomFields' => array (
+     *                 {
+     *                     'Key' => The personalisation tag of the custom field
+     *                     'Value' => The value of the custom field for this subscriber
+     *                 }
      *             )
-     *         )
+     *         }
      *     )
-     * )
+     * }
      */
     function get_unsubscribed_subscribers($unsubscribed_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
@@ -373,17 +349,15 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * Gets the basic details of the current list
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'ListID' => The id of the list
-     *         'Title' => The title of the list
-     *         'UnsubscribePage' => The page which subscribers are redirected to upon unsubscribing
-     *         'ConfirmationSuccessPage' => The page which subscribers are
-     *             redirected to upon confirming their subscription
-     *         'ConfirmedOptIn' => Whether the list is Double-Opt In
-     *     )
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ListID' => The id of the list
+     *     'Title' => The title of the list
+     *     'UnsubscribePage' => The page which subscribers are redirected to upon unsubscribing
+     *     'ConfirmedOptIn' => Whether the list is Double-Opt In
+     *     'ConfirmationSuccessPage' => The page which subscribers are
+     *         redirected to upon confirming their subscription
+     * }
      */
     function get($call_options = array()) {
         $call_options['route'] = trim($this->_lists_base_route, '/').'.json';
@@ -396,35 +370,33 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * Gets statistics for list subscriptions, deletions, bounces and unsubscriptions
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'TotalActiveSubscribers'
-     *         'NewActiveSubscribersToday'
-     *         'NewActiveSubscribersYesterday'
-     *         'NewActiveSubscribersThisWeek'
-     *         'NewActiveSubscribersThisMonth'
-     *         'NewActiveSubscribersThisYeay'
-     *         'TotalUnsubscribes'
-     *         'UnsubscribesToday'
-     *         'UnsubscribesYesterday'
-     *         'UnsubscribesThisWeek'
-     *         'UnsubscribesThisMonth'
-     *         'UnsubscribesThisYear'
-     *         'TotalDeleted'
-     *         'DeletedToday'
-     *         'DeletedYesterday'
-     *         'DeletedThisWeek'
-     *         'DeletedThisMonth'
-     *         'DeletedThisYear'
-     *         'TotalBounces'
-     *         'BouncesToday'
-     *         'BouncesYesterday'
-     *         'BouncesThisWeek'
-     *         'BouncesThisMonth'
-     *         'BouncesThisYear'
-     *     )
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'TotalActiveSubscribers'
+     *     'NewActiveSubscribersToday'
+     *     'NewActiveSubscribersYesterday'
+     *     'NewActiveSubscribersThisWeek'
+     *     'NewActiveSubscribersThisMonth'
+     *     'NewActiveSubscribersThisYeay'
+     *     'TotalUnsubscribes'
+     *     'UnsubscribesToday'
+     *     'UnsubscribesYesterday'
+     *     'UnsubscribesThisWeek'
+     *     'UnsubscribesThisMonth'
+     *     'UnsubscribesThisYear'
+     *     'TotalDeleted'
+     *     'DeletedToday'
+     *     'DeletedYesterday'
+     *     'DeletedThisWeek'
+     *     'DeletedThisMonth'
+     *     'DeletedThisYear'
+     *     'TotalBounces'
+     *     'BouncesToday'
+     *     'BouncesYesterday'
+     *     'BouncesThisWeek'
+     *     'BouncesThisMonth'
+     *     'BouncesThisYear'
+     * }
      */
     function get_stats($call_options = array()) {
         $call_options['route'] = $this->_lists_base_route.'stats.json';

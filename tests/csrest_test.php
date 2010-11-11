@@ -4,7 +4,7 @@ require_once 'simpletest/autorun.php';
 require_once '../class/transport.php';
 require_once '../class/serialisation.php';
 require_once '../class/log.php';
-require_once '../csrest.php';
+require_once '../csrest_general.php';
 
 @Mock::generate('CS_REST_Log');
 @Mock::generate('CS_REST_NativeJsonSerialiser');
@@ -40,8 +40,8 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     function set_up_inner() {
-        $this->wrapper = &new CS_REST_Wrapper_Base($this->api_key, $this->protocol, $this->log_level,
-        $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = &new CS_REST_General($this->api_key, $this->protocol, $this->log_level,
+            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
     function get_call_options($route, $method = 'GET') {
@@ -75,17 +75,18 @@ class CS_REST_TestBase extends UnitTestCase {
     function general_test($wrapper_function, $call_options, $from_transport,
     $from_deserialisation, $response_code = 200) {
 
-        $expected_result = array (
+        $transport_result = array (
 	        'code' => $response_code, 
 	        'response' => $from_transport
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($from_deserialisation, $response_code);
          
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $from_deserialisation, $from_transport, NULL, NULL, $response_code);
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $from_deserialisation, $from_transport, NULL, NULL, $response_code);
 
         $result = $this->wrapper->$wrapper_function();
          
-        $expected_result['response'] = $from_deserialisation;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -93,19 +94,20 @@ class CS_REST_TestBase extends UnitTestCase {
     $from_transport, $from_deserialisation,
     $from_serialisation = 'serialised', $response_code = 200) {
 
-        $expected_result = array (
-	        'code' => $response_code, 
-	        'response' => $from_transport
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $from_transport
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($from_deserialisation, $response_code);
          
         $call_options['data'] = $from_serialisation;
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $from_deserialisation, $from_transport,
-        $from_serialisation, $function_argument, $response_code);
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $from_deserialisation, $from_transport, $from_serialisation, 
+            $function_argument, $response_code);
 
         $result = $this->wrapper->$wrapper_function($function_argument);
          
-        $expected_result['response'] = $from_deserialisation;
         $this->assertIdentical($expected_result, $result);
     }
 }
@@ -169,12 +171,14 @@ class CS_REST_TestWrapperBase extends CS_REST_TestBase {
         $call_options = $this->get_call_options($this->base_route.'apikey.json?siteurl='.$site_url);
         $call_options['credentials'] = $username.':'.$password;
 
-        $expected_result = array (
-	        'code' => 200, 
-	        'response' => $raw_result
+        $transport_result = array (
+            'code' => 200, 
+            'response' => $raw_result
         );
-         
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, 200);
+                 
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
         $raw_result, $raw_result);
 
         $result = $this->wrapper->get_apikey($username, $password, $site_url);

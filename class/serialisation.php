@@ -4,8 +4,9 @@ require_once 'services_json.php';
 
 class CS_REST_SerialiserFactory {
     function get_available_serialiser($log) {
+        $log->log_message('Getting serialiser', get_class($this), CS_REST_LOG_VERBOSE);
         if(@CS_REST_NativeJsonSerialiser::is_available()) {
-            return new CS_REST_JsonSerialiser($log);
+            return new CS_REST_NativeJsonSerialiser($log);
         } else {
             return new CS_REST_ServicesJsonSerialiser($log);
         }
@@ -54,7 +55,7 @@ class CS_REST_ServicesJsonSerialiser {
     
     function CS_REST_ServicesJsonSerialiser($log) {
         $this->_log = $log;
-        $this->_serialiser = new Services_JSON(SERVICES_JSON_SUPPRESS_ERRORS);
+        $this->_serialiser = new Services_JSON();
     }
 
     function get_content_type() {
@@ -78,5 +79,4 @@ class CS_REST_ServicesJsonSerialiser {
         
         return is_null($data) ? $text : $data;
     }
-    
 }

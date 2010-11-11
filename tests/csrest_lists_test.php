@@ -32,18 +32,19 @@ class CS_REST_TestLists extends CS_REST_TestBase {
             'UnsubscribeURL' => 'Widget Man!'
         );
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
-            'response' => 'the new list id'
+            'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
         $call_options['data'] = 'list info was serialised to this';
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'list info was serialised to this', $list_info, $response_code);
 
         $result = $this->wrapper->create($client_id, $list_info);
 
-        $expected_result['response'] = $raw_result;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -91,17 +92,18 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $call_options = $this->get_call_options(
             $this->list_base_route.'customfields/'.rawurlencode($key).'.json', 'DELETE');
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->delete_custom_field($key);
 
-        $expected_result['response'] = $raw_result;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -128,17 +130,18 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $deserialised = array('Subscriber 1', 'Subscriber 2');
         $call_options = $this->get_call_options($this->list_base_route.'active.json?date='.$since);
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
 
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
             $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_active_subscribers($since);
 
-        $expected_result['response'] = $deserialised;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -149,17 +152,18 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $deserialised = array('Subscriber 1', 'Subscriber 2');
         $call_options = $this->get_call_options($this->list_base_route.'bounced.json?date='.$since);
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
 
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
             $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_bounced_subscribers($since);
 
-        $expected_result['response'] = $deserialised;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -170,17 +174,18 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $deserialised = array('Subscriber 1', 'Subscriber 2');
         $call_options = $this->get_call_options($this->list_base_route.'unsubscribed.json?date='.$since);
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
 
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
-        $deserialised, $raw_result, NULL, NULL, $response_code);
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_unsubscribed_subscribers($since);
 
-        $expected_result['response'] = $deserialised;
         $this->assertIdentical($expected_result, $result);
     }
 

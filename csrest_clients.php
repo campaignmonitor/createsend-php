@@ -1,5 +1,5 @@
 <?php
-require_once 'csrest.php';
+require_once 'class/base_classes.php';
 
 define('CS_REST_CLIENT_ACCESS_NONE', 0x0);
 define('CS_REST_CLIENT_ACCESS_REPORTS', 0x1);
@@ -64,18 +64,16 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * Gets a list of sent campaigns for the current client
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             'WebVersionURL' => The webversion url of the campaign
-     *             'CampaignID' => The id of the campaign
-     *             'Subject' => The campaign subject
-     *             'Name' => The name of the campaign
-     *             'SentDate' => The sent data of the campaign
-     *             'TotalRecipient' => The number of recipients of the campaign
-     *         )
-     *     )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'WebVersionURL' => The webversion url of the campaign
+     *         'CampaignID' => The id of the campaign
+     *         'Subject' => The campaign subject
+     *         'Name' => The name of the campaign
+     *         'SentDate' => The sent data of the campaign
+     *         'TotalRecipient' => The number of recipients of the campaign
+     *     }
      * )
      */
     function get_campaigns($call_options = array()) {
@@ -89,16 +87,14 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * Gets a list of sent campaigns for the current client
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             'CampaignID' => The id of the campaign
-     *             'Name' => The name of the campaign
-     *             'Subject' => The subject of the campaign
-     *             'DateCreated' => The date the campaign was created
-     *         )
-     *     )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'CampaignID' => The id of the campaign
+     *         'Name' => The name of the campaign
+     *         'Subject' => The subject of the campaign
+     *         'DateCreated' => The date the campaign was created
+     *     }
      * )
      */
     function get_drafts($call_options = array()) {
@@ -112,14 +108,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * Gets all subscriber lists the current client has created
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             'ListID' => The id of the list
-     *             'Name' => The name of the list
-     *         )
-     *     )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'ListID' => The id of the list
+     *         'Name' => The name of the list
+     *     }
      * )
      */
     function get_lists($call_options = array()) {
@@ -133,15 +127,13 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * Gets all list segments the current client has created
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             'ListID' => The id of the list owning this segment
-     *             'SegmentID' => The id of this segment
-     *             'Title' => The title of this segment
-     *         )
-     *     )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'ListID' => The id of the list owning this segment
+     *         'SegmentID' => The id of this segment
+     *         'Title' => The title of this segment
+     *     }
      * )
      */
     function get_segments($call_options = array()) {
@@ -159,25 +151,23 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'ResultsOrderedBy' => The field the results are ordered by
-     *         'OrderDirection' => The order direction
-     *         'PageNumber' => The page number for the result set
-     *         'PageSize' => The page size used
-     *         'RecordsOnThisPage' => The number of records returned
-     *         'TotalNumberOfRecords' => The total number of records available
-     *         'NumberOfPages' => The total number of pages for this collection
-     *         'Results' => array(
-     *             array(
-     *                 'EmailAddress' => The suppressed email address
-     *                 'Date' => The date the email was suppressed
-     *                 'State' => The state of the suppressed email
-     *             )
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The suppressed email address
+     *             'Date' => The date the email was suppressed
+     *             'State' => The state of the suppressed email
+     *         }
      *     )
-     * )
+     * }
      */
     function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL, $call_options = array()) {
@@ -195,16 +185,14 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * Gets all templates the current client has access to
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             'TemplateID' => The id of the template
-     *             'Name' => The name of the template
-     *             'PreviewURL' => The url to preview the template from
-     *             'ScreenshotURL' => The url of the template screenshot
-     *         )
-     *     )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'TemplateID' => The id of the template
+     *         'Name' => The name of the template
+     *         'PreviewURL' => The url to preview the template from
+     *         'ScreenshotURL' => The url of the template screenshot
+     *     }
      * )
      */
     function get_templates($call_options = array()) {
@@ -218,55 +206,56 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * Gets all templates the current client has access to
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'BasicDetails' => array(
-     *             'ClientID' => The id of the client
-     *             'CompanyName' => The company name of the client
-     *             'ContactName' => The contact name of the client
-     *             'EmailAddress' => The clients contact email address
-     *             'Country' => The clients country
-     *             'TimeZone' => The clients timezone
-     *         )
-     *         'AccessDetails' => array(
-     *             'AccessLevel' => The current access level of the client.
-     *                 This will be some bitwise combination of
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ApiKey' => The clients API Key, THIS IS NOT THE CLIENT ID
+     *     'BasicDetails' => 
+     *     {
+     *         'ClientID' => The id of the client
+     *         'CompanyName' => The company name of the client
+     *         'ContactName' => The contact name of the client
+     *         'EmailAddress' => The clients contact email address
+     *         'Country' => The clients country
+     *         'TimeZone' => The clients timezone
+     *     }
+     *     'AccessDetails' => 
+     *     {
+     *         'AccessLevel' => The current access level of the client.
+     *             This will be some bitwise combination of
      *
-     *                 CS_REST_CLIENT_ACCESS_REPORTS
-     *                 CS_REST_CLIENT_ACCESS_SUBSCRIBERS
-     *                 CS_REST_CLIENT_ACCESS_CREATESEND
-     *                 CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST
-     *                 CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS
-     *                 CS_REST_CLIENT_ACCESS_IMPORTURL
+     *             CS_REST_CLIENT_ACCESS_REPORTS
+     *             CS_REST_CLIENT_ACCESS_SUBSCRIBERS
+     *             CS_REST_CLIENT_ACCESS_CREATESEND
+     *             CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST
+     *             CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS
+     *             CS_REST_CLIENT_ACCESS_IMPORTURL
      *
-     *                 or
-     *                 CS_REST_CLIENT_ACCESS_NONE
-     *             'Username' => The clients current username
-     *         )
-     *         'BillingDetails' =>
-     *         If on monthly billing
-     *         array(
-     *             'CurrentTier' => The current monthly tier the client sits in
-     *             'CurrentMonthlyRate' => The current pricing rate the client pays per month
-     *             'MarkupPercentage' => The percentage markup applied to the base rates
-     *             'Currency' => The currency paid in
-     *             'ClientPays' => Whether the client pays for themselves
-     *         )
-     *         If paying per campaign
-     *         array(
-     *             'CanPurchaseCredits' => Whether the client can purchase credits
-     *             'BaseDeliveryFee' => The base fee payable per campaign
-     *             'BaseRatePerRecipient' => The base fee payable per campaign recipient
-     *             'BaseDesignSpamTestRate' => The base fee payable per design and spam test
-     *             'MarkupOnDelivery' => The markup applied per campaign
-     *             'MarkupPerRecipient' => The markup applied per campaign recipient
-     *             'MarkupOnDesignSpamTest' => The markup applied per design and spam test
-     *             'Currency' => The currency fees are paid in
-     *             'ClientPays' => Whether client client pays for themselves
-     *         )
-     *     )
-     * )
+     *             or
+     *             CS_REST_CLIENT_ACCESS_NONE
+     *         'Username' => The clients current username
+     *     }
+     *     'BillingDetails' =>
+     *     If on monthly billing
+     *     {
+     *         'CurrentTier' => The current monthly tier the client sits in
+     *         'CurrentMonthlyRate' => The current pricing rate the client pays per month
+     *         'MarkupPercentage' => The percentage markup applied to the base rates
+     *         'Currency' => The currency paid in
+     *         'ClientPays' => Whether the client pays for themselves
+     *     }
+     *     If paying per campaign
+     *     {
+     *         'CanPurchaseCredits' => Whether the client can purchase credits
+     *         'BaseDeliveryFee' => The base fee payable per campaign
+     *         'BaseRatePerRecipient' => The base fee payable per campaign recipient
+     *         'BaseDesignSpamTestRate' => The base fee payable per design and spam test
+     *         'MarkupOnDelivery' => The markup applied per campaign
+     *         'MarkupPerRecipient' => The markup applied per campaign recipient
+     *         'MarkupOnDesignSpamTest' => The markup applied per design and spam test
+     *         'Currency' => The currency fees are paid in
+     *         'ClientPays' => Whether client client pays for themselves
+     *     }     
+     * }
      */
     function get($call_options = array()) {
         $call_options['route'] = trim($this->_clients_base_route, '/').'.json';
@@ -279,10 +268,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * Deletes an existing client from the system
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete($call_options = array()) {
         $call_options['route'] = trim($this->_clients_base_route, '/').'.json';
@@ -304,10 +290,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (201)
-     *     'response' => string The ID of the newly created client
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created client
      */
     function create($client, $call_options = array()) {
         $call_options['route'] = $this->_base_route.'clients.json';
@@ -330,10 +313,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function set_basics($client_basics, $call_options = array()) {
         $call_options['route'] = $this->_clients_base_route.'setbasics.json';
@@ -365,10 +345,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function set_access($client_access, $call_options = array()) {
         $call_options['route'] = $this->_clients_base_route.'setaccess.json';
@@ -395,10 +372,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function set_payg_billing($client_billing, $call_options = array()) {
         $call_options['route'] = $this->_clients_base_route.'setpaygbilling.json';
@@ -420,10 +394,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => string The HTTP Response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function set_monthly_billing($client_billing, $call_options = array()) {
         $call_options['route'] = $this->_clients_base_route.'setmonthlybilling.json';

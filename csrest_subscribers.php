@@ -1,5 +1,5 @@
 <?php
-require_once 'csrest.php';
+require_once 'class/base_classes.php';
 
 /**
  * Class to access a subscribers resources from the create send API.
@@ -70,10 +70,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *     )
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (201)
-     *     'response' => string The HTTP response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function add($subscriber, $call_options = array()) {
         $call_options['route'] = $this->_subscribers_base_route.'.json';
@@ -102,26 +99,21 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * @param $resubscribe Whether we should resubscribe any existing subscribers
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (201)
-     *     'response' => array(
-     *         'TotalUniqueEmailsSubmitted' => The number of unique emails submitted in the call
-     *         'TotalExistingSubscribers' => The number of subscribers who already existed in the list
-     *         'TotalNewSubscribers' => The number of new subscriptions to the list
-     *         'DuplicateEmailsInSubmission' => array<string> The emails which appeared more than once in the batch
-     *         'FailureDetails' => array (
-     *             array(
-     *                 'EmailAddress' => The email address which failed
-     *                 'Code' => The Create Send API Error code
-     *                 'Message' => The reason for the failure
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'TotalUniqueEmailsSubmitted' => The number of unique emails submitted in the call
+     *     'TotalExistingSubscribers' => The number of subscribers who already existed in the list
+     *     'TotalNewSubscribers' => The number of new subscriptions to the list
+     *     'DuplicateEmailsInSubmission' => array<string> The emails which appeared more than once in the batch
+     *     'FailureDetails' => array (
+     *         {
+     *             'EmailAddress' => The email address which failed
+     *             'Code' => The Create Send API Error code
+     *             'Message' => The reason for the failure
+     *         }
      *     )
-     * )
+     * }
      *
-     * For successful calls the FailureDetails element will be an empty array. Imports 'fail' when
-     * any one subscriber submitted is not correctly subscribed, this does not mean that all
-     * subscribers in the batch failed. Correct parsing of the response is required to
-     * determine which subscribers were subscribed and which subscribers failed.
      */
     function import($subscribers, $resubscribe, $call_options = array()) {
         $subscribers = array(
@@ -140,21 +132,19 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * Gets a subscriber details, including custom fields
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         'EmailAddress' => The subscriber email address
-     *         'Name' => The subscribers name
-     *         'Date' => The date the subscriber was added to the list
-     *         'State' => The current state of the subscriber
-     *         'CustomFields' => array(
-     *             array(
-     *                 'Key' => The custom fields personalisation tag
-     *                 'Value' => The custom field value for this subscriber
-     *             )
-     *         )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'EmailAddress' => The subscriber email address
+     *     'Name' => The subscribers name
+     *     'Date' => The date the subscriber was added to the list
+     *     'State' => The current state of the subscriber
+     *     'CustomFields' => array(
+     *         {
+     *             'Key' => The custom fields personalisation tag
+     *             'Value' => The custom field value for this subscriber
+     *         }
      *     )
-     * )
+     * }
      */
     function get($email, $call_options = array()) {
         $call_options['route'] = $this->_subscribers_base_route.'.json?email='.urlencode($email);
@@ -167,23 +157,21 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * Gets the sending history to a specific subscriber
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => array(
-     *         array(
-     *             ID => The id of the email which was sent
-     *             Type => 'Campaign'
-     *             Name => The name of the email
-     *             Actions => array(
-     *                 array(
-     *                     Event => The type of action (Click, Open, Unsubscribe etc)
-     *                     Date => The date the event occurred
-     *                     IPAddress => The IP that the event originated from
-     *                     Detail => Any available details about the event i.e the URL for clicks
-     *                 )
-     *             )
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         ID => The id of the email which was sent
+     *         Type => 'Campaign'
+     *         Name => The name of the email
+     *         Actions => array(
+     *             {
+     *                 Event => The type of action (Click, Open, Unsubscribe etc)
+     *                 Date => The date the event occurred
+     *                 IPAddress => The IP that the event originated from
+     *                 Detail => Any available details about the event i.e the URL for clicks
+     *             }
      *         )
-     *     )
+     *     }
      * )
      */
     function get_history($email, $call_options = array()) {
@@ -198,10 +186,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * @param string $email The email address to unsubscribe
      * @param $call_options
      * @access public
-     * @return A successful call will return an array of the form array(
-     *     'code' => int The HTTP Response Code (200)
-     *     'response' => The HTTP response (It will be empty)
-     * )
+     * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function unsubscribe($email, $call_options = array()) {
         // We need to build the subscriber data structure.

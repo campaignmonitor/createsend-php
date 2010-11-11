@@ -60,19 +60,20 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
                 'Subscribers' => $subscribers 
         );
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
         $call_options['data'] = 'subscribers were serialised to this';
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'subscribers were serialised to this', 
             $data, $response_code);
 
         $result = $this->wrapper->import($subscribers, $resubscribe);
 
-        $expected_result['response'] = $raw_result;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -85,17 +86,18 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $call_options = $this->get_call_options(
             $this->list_base_route.'.json?email='.urlencode($email), 'GET');
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
 
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
             $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get($email);
 
-        $expected_result['response'] = $deserialised;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -108,17 +110,18 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $call_options = $this->get_call_options(
             $this->list_base_route.'/history.json?email='.urlencode($email), 'GET');
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
 
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
         $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_history($email);
 
-        $expected_result['response'] = $deserialised;
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -131,19 +134,20 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
          
         $subscriber = array('EmailAddress' => $email);
 
-        $expected_result = array (
+        $transport_result = array (
             'code' => $response_code, 
             'response' => $raw_result
         );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
         $call_options['data'] = 'subscriber was serialised to this';
-        $this->setup_transport_and_serialisation($expected_result, $call_options,
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
         $raw_result, $raw_result,
             'subscriber was serialised to this', $subscriber, $response_code);
 
         $result = $this->wrapper->unsubscribe($email);
 
-        $expected_result['response'] = $raw_result;
         $this->assertIdentical($expected_result, $result);
     }
 }
