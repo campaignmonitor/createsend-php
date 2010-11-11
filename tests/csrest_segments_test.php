@@ -42,4 +42,20 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
 
         $this->assertIdentical($expected_result, $result);
     }
+    
+    function testclear_rules() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->segment_base_route.'rules.json', 'DELETE');
+
+        $this->general_test('clear_rules', $call_options, $raw_result, $raw_result);        
+    }
+    
+    function testdelete() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options(trim($this->segment_base_route, '/').'.json', 'DELETE');
+
+        $this->general_test('delete', $call_options, $raw_result, $raw_result);
+    }
 }

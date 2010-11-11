@@ -64,6 +64,19 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
         
         return $this->_call($call_options);
     }
+
+    /**
+     * Deletes all rules for the current segment
+     * @param $call_options
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function clear_rules($call_options = array()) {
+        $call_options['route'] = $this->_segments_base_route.'rules.json';
+        $call_options['method'] = CS_REST_DELETE;
+        
+        return $this->_call($call_options);
+    }
     
     /**
      * Gets a paged collection of subscribers which fall into the given segment
