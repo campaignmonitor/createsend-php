@@ -111,7 +111,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
 
     /**
      * Gets the basic details of the current template
-     * @param unknown_type $call_options
+     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {

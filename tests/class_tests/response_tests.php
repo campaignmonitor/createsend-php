@@ -70,7 +70,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                         'ContactName' => 'Client One (contact)',
                         'EmailAddress' => 'contact@example.com',
                         'Country' => 'Australia',
-                        'Timezone' => '(GMT+10:00) Canberra, Melbourne, Sydney'
+                        'TimeZone' => '(GMT+10:00) Canberra, Melbourne, Sydney'
                     ),
                     'BillingDetails' => array(
                         'CanPurchaseCredits' => true,
@@ -256,6 +256,23 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     'TotalExistingSubscribers' => 0,
                     'TotalNewSubscribers' => 3,
                     'DuplicateEmailsInSubmission' => array()
+                ),
+                'import_subscribers_partial_success' => array(
+                    "ResultData" => array(
+                        "TotalUniqueEmailsSubmitted" => 3,
+                        "TotalExistingSubscribers" => 2,
+                        "TotalNewSubscribers" => 0,
+                        "DuplicateEmailsInSubmission" => array(),
+                        "FailureDetails" => array(
+                            array( 
+                                "EmailAddress" => "example+1@example",
+                                "Code" => 1,
+                                "Message" => "Invalid Email Address"
+                            )
+                        )
+                    ),
+                    "Code" => 210,
+                    "Message" => "Subscriber Import had some failures"
                 ),
                 'subscriber_details' => array(
                     'EmailAddress' => 'subscriber@example.com',
@@ -457,7 +474,6 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     'Results' => array(
                         array(
                             'EmailAddress' => 'subs+6576576576@example.com',
-                            'URL' => 'http://video.google.com.au/?hl=en&tab=wv',
                             'ListID' => '512a3bc577a58fdf689c654329b50fa0',
                             'Date' => '2010-10-11 08:29:00',
                             'IPAddress' => '192.168.126.87'
@@ -711,7 +727,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     "RecordsOnThisPage" => 2,
                     "TotalNumberOfRecords" => 2,
                     "NumberOfPages" => 1
-                )
+                ),
+                'create_segment' => '0246c2aea610a3545d9780bf6ab89006'
             );
             
             $template_responses = array(

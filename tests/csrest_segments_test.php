@@ -20,6 +20,14 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
+    function testget() {
+        $raw_result = 'segment details';
+        $deserialised = array(1,23,4,5,6,7);
+        $call_options = $this->get_call_options(trim($this->segment_base_route, '/').'.json');
+
+        $this->general_test('get', $call_options, $raw_result, $deserialised);
+    }
+
     function testget_segment_subscribers() {
         $raw_result = 'some subscribers';
         $since = '2020';

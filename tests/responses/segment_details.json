@@ -1,0 +1,20 @@
+{
+  "ActiveSubscribers": 0,
+  "Rules": [
+    {
+      "Subject": "EmailAddress",
+      "Clauses": [
+        "CONTAINS @hello.com"
+      ]
+    },
+    {
+      "Subject": "Name",
+      "Clauses": [
+        "PROVIDED"
+      ]
+    }
+  ],
+  "ListID": "2bea949d0bf96148c3e6a209d2e82060",
+  "SegmentID": "dba84a225d5ce3d19105d7257baac46f",
+  "Title": "My Segment"
+}

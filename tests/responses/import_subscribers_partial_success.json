@@ -1,0 +1,17 @@
+{
+  "ResultData": {
+    "TotalUniqueEmailsSubmitted": 3,
+    "TotalExistingSubscribers": 2,
+    "TotalNewSubscribers": 0,
+    "DuplicateEmailsInSubmission": [],
+    "FailureDetails": [
+      {
+        "EmailAddress": "example+1@example",
+        "Code": 1,
+        "Message": "Invalid Email Address"
+      }
+    ]
+  },
+  "Code": 210,
+  "Message": "Subscriber Import had some failures"
+}

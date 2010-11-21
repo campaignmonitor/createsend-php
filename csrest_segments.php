@@ -51,6 +51,29 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
     function set_segment_id($segment_id) {
         $this->_segments_base_route = $this->_base_route.'segments/'.$segment_id.'/';
     }
+    
+
+    /**
+     * Gets the details of the current segment
+     * @param $call_options
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ActiveSubscribers' => The number of active subscribers in this segment
+     *     'Rules' => array(
+     *         {
+     *             'Subject' => The subject of the rule
+     *             'Clauses' => array<string> The clauses making up this segment rule
+     *         }
+     *     )
+     * }
+     */
+    function get($call_options = array()) {
+        $call_options['route'] = trim($this->_segments_base_route, '/').'.json';
+        $call_options['method'] = CS_REST_GET;
+        
+        return $this->_call($call_options);
+    }
 
     /**
      * Deletes an existing segment from the system
