@@ -56,6 +56,16 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      * Creates a new segment on the given list with the provided details
      * @param int $list_id The list on which to create the segment
      * @param $segment_details The details of the new segment
+     *     This should be an array of the form 
+     *         array(
+     *             'Title' => The title of the new segment
+     *             'Rules' => array(
+     *                 array(
+     *                     'Subject' => The subject of this rule
+     *                     'Clauses' => array<string> The specific clauses for this rule
+     *                 )
+     *             )
+     *         )
      * @param $call_options
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created segment
      */
@@ -70,6 +80,16 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
     /**
      * Updates the current segment with the provided details. Calls to this route will clear any existing rules
      * @param $segment_details The new details for the segment
+     *     This should be an array of the form 
+     *         array(
+     *             'Title' => The new title for the segment
+     *             'Rules' => array(
+     *                 array(
+     *                     'Subject' => The subject of this rule
+     *                     'Clauses' => array<string> The specific clauses for this rule
+     *                 )
+     *             )
+     *         )
      * @param $call_options
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
@@ -80,6 +100,25 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
         
         return $this->_call($call_options);
     }    
+    
+    /**
+     * Adds the given rule to the current segment
+     * @param $rule The rule to add to the segment
+     *     This should be an array of the form
+     *         array(
+     *             'Subject' => The subject of this rule
+     *             'Clauses' => array<string> The specific clauses for this rule
+     *         )
+     * @param $call_options
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function add_rule($rule, $call_options = array()) {
+        $call_options['route'] = $this->_segments_base_route.'/rules.json';
+        $call_options['method'] = CS_REST_POST;
+        $call_options['data'] = $this->_serialiser->serialise($rule);
+                
+        return $this->_call($call_options);
+    }
     
     /**
      * Gets the details of the current segment

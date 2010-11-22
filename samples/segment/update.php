@@ -18,7 +18,7 @@ $result = $wrap->update(array(
     )
 ));
 
-echo "Result of PUT /api/v3/segments/{listID}\n<br />";
+echo "Result of PUT /api/v3/segments/{segmentID}\n<br />";
 if($result->was_successful()) {
     echo "Updated with code\n<br />".$result->http_status_code;
 } else {

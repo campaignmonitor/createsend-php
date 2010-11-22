@@ -74,6 +74,20 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
             $raw_result, $raw_result, 'segment was serialised to this');
     }
 
+    function testadd_rule() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->segment_base_route.'/rules.json', 'POST');
+
+        $rule = array (
+            'Subject' => 'EmailAddress',
+            'Clauses' => array('CONTAINS abcwidgets.com')
+        );
+
+        $this->general_test_with_argument('add_rule', $rule, $call_options,
+            $raw_result, $raw_result, 'rule was serialised to this');
+    }
+
     function testget() {
         $raw_result = 'segment details';
         $deserialised = array(1,23,4,5,6,7);
