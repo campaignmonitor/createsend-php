@@ -11,6 +11,30 @@ class CS_REST_SerialiserFactory {
             return new CS_REST_ServicesJsonSerialiser($log);
         }
     }
+    
+    /**
+     * Recursively ensures that all data values are utf-8 encoded. 
+     * @param array $data All values of this array are checked for utf-8 encoding. 
+     */
+    function check_encoding($data) {
+        foreach($data as $k => $v) {
+            // If the element is a sub-array then recusively encode the array
+            if(is_array($v)) {
+                $data[$k] = check_encoding($v);
+            // Otherwise if the element is a string then we need to check the encoding
+            } else if(is_string($v)) {
+                if((function_exists('mb_detect_encoding') && mb_detect_encoding($v) !== 'UTF-8') || 
+                   (function_exists('mb_check_encoding') && !mb_check_encoding($v, 'UTF-8'))) {
+                    // The string is using some other encoding, make sure we utf-8 encode
+                    $v = utf8_encode($v);       
+                }
+                
+                $data[$k] = $v;
+            }
+        }
+        
+        return $data;
+    }
 }
 
 class CS_REST_NativeJsonSerialiser {
@@ -38,7 +62,7 @@ class CS_REST_NativeJsonSerialiser {
     }
 
     function serialise($data) {
-        return json_encode($data);
+        return json_encode(@CS_REST_SerialiserFactory::check_encoding($data));
     }
 
     function deserialise($text) {
@@ -71,7 +95,7 @@ class CS_REST_ServicesJsonSerialiser {
     }
     
     function serialise($data) {
-        return $this->_serialiser->encode($data);
+        return $this->_serialiser->encode(@CS_REST_SerialiserFactory::check_encoding($data));
     }
     
     function deserialise($text) {

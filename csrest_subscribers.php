@@ -76,7 +76,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
         $call_options['route'] = $this->_subscribers_base_route.'.json';
         $call_options['method'] = CS_REST_POST;
         $call_options['data'] = $this->_serialiser->serialise($subscriber);
-
+        
         return $this->_call($call_options);
     }
 
