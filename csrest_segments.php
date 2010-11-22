@@ -49,10 +49,38 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      * @access public
      */
     function set_segment_id($segment_id) {
-        $this->_segments_base_route = $this->_base_route.'segments/'.$segment_id.'/';
+        $this->_segments_base_route = $this->_base_route.'segments/'.$segment_id;
     }
     
-
+    /**
+     * Creates a new segment on the given list with the provided details
+     * @param int $list_id The list on which to create the segment
+     * @param $segment_details The details of the new segment
+     * @param $call_options
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created segment
+     */
+    function create($list_id, $segment_details, $call_options = array()) {
+        $call_options['route'] = $this->_base_route.'segments/'.$list_id.'.json';
+        $call_options['method'] = CS_REST_POST;
+        $call_options['data'] = $this->_serialiser->serialise($segment_details);
+                
+        return $this->_call($call_options);
+    }    
+    
+    /**
+     * Updates the current segment with the provided details. Calls to this route will clear any existing rules
+     * @param $segment_details The new details for the segment
+     * @param $call_options
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function update($segment_details, $call_options = array()) {
+        $call_options['route'] = $this->_segments_base_route.'.json';
+        $call_options['method'] = CS_REST_PUT;
+        $call_options['data'] = $this->_serialiser->serialise($segment_details);
+        
+        return $this->_call($call_options);
+    }    
+    
     /**
      * Gets the details of the current segment
      * @param $call_options
@@ -65,11 +93,14 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      *             'Subject' => The subject of the rule
      *             'Clauses' => array<string> The clauses making up this segment rule
      *         }
-     *     )
+     *     ),
+     *     'ListID' => The ID of the list on which this segment is applied
+     *     'SegmentID' => The ID of this segment
+     *     'Title' => The title of this segment
      * }
      */
     function get($call_options = array()) {
-        $call_options['route'] = trim($this->_segments_base_route, '/').'.json';
+        $call_options['route'] = $this->_segments_base_route.'.json';
         $call_options['method'] = CS_REST_GET;
         
         return $this->_call($call_options);
@@ -82,7 +113,7 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete($call_options = array()) {
-        $call_options['route'] = trim($this->_segments_base_route, '/').'.json';
+        $call_options['route'] = $this->_segments_base_route.'.json';
         $call_options['method'] = CS_REST_DELETE;
         
         return $this->_call($call_options);
@@ -95,7 +126,7 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function clear_rules($call_options = array()) {
-        $call_options['route'] = $this->_segments_base_route.'rules.json';
+        $call_options['route'] = $this->_segments_base_route.'/rules.json';
         $call_options['method'] = CS_REST_DELETE;
         
         return $this->_call($call_options);
@@ -138,7 +169,7 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
     function get_subscribers($subscribed_since, $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL, $call_options = array()) {
             
-        $route = $this->_segments_base_route.'active.json?date='.urlencode($subscribed_since);
+        $route = $this->_segments_base_route.'/active.json?date='.urlencode($subscribed_since);
         
         $call_options['route'] = $this->_add_paging_to_route($route, $page_number, 
             $page_size, $order_field, $order_direction);
