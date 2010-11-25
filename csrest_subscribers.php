@@ -166,11 +166,10 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
     /**
      * Unsubscribes the given subscriber from the current list
      * @param string $email The email address to unsubscribe
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function unsubscribe($email, $call_options = array()) {
+    function unsubscribe($email) {
         // We need to build the subscriber data structure.
         $email = array(
 		    'EmailAddress' => $email 

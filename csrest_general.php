@@ -49,7 +49,7 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
      *     'SystemDate' => string The current system date in your accounts timezone
      * }
      */
-    function get_systemdate($call_options = array()) {
+    function get_systemdate() {
         return $this->get_request($this->_base_route.'systemdate.json');
     }
 

@@ -363,7 +363,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     'BouncesThisYear'
      * }
      */
-    function get_stats($call_options = array()) {
+    function get_stats() {
         return $this->get_request($this->_lists_base_route.'stats.json');
     }
 }
