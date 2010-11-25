@@ -1,6 +1,12 @@
 <?php
 
 require_once 'class/base_classes.php';
+
+/**
+ * Class to access general resources from the create send API.
+ * @author tobyb
+ *
+ */
 class CS_REST_General extends CS_REST_Wrapper_Base {
 
     /**
@@ -27,21 +33,16 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
 
     /**
      * Gets an array of valid timezones
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array<string>(timezones)
      */
-    function get_timezones($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'timezones.json';
-        $call_options['method'] = CS_REST_GET;
-        	
-        return $this->_call($call_options);
+    function get_timezones() {
+        return $this->get_request($this->_base_route.'timezones.json');
     }
 
     /**
      * Gets the current date in your accounts timezone
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -49,24 +50,17 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
      * }
      */
     function get_systemdate($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'systemdate.json';
-        $call_options['method'] = CS_REST_GET;
-        	
-        return $this->_call($call_options);
+        return $this->get_request($this->_base_route.'systemdate.json');
     }
 
     /**
      * Gets an array of valid countries
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array<string>(countries)
      */
-    function get_countries($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'countries.json';
-        $call_options['method'] = CS_REST_GET;
-        	
-        return $this->_call($call_options);
+    function get_countries() {
+        return $this->get_request($this->_base_route.'countries.json');
     }
 
     /**
@@ -74,25 +68,19 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
      * @param string $username Your username
      * @param string $password Your password
      * @param string $site_url The url you use to login from
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
      *     'ApiKey' => string Your api key
      * }
      */
-    function get_apikey($username, $password, $site_url, $call_options = array()) {
-        $call_options['route'] = $this->_base_route.'apikey.json?siteurl='.$site_url;
-        $call_options['method'] = CS_REST_GET;
-
-        $call_options['credentials'] = $username.':'.$password;
-
-        return $this->_call($call_options);
+    function get_apikey($username, $password, $site_url) {
+        return $this->get_request($this->_base_route.'apikey.json?siteurl='.$site_url, 
+            array('credentials' => $username.':'.$password));
     }
 
     /**
      * Gets an array of clients
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -102,10 +90,7 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_clients($call_options = array()) {
-        $call_options['route'] = $this->_base_route.'clients.json';
-        $call_options['method'] = CS_REST_GET;
-        	
-        return $this->_call($call_options);
+    function get_clients() {
+        return $this->get_request($this->_base_route.'clients.json');
     }
 }

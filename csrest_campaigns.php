@@ -69,16 +69,11 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *         'ListIDs' => array<string> optional An array of list ids to send the campaign to
      *         'SegmentIDs' => array<string> optional An array of segment ids to send the campaign to.
      *     )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created campaign
      */
-    function create($client_id, $campaign_info, $call_options = array()) {
-        $call_options['route'] = $this->_base_route.'campaigns/'.$client_id.'.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($campaign_info);
-
-        return $this->_call($call_options);
+    function create($client_id, $campaign_info) {
+        return $this->post_request($this->_base_route.'campaigns/'.$client_id.'.json', $campaign_info);
     }
     
     /**
@@ -87,21 +82,16 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param string $personalize How to personalize the campaign content. Valid options are:
      *     'Random': Choose a random campaign recipient and use their personalisation data
      *     'Fallback': Use the fallback terms specified in the campaign content
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function send_preview($recipients, $personalize = 'Random', $call_options = array()) { 
+    function send_preview($recipients, $personalize = 'Random') { 
         $preview_data = array(
             'PreviewRecipients' => $recipients,
             'Personalize' => $personalize
         );
         
-        $call_options['route'] = $this->_campaigns_base_route.'sendpreview.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($preview_data);
-        
-        return $this->_call($call_options);
+        return $this->post_request($this->_campaigns_base_route.'sendpreview.json', $preview_data);
     }
 
     /**
@@ -113,29 +103,20 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *        'SendDate' => string required The date to send the campaign or 'immediately'.
      *                      The date should be in the format 'y-M-d'
      *     )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function send($schedule, $call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'send.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($schedule);
-
-        return $this->_call($call_options);
+    function send($schedule) {
+        return $this->post_request($this->_campaigns_base_route.'send.json', $schedule);
     }
 
     /**
      * Deletes an existing campaign from the system
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function delete($call_options = array()) {
-        $call_options['route'] = trim($this->_campaigns_base_route, '/').'.json';
-        $call_options['method'] = CS_REST_DELETE;
-
-        return $this->_call($call_options);
+    function delete() {
+        return $this->delete_request(trim($this->_campaigns_base_route, '/').'.json');
     }
 
     /**
@@ -144,7 +125,6 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -164,15 +144,9 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * }
      */
     function get_recipients($page_number = NULL, $page_size = NULL, $order_field = NULL, 
-        $order_direction = NULL, $call_options = array()) {
-            
-        $route = $this->_campaigns_base_route.'recipients.json';
-        
-        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
-            $order_field, $order_direction, '?');
-        $call_options['method'] = CS_REST_GET;
-        
-        return $this->_call($call_options);
+        $order_direction = NULL) {            
+        return $this->get_request_paged($this->_campaigns_base_route.'recipients.json', $page_number, 
+            $page_size, $order_field, $order_direction, '?');
     }
 
     /**
@@ -181,7 +155,6 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -205,20 +178,13 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * )
      */
     function get_bounces($page_number = NULL, $page_size = NULL, $order_field = NULL, 
-        $order_direction = NULL, $call_options = array()) {
-            
-        $route = $this->_campaigns_base_route.'bounces.json';
-        
-        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
-            $order_field, $order_direction, '?');
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+        $order_direction = NULL) {
+        return $this->get_request_paged($this->_campaigns_base_route.'bounces.json', $page_number, 
+            $page_size, $order_field, $order_direction, '?');
     }
 
     /**
      * Gets the lists a campaign was sent to
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -237,16 +203,12 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_lists_and_segments($call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'listsandsegments.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_lists_and_segments() {
+        return $this->get_request($this->_campaigns_base_route.'listsandsegments.json');
     }
 
     /**
      * Gets a summary of all campaign reporting statistics
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -259,11 +221,8 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'WebVersionURL' => The url of the webversion of the campaign
      * }
      */
-    function get_summary($call_options = array()) {
-        $call_options['route'] = $this->_campaigns_base_route.'summary.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_summary() {
+        return $this->get_request($this->_campaigns_base_route.'summary.json');
     }
 
     /**
@@ -273,7 +232,6 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -295,15 +253,9 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * }
      */
     function get_opens($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
-        $order_direction = NULL, $call_options = array()) {
-            
-        $route = $this->_campaigns_base_route.'opens.json?date='.urlencode($since);
-        
-        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
-            $order_field, $order_direction);
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+        $order_direction = NULL) {
+        return $this->get_request_paged($this->_campaigns_base_route.'opens.json?date='.urlencode($since), 
+            $page_number, $page_size, $order_field, $order_direction);
     }
 
     /**
@@ -313,7 +265,6 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -336,15 +287,9 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * }
      */
     function get_clicks($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
-        $order_direction = NULL, $call_options = array()) {
-            
-        $route = $this->_campaigns_base_route.'clicks.json?date='.urlencode($since);
-        
-        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
-            $order_field, $order_direction);
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+        $order_direction = NULL) {
+        return $this->get_request_paged($this->_campaigns_base_route.'clicks.json?date='.urlencode($since), 
+            $page_number, $page_size, $order_field, $order_direction);
     }
 
     /**
@@ -354,7 +299,6 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -376,14 +320,8 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * }
      */
     function get_unsubscribes($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
-        $order_direction = NULL, $call_options = array()) {
-        
-        $route = $this->_campaigns_base_route.'unsubscribes.json?date='.urlencode($since);
-        
-        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
-            $order_field, $order_direction);
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+        $order_direction = NULL) {
+        return $this->get_request_paged($this->_campaigns_base_route.'unsubscribes.json?date='.urlencode($since), 
+            $page_number, $page_size, $order_field, $order_direction);
     }
 }

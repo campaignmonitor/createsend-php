@@ -62,16 +62,11 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      *             'ZipFileURL' => The url where the template image zip can be accessed
      *             'ScreenshotURL' => The url of a screenshot of the template
      *         )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created template
      */
-    function create($client_id, $template_details, $call_options = array()) {
-        $call_options['route'] = $this->_base_route.'templates/'.$client_id.'.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($template_details);
-
-        return $this->_call($call_options);
+    function create($client_id, $template_details) {
+        return $this->post_request($this->_base_route.'templates/'.$client_id.'.json', $template_details);
     }
 
     /**
@@ -84,34 +79,24 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      *             'ZipFileURL' => The url where the template image zip can be accessed
      *             'ScreenshotURL' => The url of a screenshot of the template
      *         )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function update($template_details, $call_options = array()) {
-        $call_options['route'] = $this->_templates_base_route;
-        $call_options['method'] = CS_REST_PUT;
-        $call_options['data'] = $this->_serialiser->serialise($template_details);
-
-        return $this->_call($call_options);
+    function update($template_details) {
+        return $this->put_request($this->_templates_base_route, $template_details);
     }
 
     /**
      * Deletes the current template from the system
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function delete($call_options = array()) {
-        $call_options['route'] = $this->_templates_base_route;
-        $call_options['method'] = CS_REST_DELETE;
-
-        return $this->_call($call_options);
+    function delete() {
+        return $this->delete_request($this->_templates_base_route);
     }
 
     /**
      * Gets the basic details of the current template
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -121,10 +106,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      *     'ScreenshotURL' => The url of the template screenshot if one was provided
      * }
      */
-    function get($call_options = array()) {
-        $call_options['route'] = $this->_templates_base_route;
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get() {
+        return $this->get_request($this->_templates_base_route);
     }
 }

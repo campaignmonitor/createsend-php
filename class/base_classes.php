@@ -6,6 +6,11 @@ require_once 'log.php';
 
 define('CS_REST_WRAPPER_VERSION', '1.0.0');
 
+/**
+ * A general result object returned from all Createsend API calls.
+ * @author tobyb
+ *
+ */
 class CS_REST_Wrapper_Result {
     /**
      * The deserialised result of the API call
@@ -142,17 +147,33 @@ class CS_REST_Wrapper_Base {
             'host' => $host
         );
     }
-    
+
     /**
-     * @param $route
-     * @param $page_number
-     * @param $page_size
-     * @param $order_field
-     * @param $order_direction
-     * @access private
+     * @return boolean True if the wrapper is using SSL.
+     * @access public
      */
-    function _add_paging_to_route($route, $page_number, $page_size, $order_field, $order_direction,
-        $join_char = '&') {         
+    function is_secure() {
+        return $this->_protocol === 'https';
+    }
+    
+    function put_request($route, $data, $call_options = array()) {
+        return $this->_call($call_options, CS_REST_PUT, $route, $data);
+    }
+    
+    function post_request($route, $data, $call_options = array()) {
+        return $this->_call($call_options, CS_REST_POST, $route, $data);
+    }
+    
+    function delete_request($route, $call_options = array()) {
+        return $this->_call($call_options, CS_REST_DELETE, $route);
+    }
+    
+    function get_request($route, $call_options = array()) {
+        return $this->_call($call_options, CS_REST_GET, $route);
+    }
+    
+    function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction,
+        $join_char = '&') {      
         if(!is_null($page_number)) {
             $route .= $join_char.'page='.$page_number;
             $join_char = '&';
@@ -173,23 +194,22 @@ class CS_REST_Wrapper_Base {
             $join_char = '&';
         }
         
-        return $route;        
-    }
-
-    /**
-     * @return boolean True if the wrapper is using SSL.
-     * @access public
-     */
-    function is_secure() {
-        return $this->_protocol === 'https';
-    }
+        return $this->get_request($route);      
+    }       
 
     /**
      * Internal method to make a general API request based on the provided options
      * @param $call_options
      * @access private
      */
-    function _call($call_options) {
+    function _call($call_options, $method, $route, $data = NULL) {
+        $call_options['route'] = $route;
+        $call_options['method'] = $method;
+        
+        if(!is_null($data)) {
+            $call_options['data'] = $this->_serialiser->serialise($data);
+        }
+        
         $call_options = array_merge($this->_default_call_options, $call_options);
         $this->_log->log_message('Making '.$call_options['method'].' call to: '.$call_options['route'], get_class($this), CS_REST_LOG_WARNING);
             

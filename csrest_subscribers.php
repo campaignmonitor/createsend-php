@@ -68,16 +68,11 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *         )
      *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
      *     )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function add($subscriber, $call_options = array()) {
-        $call_options['route'] = $this->_subscribers_base_route.'.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($subscriber);
-        
-        return $this->_call($call_options);
+    function add($subscriber) {
+        return $this->post_request($this->_subscribers_base_route.'.json', $subscriber);
     }
 
     /**
@@ -97,7 +92,6 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *         )
      *     )
      * @param $resubscribe Whether we should resubscribe any existing subscribers
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -115,22 +109,17 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * }
      *
      */
-    function import($subscribers, $resubscribe, $call_options = array()) {
+    function import($subscribers, $resubscribe) {
         $subscribers = array(
 		    'Resubscribe' => $resubscribe,
 		    'Subscribers' => $subscribers
         );
-
-        $call_options['route'] = $this->_subscribers_base_route.'/import.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($subscribers);
-
-        return $this->_call($call_options);
+        
+        return $this->post_request($this->_subscribers_base_route.'/import.json', $subscribers);
     }
 
     /**
      * Gets a subscriber details, including custom fields
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -146,16 +135,12 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get($email, $call_options = array()) {
-        $call_options['route'] = $this->_subscribers_base_route.'.json?email='.urlencode($email);
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get($email) {
+        return $this->get_request($this->_subscribers_base_route.'.json?email='.urlencode($email));
     }
 
     /**
      * Gets the sending history to a specific subscriber
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -174,11 +159,8 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_history($email, $call_options = array()) {
-        $call_options['route'] = $this->_subscribers_base_route.'/history.json?email='.urlencode($email);
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_history($email) {
+        return $this->get_request($this->_subscribers_base_route.'/history.json?email='.urlencode($email));
     }
 
     /**
@@ -193,12 +175,8 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
         $email = array(
 		    'EmailAddress' => $email 
         );
-
-        $call_options['route'] = $this->_subscribers_base_route.'/unsubscribe.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($email);
-
-        return $this->_call($call_options);
+        
+        return $this->post_request($this->_subscribers_base_route.'/unsubscribe.json', $email);
     }
 
 

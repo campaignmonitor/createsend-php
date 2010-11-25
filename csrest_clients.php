@@ -62,7 +62,6 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
 
     /**
      * Gets a list of sent campaigns for the current client
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -76,16 +75,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_campaigns($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'campaigns.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_campaigns() {
+        return $this->get_request($this->_clients_base_route.'campaigns.json');
     }
 
     /**
      * Gets a list of sent campaigns for the current client
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -97,16 +92,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_drafts($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'drafts.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_drafts() {
+        return $this->get_request($this->_clients_base_route.'drafts.json');
     }
 
     /**
      * Gets all subscriber lists the current client has created
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -116,16 +107,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_lists($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'lists.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_lists() {
+        return $this->get_request($this->_clients_base_route.'lists.json');
     }
 
     /**
      * Gets all list segments the current client has created
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -136,11 +123,8 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_segments($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'segments.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_segments() {
+        return $this->get_request($this->_clients_base_route.'segments.json');
     }
 
     /**
@@ -149,7 +133,6 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -170,20 +153,14 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * }
      */
     function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL, 
-        $order_direction = NULL, $call_options = array()) {
-        
-        $route = $this->_clients_base_route.'suppressionlist.json';
-        
-        $call_options['route'] = $this->_add_paging_to_route($route, $page_number, $page_size, 
-            $order_field, $order_direction, '?');
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+        $order_direction = NULL) {
+            
+        return $this->get_request_paged($this->_clients_base_route.'suppressionlist.json', 
+            $page_number, $page_size, $order_field, $order_direction, '?');
     }
 
     /**
      * Gets all templates the current client has access to
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -195,16 +172,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_templates($call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'templates.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get_templates() {
+        return $this->get_request($this->_clients_base_route.'templates.json');
     }
 
     /**
      * Gets all templates the current client has access to
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -257,24 +230,17 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     }     
      * }
      */
-    function get($call_options = array()) {
-        $call_options['route'] = trim($this->_clients_base_route, '/').'.json';
-        $call_options['method'] = CS_REST_GET;
-
-        return $this->_call($call_options);
+    function get() {
+        return $this->get_request(trim($this->_clients_base_route, '/').'.json');
     }
 
     /**
      * Deletes an existing client from the system
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function delete($call_options = array()) {
-        $call_options['route'] = trim($this->_clients_base_route, '/').'.json';
-        $call_options['method'] = CS_REST_DELETE;
-
-        return $this->_call($call_options);
+    function delete() {
+        return $this->delete_request(trim($this->_clients_base_route, '/').'.json');
     }
 
     /**
@@ -288,16 +254,11 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *             'Country' => The clients country
      *             'TimeZone' => The clients timezone
      *         )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created client
      */
-    function create($client, $call_options = array()) {
-        $call_options['route'] = $this->_base_route.'clients.json';
-        $call_options['method'] = CS_REST_POST;
-        $call_options['data'] = $this->_serialiser->serialise($client);
-
-        return $this->_call($call_options);
+    function create($client) {
+        return $this->post_request($this->_base_route.'clients.json', $client);
     }
 
     /**
@@ -311,16 +272,11 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *             'Country' => The clients country
      *             'TimeZone' => The clients timezone
      *         )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function set_basics($client_basics, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setbasics.json';
-        $call_options['method'] = CS_REST_PUT;
-        $call_options['data'] = $this->_serialiser->serialise($client_basics);
-
-        return $this->_call($call_options);
+    function set_basics($client_basics) {
+        return $this->put_request($this->_clients_base_route.'setbasics.json', $client_basics);
     }
 
     /**
@@ -343,16 +299,11 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *             'Username' => The clients current username
      *             'Password' => The new password for the given client
      *         )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function set_access($client_access, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setaccess.json';
-        $call_options['method'] = CS_REST_PUT;
-        $call_options['data'] = $this->_serialiser->serialise($client_access);
-
-        return $this->_call($call_options);
+    function set_access($client_access) {
+        return $this->put_request($this->_clients_base_route.'setaccess.json', $client_access);
     }
 
     /**
@@ -370,16 +321,11 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *             'MarkupPerRecipient' => The markup applied per campaign recipient
      *             'MarkupOnDesignSpamTest' => The markup applied per design and spam test
      *         )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function set_payg_billing($client_billing, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setpaygbilling.json';
-        $call_options['method'] = CS_REST_PUT;
-        $call_options['data'] = $this->_serialiser->serialise($client_billing);
-
-        return $this->_call($call_options);
+    function set_payg_billing($client_billing) {
+        return $this->put_request($this->_clients_base_route.'setpaygbilling.json', $client_billing);
     }
 
     /**
@@ -392,15 +338,10 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *             'ClientPays' => Whether client client pays for themselves
      *             'MarkupPercentage' => Sets the percentage markup used for all monthly tiers
      *         )
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
-    function set_monthly_billing($client_billing, $call_options = array()) {
-        $call_options['route'] = $this->_clients_base_route.'setmonthlybilling.json';
-        $call_options['method'] = CS_REST_PUT;
-        $call_options['data'] = $this->_serialiser->serialise($client_billing);
-
-        return $this->_call($call_options);
+    function set_monthly_billing($client_billing) {
+        return $this->put_request($this->_clients_base_route.'setmonthlybilling.json', $client_billing);
     }
 }
