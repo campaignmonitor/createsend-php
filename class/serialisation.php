@@ -20,7 +20,7 @@ class CS_REST_SerialiserFactory {
         foreach($data as $k => $v) {
             // If the element is a sub-array then recusively encode the array
             if(is_array($v)) {
-                $data[$k] = check_encoding($v);
+                $data[$k] = @CS_REST_SerialiserFactory::check_encoding($v);
             // Otherwise if the element is a string then we need to check the encoding
             } else if(is_string($v)) {
                 if((function_exists('mb_detect_encoding') && mb_detect_encoding($v) !== 'UTF-8') || 
@@ -32,7 +32,7 @@ class CS_REST_SerialiserFactory {
                 $data[$k] = $v;
             }
         }
-        
+              
         return $data;
     }
 }
