@@ -52,6 +52,7 @@ class CS_REST_TestBase extends UnitTestCase {
 		    'contentType' => 'application/json; charset=utf-8',
 			'deserialise' => true,
 			'host' => $this->api_host,
+            'protocol' => $this->protocol,
 		    'route' => $route,
 		    'method' => $method
         );
@@ -112,32 +113,7 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 }
 
-class CS_REST_TestGeneral extends CS_REST_TestBase {/*
-    function test_add_paging_to_route() {
-        $this->assertIdentical('route', $this->wrapper->_add_paging_to_route('route', NULL, NULL, NULL, NULL));
-        $this->assertIdentical('route?qs&page=1', 
-            $this->wrapper->_add_paging_to_route('route?qs', 1, NULL, NULL, NULL));
-        $this->assertIdentical('route?qs&pageSize=20', 
-            $this->wrapper->_add_paging_to_route('route?qs', NULL, 20, NULL, NULL));
-        $this->assertIdentical('route?qs&orderField=email', 
-            $this->wrapper->_add_paging_to_route('route?qs', NULL, NULL, 'email', NULL));
-        $this->assertIdentical('route?qs&orderDirection=desc', 
-            $this->wrapper->_add_paging_to_route('route?qs', NULL, NULL, NULL, 'desc'));
-        $this->assertIdentical('route?qs&page=1&pageSize=20&orderField=email&orderDirection=desc', 
-            $this->wrapper->_add_paging_to_route('route?qs', 1, 20, 'email', 'desc'));
-            
-        $this->assertIdentical('route', $this->wrapper->_add_paging_to_route('route', NULL, NULL, NULL, NULL, '?'));
-        $this->assertIdentical('route?page=1', 
-            $this->wrapper->_add_paging_to_route('route', 1, NULL, NULL, NULL, '?'));
-        $this->assertIdentical('route?pageSize=20', 
-            $this->wrapper->_add_paging_to_route('route', NULL, 20, NULL, NULL, '?'));
-        $this->assertIdentical('route?orderField=email', 
-            $this->wrapper->_add_paging_to_route('route', NULL, NULL, 'email', NULL, '?'));
-        $this->assertIdentical('route?orderDirection=desc', 
-            $this->wrapper->_add_paging_to_route('route', NULL, NULL, NULL, 'desc', '?'));
-        $this->assertIdentical('route?page=1&pageSize=20&orderField=email&orderDirection=desc', 
-            $this->wrapper->_add_paging_to_route('route', 1, 20, 'email', 'desc', '?'));
-    } */
+class CS_REST_TestGeneral extends CS_REST_TestBase {
     
     function testget_timezones() {
         $raw_result = 'some timezones';

@@ -64,6 +64,12 @@ class CS_REST_CurlTransport {
         curl_setopt($ch, CURLOPT_USERPWD, $call_options['credentials']);
         curl_setopt($ch, CURLOPT_USERAGENT, $call_options['userAgent']);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: '.$call_options['contentType']));
+        
+        if($call_options['protocol'] === 'https') {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__).'/GoDaddyClass2CA.crt');
+        }
 
         switch($call_options['method']) {
             case CS_REST_PUT:

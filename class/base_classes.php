@@ -144,7 +144,8 @@ class CS_REST_Wrapper_Base {
                 ' PHPv'.phpversion().' over '.$transport_type.' with '.$this->_serialiser->get_type(),
             'contentType' => 'application/json; charset=utf-8', 
             'deserialise' => true,
-            'host' => $host
+            'host' => $host,
+            'protocol' => $protocol
         );
     }
 
