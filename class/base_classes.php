@@ -4,7 +4,7 @@ require_once 'serialisation.php';
 require_once 'transport.php';
 require_once 'log.php';
 
-define('CS_REST_WRAPPER_VERSION', '1.0.0');
+define('CS_REST_WRAPPER_VERSION', '1.0.1');
 
 /**
  * A general result object returned from all Createsend API calls.
