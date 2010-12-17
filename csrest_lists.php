@@ -439,4 +439,14 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function activate_webhook($webhook_id) {
         return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/activate.json', '');
     }
+    
+    /**
+     * Deactivates an existing activated webhook
+     * @param string $webhook_id The id of the webhook to deactivate
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function deactivate_webhook($webhook_id) {
+        return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/deactivate.json', '');
+    }
 }
