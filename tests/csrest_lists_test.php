@@ -244,4 +244,18 @@ class CS_REST_TestLists extends CS_REST_TestBase {
 
         $this->general_test('get_webhooks', $call_options, $raw_result, $deserialised);
     }
+
+    function testcreate_webhook() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->list_base_route.'webhooks.json', 'POST');
+
+        $webhook = array (
+            'Url' => 'http://webhooks.abcwidgets.com/receive',
+            'Events' => array('Subscribe', 'Deactivate')
+        );
+
+        $this->general_test_with_argument('create_webhook', $webhook, $call_options,
+        $raw_result, $raw_result, 'webhook was serialised to this');
+    }
 }

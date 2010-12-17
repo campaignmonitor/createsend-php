@@ -9,6 +9,10 @@ define('CS_REST_CUSTOM_FIELD_TYPE_DATE', 'Date');
 define('CS_REST_CUSTOM_FIELD_TYPE_COUNTRY', 'Country');
 define('CS_REST_CUSTOM_FIELD_TYPE_USSTATE', 'USState');
 
+define('CS_REST_LIST_WEBHOOK_SUBSCRIBE', 'Subscribe');
+define('CS_REST_LIST_WEBHOOK_DEACTIVATE', 'Deactivate');
+define('CS_REST_LIST_WEBHOOK_UPDATE', 'Update');
+
 /**
  * Class to access a lists resources from the create send API.
  * This class includes functions to create lists and custom fields,
@@ -382,5 +386,27 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      */
     function get_webhooks() {
         return $this->get_request($this->_lists_base_route.'webhooks.json');
+    }
+   
+    /**
+     * Creates a new webhook based on the provided details
+     * @param array $webhook The details of the new webhook
+     *     This array should be of the form
+     *     array(
+     *         'Events' => array<string> The events to subscribe to. Valid events are 
+     *             CS_REST_LIST_WEBHOOK_SUBSCRIBE, 
+     *             CS_REST_LIST_WEBHOOK_DEACTIVATE, 
+     *             CS_REST_LIST_WEBHOOK_UPDATE
+     *         'Url' => string The url of the page to POST the webhook events to
+     *         'PayloadFormat' => The format to use when POSTing webhook event data, either
+     *             CS_REST_WEBHOOK_FORMAT_JSON or
+     *             CS_REST_WEBHOOK_FORMAT_XML
+     *         (xml or json)
+     *     )
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created webhook
+     */
+    function create_webhook($webhook) {
+        return $this->post_request($this->_lists_base_route.'webhooks.json', $webhook);    
     }
 }
