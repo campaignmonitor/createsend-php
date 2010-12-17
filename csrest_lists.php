@@ -409,4 +409,14 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function create_webhook($webhook) {
         return $this->post_request($this->_lists_base_route.'webhooks.json', $webhook);    
     }
+    
+    /**
+     * Sends test events for the given webhook id
+     * @param $webhook_id The id of the webhook to test
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty. 
+     */
+    function test_webhook($webhook_id) {
+        return $this->get_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/test.json');
+    }
 }

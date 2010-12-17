@@ -258,4 +258,14 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test_with_argument('create_webhook', $webhook, $call_options,
         $raw_result, $raw_result, 'webhook was serialised to this');
     }
+
+    function testtest_webhook() {
+        $raw_result = '';
+
+        $webhook_id = 'not a real id';
+        $call_options = $this->get_call_options($this->list_base_route.'webhooks/'.$webhook_id.'/test.json');
+
+        $this->general_test_with_argument('test_webhook', $webhook_id, $call_options,
+            $raw_result, $raw_result, NULL);
+    }
 }
