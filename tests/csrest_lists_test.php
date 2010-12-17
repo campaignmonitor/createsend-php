@@ -236,4 +236,12 @@ class CS_REST_TestLists extends CS_REST_TestBase {
 
         $this->general_test('get_stats', $call_options, $raw_result, $deserialised);
     }
+
+    function testget_webhooks() {
+        $raw_result = 'list webhooks';
+        $deserialised = array(1,23,4,5,6,7);
+        $call_options = $this->get_call_options($this->list_base_route.'webhooks.json');
+
+        $this->general_test('get_webhooks', $call_options, $raw_result, $deserialised);
+    }
 }

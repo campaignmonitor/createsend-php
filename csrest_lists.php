@@ -333,7 +333,6 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
 
     /**
      * Gets statistics for list subscriptions, deletions, bounces and unsubscriptions
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -365,5 +364,23 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      */
     function get_stats() {
         return $this->get_request($this->_lists_base_route.'stats.json');
+    }
+    
+    /**
+     * Gets the webhooks which are currently subcribed to event on this list
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'WebhookID' => The if of
+     *         'Events' => An array of the events this webhook is subscribed to ('Subscribe', 'Update', 'Deactivate')
+     *         'Url' => The url the webhook data will be POSTed to
+     *         'Status' => The current status of this webhook
+     *         'PayloadFormat' => The format in which data will be POSTed
+     *     }
+     * )
+     */
+    function get_webhooks() {
+        return $this->get_request($this->_lists_base_route.'webhooks.json');
     }
 }
