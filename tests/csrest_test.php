@@ -74,7 +74,7 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     function general_test($wrapper_function, $call_options, $from_transport,
-    $from_deserialisation, $response_code = 200) {
+        $from_deserialisation, $response_code = 200) {
 
         $transport_result = array (
 	        'code' => $response_code, 

@@ -422,11 +422,21 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
 
     /**
      * Deletes an existing webhook from the system
-     * @param string $webhook_id
+     * @param string $webhook_id The id of the webhook to delete
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function delete_webhook($webhook_id) {
         return $this->delete_request($this->_lists_base_route.'webhooks/'.$webhook_id.'.json');
+    }
+    
+    /**
+     * Activates an existing deactivated webhook
+     * @param string $webhook_id The id of the webhook to activate
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function activate_webhook($webhook_id) {
+        return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/activate.json', '');
     }
 }

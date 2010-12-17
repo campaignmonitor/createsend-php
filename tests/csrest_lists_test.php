@@ -291,4 +291,28 @@ class CS_REST_TestLists extends CS_REST_TestBase {
 
         $this->assertIdentical($expected_result, $result);
     }
+
+    function testactivate_webhook() {
+        $raw_result = '';
+        $response_code = 200;
+        $webhook_id = 'not a webhook id';
+
+        $call_options = $this->get_call_options(
+            $this->list_base_route.'webhooks/'.$webhook_id.'/activate.json', 'PUT');
+        $call_options['data'] = '';
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, '', '', $response_code);
+
+        $result = $this->wrapper->activate_webhook($webhook_id);
+
+        $this->assertIdentical($expected_result, $result);
+    }
 }
