@@ -1,0 +1,21 @@
+[
+  {
+    "WebhookID": "943678317049bc13",
+    "Events": [
+      "Bounce",
+      "Spam"
+    ],
+    "Url": "http://www.postbin.org/d9w8ud9wud9w",
+    "Status": "Active",
+    "PayloadFormat": "Json"
+  },
+  {
+    "WebhookID": "ee1b3864e5ca6161",
+    "Events": [
+      "Subscribe"
+    ],
+    "Url": "http://www.postbin.org/hiuhiu2h2u",
+    "Status": "Active",
+    "PayloadFormat": "Xml"
+  }
+]

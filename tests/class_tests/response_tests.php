@@ -465,7 +465,29 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     "RecordsOnThisPage" => 5,
                     "TotalNumberOfRecords" => 5,
                     "NumberOfPages" => 1
-                )
+                ),
+                'list_webhooks' => array(
+                    array(
+                        "WebhookID" => "943678317049bc13",
+                        "Events" => array(
+                            "Bounce",
+                            "Spam"
+                        ),
+                        "Url" => "http://www.postbin.org/d9w8ud9wud9w",
+                        "Status" => "Active",
+                        "PayloadFormat" => "Json"
+                    ),
+                    array(
+                        "WebhookID" => "ee1b3864e5ca6161",
+                        "Events" => array(
+                            "Subscribe"
+                        ),
+                        "Url" => "http://www.postbin.org/hiuhiu2h2u",
+                        "Status" => "Active",
+                        "PayloadFormat" => "Xml"
+                    )
+                ),
+                'create_list_webhook' => '6a783d359bd44ef62c6ca0d3eda4412a'
             );
             
             $campaign_responses = array(

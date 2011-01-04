@@ -9,6 +9,10 @@ define('CS_REST_CUSTOM_FIELD_TYPE_DATE', 'Date');
 define('CS_REST_CUSTOM_FIELD_TYPE_COUNTRY', 'Country');
 define('CS_REST_CUSTOM_FIELD_TYPE_USSTATE', 'USState');
 
+define('CS_REST_LIST_WEBHOOK_SUBSCRIBE', 'Subscribe');
+define('CS_REST_LIST_WEBHOOK_DEACTIVATE', 'Deactivate');
+define('CS_REST_LIST_WEBHOOK_UPDATE', 'Update');
+
 /**
  * Class to access a lists resources from the create send API.
  * This class includes functions to create lists and custom fields,
@@ -333,7 +337,6 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
 
     /**
      * Gets statistics for list subscriptions, deletions, bounces and unsubscriptions
-     * @param $call_options
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -365,5 +368,85 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      */
     function get_stats() {
         return $this->get_request($this->_lists_base_route.'stats.json');
+    }
+    
+    /**
+     * Gets the webhooks which are currently subcribed to event on this list
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'WebhookID' => The if of
+     *         'Events' => An array of the events this webhook is subscribed to ('Subscribe', 'Update', 'Deactivate')
+     *         'Url' => The url the webhook data will be POSTed to
+     *         'Status' => The current status of this webhook
+     *         'PayloadFormat' => The format in which data will be POSTed
+     *     }
+     * )
+     */
+    function get_webhooks() {
+        return $this->get_request($this->_lists_base_route.'webhooks.json');
+    }
+   
+    /**
+     * Creates a new webhook based on the provided details
+     * @param array $webhook The details of the new webhook
+     *     This array should be of the form
+     *     array(
+     *         'Events' => array<string> The events to subscribe to. Valid events are 
+     *             CS_REST_LIST_WEBHOOK_SUBSCRIBE, 
+     *             CS_REST_LIST_WEBHOOK_DEACTIVATE, 
+     *             CS_REST_LIST_WEBHOOK_UPDATE
+     *         'Url' => string The url of the page to POST the webhook events to
+     *         'PayloadFormat' => The format to use when POSTing webhook event data, either
+     *             CS_REST_WEBHOOK_FORMAT_JSON or
+     *             CS_REST_WEBHOOK_FORMAT_XML
+     *         (xml or json)
+     *     )
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created webhook
+     */
+    function create_webhook($webhook) {
+        return $this->post_request($this->_lists_base_route.'webhooks.json', $webhook);    
+    }
+    
+    /**
+     * Sends test events for the given webhook id
+     * @param string $webhook_id The id of the webhook to test
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty. 
+     */
+    function test_webhook($webhook_id) {
+        return $this->get_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/test.json');
+    }    
+
+    /**
+     * Deletes an existing webhook from the system
+     * @param string $webhook_id The id of the webhook to delete
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function delete_webhook($webhook_id) {
+        return $this->delete_request($this->_lists_base_route.'webhooks/'.$webhook_id.'.json');
+    }
+    
+    /**
+     * Activates an existing deactivated webhook
+     * @param string $webhook_id The id of the webhook to activate
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function activate_webhook($webhook_id) {
+        return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/activate.json', '');
+    }
+    
+    /**
+     * Deactivates an existing activated webhook
+     * @param string $webhook_id The id of the webhook to deactivate
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function deactivate_webhook($webhook_id) {
+        return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/deactivate.json', '');
     }
 }

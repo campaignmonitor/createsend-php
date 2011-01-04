@@ -236,4 +236,107 @@ class CS_REST_TestLists extends CS_REST_TestBase {
 
         $this->general_test('get_stats', $call_options, $raw_result, $deserialised);
     }
+
+    function testget_webhooks() {
+        $raw_result = 'list webhooks';
+        $deserialised = array(1,23,4,5,6,7);
+        $call_options = $this->get_call_options($this->list_base_route.'webhooks.json');
+
+        $this->general_test('get_webhooks', $call_options, $raw_result, $deserialised);
+    }
+
+    function testcreate_webhook() {
+        $raw_result = '';
+
+        $call_options = $this->get_call_options($this->list_base_route.'webhooks.json', 'POST');
+
+        $webhook = array (
+            'Url' => 'http://webhooks.abcwidgets.com/receive',
+            'Events' => array('Subscribe', 'Deactivate')
+        );
+
+        $this->general_test_with_argument('create_webhook', $webhook, $call_options,
+        $raw_result, $raw_result, 'webhook was serialised to this');
+    }
+
+    function testtest_webhook() {
+        $raw_result = '';
+
+        $webhook_id = 'not a real id';
+        $call_options = $this->get_call_options($this->list_base_route.'webhooks/'.$webhook_id.'/test.json');
+
+        $this->general_test_with_argument('test_webhook', $webhook_id, $call_options,
+            $raw_result, $raw_result, NULL);
+    }
+
+    function testdelete_webhook() {
+        $raw_result = '';
+        $response_code = 200;
+        $webhook_id = 'not a webhook id';
+
+        $call_options = $this->get_call_options(
+            $this->list_base_route.'webhooks/'.$webhook_id.'.json', 'DELETE');
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->delete_webhook($webhook_id);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
+    function testactivate_webhook() {
+        $raw_result = '';
+        $response_code = 200;
+        $webhook_id = 'not a webhook id';
+
+        $call_options = $this->get_call_options(
+            $this->list_base_route.'webhooks/'.$webhook_id.'/activate.json', 'PUT');
+        $call_options['data'] = '';
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, '', '', $response_code);
+
+        $result = $this->wrapper->activate_webhook($webhook_id);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
+    function testdeeeeactivate_webhook() {
+        $raw_result = '';
+        $response_code = 200;
+        $webhook_id = 'not a webhook id';
+
+        $call_options = $this->get_call_options(
+            $this->list_base_route.'webhooks/'.$webhook_id.'/deactivate.json', 'PUT');
+        $call_options['data'] = '';
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, '', '', $response_code);
+
+        $result = $this->wrapper->deactivate_webhook($webhook_id);
+
+        $this->assertIdentical($expected_result, $result);
+    }
 }
