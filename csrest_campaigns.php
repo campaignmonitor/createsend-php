@@ -1,5 +1,5 @@
 <?php
-require_once 'class/base_classes.php';
+require_once dirname(__FILE__).'/class/base_classes.php';
 
 /**
  * Class to access a campaigns resources from the create send API.

@@ -1,5 +1,5 @@
 <?php
-require_once 'class/base_classes.php';
+require_once dirname(__FILE__).'/class/base_classes.php';
 
 define('CS_REST_CLIENT_ACCESS_NONE', 0x0);
 define('CS_REST_CLIENT_ACCESS_REPORTS', 0x1);
