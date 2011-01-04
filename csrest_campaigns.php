@@ -65,7 +65,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *         'FromEmail' => string required The From address for the campaign
      *         'ReplyTo' => string required The Reply-To address for the campaign
      *         'HtmlUrl' => string required A url to download the campaign HTML from
-     *         'TextUrl' => string optional A url to download the campaign text version from
+     *         'TextUrl' => string required A url to download the campaign text version from
      *         'ListIDs' => array<string> optional An array of list ids to send the campaign to
      *         'SegmentIDs' => array<string> optional An array of segment ids to send the campaign to.
      *     )

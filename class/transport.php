@@ -51,8 +51,7 @@ class CS_REST_CurlTransport {
      * @return boolean False if this schema is unavailable on the server.
      */
     function is_available($requires_ssl = false) {
-        return function_exists('curl_init') &&
-        function_exists('curl_exec');
+        return function_exists('curl_init') && function_exists('curl_exec');
     }
 
     function make_call($call_options) {
