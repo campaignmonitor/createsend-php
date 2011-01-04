@@ -4,7 +4,7 @@ require_once 'serialisation.php';
 require_once 'transport.php';
 require_once 'log.php';
 
-define('CS_REST_WRAPPER_VERSION', '1.0.1');
+define('CS_REST_WRAPPER_VERSION', '1.0.2');
 
 define('CS_REST_WEBHOOK_FORMAT_JSON', 'json');
 define('CS_REST_WEBHOOK_FORMAT_XML', 'xml');
