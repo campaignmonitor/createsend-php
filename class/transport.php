@@ -7,16 +7,15 @@ define('CS_REST_DELETE', 'DELETE');
 define('CS_REST_SOCKET_TIMEOUT', 1);
 
 class CS_REST_TransportFactory {
-    function get_available_transport($requires_ssl, $log) {
+    function get_available_transport($requires_ssl, $log) { 
         if(@CS_REST_CurlTransport::is_available($requires_ssl)) {
             return new CS_REST_CurlTransport($log);
         } else if(@CS_REST_SocketTransport::is_available($requires_ssl)) {
             return new CS_REST_SocketTransport($log);
-        } else {
-            trigger_error('No transport is available.'.
-            ($requires_ssl ? ' Try using non-secure (http) mode or ' : ' Please ').
-			    'ensure the cURL extension is loaded',
-            E_ERROR);
+        } else { 
+            die('No transport is available.'.
+                ($requires_ssl ? ' Try using non-secure (http) mode or ' : ' Please ').
+    			'ensure the cURL extension is loaded');
         }
     }
 }
@@ -87,7 +86,7 @@ class CS_REST_CurlTransport {
 
         $response = curl_exec($ch);
         if(!$response && $response !== '') {
-            trigger_error('Error making request with curl_error: '.curl_error($ch));
+            die('Error making request with curl_error: '.curl_error($ch));
         }
 
         $this->_log->log_message('API Call Info for '.$call_options['method'].' '.
@@ -114,7 +113,7 @@ class CS_REST_SocketWrapper {
         $this->socket = fsockopen($domain, $port, $errno, $errstr, CS_REST_SOCKET_TIMEOUT);
 
         if(!$this->socket) {
-            trigger_error('Error making request with '.$errno.': '.$errstr);
+            die('Error making request with '.$errno.': '.$errstr);
             return false;
         } else if(function_exists('stream_set_timeout')) {
             stream_set_timeout($this->socket, CS_REST_SOCKET_TIMEOUT);
@@ -192,7 +191,7 @@ class CS_REST_SocketTransport {
         $port = 80;
 
         $this->_log->log_message('Creating socket to '.$domain.' over '.$protocol.' for request to '.$path,
-        get_class($this), CS_REST_LOG_VERBOSE);
+            get_class($this), CS_REST_LOG_VERBOSE);
 
         if($protocol === 'https://') {
             $domain = 'ssl://'.$domain;
@@ -232,8 +231,8 @@ class CS_REST_SocketTransport {
         }
 
         $this->_log->log_message('Failed to get HTTP status code from request headers <pre>'.$headers.'</pre>',
-        get_class($this), CS_REST_LOG_ERROR);
-        trigger_error('Failed to get HTTP status code from request');
+            get_class($this), CS_REST_LOG_ERROR);
+        die('Failed to get HTTP status code from request');
     }
 
     function _build_request($call_options, $host, $path) {

@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/serialisation.php';
 require_once dirname(__FILE__).'/transport.php';
 require_once dirname(__FILE__).'/log.php';
 
-define('CS_REST_WRAPPER_VERSION', '1.0.3');
+define('CS_REST_WRAPPER_VERSION', '1.0.4');
 
 define('CS_REST_WEBHOOK_FORMAT_JSON', 'json');
 define('CS_REST_WEBHOOK_FORMAT_XML', 'xml');
@@ -220,7 +220,7 @@ class CS_REST_Wrapper_Base {
         $call_result = $this->_transport->make_call($call_options);
 
         $this->_log->log_message('Call result: <pre>'.var_export($call_result, true).'</pre>',
-        get_class($this), CS_REST_LOG_VERBOSE);
+            get_class($this), CS_REST_LOG_VERBOSE);
 
         if($call_options['deserialise']) {
             $call_result['response'] = $this->_serialiser->deserialise($call_result['response']);

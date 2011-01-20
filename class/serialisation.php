@@ -1,6 +1,6 @@
 <?php
 
-require_once 'services_json.php';
+require_once dirname(__FILE__).'/services_json.php';
 
 class CS_REST_SerialiserFactory {
     function get_available_serialiser($log) {
