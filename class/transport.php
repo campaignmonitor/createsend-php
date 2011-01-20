@@ -214,7 +214,7 @@ class CS_REST_SocketTransport {
             	
             list( $headers, $result ) = explode("\r\n\r\n", $response, 2);
             $this->_log->log_message('Received headers <pre>'.$headers.'</pre>',
-            get_class($this), CS_REST_LOG_VERBOSE);
+                get_class($this), CS_REST_LOG_VERBOSE);
             	
             return array(
 			    'code' => $this->_get_status_code($headers),

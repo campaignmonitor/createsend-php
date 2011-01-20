@@ -46,26 +46,30 @@ class CS_REST_TestSocketTransport extends UnitTestCase {
 
         $request = 'Get me some data!';
         $body = 'Some data';
-        $headers = 'Here you go ;)';
+        $headers = '
+HTTP/1.1 200 OK
+Cache-Control: private, s-maxage=0
+Content-Type: application/json; charset=utf-8
+Server: Microsoft-IIS/7.0';
         $response = $headers."\r\n\r\n".$body;
         $status = '200';
 
 
         $this->partial->setReturnValue('_build_request', $request);
         $this->partial->expectOnce('_build_request',
-        array(
-        new IdenticalExpectation($call_options),
-        new IdenticalExpectation($host),
-        new IdenticalExpectation($path)
-        )
+            array(
+                new IdenticalExpectation($call_options),
+                new IdenticalExpectation($host),
+                new IdenticalExpectation($path)
+            )
         );
 
         $this->mock_wrapper->setReturnValue('open', true);
         $this->mock_wrapper->expectOnce('open',
-        array(
-        new IdenticalExpectation($domain_prefix.$host),
-        new IdenticalExpectation($port)
-        )
+            array(
+                new IdenticalExpectation($domain_prefix.$host),
+                new IdenticalExpectation($port)
+            )
         );
 
         $this->mock_wrapper->expectOnce('write', array(new IdenticalExpectation($request)));
@@ -104,14 +108,6 @@ Content-Type: application/json; charset=utf-8
 Server: Microsoft-IIS/7.0';
 
         $this->assertIdentical($this->transport->_get_status_code($headers), '404');
-    }
-
-    function test_get_status_not_found() {
-        $headers =
-"Wait a second! These aren't HTTP headers";
-         
-        $this->expectError('Failed to get HTTP status code from request');
-        $this->transport->_get_status_code($headers);
     }
 
     function test_build_request_no_data() {
