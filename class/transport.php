@@ -13,9 +13,10 @@ class CS_REST_TransportFactory {
         } else if(@CS_REST_SocketTransport::is_available($requires_ssl)) {
             return new CS_REST_SocketTransport($log);
         } else { 
-            die('No transport is available.'.
+            $log->log_message('No transport is available', CS_REST_LOG_ERROR);
+            trigger_error('No transport is available.'.
                 ($requires_ssl ? ' Try using non-secure (http) mode or ' : ' Please ').
-    			'ensure the cURL extension is loaded');
+    			'ensure the cURL extension is loaded', E_USER_ERROR);
         }
     }
 }
@@ -86,7 +87,8 @@ class CS_REST_CurlTransport {
 
         $response = curl_exec($ch);
         if(!$response && $response !== '') {
-            die('Error making request with curl_error: '.curl_error($ch));
+            $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch), CS_REST_LOG_ERROR);
+            trigger_error('Error making request with curl_error: '.curl_error($ch), E_USER_ERROR);
         }
 
         $this->_log->log_message('API Call Info for '.$call_options['method'].' '.
@@ -232,7 +234,7 @@ class CS_REST_SocketTransport {
 
         $this->_log->log_message('Failed to get HTTP status code from request headers <pre>'.$headers.'</pre>',
             get_class($this), CS_REST_LOG_ERROR);
-        die('Failed to get HTTP status code from request');
+        trigger_error('Failed to get HTTP status code from request', E_USER_ERROR);        
     }
 
     function _build_request($call_options, $host, $path) {
