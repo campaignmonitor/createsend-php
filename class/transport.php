@@ -87,7 +87,8 @@ class CS_REST_CurlTransport {
 
         $response = curl_exec($ch);
         if(!$response && $response !== '') {
-            $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch), CS_REST_LOG_ERROR);
+            $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch),
+                get_class($this), CS_REST_LOG_ERROR);
             trigger_error('Error making request with curl_error: '.curl_error($ch), E_USER_ERROR);
         }
 
