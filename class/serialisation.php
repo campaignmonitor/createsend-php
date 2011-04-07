@@ -68,7 +68,19 @@ class CS_REST_NativeJsonSerialiser {
     function deserialise($text) {
         $data = json_decode($text);
 
-        return is_null($data) ? $text : $data;
+        return $this->strip_surrounding_quotes(is_null($data) ? $text : $data);
+    }
+    
+    /** 
+     * We've had sporadic reports of people getting ID's from create routes with the surrounding quotes present. 
+     * There is no case where these should be present. Just get rid of it. 
+     */
+    function strip_surrounding_quotes($data) {
+        if(is_string($data)) {
+            return trim($data, '"');
+        }
+        
+        return $data;
     }
 }
 
