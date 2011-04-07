@@ -144,26 +144,31 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                 'suppressionlist' => array(
                     "Results" => array(
                         array(
+                            "SuppressionReason" => "Unsubscribed",
                             "EmailAddress" => "example+1@example.com",
                             "Date" => "2010-10-26 10:55:31",
                             "State" => "Suppressed"
                         ),
                         array(
+                            "SuppressionReason" => "Unsubscribed",
                             "EmailAddress" => "example+2@example.com",
                             "Date" => "2010-10-26 10:55:31",
                             "State" => "Suppressed"
                         ),
                         array(
+                            "SuppressionReason" => "Unsubscribed",
                             "EmailAddress" => "example+3@example.com",
                             "Date" => "2010-10-26 10:55:31",
                             "State" => "Suppressed"
                         ),
                         array(
+                            "SuppressionReason" => "Unsubscribed",
                             "EmailAddress" => "subscriber@example.com",
                             "Date" => "2010-10-25 13:11:04",
                             "State" => "Suppressed"
                         ),
                         array(
+                            "SuppressionReason" => "Unsubscribed",
                             "EmailAddress" => "subscriberone@example.com",
                             "Date" => "2010-10-25 13:04:15",
                             "State" => "Suppressed"
