@@ -32,7 +32,38 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         );
 
         $this->general_test_with_argument('add', $subscriber, $call_options,
-        $raw_result, $raw_result, 'subscriber was serialised to this');
+			$raw_result, $raw_result, 'subscriber was serialised to this');
+    }
+
+    function testupdate() {
+        $raw_result = '';
+        $email = 'test@test.com';
+		$serialised_subscriber = 'subscriber data';
+		
+        $call_options = $this->get_call_options(
+            $this->list_base_route.'.json?email='.urlencode($email), 'PUT');
+
+        $subscriber = array (
+            'Email' => 'test2@test.com',
+            'Name' => 'Widget Man!',
+            'CustomFields' => array(array(1,2), array(3,4))
+        );
+
+        $transport_result = array (
+            'code' => 200, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, 200);
+        $call_options['data'] = $serialised_subscriber;
+        
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, $serialised_subscriber, 
+            $subscriber, 200);
+
+        $result = $this->wrapper->update($email, $subscriber);
+         
+        $this->assertIdentical($expected_result, $result);
     }
 
     function testimport() {

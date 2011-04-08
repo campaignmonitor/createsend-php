@@ -76,6 +76,31 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
     }
 
     /**
+     * Updates an existing subscriber (email, name, state, or custom fields) in the specified list.
+	 * The update is performed even for inactive subscribers, but will return an error in the event of the
+	 * given email not existing in the list.
+	 * @param string $email The email address of the susbcriber to be updated
+     * @param array $subscriber The subscriber details to use for the update. Empty parameters will remain unchanged
+     *     This array should be of the form
+     *     array (
+     *         'EmailAddress' => The new  email address
+     *         'Name' => The name of the subscriber
+     *         'CustomFields' => array(
+     *             array(
+     *                 'Key' => The custom fields personalisation tag
+     *                 'Value' => The value for this subscriber
+     *             )
+     *         )
+     *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
+     *     )
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function update($email, $subscriber) {
+        return $this->put_request($this->_subscribers_base_route.'.json?email='.urlencode($email), $subscriber);
+    }
+
+    /**
      * Imports an array of subscribers into the current list
      * @param array $subscribers An array of subscribers to import.
      *     This array should be of the form
