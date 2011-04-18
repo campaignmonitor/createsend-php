@@ -60,7 +60,8 @@ Server: Microsoft-IIS/7.0';
             array(
                 new IdenticalExpectation($call_options),
                 new IdenticalExpectation($host),
-                new IdenticalExpectation($path)
+                new IdenticalExpectation($path),
+                new IdenticalExpectation(true)
             )
         );
 
@@ -110,7 +111,7 @@ Server: Microsoft-IIS/7.0';
         $this->assertIdentical($this->transport->_get_status_code($headers), '404');
     }
 
-    function test_build_request_no_data() {
+    function test_build_request_no_data_or_gzip() {
         $call_options = array(
     	    'method' => 'CONJURE',
     	    'credentials' => 'Chuck:Norris',
@@ -128,10 +129,32 @@ Server: Microsoft-IIS/7.0';
 'User-Agent: '.$call_options['userAgent']."\n".
 'Content-Type: '.$call_options['contentType']."\n\n\n";
     	     
-    	    $this->assertIdentical($this->transport->_build_request($call_options, $host, $path), $expected);
+    	    $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, false), $expected);
+    }
+    
+    function test_build_request_no_data_with_gzip() {
+        $call_options = array(
+            'method' => 'CONJURE',
+            'credentials' => 'Chuck:Norris',
+            'userAgent' => 'Nozilla/ Firechuck',
+            'contentType' => 'application/visa'         
+            );
+             
+            $host = 'api.test.createsend.com';
+            $path = '/path/to/resource';
+             
+            $expected =
+            $call_options['method'].' '.$path." HTTP/1.1\n".
+'Host: '.$host."\n".
+'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+'User-Agent: '.$call_options['userAgent']."\n".
+'Content-Type: '.$call_options['contentType']."\n".
+"Accept-Encoding: gzip\n\n\n";
+             
+            $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, true), $expected);
     }
 
-    function test_build_request_with_data() {
+    function test_build_request_with_data_no_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
             'credentials' => 'Chuck:Norris',
@@ -152,6 +175,31 @@ Server: Microsoft-IIS/7.0';
 'Content-Length: '.strlen($call_options['data'])."\n\n".
             $call_options['data']."\n\n";
 
-            $this->assertIdentical($this->transport->_build_request($call_options, $host, $path), $expected);
+            $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, false), $expected);
+    }
+
+    function test_build_request_with_data_and_gzip() {
+        $call_options = array(
+            'method' => 'CONJURE',
+            'credentials' => 'Chuck:Norris',
+            'userAgent' => 'Nozilla/ Firechuck',
+            'contentType' => 'application/visa',
+            'data' => 'Send this to your bank for a new Credit Card!'      
+            );
+
+            $host = 'api.test.createsend.com';
+            $path = '/path/to/resource';
+
+            $expected =
+            $call_options['method'].' '.$path." HTTP/1.1\n".
+'Host: '.$host."\n".
+'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+'User-Agent: '.$call_options['userAgent']."\n".
+'Content-Type: '.$call_options['contentType']."\n".
+"Accept-Encoding: gzip\n".
+'Content-Length: '.strlen($call_options['data'])."\n\n".
+            $call_options['data']."\n\n";
+
+            $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, true), $expected);
     }
 }

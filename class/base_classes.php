@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/serialisation.php';
 require_once dirname(__FILE__).'/transport.php';
 require_once dirname(__FILE__).'/log.php';
 
-define('CS_REST_WRAPPER_VERSION', '1.0.6');
+define('CS_REST_WRAPPER_VERSION', '1.0.7');
 
 define('CS_REST_WEBHOOK_FORMAT_JSON', 'json');
 define('CS_REST_WEBHOOK_FORMAT_XML', 'xml');
