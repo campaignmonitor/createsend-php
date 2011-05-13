@@ -10,7 +10,7 @@ $result = $wrap->import(array(
 	    'Name' => 'Subscriber name',
 	    'CustomFields' => array(
             array(
-                'Key' => 'Field name',
+                'Key' => 'Field Key',
                 'Value' => 'Field Value'
             )
         )
@@ -20,7 +20,7 @@ $result = $wrap->import(array(
 	    'Name' => '2nd Subscriber name',
 	    'CustomFields' => array(
 	        array(
-	            'Key' => 'Field name',
+	            'Key' => 'Field Key',
 	            'Value' => 'Field Value'
 	        )
 	    )

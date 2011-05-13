@@ -8,7 +8,7 @@ $result = $wrap->add(array(
     'Name' => 'Subscriber name',
     'CustomFields' => array(
         array(
-            'Key' => 'Field name',
+            'Key' => 'Field Key',
             'Value' => 'Field Value'
         )
     ),
