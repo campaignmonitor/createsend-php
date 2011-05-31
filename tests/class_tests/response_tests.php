@@ -103,6 +103,26 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                         'TotalRecipients' => 11222
                     )
                 ),
+                'scheduled' => array(
+                    array(
+                        "DateScheduled" => "2011-05-25 10:40:00",
+                        "ScheduledTimeZone" => "(GMT+10:00) Canberra, Melbourne, Sydney",
+                        "CampaignID" => "827dbbd2161ea9989fa11ad562c66937",
+                        "Name" => "Magic Issue One",
+                        "Subject" => "Magic Issue One",
+                        "DateCreated" => "2011-05-24 10:37:00",
+                        "PreviewURL" => "http://createsend.com/t/r-DD543521A87C9B8B"
+                    ),
+                    array(
+                        "DateScheduled" => "2011-05-29 11:20:00",
+                        "ScheduledTimeZone" => "(GMT+10:00) Canberra, Melbourne, Sydney",
+                        "CampaignID" => "4f54bbd2161e65789fa11ad562c66937",
+                        "Name" => "Magic Issue Two",
+                        "Subject" => "Magic Issue Two",
+                        "DateCreated" => "2011-05-24 10:39:00",
+                        "PreviewURL" => "http://createsend.com/t/r-DD913521A87C9B8B"
+                    )
+                ),
                 'drafts' => array(
                     array(
                         "CampaignID" => "7c7424792065d92627139208c8c01db1",

@@ -120,10 +120,25 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
 
     function testget_bounces() {
         $raw_result = 'some bounces';
+        $since = '2020';
+        $response_code = 200;
         $deserialised = array('Bounce 1', 'Bounce 2');
-        $call_options = $this->get_call_options($this->campaign_base_route.'bounces.json');
+        $call_options = $this->get_call_options(
+          $this->campaign_base_route.'bounces.json?date='.$since);
 
-        $this->general_test('get_bounces', $call_options, $raw_result, $deserialised);
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $deserialised, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->get_bounces($since);
+
+        $this->assertIdentical($expected_result, $result);
     }
 
     function testget_lists_and_segments() {

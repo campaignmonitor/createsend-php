@@ -151,6 +151,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
 
     /**
      * Gets all bounces recorded for a campaign
+     * @param string $since The date to start getting bounces from
      * @param int $page_number The page number to get
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
@@ -177,10 +178,10 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * }
      * )
      */
-    function get_bounces($page_number = NULL, $page_size = NULL, $order_field = NULL, 
+    function get_bounces($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL) {
-        return $this->get_request_paged($this->_campaigns_base_route.'bounces.json', $page_number, 
-            $page_size, $order_field, $order_direction, '?');
+        return $this->get_request_paged($this->_campaigns_base_route.'bounces.json?date='.urlencode($since),
+            $page_number, $page_size, $order_field, $order_direction);
     }
 
     /**

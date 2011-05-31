@@ -71,7 +71,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'Subject' => The campaign subject
      *         'Name' => The name of the campaign
      *         'SentDate' => The sent data of the campaign
-     *         'TotalRecipient' => The number of recipients of the campaign
+     *         'TotalRecipients' => The number of recipients of the campaign
      *     }
      * )
      */
@@ -80,7 +80,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     }
 
     /**
-     * Gets a list of sent campaigns for the current client
+     * Gets a list of scheduled campaigns for the current client
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
@@ -89,6 +89,27 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'Name' => The name of the campaign
      *         'Subject' => The subject of the campaign
      *         'DateCreated' => The date the campaign was created
+     *         'PreviewURL' => The preview url of the draft campaign
+     *         'DateScheduled' => The date the campaign is scheduled to be sent
+     *         'ScheduledTimeZone' => The time zone in which the campaign is scheduled to be sent at 'DateScheduled'
+     *     }
+     * )
+     */
+    function get_scheduled() {
+        return $this->get_request($this->_clients_base_route.'scheduled.json');
+    }
+
+    /**
+     * Gets a list of draft campaigns for the current client
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'CampaignID' => The id of the campaign
+     *         'Name' => The name of the campaign
+     *         'Subject' => The subject of the campaign
+     *         'DateCreated' => The date the campaign was created
+     *         'PreviewURL' => The preview url of the draft campaign
      *     }
      * )
      */

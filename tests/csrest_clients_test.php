@@ -28,6 +28,14 @@ class CS_REST_TestClients extends CS_REST_TestBase {
         $this->general_test('get_campaigns', $call_options, $raw_result, $deserialised);
     }
 
+    function testget_scheduled() {
+        $raw_result = 'some scheduled campaigns';
+        $deserialised = array('Campaign 1', 'Campaign 2');
+        $call_options = $this->get_call_options($this->client_base_route.'scheduled.json');
+
+        $this->general_test('get_scheduled', $call_options, $raw_result, $deserialised);
+    }
+
     function testget_drafts() {
         $raw_result = 'some drafts';
         $deserialised = array('Campaign 1', 'Campaign 2');
