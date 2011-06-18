@@ -6,47 +6,62 @@ define('CS_REST_PUT', 'PUT');
 define('CS_REST_DELETE', 'DELETE');
 define('CS_REST_SOCKET_TIMEOUT', 1);
 
-class CS_REST_TransportFactory {
-    function get_available_transport($requires_ssl, $log) { 
-        if(@CS_REST_CurlTransport::is_available($requires_ssl)) {
-            return new CS_REST_CurlTransport($log);
-        } else if(@CS_REST_SocketTransport::is_available($requires_ssl)) {
-            return new CS_REST_SocketTransport($log);
-        } else { 
-            $log->log_message('No transport is available', CS_REST_LOG_ERROR);
-            trigger_error('No transport is available.'.
-                ($requires_ssl ? ' Try using non-secure (http) mode or ' : ' Please ').
-    			'ensure the cURL extension is loaded', E_USER_ERROR);
+function CS_REST_TRANSPORT_get_available($requires_ssl, $log) {
+    if(function_exists('curl_init') && function_exists('curl_exec')) {
+        return new CS_REST_CurlTransport($log);
+    } else if(CS_REST_TRANSPORT_can_use_raw_socket($requires_ssl)) {
+        return new CS_REST_SocketTransport($log);
+    } else { 
+        $log->log_message('No transport is available', CS_REST_LOG_ERROR);
+        trigger_error('No transport is available.'.
+            ($requires_ssl ? ' Try using non-secure (http) mode or ' : ' Please ').
+            'ensure the cURL extension is loaded', E_USER_ERROR);
+    }    
+}
+function CS_REST_TRANSPORT_can_use_raw_socket($requires_ssl) {
+    if(function_exists('fsockopen')) {
+        if($requires_ssl) {
+            return extension_loaded('openssl');
         }
+
+        return true;
+    }
+
+    return false;
+}   
+class CS_REST_BaseTransport {
+    
+    var $_log;
+    
+    function CS_REST_BaseTransport($log) {
+        $this->_log = $log;
     }
     
-    function split_and_inflate($response, $may_be_compressed, $log) {        
+    function split_and_inflate($response, $may_be_compressed) {        
         list( $headers, $result ) = explode("\r\n\r\n", $response, 2);
         if($may_be_compressed && preg_match('/^Content-Encoding:\s+gzip\s+$/im', $headers)) {        
             $original_length = strlen($response);
             $result = gzinflate(substr($result, 10, -8));
     
-            $log->log_message('Inflated gzipped response: '.$original_length.' bytes ->'.
+            $this->_log->log_message('Inflated gzipped response: '.$original_length.' bytes ->'.
                 strlen($result).' bytes', get_class(), CS_REST_LOG_VERBOSE);
         }
         
         return array($headers, $result); 
     }
 }
-
 /**
  * Provide HTTP request functionality via cURL extensions
  *
  * @author tobyb
  * @since 1.0
  */
-class CS_REST_CurlTransport {
+class CS_REST_CurlTransport extends CS_REST_BaseTransport {
 
-    var $_log;
     var $_curl_zlib;
 
     function CS_REST_CurlTransport($log) {
-        $this->_log = $log;
+        $this->CS_REST_BaseTransport($log);
         
         $curl_version = curl_version();
         $this->_curl_zlib = isset($curl_version['libz_version']);
@@ -57,18 +72,6 @@ class CS_REST_CurlTransport {
      */
     function get_type() {
         return 'cURL';
-    }
-
-    /**
-     * Check's if this transport schema may be used on the current server
-     *
-     * @static
-     * @param $requires_ssl
-     *
-     * @return boolean False if this schema is unavailable on the server.
-     */
-    function is_available($requires_ssl = false) {
-        return function_exists('curl_init') && function_exists('curl_exec');
     }
 
     function make_call($call_options) {
@@ -125,8 +128,7 @@ class CS_REST_CurlTransport {
             trigger_error('Error making request with curl_error: '.curl_error($ch), E_USER_ERROR);
         }
         
-        list( $headers, $result ) = @CS_REST_TransportFactory::split_and_inflate(
-            $response, $inflate_response, $this->_log);
+        list( $headers, $result ) = $this->split_and_inflate($response, $inflate_response);
         
         $this->_log->log_message('API Call Info for '.$call_options['method'].' '.
         curl_getinfo($ch, CURLINFO_EFFECTIVE_URL).': '.curl_getinfo($ch, CURLINFO_SIZE_UPLOAD).
@@ -177,13 +179,12 @@ class CS_REST_SocketWrapper {
     }
 }
 
-class CS_REST_SocketTransport {
+class CS_REST_SocketTransport extends CS_REST_BaseTransport {
 
-    var $_log;
     var $_socket_wrapper;
 
     function CS_REST_SocketTransport($log, $socket_wrapper = NULL) {
-        $this->_log = $log;
+        $this->CS_REST_BaseTransport($log);
 
         if(is_null($socket_wrapper)) {
             $socket_wrapper = new CS_REST_SocketWrapper();
@@ -197,26 +198,6 @@ class CS_REST_SocketTransport {
      */
     function get_type() {
         return 'Socket';
-    }
-
-    /**
-     * Check's if this transport schema may be used on the current server
-     *
-     * @static
-     * @param $requires_ssl
-     *
-     * @return boolean False if this schema is unavailable on the server.
-     */
-    function is_available($requires_ssl = false) {
-        if(function_exists('fsockopen')) {
-            if($requires_ssl) {
-                return extension_loaded('openssl');
-            }
-
-            return true;
-        }
-
-        return false;
     }
 
     function make_call($call_options) {
@@ -253,8 +234,7 @@ class CS_REST_SocketTransport {
 	            ' bytes uploaded. '.strlen($response).' bytes downloaded', 
             get_class($this), CS_REST_LOG_VERBOSE);
             	
-            list( $headers, $result ) = @CS_REST_TransportFactory::split_and_inflate(
-                $response, $inflate_response, $this->_log);
+            list( $headers, $result ) = $this->split_and_inflate($response, $inflate_response);
                 
             $this->_log->log_message('Received headers <pre>'.$headers.'</pre>',
                 get_class($this), CS_REST_LOG_VERBOSE);

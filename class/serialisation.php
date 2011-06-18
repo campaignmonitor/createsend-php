@@ -2,14 +2,20 @@
 
 require_once dirname(__FILE__).'/services_json.php';
 
-class CS_REST_SerialiserFactory {
-    function get_available_serialiser($log) {
-        $log->log_message('Getting serialiser', get_class($this), CS_REST_LOG_VERBOSE);
-        if(@CS_REST_NativeJsonSerialiser::is_available()) {
-            return new CS_REST_NativeJsonSerialiser($log);
-        } else {
-            return new CS_REST_ServicesJsonSerialiser($log);
-        }
+function CS_REST_SERIALISATION_get_available($log) { 
+    $log->log_message('Getting serialiser', get_class($this), CS_REST_LOG_VERBOSE);
+    if(function_exists('json_decode') && function_exists('json_encode')) {
+        return new CS_REST_NativeJsonSerialiser($log);
+    } else {
+        return new CS_REST_ServicesJsonSerialiser($log);
+    }    
+}
+class CS_REST_BaseSerialiser {
+
+    var $_log;
+    
+    function CS_REST_BaseSerialiser($log) { 
+        $this->_log = $log;
     }
     
     /**
@@ -34,15 +40,13 @@ class CS_REST_SerialiserFactory {
         }
               
         return $data;
-    }
+    }    
 }
 
-class CS_REST_NativeJsonSerialiser {
-
-    var $_log;
+class CS_REST_NativeJsonSerialiser extends CS_REST_BaseSerialiser {
 
     function CS_REST_NativeJsonSerialiser($log) {
-        $this->_log = $log;
+        $this->CS_REST_BaseSerialiser($log);
     }
 
     function get_format() {
@@ -53,16 +57,8 @@ class CS_REST_NativeJsonSerialiser {
         return 'native';
     }
 
-    /**
-     * Tests if this serialisation scheme is available on the current server
-     * @return boolean False if the server doesn't support the serialisation scheme
-     */
-    function is_available() {
-        return function_exists('json_decode') && function_exists('json_encode');
-    }
-
     function serialise($data) {
-        return json_encode(@CS_REST_SerialiserFactory::check_encoding($data));
+        return json_encode($this->check_encoding($data));
     }
 
     function deserialise($text) {
@@ -84,13 +80,12 @@ class CS_REST_NativeJsonSerialiser {
     }
 }
 
-class CS_REST_ServicesJsonSerialiser {
+class CS_REST_ServicesJsonSerialiser extends CS_REST_BaseSerialiser {
     
-    var $_log;
     var $_serialiser;
     
     function CS_REST_ServicesJsonSerialiser($log) {
-        $this->_log = $log;
+        $this->CS_REST_BaseSerialiser($log);
         $this->_serialiser = new Services_JSON();
     }
 
@@ -107,7 +102,7 @@ class CS_REST_ServicesJsonSerialiser {
     }
     
     function serialise($data) {
-        return $this->_serialiser->encode(@CS_REST_SerialiserFactory::check_encoding($data));
+        return $this->_serialiser->encode($this->check_encoding($data));
     }
     
     function deserialise($text) {

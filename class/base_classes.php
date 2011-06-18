@@ -130,14 +130,14 @@ class CS_REST_Wrapper_Base {
         $this->_log->log_message('Creating wrapper for '.$this->_base_route, get_class($this), CS_REST_LOG_VERBOSE);
 
         $this->_transport = is_null($transport) ?
-        @CS_REST_TransportFactory::get_available_transport($this->is_secure(), $this->_log) :
-        $transport;
+            CS_REST_TRANSPORT_get_available($this->is_secure(), $this->_log) :
+            $transport;
 
         $transport_type = method_exists($this->_transport, 'get_type') ? $this->_transport->get_type() : 'Unknown';
         $this->_log->log_message('Using '.$transport_type.' for transport', get_class($this), CS_REST_LOG_WARNING);
 
         $this->_serialiser = is_null($serialiser) ?
-            @CS_REST_SerialiserFactory::get_available_serialiser($this->_log) : $serialiser;
+            CS_REST_SERIALISATION_get_available($this->log) : $serialiser;
             
         $this->_log->log_message('Using '.$this->_serialiser->get_type().' json serialising', get_class($this), CS_REST_LOG_WARNING);
 

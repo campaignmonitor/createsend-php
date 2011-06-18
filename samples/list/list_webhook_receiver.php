@@ -4,7 +4,7 @@ require_once '../../class/serialisation.php';
 require_once '../../class/log.php';
 
 // Get a serialiser for the webhook data - We assume here that we're dealing with json
-$serialiser = @CS_REST_SerialiserFactory::get_available_serialiser(new CS_REST_Log(CS_REST_LOG_NONE));
+$serialiser = CS_REST_SERIALISATION_get_available(new CS_REST_Log(CS_REST_LOG_NONE));
 
 // Read all the posted data from the input stream
 $raw_post = file_get_contents("php://input");

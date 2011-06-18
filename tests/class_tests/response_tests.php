@@ -868,7 +868,7 @@ class CS_REST_TestServices_JSONResponseDeserialisation extends CS_REST_TestRespo
         $this->CS_REST_TestResponseDeserialisation(new CS_REST_ServicesJsonSerialiser($log));
     }
 }
-if(@CS_REST_NativeJsonSerialiser::is_available()):
+if(function_exists('json_decode') && function_exists('json_encode')):
 class CS_REST_TestJSONResponseDeserialisation extends CS_REST_TestResponseDeserialisation {
     function CS_REST_TestJSONResponseDeserialisation() {
         $log = &new MockCS_REST_Log($this);
