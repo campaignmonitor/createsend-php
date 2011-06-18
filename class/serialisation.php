@@ -3,7 +3,7 @@
 require_once dirname(__FILE__).'/services_json.php';
 
 function CS_REST_SERIALISATION_get_available($log) { 
-    $log->log_message('Getting serialiser', get_class($this), CS_REST_LOG_VERBOSE);
+    $log->log_message('Getting serialiser', __FUNCTION__, CS_REST_LOG_VERBOSE);
     if(function_exists('json_decode') && function_exists('json_encode')) {
         return new CS_REST_NativeJsonSerialiser($log);
     } else {

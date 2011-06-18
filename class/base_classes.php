@@ -137,7 +137,7 @@ class CS_REST_Wrapper_Base {
         $this->_log->log_message('Using '.$transport_type.' for transport', get_class($this), CS_REST_LOG_WARNING);
 
         $this->_serialiser = is_null($serialiser) ?
-            CS_REST_SERIALISATION_get_available($this->log) : $serialiser;
+            CS_REST_SERIALISATION_get_available($this->_log) : $serialiser;
             
         $this->_log->log_message('Using '.$this->_serialiser->get_type().' json serialising', get_class($this), CS_REST_LOG_WARNING);
 
