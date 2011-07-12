@@ -7,8 +7,7 @@ $wrap = new CS_REST_Templates('Template ID', 'Your API Key');
 $result = $wrap->update(array(
     'Name' => 'Template Name',
     'HtmlPageURL' => 'Template HTML Url',
-    'ZipFileURL' => 'Template Images Zip URL',
-    'ScreenshotURL' => 'Template Screenshot URL'
+    'ZipFileURL' => 'Template Images Zip URL'
 ));
 
 echo "Result of PUT /api/v3/templates/{ID}\n<br />";

@@ -60,7 +60,6 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      *             'Name' => The name of the template
      *             'HtmlPageURL' => The url where the template html can be accessed
      *             'ZipFileURL' => The url where the template image zip can be accessed
-     *             'ScreenshotURL' => The url of a screenshot of the template
      *         )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created template
@@ -77,7 +76,6 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      *             'Name' => The name of the template
      *             'HtmlPageURL' => The url where the template html can be accessed
      *             'ZipFileURL' => The url where the template image zip can be accessed
-     *             'ScreenshotURL' => The url of a screenshot of the template
      *         )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty

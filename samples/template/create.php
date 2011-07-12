@@ -7,8 +7,7 @@ $wrap = new CS_REST_Templates(NULL, 'Your API Key');
 $result = $wrap->create('Templates Client ID', array(
     'Name' => 'Template Name',
     'HtmlPageURL' => 'Template HTML Url',
-    'ZipFileURL' => 'Template Images Zip URL',
-    'ScreenshotURL' => 'Template Screenshot URL'
+    'ZipFileURL' => 'Template Images Zip URL'
 ));
 
 echo "Result of POST /api/v3/templates/{clientID}\n<br />";
