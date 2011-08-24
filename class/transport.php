@@ -264,6 +264,7 @@ $call_options['method'].' '.$path." HTTP/1.1\n".
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
+"Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n";
 
         if($accept_gzip) {

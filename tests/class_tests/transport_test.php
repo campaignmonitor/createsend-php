@@ -127,6 +127,7 @@ Server: Microsoft-IIS/7.0';
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
+"Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n\n\n";
     	     
     	    $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, false), $expected);
@@ -148,6 +149,7 @@ Server: Microsoft-IIS/7.0';
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
+"Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n".
 "Accept-Encoding: gzip\n\n\n";
              
@@ -171,6 +173,7 @@ Server: Microsoft-IIS/7.0';
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
+"Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n".
 'Content-Length: '.strlen($call_options['data'])."\n\n".
             $call_options['data']."\n\n";
@@ -195,6 +198,7 @@ Server: Microsoft-IIS/7.0';
 'Host: '.$host."\n".
 'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
+"Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n".
 "Accept-Encoding: gzip\n".
 'Content-Length: '.strlen($call_options['data'])."\n\n".
