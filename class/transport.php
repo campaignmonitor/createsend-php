@@ -38,7 +38,8 @@ class CS_REST_BaseTransport {
     }
     
     function split_and_inflate($response, $may_be_compressed) {        
-        list( $headers, $result ) = explode("\r\n\r\n", $response, 2);
+	$ra = explode("\r\n\r\n", $response);
+	list( $result, $headers ) = array( array_pop($ra), array_pop($ra) );
         if($may_be_compressed && preg_match('/^Content-Encoding:\s+gzip\s+$/im', $headers)) {        
             $original_length = strlen($response);
             $result = gzinflate(substr($result, 10, -8));
