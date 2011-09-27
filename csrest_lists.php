@@ -319,6 +319,46 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     }
 
     /**
+     * Gets all subscribers who have been deleted since the given date
+     * @param string $deleted_since The date to start getting subscribers from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber
+     *             'Name' => The name of the subscriber
+     *             'Date' => The date that the subscriber was deleted from the list
+     *             'State' => The current state of the subscriber, will be 'Deleted'
+     *             'CustomFields' => array (
+     *                 {
+     *                     'Key' => The personalisation tag of the custom field
+     *                     'Value' => The value of the custom field for this subscriber
+     *                 }
+     *             )
+     *         }
+     *     )
+     * }
+     */
+    function get_deleted_subscribers($deleted_since, $page_number = NULL, 
+        $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+            
+        return $this->get_request_paged($this->_lists_base_route.'deleted.json?date='.urlencode($deleted_since), 
+            $page_number, $page_size, $order_field, $order_direction);
+    }
+
+    /**
      * Gets the basic details of the current list
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form

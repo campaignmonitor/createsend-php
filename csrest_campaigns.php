@@ -111,6 +111,16 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     }
 
     /**
+     * Unschedules the campaign, moving it back into the drafts. If the campaign has been sent or is   
+     * in the process of sending, this api request will fail.
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function unschedule() {
+        return $this->post_request($this->_campaigns_base_route.'unschedule.json', NULL);
+    }
+
+    /**
      * Deletes an existing campaign from the system
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
@@ -220,6 +230,9 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'Bounced' => The number of recipients who bounced
      *     'UniqueOpened' => The number of recipients who opened
      *     'WebVersionURL' => The url of the webversion of the campaign
+     *     'ForwardsToAFriend' => The number of times the campaign has been forwarded to a friend
+     *     'FacebookLikes' => The number of times the campaign has been 'liked' on facebook
+     *     'TwitterTweets' => The number of times the campaign has been tweeted about
      * }
      */
     function get_summary() {

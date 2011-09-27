@@ -89,6 +89,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *             array(
      *                 'Key' => The custom fields personalisation tag
      *                 'Value' => The value for this subscriber
+	 *                 'Clear' => true/false (pass true to remove this custom field. in the case of a [multi-option, select many] field, pass an option in the 'Value' field to clear that option or leave Value blank to remove all options)
      *             )
      *         )
      *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
@@ -112,11 +113,13 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *                 array(
      *                     'Key' => The custom fields personalisation tag
      *                     'Value' => The value for this subscriber
+	 *                     'Clear' => true/false (pass true to remove this custom field. in the case of a [multi-option, select many] field, pass an option in the 'Value' field to clear that option or leave Value blank to remove all options)
      *                 )
      *             )
      *         )
      *     )
      * @param $resubscribe Whether we should resubscribe any existing subscribers
+	 * @param $queueSubscriptionBasedAutoResponders By default, subscription based auto responders do not trigger during an import. Pass a value of true to override this behaviour
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -134,9 +137,10 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * }
      *
      */
-    function import($subscribers, $resubscribe) {
+    function import($subscribers, $resubscribe, $queueSubscriptionBasedAutoResponders = false) {
         $subscribers = array(
 		    'Resubscribe' => $resubscribe,
+			'QueueSubscriptionBasedAutoResponders' => $queueSubscriptionBasedAutoResponders,
 		    'Subscribers' => $subscribers
         );
         
@@ -203,5 +207,13 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
         return $this->post_request($this->_subscribers_base_route.'/unsubscribe.json', $email);
     }
 
-
+    /**
+     * deletes the given subscriber from the current list
+     * @param string $email The email address to delete
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be empty
+     */
+    function delete($email) {
+        return $this->delete_request($this->_subscribers_base_route.'.json?email='.urlencode($email));
+    }
 }

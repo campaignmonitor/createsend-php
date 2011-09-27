@@ -541,7 +541,10 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     'Unsubscribed' => 0,
                     'Bounced' => 0,
                     'UniqueOpened' => 5,
-                    'WebVersionURL' => 'http://clientone.createsend.com/t/ViewEmail/r/3A433FC72FFE3B8B/C67FD2F38AC4859C/'
+                    'WebVersionURL' => 'http://clientone.createsend.com/t/ViewEmail/r/3A433FC72FFE3B8B/C67FD2F38AC4859C/',
+                    'ForwardToAFriends' => 18,
+                    'FacebookLikes' => 25,
+                    'TwitterTweets' => 11
                 ),
                 'campaign_listsandsegments' => array(
                     'Lists' => array(

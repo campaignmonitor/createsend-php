@@ -70,6 +70,7 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $raw_result = 'the import result';
         $response_code = 200;
         $resubscribe = true;
+		$queueSubscriptionBasedAutoResponders = true;
 
         $call_options = $this->get_call_options($this->list_base_route.'/import.json', 'POST');
 
@@ -88,6 +89,7 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
 
         $data = array(
                 'Resubscribe' => $resubscribe,
+                'QueueSubscriptionBasedAutoResponders' => $queueSubscriptionBasedAutoResponders,
                 'Subscribers' => $subscribers 
         );
 
@@ -103,7 +105,7 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
             $raw_result, $raw_result, 'subscribers were serialised to this', 
             $data, $response_code);
 
-        $result = $this->wrapper->import($subscribers, $resubscribe);
+        $result = $this->wrapper->import($subscribers, $resubscribe, $queueSubscriptionBasedAutoResponders);
 
         $this->assertIdentical($expected_result, $result);
     }
@@ -178,6 +180,28 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
             'subscriber was serialised to this', $subscriber, $response_code);
 
         $result = $this->wrapper->unsubscribe($email);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
+    function testdelete() {
+        $raw_result = '';
+        $response_code = 200;
+        $email = 'test@test.com';
+
+        $call_options = $this->get_call_options($this->list_base_route.'.json?email='.urlencode($email), 'DELETE');
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+        $raw_result, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->delete($email);
 
         $this->assertIdentical($expected_result, $result);
     }

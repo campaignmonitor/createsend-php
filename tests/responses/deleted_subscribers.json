@@ -1,0 +1,69 @@
+{
+  "Results": [
+    {
+      "EmailAddress": "subs+7t8787Y@example.com",
+      "Name": "Person One",
+      "Date": "2010-10-25 10:28:00",
+      "State": "Deleted",
+      "CustomFields": [
+        {
+          "Key": "website",
+          "Value": "http://example.com"
+        },
+        {
+          "Key": "age",
+          "Value": "24"
+        },
+        {
+          "Key": "subscription date",
+          "Value": "2010-03-09"
+        }
+      ]
+    },
+    {
+      "EmailAddress": "subs+7878787y8ggg@example.com",
+      "Name": "Person Two",
+      "Date": "2010-10-25 12:17:00",
+      "State": "Deleted",
+      "CustomFields": [
+        {
+          "Key": "website",
+          "Value": "http://subdomain.example.com"
+        }
+      ]
+    },
+    {
+      "EmailAddress": "subs+7890909i0ggg@example.com",
+      "Name": "Person Three",
+      "Date": "2010-10-25 12:52:00",
+      "State": "Deleted",
+      "CustomFields": [
+        {
+          "Key": "website",
+          "Value": "http://subdomain.example.com"
+        }
+      ]
+    },
+    {
+      "EmailAddress": "subs@example.com",
+      "Name": "Person Four",
+      "Date": "2010-10-27 13:13:00",
+      "State": "Deleted",
+      "CustomFields": []
+    },
+    {
+      "EmailAddress": "joey@example.com",
+      "Name": "Person Five",
+      "Date": "2010-10-27 13:13:00",
+      "State": "Deleted",
+      "CustomFields": []
+    }
+  ],
+  "ResultsOrderedBy": "email",
+  "OrderDirection": "asc",
+  "PageNumber": 1,
+  "PageSize": 1000,
+  "RecordsOnThisPage": 5,
+  "TotalNumberOfRecords": 5,
+  "NumberOfPages": 1
+}

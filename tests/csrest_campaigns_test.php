@@ -228,4 +228,24 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
+    function testunschedule() {
+        $raw_result = '';
+        $response_code = 200;
+
+        $call_options = $this->get_call_options($this->campaign_base_route.'unschedule.json', 'POST');
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+        $raw_result, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->unschedule();
+
+        $this->assertIdentical($expected_result, $result);
+    }
 }
