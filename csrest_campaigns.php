@@ -230,9 +230,9 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'Bounced' => The number of recipients who bounced
      *     'UniqueOpened' => The number of recipients who opened
      *     'WebVersionURL' => The url of the webversion of the campaign
-     *     'ForwardsToAFriend' => The number of times the campaign has been forwarded to a friend
-     *     'FacebookLikes' => The number of times the campaign has been 'liked' on facebook
-     *     'TwitterTweets' => The number of times the campaign has been tweeted about
+     *     'Forwards' => The number of times the campaign has been forwarded to a friend
+     *     'Likes' => The number of times the campaign has been 'liked' on facebook
+     *     'Mentions' => The number of times the campaign has been tweeted about
      * }
      */
     function get_summary() {
