@@ -167,4 +167,35 @@ class CS_REST_TestClients extends CS_REST_TestBase {
         $this->general_test_with_argument('set_monthly_billing', $client_data, $call_options,
             $raw_result, $raw_result, 'client data was serialised to this');
     }
+    
+    function testget_primary_contact() {
+    	$raw_result = 'primary contact result';
+    	$deserialized = array('EmailAddress' => 'test@foo.bar');
+    	$call_options = $this->get_call_options($this->client_base_route.'primarycontact.json', 'GET');
+    
+    	$this->general_test('get_primary_contact', $call_options,
+    			$raw_result, $deserialized);
+    }
+    
+    function testset_primary_contact() {
+    	$raw_result = '';
+    	$response_code = 200;
+    	$email = 'test@foo.bar';
+    	$call_options = $this->get_call_options($this->client_base_route.'primarycontact.json?email=' . urlencode($email), 'PUT'); 	
+    	$call_options['data'] = '';
+    	
+    	$transport_result = array (
+    			'code' => $response_code,
+    			'response' => $raw_result
+    	);
+    	
+    	$expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+    	
+    	$this->setup_transport_and_serialisation($transport_result, $call_options,
+    			$raw_result, $raw_result, '', '', $response_code);
+    	
+    	$result = $this->wrapper->set_primary_contact($email);
+    	
+    	$this->assertIdentical($expected_result, $result);       
+    }
 }

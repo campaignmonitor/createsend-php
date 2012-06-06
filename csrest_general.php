@@ -93,4 +93,39 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
     function get_clients() {
         return $this->get_request($this->_base_route.'clients.json');
     }
+    
+    /**
+     * Gets an array of administrators
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'EmailAddress' => The administrators email address
+     *         'Name' => The administrators name
+     *         'Status' => The administrators status
+     *     }
+     * )
+     */
+    function get_administrators() {
+    	return $this->get_request($this->_base_route.'admins.json');
+    }
+    
+    /**
+     * retrieves the email address of the primary contact for this account
+     * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
+     * 		array('EmailAddress'=> email address of primary contact)
+     */
+    function get_primary_contact() {
+    	return $this->get_request($this->_base_route.'primarycontact.json');
+    }
+    
+    /**
+     * assigns the primary contact for this account to the administrator with the specified email address
+     * @param string $emailAddress the email address of the administrator designated to be the primary contact
+     * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
+     * 		array('EmailAddress'=> email address of primary contact)
+     */
+    function set_primary_contact($emailAddress) {
+    	return $this->put_request($this->_base_route.'primarycontact.json?email=' . urlencode($emailAddress), '');
+    }
 }

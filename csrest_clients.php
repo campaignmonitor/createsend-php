@@ -365,4 +365,37 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     function set_monthly_billing($client_billing) {
         return $this->put_request($this->_clients_base_route.'setmonthlybilling.json', $client_billing);
     }
+    
+    /**
+     * returns the people associated with this client.
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form 
+     *     array({
+     *     		'EmailAddress' => the email address of the person
+     *     		'Name' => the name of the person
+     *     		'AccessLevel' => the access level of the person
+     *     		'Status' => the status of the person
+     *     })
+     */
+    function get_people() {
+    	return $this->get_request($this->_clients_base_route.'people.json');
+    } 
+    
+    /**
+     * retrieves the email address of the primary contact for this client
+     * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
+     * 		array('EmailAddress'=> email address of primary contact)
+     */
+    function get_primary_contact() {
+    	return $this->get_request($this->_clients_base_route.'primarycontact.json');
+    }
+    
+    /**
+     * assigns the primary contact for this client to the person with the specified email address
+     * @param string $emailAddress the email address of the person designated to be the primary contact
+     * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
+     * 		array('EmailAddress'=> email address of primary contact)
+     */
+    function set_primary_contact($emailAddress) {
+    	return $this->put_request($this->_clients_base_route.'primarycontact.json?email=' . urlencode($emailAddress), '');
+    }    
 }
