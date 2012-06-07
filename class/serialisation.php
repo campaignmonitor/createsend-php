@@ -58,6 +58,7 @@ class CS_REST_NativeJsonSerialiser extends CS_REST_BaseSerialiser {
     }
 
     function serialise($data) {
+    	if(is_null($data) || $data == '') return '';
         return json_encode($this->check_encoding($data));
     }
 
@@ -102,6 +103,7 @@ class CS_REST_ServicesJsonSerialiser extends CS_REST_BaseSerialiser {
     }
     
     function serialise($data) {
+    	if(is_null($data) || $data == '') return '';
         return $this->_serialiser->encode($this->check_encoding($data));
     }
     
