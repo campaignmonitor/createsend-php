@@ -279,6 +279,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created client
      */
     function create($client) {
+    	if(isset($client['ContactName'])) {
+    		trigger_error('[DEPRECATION] Use Person->add or person->update to set name on a particular person in a client. For now, will create a default person with name.', E_USER_NOTICE);
+    	}
+    	if(isset($client['EmailAddress'])) {
+    		trigger_error('[DEPRECATION] Use Person->add or person->update to set email on a particular person in a client. For now, will create a default person with name.', E_USER_NOTICE);
+    	}
         return $this->post_request($this->_base_route.'clients.json', $client);
     }
 
@@ -297,6 +303,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function set_basics($client_basics) {
+    	if(isset($client['ContactName'])) {
+    		trigger_error('[DEPRECATION] Use Person->add or person->update to set name on a particular person in a client. For now, will create a default person with name.', E_USER_NOTICE);
+    	}
+    	if(isset($client['EmailAddress'])) {
+    		trigger_error('[DEPRECATION] Use Person->add or person->update to set email on a particular person in a client. For now, will create a default person with name.', E_USER_NOTICE);
+    	}
         return $this->put_request($this->_clients_base_route.'setbasics.json', $client_basics);
     }
 
@@ -324,6 +336,8 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function set_access($client_access) {
+    	trigger_error('[DEPRECATION] `set_access` is deprecated. Use Person->update to set access on a particular person in a client.', E_USER_NOTICE);
+    	 
         return $this->put_request($this->_clients_base_route.'setaccess.json', $client_access);
     }
 
