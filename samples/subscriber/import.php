@@ -9,19 +9,43 @@ $result = $wrap->import(array(
 	    'EmailAddress' => 'Subscriber email',
 	    'Name' => 'Subscriber name',
 	    'CustomFields' => array(
-            array(
-                'Key' => 'Field Key',
-                'Value' => 'Field Value'
+	        array(
+	            'Key' => 'Field 1 Key',
+	            'Value' => 'Field Value'
+	        ),
+	        array(
+	            'Key' => 'Field 2 Key',
+	            'Value' => 'Field Value'
+	        ),
+	        array(
+	            'Key' => 'Multi Option Field 1',
+	            'Value' => 'Option 1'
+	        ),
+	        array(
+	            'Key' => 'Multi Option Field 1',
+	            'Value' => 'Option 2'
+	        )
             )
-        )
 	),
 	array(
 	    'EmailAddress' => '2nd Subscriber email',
 	    'Name' => '2nd Subscriber name',
 	    'CustomFields' => array(
 	        array(
-	            'Key' => 'Field Key',
+	            'Key' => 'Field 1 Key',
 	            'Value' => 'Field Value'
+	        ),
+	        array(
+	            'Key' => 'Field 2 Key',
+	            'Value' => 'Field Value'
+	        ),
+	        array(
+	            'Key' => 'Multi Option Field 1',
+	            'Value' => 'Option 1'
+	        ),
+	        array(
+	            'Key' => 'Multi Option Field 1',
+	            'Value' => 'Option 2'
 	        )
 	    )
 	)
