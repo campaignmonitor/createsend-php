@@ -40,7 +40,7 @@ class CS_REST_BaseTransport {
     function split_and_inflate($response, $may_be_compressed) {        
         $ra = explode("\r\n\r\n", $response);
         
-        $result = utf8_decode(array_pop($ra));
+        $result = array_pop($ra);
         $headers = array_pop($ra);
         
         if($may_be_compressed && preg_match('/^Content-Encoding:\s+gzip\s+$/im', $headers)) {        
@@ -51,7 +51,7 @@ class CS_REST_BaseTransport {
                 strlen($result).' bytes', get_class(), CS_REST_LOG_VERBOSE);
         }
         
-        return array($headers, $result); 
+        return array($headers, utf8_decode($result)); 
     }
 }
 /**
