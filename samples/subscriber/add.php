@@ -8,8 +8,20 @@ $result = $wrap->add(array(
     'Name' => 'Subscriber name',
     'CustomFields' => array(
         array(
-            'Key' => 'Field Key',
+            'Key' => 'Field 1 Key',
             'Value' => 'Field Value'
+        ),
+        array(
+            'Key' => 'Field 2 Key',
+            'Value' => 'Field Value'
+        ),
+        array(
+            'Key' => 'Multi Option Field 1',
+            'Value' => 'Option 1'
+        ),
+        array(
+            'Key' => 'Multi Option Field 1',
+            'Value' => 'Option 2'
         )
     ),
     'Resubscribe' => true
