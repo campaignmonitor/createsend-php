@@ -1,6 +1,16 @@
 <?php
 require_once dirname(__FILE__).'/class/base_classes.php';
 
+/* THESE ACCESS LEVELS SHOULD NO LONGER BE USED, EXCEPT WITH EXISTING USE OF THE FOLLOWING DEPRECATED METHOD */
+
+define('CS_REST_CLIENT_ACCESS_NONE', 0x0);
+define('CS_REST_CLIENT_ACCESS_REPORTS', 0x1);
+define('CS_REST_CLIENT_ACCESS_SUBSCRIBERS', 0x2);
+define('CS_REST_CLIENT_ACCESS_CREATESEND', 0x4);
+define('CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST', 0x8);
+define('CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS', 0x10);
+define('CS_REST_CLIENT_ACCESS_IMPORTURL', 0x20);
+
 /**
  * Class to access a clients resources from the create send API.
  * This class includes functions to create and edit clients,
@@ -371,17 +381,6 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     function set_primary_contact($emailAddress) {
     	return $this->put_request($this->_clients_base_route.'primarycontact.json?email=' . urlencode($emailAddress), '');
     }
-    
-
-    /* THESE ACCESS LEVELS SHOULD NO LONGER BE USED, EXCEPT WITH EXISTING USE OF THE FOLLOWING DEPRECATED METHOD */
-
-    define('CS_REST_CLIENT_ACCESS_NONE', 0x0);
-    define('CS_REST_CLIENT_ACCESS_REPORTS', 0x1);
-    define('CS_REST_CLIENT_ACCESS_SUBSCRIBERS', 0x2);
-    define('CS_REST_CLIENT_ACCESS_CREATESEND', 0x4);
-    define('CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST', 0x8);
-    define('CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS', 0x10);
-    define('CS_REST_CLIENT_ACCESS_IMPORTURL', 0x20);
 
     /**
      * THIS METHOD SHOULD NO LONGER BE USED. The set_access method has been replaced by person based methods, and their individual access level.
