@@ -1,5 +1,4 @@
-# createsend
-
+# createsend [![Build Status](https://secure.travis-ci.org/campaignmonitor/createsend-php.png)][travis]
 A php library which implements the complete functionality of v3 of the Create Send API.
 
 ## Installation
