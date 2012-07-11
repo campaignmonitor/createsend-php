@@ -6,8 +6,6 @@ $wrap = new CS_REST_Clients(NULL, 'Your API Key');
 
 $result = $wrap->create(array(
     'CompanyName' => 'Clients company name',
-    'ContactName' => 'Clients contact name',
-    'EmailAddress' => 'Clients email',
     'Country' => 'Clients country',
     'Timezone' => 'Clients timezone'
 ));
