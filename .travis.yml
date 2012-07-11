@@ -5,5 +5,5 @@ php:
   - 5.3
   - 5.4
 
-script: cd tests && phpunit all_tests.php
+script: cd tests && php all_tests.php
 
