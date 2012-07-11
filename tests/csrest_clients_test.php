@@ -97,15 +97,13 @@ class CS_REST_TestClients extends CS_REST_TestBase {
         $raw_result = 'the new client id';
 
         $call_options = $this->get_call_options($this->base_route.'clients.json', 'POST');
-         
+
         $client_data = array (
 	        'CompanyName' => 'ABC Widgets',
-		    'ContactName' => 'Widget Man!',
-		    'EmailAddress' => 'widgets@abc.net.au'
-		);
+	      );
 
-	    $this->general_test_with_argument('create', $client_data, $call_options,
-	        $raw_result, $raw_result, 'client data was serialised to this');
+        $this->general_test_with_argument('create', $client_data, $call_options,
+          $raw_result, $raw_result, 'client data was serialised to this');
     }
 
     function testset_basics() {
@@ -134,7 +132,7 @@ class CS_REST_TestClients extends CS_REST_TestBase {
             'AccessLevel' => 4
         );
 
-        $this->general_test_with_argument('set_access', $client_data, $call_options,
+        $this->general_test_with_argument_expecting_deprecated('set_access', $client_data, $call_options,
             $raw_result, $raw_result, 'client data was serialised to this');
     }
 
