@@ -51,7 +51,7 @@ class CS_REST_BaseTransport {
                 strlen($result).' bytes', get_class(), CS_REST_LOG_VERBOSE);
         }
         
-        return array($headers, utf8_decode($result)); 
+        return array($headers, $result); 
     }
 }
 /**
