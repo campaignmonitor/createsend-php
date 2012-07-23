@@ -71,6 +71,7 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $response_code = 200;
         $resubscribe = true;
 		$queueSubscriptionBasedAutoResponders = true;
+        $restartSubscriptionBasedAutoResponders = false;
 
         $call_options = $this->get_call_options($this->list_base_route.'/import.json', 'POST');
 
@@ -90,7 +91,8 @@ class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $data = array(
                 'Resubscribe' => $resubscribe,
                 'QueueSubscriptionBasedAutoResponders' => $queueSubscriptionBasedAutoResponders,
-                'Subscribers' => $subscribers 
+                'Subscribers' => $subscribers,
+                'RestartSubscriptionBasedAutoresponders' => $restartSubscriptionBasedAutoResponders
         );
 
         $transport_result = array (

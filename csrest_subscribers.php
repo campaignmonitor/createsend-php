@@ -67,6 +67,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *             )
      *         )
      *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
+     *         'RestartSubscriptionBasedAutoResponders' => Whether we should restart subscription based auto responders which are sent when the subscriber first subscribes to a list.
      *     )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
@@ -93,6 +94,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *             )
      *         )
      *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
+     *         'RestartSubscriptionBasedAutoResponders' => Whether we should restart subscription based auto responders which are sent when the subscriber first subscribes to a list.
      *     )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
@@ -120,6 +122,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *     )
      * @param $resubscribe Whether we should resubscribe any existing subscribers
 	 * @param $queueSubscriptionBasedAutoResponders By default, subscription based auto responders do not trigger during an import. Pass a value of true to override this behaviour
+     * @param $restartSubscriptionBasedAutoResponders By default, subscription based auto responders will not be restarted
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
@@ -137,11 +140,12 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * }
      *
      */
-    function import($subscribers, $resubscribe, $queueSubscriptionBasedAutoResponders = false) {
+    function import($subscribers, $resubscribe, $queueSubscriptionBasedAutoResponders = false, $restartSubscriptionBasedAutoResponders = false) {
         $subscribers = array(
 		    'Resubscribe' => $resubscribe,
 			'QueueSubscriptionBasedAutoResponders' => $queueSubscriptionBasedAutoResponders,
-		    'Subscribers' => $subscribers
+		    'Subscribers' => $subscribers,
+            'RestartSubscriptionBasedAutoresponders' => $restartSubscriptionBasedAutoResponders
         );
         
         return $this->post_request($this->_subscribers_base_route.'/import.json', $subscribers);
