@@ -12,6 +12,8 @@ define('CS_REST_CUSTOM_FIELD_TYPE_USSTATE', 'USState');
 define('CS_REST_LIST_WEBHOOK_SUBSCRIBE', 'Subscribe');
 define('CS_REST_LIST_WEBHOOK_DEACTIVATE', 'Deactivate');
 define('CS_REST_LIST_WEBHOOK_UPDATE', 'Update');
+define('CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS', 'AllClientLists');
+define('CS_REST_LIST_UNSUBSCRIBE_SETTING_ONLY_THIS_LIST', 'OnlyThisList');
 
 /**
  * Class to access a lists resources from the create send API.
@@ -76,6 +78,10 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *         'ConfirmedOptIn' => boolean Whether this list requires confirmation of subscription
      *         'ConfirmationSuccessPage' => string The page to redirect subscribers to when
      *             they confirm their subscription
+     *         'UnsubscribeSetting' => string Unsubscribe setting must be
+     *             CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS or
+     *             CS_REST_LIST_UNSUBSCRIBE_SETTING_ONLY_THIS_LIST.
+     *             See the documentation for details: http://www.campaignmonitor.com/api/lists/#creating_a_list
      *     )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created list
@@ -96,6 +102,18 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *         'ConfirmedOptIn' => boolean Whether this list requires confirmation of subscription
      *         'ConfirmationSuccessPage' => string The page to redirect subscribers to when
      *             they confirm their subscription
+     *         'UnsubscribeSetting' => string Unsubscribe setting must be
+     *             CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS or
+     *             CS_REST_LIST_UNSUBSCRIBE_SETTING_ONLY_THIS_LIST.
+     *             See the documentation for details: http://www.campaignmonitor.com/api/lists/#updating_a_list
+     *         'AddUnsubscribesToSuppList' => boolean When UnsubscribeSetting
+     *             is CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS,
+     *             whether unsubscribes from this list should be added to the
+     *             suppression list.
+     *         'ScrubActiveWithSuppList' => boolean When UnsubscribeSetting
+     *             is CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS,
+     *             whether active subscribers should be scrubbed against the
+     *             suppression list.
      *     )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be empty
@@ -369,6 +387,9 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     'ConfirmedOptIn' => Whether the list is Double-Opt In
      *     'ConfirmationSuccessPage' => The page which subscribers are
      *         redirected to upon confirming their subscription
+     *     'UnsubscribeSetting' => The unsubscribe setting for the list. Will
+     *         be either CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS or
+     *         CS_REST_LIST_UNSUBSCRIBE_SETTING_ONLY_THIS_LIST.
      * }
      */
     function get() {

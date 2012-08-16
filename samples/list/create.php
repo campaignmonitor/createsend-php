@@ -8,7 +8,8 @@ $result = $wrap->create('Lists Client ID', array(
     'Title' => 'List Title',
     'UnsubscribePage' => 'List unsubscribe page',
     'ConfirmedOptIn' => true,
-    'ConfirmationSuccessPage' => 'List confirmation success page'
+    'ConfirmationSuccessPage' => 'List confirmation success page',
+    'UnsubscribeSetting' => CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS
 ));
 
 echo "Result of POST /api/v3/lists/{clientID}\n<br />";
