@@ -135,6 +135,26 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     }
 
     /**
+     * Gets the lists across a client to which a subscriber with a particular
+     * email address belongs.
+     * @param string $email_address Subscriber's email address.
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         'ListID' => The id of the list
+     *         'ListName' => The name of the list
+     *         'SubscriberState' => The state of the subscriber in the list
+     *         'DateSubscriberAdded' => The date the subscriber was added
+     *     }
+     * )
+     */
+    function get_lists_for_email($email_address) {
+        return $this->get_request($this->_clients_base_route . 
+          'listsforemail.json?email='.urlencode($email_address));
+    }
+
+    /**
      * Gets all list segments the current client has created
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form

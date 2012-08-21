@@ -52,6 +52,26 @@ class CS_REST_TestClients extends CS_REST_TestBase {
         $this->general_test('get_lists', $call_options, $raw_result, $deserialised);
     }
 
+    function testget_lists_for_email() {
+        $email = 'valid@example.com';
+        $raw_result = 'lists to which email is subscribed';
+        $deserialised = array('List 1', 'List 2');
+        $response_code = 200;
+        $call_options = $this->get_call_options($this->client_base_route .
+          'listsforemail.json?email='.urlencode($email), 'GET');
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+          $deserialised, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->get_lists_for_email($email);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
     function testget_segments() {
         $raw_result = 'some segments';
         $deserialised = array('Segment 1', 'Segment 2');
