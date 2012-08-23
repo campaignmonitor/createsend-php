@@ -114,29 +114,6 @@ class CS_REST_TestBase extends UnitTestCase {
          
         $this->assertIdentical($expected_result, $result);
     }
-
-    function general_test_with_argument_expecting_deprecated($wrapper_function, $function_argument, $call_options,
-        $from_transport, $from_deserialisation,
-        $from_serialisation = 'serialised', $response_code = 200) {
-
-        $transport_result = array (
-            'code' => $response_code, 
-            'response' => $from_transport
-        );
-        
-        $expected_result = new CS_REST_Wrapper_Result($from_deserialisation, $response_code);
-         
-        if(!is_null($from_serialisation)) {
-            $call_options['data'] = $from_serialisation;
-        }
-        
-        $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $from_deserialisation, $from_transport, $from_serialisation, 
-            $function_argument, $response_code);
-
-        $this->expectError(new PatternExpectation("/is deprecated/i"));
-        $result = $this->wrapper->$wrapper_function($function_argument);
-    }
 }
 
 class CS_REST_TestGeneral extends CS_REST_TestBase {

@@ -141,21 +141,6 @@ class CS_REST_TestClients extends CS_REST_TestBase {
             $raw_result, $raw_result, 'client data was serialised to this');
     }
 
-    function testset_access() {
-        $raw_result = '';
-
-        $call_options = $this->get_call_options($this->client_base_route.'setaccess.json', 'PUT');
-         
-        $client_data = array (
-            'Username' => 'ABCWidgets',
-            'Password' => 'Widget Man!',
-            'AccessLevel' => 4
-        );
-
-        $this->general_test_with_argument_expecting_deprecated('set_access', $client_data, $call_options,
-            $raw_result, $raw_result, 'client data was serialised to this');
-    }
-
     function testset_payg() {
         $raw_result = '';
 

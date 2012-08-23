@@ -57,15 +57,9 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     	$client_responses = array(
     			'client_details' => array(
     					'ApiKey' => '7c86c29e930f4a1c3836eb57e9e3f4b283b06857489a750e',
-    					'AccessDetails' => array(
-    							'Username' => 'clientone',
-    							'AccessLevel' => 23
-    					),
     					'BasicDetails' => array(
     							'ClientID' => '4a397ccaaa55eb4e6aa1221e1e2d7122',
     							'CompanyName' => 'Client One',
-    							'ContactName' => 'Client One (contact)',
-    							'EmailAddress' => 'contact@example.com',
     							'Country' => 'Australia',
     							'TimeZone' => '(GMT+10:00) Canberra, Melbourne, Sydney'
     					),

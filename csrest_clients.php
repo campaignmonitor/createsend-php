@@ -1,16 +1,6 @@
 <?php
 require_once dirname(__FILE__).'/class/base_classes.php';
 
-/* THESE ACCESS LEVELS SHOULD NO LONGER BE USED, EXCEPT WITH EXISTING USE OF THE FOLLOWING DEPRECATED METHOD */
-
-define('CS_REST_CLIENT_ACCESS_NONE', 0x0);
-define('CS_REST_CLIENT_ACCESS_REPORTS', 0x1);
-define('CS_REST_CLIENT_ACCESS_SUBSCRIBERS', 0x2);
-define('CS_REST_CLIENT_ACCESS_CREATESEND', 0x4);
-define('CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST', 0x8);
-define('CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS', 0x10);
-define('CS_REST_CLIENT_ACCESS_IMPORTURL', 0x20);
-
 /**
  * Class to access a clients resources from the create send API.
  * This class includes functions to create and edit clients,
@@ -234,22 +224,6 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'Country' => The clients country
      *         'TimeZone' => The clients timezone
      *     }
-     *     'AccessDetails' => 
-     *     {
-     *         'AccessLevel' => The current access level of the client.
-     *             This will be some bitwise combination of
-     *
-     *             CS_REST_CLIENT_ACCESS_REPORTS
-     *             CS_REST_CLIENT_ACCESS_SUBSCRIBERS
-     *             CS_REST_CLIENT_ACCESS_CREATESEND
-     *             CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST
-     *             CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS
-     *             CS_REST_CLIENT_ACCESS_IMPORTURL
-     *
-     *             or
-     *             CS_REST_CLIENT_ACCESS_NONE
-     *         'Username' => The clients current username
-     *     }
      *     'BillingDetails' =>
      *     If on monthly billing
      *     {
@@ -299,12 +273,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created client
      */
     function create($client) {
-    	if(isset($client['ContactName'])) {
-    		trigger_error('[DEPRECATION] Use Person->add to set name on a new person in a client. For now, we will create a default person with the name provided.', E_USER_NOTICE);
-    	}
-    	if(isset($client['EmailAddress'])) {
-    		trigger_error('[DEPRECATION] Use Person->add to set email on a new person in a client. For now, we will create a default person with the email provided.', E_USER_NOTICE);
-    	}
+      	if(isset($client['ContactName'])) {
+      		trigger_error('[DEPRECATION] Use Person->add to set name on a new person in a client. For now, we will create a default person with the name provided.', E_USER_NOTICE);
+      	}
+      	if(isset($client['EmailAddress'])) {
+      		trigger_error('[DEPRECATION] Use Person->add to set email on a new person in a client. For now, we will create a default person with the email provided.', E_USER_NOTICE);
+      	}
         return $this->post_request($this->_base_route.'clients.json', $client);
     }
 
@@ -321,12 +295,12 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be empty
      */
     function set_basics($client_basics) {
-    	if(isset($client['ContactName'])) {
-    		trigger_error('[DEPRECATION] Use person->update to set name on a particular person in a client. For now, we will update the default person with the name provided.', E_USER_NOTICE);
-    	}
-    	if(isset($client['EmailAddress'])) {
-    		trigger_error('[DEPRECATION] Use person->update to set email on a particular person in a client. For now, we will update the default person with the email address provided.', E_USER_NOTICE);
-    	}
+      	if(isset($client['ContactName'])) {
+      		trigger_error('[DEPRECATION] Use person->update to set name on a particular person in a client. For now, we will update the default person with the name provided.', E_USER_NOTICE);
+      	}
+      	if(isset($client['EmailAddress'])) {
+      		trigger_error('[DEPRECATION] Use person->update to set email on a particular person in a client. For now, we will update the default person with the email address provided.', E_USER_NOTICE);
+      	}
         return $this->put_request($this->_clients_base_route.'setbasics.json', $client_basics);
     }
 
@@ -400,36 +374,5 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      */
     function set_primary_contact($emailAddress) {
     	return $this->put_request($this->_clients_base_route.'primarycontact.json?email=' . urlencode($emailAddress), '');
-    }
-
-    /**
-     * THIS METHOD SHOULD NO LONGER BE USED. The set_access method has been replaced by person based methods, and their individual access level.
-     *
-     * Updates the access details of the current client
-     * @param array $client_access Access details of the client.
-     *     This should be an array of the form
-     *         array(
-     *             'AccessLevel' => The current access level of the client.
-     *                 This will be some bitwise combination of
-     *
-     *                 CS_REST_CLIENT_ACCESS_REPORTS
-     *                 CS_REST_CLIENT_ACCESS_SUBSCRIBERS
-     *                 CS_REST_CLIENT_ACCESS_CREATESEND
-     *                 CS_REST_CLIENT_ACCESS_DESIGNSPAMTEST
-     *                 CS_REST_CLIENT_ACCESS_IMPORTSUBSCRIBERS
-     *                 CS_REST_CLIENT_ACCESS_IMPORTURL
-     *
-     *                 or
-     *                 CS_REST_CLIENT_ACCESS_NONE
-     *             'Username' => The clients current username
-     *             'Password' => The new password for the given client
-     *         )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
-     */
-    function set_access($client_access) {
-        trigger_error('[DEPRECATION] `set_access` is deprecated. Use Person->update to set access on a particular person in a client.', E_USER_NOTICE);
-         
-        return $this->put_request($this->_clients_base_route.'setaccess.json', $client_access);
     }
 }
