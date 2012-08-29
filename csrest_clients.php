@@ -231,7 +231,8 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'CurrentMonthlyRate' => The current pricing rate the client pays per month
      *         'MarkupPercentage' => The percentage markup applied to the base rates
      *         'Currency' => The currency paid in
-     *         'ClientPays' => Whether the client pays for themselves
+     *         'ClientPays' => Whether the client pays for themselves,
+     *         'MonthlyScheme' => Basic or Unlimited
      *     }
      *     If paying per campaign
      *     {

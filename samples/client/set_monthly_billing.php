@@ -7,7 +7,8 @@ $wrap = new CS_REST_Clients('Your clients ID', 'Your API Key');
 $result = $wrap->set_monthly_billing(array(
     'Currency' => 'USD',
     'ClientPays' => true,
-    'MarkupPercentage' => 100
+    'MarkupPercentage' => 100/*,
+    'MonthlyScheme' => 'Basic' */
 ));
 
 echo "Result of PUT /api/v3/clients/{id}/setmonthlybilling\n<br />";
