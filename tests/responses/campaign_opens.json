@@ -4,31 +4,61 @@
       "EmailAddress": "subs+6576576576@example.com",
       "ListID": "512a3bc577a58fdf689c654329b50fa0",
       "Date": "2010-10-11 08:29:00",
-      "IPAddress": "192.168.126.87"
+      "IPAddress": "192.168.126.87",
+      "Latitude": -33.8683,
+      "Longitude": 151.2086,
+      "City": "Sydney",
+      "Region": "New South Wales",
+      "CountryCode": "AU",
+      "CountryName": "Australia"
     },
     {
       "EmailAddress": "subs+6576576576@example.com",
       "ListID": "512a3bc577a58fdf689c654329b50fa0",
       "Date": "2010-10-08 14:24:00",
-      "IPAddress": "192.168.126.87"
+      "IPAddress": "192.168.126.87",
+      "Latitude": -33.8683,
+      "Longitude": 151.2086,
+      "City": "Sydney",
+      "Region": "New South Wales",
+      "CountryCode": "AU",
+      "CountryName": "Australia"
     },
     {
       "EmailAddress": "subs+6576576576@example.com",
       "ListID": "512a3bc577a58fdf689c654329b50fa0",
       "Date": "2010-10-07 10:20:00",
-      "IPAddress": "192.168.126.87"
+      "IPAddress": "192.168.126.87",
+      "Latitude": -33.8683,
+      "Longitude": 151.2086,
+      "City": "Sydney",
+      "Region": "New South Wales",
+      "CountryCode": "AU",
+      "CountryName": "Australia"
     },
     {
       "EmailAddress": "subs+6576576576@example.com",
       "ListID": "512a3bc577a58fdf689c654329b50fa0",
       "Date": "2010-10-07 07:15:00",
-      "IPAddress": "192.168.126.87"
+      "IPAddress": "192.168.126.87",
+      "Latitude": -33.8683,
+      "Longitude": 151.2086,
+      "City": "Sydney",
+      "Region": "New South Wales",
+      "CountryCode": "AU",
+      "CountryName": "Australia"
     },
     {
       "EmailAddress": "subs+6576576576@example.com",
       "ListID": "512a3bc577a58fdf689c654329b50fa0",
       "Date": "2010-10-07 06:58:00",
-      "IPAddress": "192.168.126.87"
+      "IPAddress": "192.168.126.87",
+      "Latitude": -33.8683,
+      "Longitude": 151.2086,
+      "City": "Sydney",
+      "Region": "New South Wales",
+      "CountryCode": "AU",
+      "CountryName": "Australia"
     }
   ],
   "ResultsOrderedBy": "date",
