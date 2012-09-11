@@ -103,7 +103,7 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
         if($call_options['protocol'] === 'https') {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__).'/GoDaddyClass2CA.crt');
+            curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__).'/cacert.pem');
         }
 
         switch($call_options['method']) {
