@@ -533,6 +533,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     					'Bounced' => 0,
     					'UniqueOpened' => 5,
     					'WebVersionURL' => 'http://clientone.createsend.com/t/ViewEmail/r/3A433FC72FFE3B8B/C67FD2F38AC4859C/',
+    					'WorldviewURL' => 'http://clientone.createsend.com/reports/wv/r/3A433FC72FFE3B8B',
     					'ForwardToAFriends' => 18,
     					'FacebookLikes' => 25,
     					'TwitterTweets' => 11
@@ -558,31 +559,61 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     									"EmailAddress" => "subs+6576576576@example.com",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-11 08:29:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							),
     							array(
     									"EmailAddress" => "subs+6576576576@example.com",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-08 14:24:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							),
     							array(
     									"EmailAddress" => "subs+6576576576@example.com",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-07 10:20:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							),
     							array(
     									"EmailAddress" => "subs+6576576576@example.com",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-07 07:15:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							),
     							array(
     									"EmailAddress" => "subs+6576576576@example.com",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-07 06:58:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							)
     					),
     					"ResultsOrderedBy" => "date",
@@ -691,21 +722,39 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     									"URL" => "http://video.google.com.au/?hl=en&tab=wv",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-11 08:29:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							),
     							array(
     									"EmailAddress" => "subs+6576576576@example.com",
     									"URL" => "http://mail.google.com/mail/?hl=en&tab=wm",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-11 08:29:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							),
     							array(
     									"EmailAddress" => "subs+6576576576@example.com",
     									"URL" => "http://mail.google.com/mail/?hl=en&tab=wm",
     									"ListID" => "512a3bc577a58fdf689c654329b50fa0",
     									"Date" => "2010-10-06 17:24:00",
-    									"IPAddress" => "192.168.126.87"
+    									"IPAddress" => "192.168.126.87",
+                      "Latitude" => -33.8683,
+                      "Longitude" => 151.2086,
+                      "City" => "Sydney",
+                      "Region" => "New South Wales",
+                      "CountryCode" => "AU",
+                      "CountryName" => "Australia"
     							)
     					),
     					"ResultsOrderedBy" => "date",

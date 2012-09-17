@@ -230,6 +230,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'Bounced' => The number of recipients who bounced
      *     'UniqueOpened' => The number of recipients who opened
      *     'WebVersionURL' => The url of the webversion of the campaign
+     *     'WorldviewURL' => The public Worldview URL for the campaign
      *     'Forwards' => The number of times the campaign has been forwarded to a friend
      *     'Likes' => The number of times the campaign has been 'liked' on facebook
      *     'Mentions' => The number of times the campaign has been tweeted about
@@ -262,6 +263,12 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *             'ListID' => The list id of the list containing the subscriber
      *             'Date' => The date of the open
      *             'IPAddress' => The ip address where the open originated
+     *             'Latitude' => The geocoded latitude from the IP address
+     *             'Longitude' => The geocoded longitude from the IP address
+     *             'City' => The geocoded city from the IP address
+     *             'Region' => The geocoded region from the IP address
+     *             'CountryCode' => The geocoded two letter country code from the IP address
+     *             'CountryName' => The geocoded full country name from the IP address
      *         }
      *     )
      * }
@@ -296,6 +303,12 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *             'Date' => The date of the click
      *             'IPAddress' => The ip address where the click originated
      *             'URL' => The url that the subscriber clicked on
+     *             'Latitude' => The geocoded latitude from the IP address
+     *             'Longitude' => The geocoded longitude from the IP address
+     *             'City' => The geocoded city from the IP address
+     *             'Region' => The geocoded region from the IP address
+     *             'CountryCode' => The geocoded two letter country code from the IP address
+     *             'CountryName' => The geocoded full country name from the IP address
      *         }
      *     )
      * }
