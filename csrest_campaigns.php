@@ -75,7 +75,31 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     function create($client_id, $campaign_info) {
         return $this->post_request($this->_base_route.'campaigns/'.$client_id.'.json', $campaign_info);
     }
-    
+
+    /**
+     * Creates a new campaign from a template based on the info provided.
+     * At least on of the ListIDs and Segments parameters must be provided
+     * @param string $client_id The client to create the campaign for
+     * @param array $campaign_info The campaign information to use during creation.
+     *     This array should be of the form
+     *     array(
+     *         'Subject' => string required The campaign subject
+     *         'Name' => string required The campaign name
+     *         'FromName' => string required The From name for the campaign
+     *         'FromEmail' => string required The From address for the campaign
+     *         'ReplyTo' => string required The Reply-To address for the campaign
+     *         'ListIDs' => array<string> optional An array of list ids to send the campaign to
+     *         'SegmentIDs' => array<string> optional An array of segment ids to send the campaign to
+     *         'TemplateID' => string required The ID of the template to use
+     *         'TemplateContent' => array required The content which will be used to fill the editable areas of the template
+     *     )
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created campaign
+     */
+    function create_from_template($client_id, $campaign_info) {
+        return $this->post_request($this->_base_route.'campaigns/'.$client_id.'/fromtemplate.json', $campaign_info);
+    }
+
     /**
      * Sends a preview of an existing campaign to the specified recipients. 
      * @param array<string> $recipients The recipients to send the preview to. 

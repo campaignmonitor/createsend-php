@@ -51,6 +51,89 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
+    function testcreate_from_template() {
+        $raw_result = 'the new campaign id';
+        $client_id = 'not a real client id';
+        $response_code = 200;
+
+        $call_options = $this->get_call_options(
+            $this->base_route.'campaigns/'.$client_id.'/fromtemplate.json', 'POST');
+
+        $template_content = array(
+          'Singlelines' => array(
+            array(
+              'Content' => 'This is a heading',
+              'Alt' => 'This is alt text',
+              'Href' => 'http://example.com/'
+            )
+          ),
+          'Multilines' => array(
+            array(
+              'Content' => '<p>This is example</p><p>multiline <a href=\"http://example.com\">content</a>...</p>'
+            )
+          ),
+          'Images' => array(
+            array(
+              'Content' => 'http://example.com/image.png',
+              'Alt' => 'This is alt text for an image',
+              'Href' => 'http://example.com/'
+            )
+          ),
+          'Repeaters' => array(
+            array(
+              'Items' => array(
+                array(
+                  'Layout' => 'My layout',
+                  'Singlelines' => array(
+                    array(
+                      'Content' => 'This is a repeater heading',
+                      'Alt' => 'This is alt text',
+                      'Href' => 'http://example.com/'
+                    )
+                  ),
+                  'Multilines' => array(
+                    array(
+                      'Content' => '<p>This is example</p><p>multiline <a href=\"http://example.com\">content</a>...</p>'
+                    )
+                  ),
+                  'Images' => array(
+                    array(
+                      'Content' => 'http://example.com/image.png',
+                      'Alt' => 'This is alt text for a repeater image',
+                      'Href' => 'http://example.com/'
+                    )
+                  )
+                )
+              )
+            )
+          )
+        );
+
+        $campaign_data = array (
+            'Name' => 'ABC Widgets',
+            'Subject' => 'Widget Man!',
+            'ListIDs' => array(1,2,3),
+            'SegmentIDs' => array(4,5,6),
+            'TemplateID' => 'dj9qw8jdq98wjdqd2112e',
+            'TemplateContent' => $template_content
+        );
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $call_options['data'] = 'campaign data was serialised to this';
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, 'campaign data was serialised to this', 
+            $campaign_data, $response_code);
+
+        $result = $this->wrapper->create_from_template($client_id, $campaign_data);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
     function testsend_preview() {
         $raw_result = '';
         $response_code = 200;
