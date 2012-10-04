@@ -54,6 +54,28 @@ $template_content = array(
   )
 );
 
+# $template_content as defined above would be used to fill the content of
+# a template with markup similar to the following:
+#
+# <html>
+#   <head><title>My Template</title></head>
+#   <body>
+#     <p><singleline>Enter heading...</singleline></p>
+#     <div><multiline>Enter description...</multiline></div>
+#     <img id="header-image" editable="true" width="500" />
+#     <repeater>
+#       <layout label="My layout">
+#         <div class="repeater-item">
+#           <p><singleline></singleline></p>
+#           <div><multiline></multiline></div>
+#           <img editable="true" width="500" />
+#         </div>
+#       </layout>
+#     </repeater>
+#     <p><unsubscribe>Unsubscribe</unsubscribe></p>
+#   </body>
+# </html>
+
 $result = $wrap->create_from_template('Campaigns Client ID', array(
     'Subject' => 'Campaign Subject',
     'Name' => 'Campaign Name',
