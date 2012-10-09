@@ -161,7 +161,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     }
 
     /**
-     * Gets all email addresses on the current clients suppression list
+     * Gets all email addresses on the current client's suppression list
      * @param int $page_number The page number to get
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'DATE')
@@ -190,6 +190,15 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
             
         return $this->get_request_paged($this->_clients_base_route.'suppressionlist.json', 
             $page_number, $page_size, $order_field, $order_direction, '?');
+    }
+
+    /**
+     * Unsuppresses an email address by removing it from the the client's
+     * suppression list.
+     * @param string $email The email address to be unsuppressed
+     */
+    function unsuppress($email) {
+      return $this->put_request($this->_clients_base_route.'unsuppress.json?email=' . urlencode($email), '');
     }
 
     /**
