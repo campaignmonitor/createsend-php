@@ -63,7 +63,6 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
           'Singlelines' => array(
             array(
               'Content' => 'This is a heading',
-              'Alt' => 'This is alt text',
               'Href' => 'http://example.com/'
             )
           ),
@@ -87,7 +86,6 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
                   'Singlelines' => array(
                     array(
                       'Content' => 'This is a repeater heading',
-                      'Alt' => 'This is alt text',
                       'Href' => 'http://example.com/'
                     )
                   ),
