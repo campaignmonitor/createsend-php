@@ -5,7 +5,8 @@
       "Name": "Bounced One",
       "Date": "2010-10-25 13:11:00",
       "State": "Bounced",
-      "CustomFields": []
+      "CustomFields": [],
+      "ReadsEmailWith": ""
     }
   ],
   "ResultsOrderedBy": "email",
