@@ -265,6 +265,23 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
     }
 
     /**
+     * Gets the email clients that subscribers used to open the campaign
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * array(
+     *     {
+     *         Client => The email client name
+     *         Version => The email client version
+     *         Percentage => The percentage of subscribers who used this email client
+     *         Subscribers => The actual number of subscribers who used this email client
+     *     }
+     * )
+     */
+    function get_email_client_usage() {
+      return $this->get_request($this->_campaigns_base_route.'emailclientusage.json');
+    }
+
+    /**
      * Gets all opens recorded for a campaign since the provided date
      * @param string $since The date to start getting opens from
      * @param int $page_number The page number to get
