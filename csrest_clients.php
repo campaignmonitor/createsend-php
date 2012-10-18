@@ -193,9 +193,20 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     }
 
     /**
+     * Adds email addresses to a client's suppression list.
+     * @param array<string> $emails The email addresses to suppress.
+     * @access public
+     */
+    function suppress($emails) {
+      $data = array('EmailAddresses' => $emails);
+      return $this->post_request($this->_clients_base_route.'suppress.json', $data);
+    }
+
+    /**
      * Unsuppresses an email address by removing it from the the client's
      * suppression list.
      * @param string $email The email address to be unsuppressed
+     * @access public
      */
     function unsuppress($email) {
       return $this->put_request($this->_clients_base_route.'unsuppress.json?email=' . urlencode($email), '');
