@@ -1,6 +1,8 @@
 <?php
 
-require_once dirname(__FILE__).'/services_json.php';
+if (!class_exists('Services_JSON')) {
+    require_once dirname(__FILE__).'/services_json.php';
+}
 
 function CS_REST_SERIALISATION_get_available($log) { 
     $log->log_message('Getting serialiser', __FUNCTION__, CS_REST_LOG_VERBOSE);
