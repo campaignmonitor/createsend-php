@@ -4,7 +4,7 @@ define('CS_REST_GET', 'GET');
 define('CS_REST_POST', 'POST');
 define('CS_REST_PUT', 'PUT');
 define('CS_REST_DELETE', 'DELETE');
-define('CS_REST_SOCKET_TIMEOUT', 1);
+define('CS_REST_SOCKET_TIMEOUT', 10);
 define('CS_REST_CALL_TIMEOUT', 10);
 
 function CS_REST_TRANSPORT_get_available($requires_ssl, $log) {
