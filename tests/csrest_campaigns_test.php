@@ -318,6 +318,29 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
+    function testget_spam() {
+        $raw_result = 'some spam';
+        $since = '2020';
+        $response_code = 200;
+        $deserialised = array('Spam 1', 'Spam 2');
+        $call_options = $this->get_call_options(
+            $this->campaign_base_route.'spam.json?date='.$since);
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $deserialised, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->get_spam($since);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
     function testunschedule() {
         $raw_result = '';
         $response_code = 200;
