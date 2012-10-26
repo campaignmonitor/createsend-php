@@ -137,6 +137,37 @@ class CS_REST_TestLists extends CS_REST_TestBase {
         $raw_result, $raw_result, 'custom field was serialised to this');
     }
 
+    function testupdate_custom_field() {
+        $raw_result = '';
+        $field_key = 'not a real custom field';
+        $response_code = 200;
+
+        $call_options = $this->get_call_options(
+            $this->list_base_route.'customfields/'.rawurlencode($field_key).'.json', 'PUT');
+          
+        $keep_existing = true;
+
+        $serialise_input = array(
+            'FieldName' => 'new field name',
+            'VisibleInPreferenceCenter' => true
+        );
+
+        $transport_result = array (
+            'code' => $response_code,
+            'response' => $raw_result
+        );
+
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $call_options['data'] = 'options were serialised to this';
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, 'options were serialised to this', $serialise_input, $response_code);
+
+        $result = $this->wrapper->update_custom_field($field_key, $serialise_input);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
     function testupdate_field_options() {
         $raw_result = '';
         $field_key = 'not a real custom field';

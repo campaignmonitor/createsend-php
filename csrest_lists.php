@@ -137,7 +137,11 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *             CS_REST_CUSTOM_FIELD_TYPE_DATE
      *             CS_REST_CUSTOM_FIELD_TYPE_COUNTRY
      *             CS_REST_CUSTOM_FIELD_TYPE_USSTATE
-     *         'Options' => array<string> Valid options for either Multi-Optioned field data type
+     *         'Options' => array<string> Valid options for either
+     *           Multi-Optioned field data type.
+     *         'VisibleInPreferenceCenter' => boolean representing whether or
+     *           not the field should be visible in the subscriber preference
+     *           center.
      *     )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be the 
@@ -145,6 +149,26 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      */
     function create_custom_field($custom_field_details) {
         return $this->post_request($this->_lists_base_route.'customfields.json', $custom_field_details);
+    }
+
+    /**
+     * Updates a custom field for the current list
+     * @param string $key The personalisation tag of the field to update
+     * @param array $custom_field_details The details of the new custom field.
+     *     This array should be of the form
+     *     array(
+     *         'FieldName' => string The new name for the field
+     *         'VisibleInPreferenceCenter' => boolean representing whether or
+     *           not the field should be visible in the subscriber preference
+     *           center.
+     *     )
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be the
+     * personalisation tag of the updated custom field
+     */
+    function update_custom_field($key, $custom_field_details) {
+        return $this->put_request($this->_lists_base_route.'customfields/'.rawurlencode($key).'.json',
+            $custom_field_details);
     }
 
     /**
@@ -193,6 +217,8 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *         'Key' => The personalisation tag of the custom field
      *         'DataType' => The data type of the custom field
      *         'FieldOptions' => Valid options for a multi-optioned custom field
+     *         'VisibleInPreferenceCenter' => Boolean representing whether or
+     *           not the field is visible in the subscriber preference center
      *     }
      * )
      */
