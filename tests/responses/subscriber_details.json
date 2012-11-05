@@ -16,5 +16,6 @@
       "Key": "subscription date",
       "Value": "2010-03-09"
     }
-  ]
+  ],
+  "ReadsEmailWith": "Gmail"
 }

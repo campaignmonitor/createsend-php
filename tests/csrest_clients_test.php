@@ -88,6 +88,34 @@ class CS_REST_TestClients extends CS_REST_TestBase {
         $this->general_test('get_suppressionlist', $call_options, $raw_result, $deserialised);
     }
 
+    function testsuppress() {
+      $raw_result = '';
+      $response_code = 200;
+      $call_options = $this->get_call_options(
+          $this->client_base_route.'suppress.json', 'POST');
+      $emails = array (
+          'test1@test.com',
+          'test1@test.com'
+      );
+      $suppression_info = array(
+          'EmailAddresses' => $emails
+      );
+      $transport_result = array (
+          'code' => $response_code, 
+          'response' => $raw_result
+      );
+
+      $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+      $call_options['data'] = 'suppression data was serialised to this';
+      $this->setup_transport_and_serialisation($transport_result, $call_options,
+          $raw_result, $raw_result, 'suppression data was serialised to this', 
+          $suppression_info);
+
+      $result = $this->wrapper->suppress($emails);
+
+      $this->assertIdentical($expected_result, $result);
+    }
+
     function testunsuppress() {
     	$raw_result = '';
     	$response_code = 200;

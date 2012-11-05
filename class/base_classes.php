@@ -10,7 +10,7 @@ define('CS_REST_WEBHOOK_FORMAT_JSON', 'json');
 define('CS_REST_WEBHOOK_FORMAT_XML', 'xml');
 
 /**
- * A general result object returned from all Createsend API calls.
+ * A general result object returned from all Campaign Monitor API calls.
  * @author tobyb
  *
  */

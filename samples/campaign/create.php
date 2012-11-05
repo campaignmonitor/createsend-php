@@ -11,7 +11,7 @@ $result = $wrap->create('Campaigns Client ID', array(
     'FromEmail' => 'Campaign From Email Address',
     'ReplyTo' => 'Campaign Reply To Email Address',
     'HtmlUrl' => 'Campaign HTML Import URL',
-    'TextUrl' => 'Campaign Text Import URL',
+    # 'TextUrl' => 'Optional campaign text import URL',
     'ListIDs' => array('First List', 'Second List'),
     'SegmentIDs' => array('First Segment', 'Second Segment')
 ));

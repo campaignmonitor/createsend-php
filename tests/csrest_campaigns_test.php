@@ -240,6 +240,15 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->general_test('get_summary', $call_options, $raw_result, $deserialised);
     }
 
+    function testget_email_client_usage() {
+        $raw_result = 'campaign email client usage';
+        $deserialised = array(1,2,3,4,5);
+        $call_options = $this->get_call_options(
+            $this->campaign_base_route.'emailclientusage.json');
+
+        $this->general_test('get_email_client_usage', $call_options, $raw_result, $deserialised);
+    }
+
     function testget_opens() {
         $raw_result = 'some opens';
         $since = '2020';
@@ -305,6 +314,29 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
             $deserialised, $raw_result, NULL, NULL, $response_code);
 
         $result = $this->wrapper->get_unsubscribes($since);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
+    function testget_spam() {
+        $raw_result = 'some spam';
+        $since = '2020';
+        $response_code = 200;
+        $deserialised = array('Spam 1', 'Spam 2');
+        $call_options = $this->get_call_options(
+            $this->campaign_base_route.'spam.json?date='.$since);
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $deserialised, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->get_spam($since);
 
         $this->assertIdentical($expected_result, $result);
     }

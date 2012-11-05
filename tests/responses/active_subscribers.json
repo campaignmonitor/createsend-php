@@ -18,7 +18,8 @@
           "Key": "subscription date",
           "Value": "2010-03-09"
         }
-      ]
+      ],
+      "ReadsEmailWith": "Gmail"
     },
     {
       "EmailAddress": "subs+7878787y8ggg@example.com",
@@ -30,7 +31,8 @@
           "Key": "website",
           "Value": "http://subdomain.example.com"
         }
-      ]
+      ],
+      "ReadsEmailWith": "Gmail"
     },
     {
       "EmailAddress": "subs+7890909i0ggg@example.com",
@@ -42,21 +44,24 @@
           "Key": "website",
           "Value": "http://subdomain.example.com"
         }
-      ]
+      ],
+      "ReadsEmailWith": ""
     },
     {
       "EmailAddress": "subs@example.com",
       "Name": "Person Four",
       "Date": "2010-10-27 13:13:00",
       "State": "Active",
-      "CustomFields": []
+      "CustomFields": [],
+      "ReadsEmailWith": ""
     },
     {
       "EmailAddress": "joey@example.com",
       "Name": "Person Five",
       "Date": "2010-10-27 13:13:00",
       "State": "Active",
-      "CustomFields": []
+      "CustomFields": [],
+      "ReadsEmailWith": "Gmail"
     }
   ],
   "ResultsOrderedBy": "email",

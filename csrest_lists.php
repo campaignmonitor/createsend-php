@@ -137,7 +137,11 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *             CS_REST_CUSTOM_FIELD_TYPE_DATE
      *             CS_REST_CUSTOM_FIELD_TYPE_COUNTRY
      *             CS_REST_CUSTOM_FIELD_TYPE_USSTATE
-     *         'Options' => array<string> Valid options for either Multi-Optioned field data type
+     *         'Options' => array<string> Valid options for either
+     *           Multi-Optioned field data type.
+     *         'VisibleInPreferenceCenter' => boolean representing whether or
+     *           not the field should be visible in the subscriber preference
+     *           center.
      *     )
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be the 
@@ -145,6 +149,26 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      */
     function create_custom_field($custom_field_details) {
         return $this->post_request($this->_lists_base_route.'customfields.json', $custom_field_details);
+    }
+
+    /**
+     * Updates a custom field for the current list
+     * @param string $key The personalisation tag of the field to update
+     * @param array $custom_field_details The details of the new custom field.
+     *     This array should be of the form
+     *     array(
+     *         'FieldName' => string The new name for the field
+     *         'VisibleInPreferenceCenter' => boolean representing whether or
+     *           not the field should be visible in the subscriber preference
+     *           center.
+     *     )
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be the
+     * personalisation tag of the updated custom field
+     */
+    function update_custom_field($key, $custom_field_details) {
+        return $this->put_request($this->_lists_base_route.'customfields/'.rawurlencode($key).'.json',
+            $custom_field_details);
     }
 
     /**
@@ -193,6 +217,8 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *         'Key' => The personalisation tag of the custom field
      *         'DataType' => The data type of the custom field
      *         'FieldOptions' => Valid options for a multi-optioned custom field
+     *         'VisibleInPreferenceCenter' => Boolean representing whether or
+     *           not the field is visible in the subscriber preference center
      *     }
      * )
      */
@@ -253,6 +279,46 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
         $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
             
         return $this->get_request_paged($this->_lists_base_route.'active.json?date='.urlencode($added_since), 
+            $page_number, $page_size, $order_field, $order_direction);
+    }
+
+    /**
+     * Gets all unconfirmed subscribers added since the given date
+     * @param string $added_since The date to start getting subscribers from
+     * @param int $page_number The page number to get
+     * @param int $page_size The number of records per page
+     * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
+     * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'ResultsOrderedBy' => The field the results are ordered by
+     *     'OrderDirection' => The order direction
+     *     'PageNumber' => The page number for the result set
+     *     'PageSize' => The page size used
+     *     'RecordsOnThisPage' => The number of records returned
+     *     'TotalNumberOfRecords' => The total number of records available
+     *     'NumberOfPages' => The total number of pages for this collection
+     *     'Results' => array(
+     *         {
+     *             'EmailAddress' => The email address of the subscriber
+     *             'Name' => The name of the subscriber
+     *             'Date' => The date that the subscriber was added to the list
+     *             'State' => The current state of the subscriber, will be 'Unconfirmed'
+     *             'CustomFields' => array (
+     *                 {
+     *                     'Key' => The personalisation tag of the custom field
+     *                     'Value' => The value of the custom field for this subscriber
+     *                 }
+     *             )
+     *         }
+     *     )
+     * }
+     */
+    function get_unconfirmed_subscribers($added_since, $page_number = NULL, 
+        $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+
+        return $this->get_request_paged($this->_lists_base_route.'unconfirmed.json?date='.urlencode($added_since), 
             $page_number, $page_size, $order_field, $order_direction);
     }
 
