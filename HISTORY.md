@@ -1,5 +1,20 @@
 # createsend-php history
 
+## v2.4.0 - 5 Nov, 2012   (98de84d1)
+
+* Added CS_REST_Campaigns.get_email_client_usage().
+* Added support for ReadsEmailWith field on subscriber objects.
+* Added support for retrieving unconfirmed subscribers for a list.
+* Added support for suppressing email addresses.
+* Added support for retrieving spam complaints for a campaign, as well as
+adding SpamComplaints field to campaign summary output.
+* Added VisibleInPreferenceCenter field to custom field output.
+* Added support for setting preference center visibility when creating custom
+fields.
+* Added the ability to update a custom field name and preference visibility.
+* Added documentation explaining that TextUrl is now optional when creating a
+campaign.
+
 ## v2.3.2 - 23 Oct, 2012   (2088ae69)
 
 * Fixed timeout issue by setting CS_REST_SOCKET_TIMEOUT to 10 seconds.
