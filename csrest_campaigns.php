@@ -214,7 +214,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * }
      * )
      */
-    function get_bounces($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+    function get_bounces($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL) {
         return $this->get_request_paged($this->_campaigns_base_route.'bounces.json?date='.urlencode($since),
             $page_number, $page_size, $order_field, $order_direction);
@@ -317,7 +317,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_opens($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+    function get_opens($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL) {
         return $this->get_request_paged($this->_campaigns_base_route.'opens.json?date='.urlencode($since), 
             $page_number, $page_size, $order_field, $order_direction);
@@ -357,7 +357,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_clicks($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+    function get_clicks($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL) {
         return $this->get_request_paged($this->_campaigns_base_route.'clicks.json?date='.urlencode($since), 
             $page_number, $page_size, $order_field, $order_direction);
@@ -390,7 +390,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_unsubscribes($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+    function get_unsubscribes($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL) {
         return $this->get_request_paged($this->_campaigns_base_route.'unsubscribes.json?date='.urlencode($since), 
             $page_number, $page_size, $order_field, $order_direction);
@@ -422,7 +422,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_spam($since, $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+    function get_spam($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
         $order_direction = NULL) {
         return $this->get_request_paged($this->_campaigns_base_route.'spam.json?date='.urlencode($since), 
             $page_number, $page_size, $order_field, $order_direction);

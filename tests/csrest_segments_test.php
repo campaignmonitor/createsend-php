@@ -98,11 +98,10 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
 
     function testget_segment_subscribers() {
         $raw_result = 'some subscribers';
-        $since = '2020';
         $segment_id = 'abc123';
         $response_code = 200;
         $deserialised = array('Subscriber 1', 'Subscriber 2');
-        $call_options = $this->get_call_options($this->segment_base_route.'/active.json?date='.$since);
+        $call_options = $this->get_call_options($this->segment_base_route.'/active.json?date=');
 
         $transport_result = array (
             'code' => $response_code, 
@@ -114,7 +113,7 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
         $this->setup_transport_and_serialisation($transport_result, $call_options,
         $deserialised, $raw_result, NULL, NULL, $response_code);
 
-        $result = $this->wrapper->get_subscribers($since);
+        $result = $this->wrapper->get_subscribers();
 
         $this->assertIdentical($expected_result, $result);
     }

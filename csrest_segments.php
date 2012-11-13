@@ -177,7 +177,7 @@ class CS_REST_Segments extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_subscribers($subscribed_since, $page_number = NULL, 
+    function get_subscribers($subscribed_since = '', $page_number = NULL, 
         $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
             
         return $this->get_request_paged($this->_segments_base_route.'/active.json?date='.urlencode($subscribed_since), 
