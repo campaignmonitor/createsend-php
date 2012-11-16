@@ -93,7 +93,19 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
     function get_clients() {
         return $this->get_request($this->_base_route.'clients.json');
     }
-    
+
+    /**
+     * Gets your billing details.
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'Credits' => The number of credits belonging to the account
+     * }
+     */
+    function get_billing_details() {
+        return $this->get_request($this->_base_route.'billingdetails.json');
+    }
+
     /**
      * Gets an array of administrators
      * @access public

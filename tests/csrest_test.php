@@ -171,7 +171,13 @@ class CS_REST_TestGeneral extends CS_REST_TestBase {
 
         $this->general_test('get_clients', $call_options, $raw_result, $deserialised);
     }
-    
+
+    function testget_billing_details() {
+        $raw_result = 'billing details';
+        $call_options = $this->get_call_options($this->base_route.'billingdetails.json');
+        $this->general_test('get_billing_details', $call_options, $raw_result, $raw_result);
+    }
+
     function testget_primary_contact() {
     	$raw_result = 'primary contact result';
     	$deserialized = array('EmailAddress' => 'test@foo.bar');

@@ -257,6 +257,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     If paying per campaign
      *     {
      *         'CanPurchaseCredits' => Whether the client can purchase credits
+     *         'Credits' => The number of credits belonging to the client
      *         'BaseDeliveryFee' => The base fee payable per campaign
      *         'BaseRatePerRecipient' => The base fee payable per campaign recipient
      *         'BaseDesignSpamTestRate' => The base fee payable per design and spam test
