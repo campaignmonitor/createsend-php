@@ -220,7 +220,21 @@ class CS_REST_TestClients extends CS_REST_TestBase {
         $this->general_test_with_argument('set_monthly_billing', $client_data, $call_options,
             $raw_result, $raw_result, 'client data was serialised to this');
     }
-    
+
+    function testtransfer_credits() {
+      $raw_result = 'the result';
+
+      $call_options = $this->get_call_options($this->client_base_route.'credits.json', 'POST');
+
+      $transfer_data = array(
+          'Credits' => 200,
+          'CanUseMyCreditsWhenTheyRunOut' => false
+      );
+
+      $this->general_test_with_argument('transfer_credits', $transfer_data, $call_options,
+        $raw_result, $raw_result, 'transfer data was serialised to this');
+    }
+
     function testget_primary_contact() {
     	$raw_result = 'primary contact result';
     	$deserialized = array('EmailAddress' => 'test@foo.bar');

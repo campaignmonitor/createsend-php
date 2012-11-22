@@ -364,7 +364,37 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     function set_monthly_billing($client_billing) {
         return $this->put_request($this->_clients_base_route.'setmonthlybilling.json', $client_billing);
     }
-    
+
+    /**
+     * Transfer credits to or from this client.
+     * 
+     * @param array $transfer_data Details for the credit transfer. This array
+     *   should be of the form:
+     *     array(
+     *      'Credits' => An in representing the number of credits to transfer.
+     *        This value may be either positive if you want to allocate credits
+     *        from your account to the client, or negative if you want to
+     *        deduct credits from the client back into your account.
+     *      'CanUseMyCreditsWhenTheyRunOut' => A boolean value which if set
+     *        to true, will allow the client to continue sending using your
+     *        credits or payment details once they run out of credits, and if
+     *        set to false, will prevent the client from using your credits to
+     *        continue sending until you allocate more credits to them.
+     *     )
+     * @access public
+     * @return CS_REST_Wrapper_Result A successful response will be an object
+     * of the form:
+     * {
+     *   'AccountCredits' => Integer representing credits in your account now
+     *   'ClientCredits' => Integer representing credits in this client's
+     *                      account now
+     * }
+     */
+    function transfer_credits($transfer_data) {
+        return $this->post_request($this->_clients_base_route.'credits.json',
+        $transfer_data);
+    }
+
     /**
      * returns the people associated with this client.
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form 
