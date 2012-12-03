@@ -11,10 +11,6 @@
           "Value": "http://example.com"
         },
         {
-          "Key": "age",
-          "Value": "24"
-        },
-        {
           "Key": "subscription date",
           "Value": "2010-03-09"
         }

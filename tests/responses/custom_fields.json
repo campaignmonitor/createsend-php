@@ -6,12 +6,6 @@
     "FieldOptions": []
   },
   {
-    "FieldName": "age",
-    "Key": "[age]",
-    "DataType": "Number",
-    "FieldOptions": []
-  },
-  {
     "FieldName": "subscription date",
     "Key": "[subscriptiondate]",
     "DataType": "Date",
