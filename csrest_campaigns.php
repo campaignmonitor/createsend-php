@@ -255,10 +255,11 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'Unsubscribed' => The number of recipients who unsubscribed
      *     'Bounced' => The number of recipients who bounced
      *     'UniqueOpened' => The number of recipients who opened
-     *     'WebVersionURL' => The url of the webversion of the campaign
+     *     'WebVersionURL' => The url of the web version of the campaign
+     *     'WebVersionTextURL' => The url of the web version of the text version of the campaign
      *     'WorldviewURL' => The public Worldview URL for the campaign
      *     'Forwards' => The number of times the campaign has been forwarded to a friend
-     *     'Likes' => The number of times the campaign has been 'liked' on facebook
+     *     'Likes' => The number of times the campaign has been 'liked' on Facebook
      *     'Mentions' => The number of times the campaign has been tweeted about
      *     'SpamComplaints' => The number of recipients who marked the campaign as spam
      * }

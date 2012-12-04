@@ -79,6 +79,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     			'campaigns' => array(
     					array(
     							'WebVersionURL' => 'http://hello.createsend.com/t/ViewEmail/r/765E86829575EE2C/C67FD2F38AC4859C/',
+  							  'WebVersionTextURL' => 'http://createsend.com/t/r-765E86829575EE2C/t',
     							'CampaignID' => 'fc0ce7105baeaf97f47c99be31d02a91',
     							'Subject' => 'Campaign One',
     							'Name' => 'Campaign One',
@@ -87,6 +88,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     					),
     					array(
     							'WebVersionURL' => 'http://hello.createsend.com/t/ViewEmail/r/DD543566A87C9B8B/C67FD2F38AC4859C/',
+    							'WebVersionTextURL' => 'http://createsend.com/t/r-DD543566A87C9B8B/t',
     							'CampaignID' => '072472b88c853ae5dedaeaf549a8d607',
     							'Subject' => 'Campaign Two',
     							'Name' => 'Campaign Two',
@@ -102,7 +104,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							"Name" => "Magic Issue One",
     							"Subject" => "Magic Issue One",
     							"DateCreated" => "2011-05-24 10:37:00",
-    							"PreviewURL" => "http://createsend.com/t/r-DD543521A87C9B8B"
+    							"PreviewURL" => "http://createsend.com/t/r-DD543521A87C9B8B",
+  							  "PreviewTextURL" => "http://createsend.com/t/r-DD543521A87C9B8B/t"
     					),
     					array(
     							"DateScheduled" => "2011-05-29 11:20:00",
@@ -111,7 +114,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							"Name" => "Magic Issue Two",
     							"Subject" => "Magic Issue Two",
     							"DateCreated" => "2011-05-24 10:39:00",
-    							"PreviewURL" => "http://createsend.com/t/r-DD913521A87C9B8B"
+    							"PreviewURL" => "http://createsend.com/t/r-DD913521A87C9B8B",
+    							"PreviewTextURL" => "http://createsend.com/t/r-DD913521A87C9B8B/t"
     					)
     			),
     			'drafts' => array(
@@ -120,14 +124,16 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							"Name" => "Draft One",
     							"Subject" => "Draft One",
     							"DateCreated" => "2010-08-19 16:08:00",
-    							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/"
+    							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/",
+    							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t"
     					),
     					array(
     							"CampaignID" => "2e928e982065d92627139208c8c01db1",
     							"Name" => "Draft Two",
     							"Subject" => "Draft Two",
     							"DateCreated" => "2010-08-19 16:08:00",
-    							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/"
+    							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/",
+    							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t"
     					)
     			),
     			'lists' => array(
@@ -533,6 +539,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     					'Bounced' => 0,
     					'UniqueOpened' => 5,
     					'WebVersionURL' => 'http://clientone.createsend.com/t/ViewEmail/r/3A433FC72FFE3B8B/C67FD2F38AC4859C/',
+    					'WebVersionTextURL' => 'http://createsend.com/t/r-3A433FC72FFE3B8B/t',
     					'WorldviewURL' => 'http://clientone.createsend.com/reports/wv/r/3A433FC72FFE3B8B',
     					'ForwardToAFriends' => 18,
     					'FacebookLikes' => 25,

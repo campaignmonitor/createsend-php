@@ -58,7 +58,8 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * array(
      *     {
-     *         'WebVersionURL' => The webversion url of the campaign
+     *         'WebVersionURL' => The web version url of the campaign
+     *         'WebVersionTextURL' => The web version url of the text version of the campaign
      *         'CampaignID' => The id of the campaign
      *         'Subject' => The campaign subject
      *         'Name' => The name of the campaign
@@ -81,7 +82,8 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'Name' => The name of the campaign
      *         'Subject' => The subject of the campaign
      *         'DateCreated' => The date the campaign was created
-     *         'PreviewURL' => The preview url of the draft campaign
+     *         'PreviewURL' => The preview url of the campaign
+     *         'PreviewTextURL' => The preview url of the text version of the campaign
      *         'DateScheduled' => The date the campaign is scheduled to be sent
      *         'ScheduledTimeZone' => The time zone in which the campaign is scheduled to be sent at 'DateScheduled'
      *     }
@@ -102,6 +104,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'Subject' => The subject of the campaign
      *         'DateCreated' => The date the campaign was created
      *         'PreviewURL' => The preview url of the draft campaign
+     *         'PreviewTextURL' => The preview url of the text version of the campaign
      *     }
      * )
      */

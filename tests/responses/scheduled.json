@@ -6,7 +6,8 @@
     "Name": "Magic Issue One",
     "Subject": "Magic Issue One",
     "DateCreated": "2011-05-24 10:37:00",
-    "PreviewURL": "http://createsend.com/t/r-DD543521A87C9B8B"
+    "PreviewURL": "http://createsend.com/t/r-DD543521A87C9B8B",
+    "PreviewTextURL": "http://createsend.com/t/r-DD543521A87C9B8B/t"
   },
   {
     "DateScheduled": "2011-05-29 11:20:00",
@@ -15,6 +16,7 @@
     "Name": "Magic Issue Two",
     "Subject": "Magic Issue Two",
     "DateCreated": "2011-05-24 10:39:00",
-    "PreviewURL": "http://createsend.com/t/r-DD913521A87C9B8B"
+    "PreviewURL": "http://createsend.com/t/r-DD913521A87C9B8B",
+    "PreviewTextURL": "http://createsend.com/t/r-DD913521A87C9B8B/t"
   }
 ]
