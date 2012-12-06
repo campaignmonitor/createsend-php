@@ -83,6 +83,9 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							'CampaignID' => 'fc0ce7105baeaf97f47c99be31d02a91',
     							'Subject' => 'Campaign One',
     							'Name' => 'Campaign One',
+                  'FromName' => 'My Name',
+                  'FromEmail' => 'myemail@example.com',
+                  'ReplyTo' => 'myemail@example.com',
     							'SentDate' => '2010-10-12 12:58:00',
     							'TotalRecipients' => 2245
     					),
@@ -92,6 +95,9 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							'CampaignID' => '072472b88c853ae5dedaeaf549a8d607',
     							'Subject' => 'Campaign Two',
     							'Name' => 'Campaign Two',
+                  'FromName' => 'My Name',
+                  'FromEmail' => 'myemail@example.com',
+                  'ReplyTo' => 'myemail@example.com',
     							'SentDate' => '2010-10-06 16:20:00',
     							'TotalRecipients' => 11222
     					)
@@ -103,6 +109,9 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							"CampaignID" => "827dbbd2161ea9989fa11ad562c66937",
     							"Name" => "Magic Issue One",
     							"Subject" => "Magic Issue One",
+                  'FromName' => 'My Name',
+                  'FromEmail' => 'myemail@example.com',
+                  'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2011-05-24 10:37:00",
     							"PreviewURL" => "http://createsend.com/t/r-DD543521A87C9B8B",
   							  "PreviewTextURL" => "http://createsend.com/t/r-DD543521A87C9B8B/t"
@@ -113,6 +122,9 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							"CampaignID" => "4f54bbd2161e65789fa11ad562c66937",
     							"Name" => "Magic Issue Two",
     							"Subject" => "Magic Issue Two",
+                  'FromName' => 'My Name',
+                  'FromEmail' => 'myemail@example.com',
+                  'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2011-05-24 10:39:00",
     							"PreviewURL" => "http://createsend.com/t/r-DD913521A87C9B8B",
     							"PreviewTextURL" => "http://createsend.com/t/r-DD913521A87C9B8B/t"
@@ -123,6 +135,9 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							"CampaignID" => "7c7424792065d92627139208c8c01db1",
     							"Name" => "Draft One",
     							"Subject" => "Draft One",
+                  'FromName' => 'My Name',
+                  'FromEmail' => 'myemail@example.com',
+                  'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2010-08-19 16:08:00",
     							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/",
     							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t"
@@ -131,6 +146,9 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     							"CampaignID" => "2e928e982065d92627139208c8c01db1",
     							"Name" => "Draft Two",
     							"Subject" => "Draft Two",
+                  'FromName' => 'My Name',
+                  'FromEmail' => 'myemail@example.com',
+                  'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2010-08-19 16:08:00",
     							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/",
     							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t"

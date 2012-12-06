@@ -5,6 +5,9 @@
     "CampaignID": "fc0ce7105baeaf97f47c99be31d02a91",
     "Subject": "Campaign One",
     "Name": "Campaign One",
+    "FromName": "My Name",
+    "FromEmail": "myemail@example.com",
+    "ReplyTo": "myemail@example.com",
     "SentDate": "2010-10-12 12:58:00",
     "TotalRecipients": 2245
   },
@@ -14,6 +17,9 @@
     "CampaignID": "072472b88c853ae5dedaeaf549a8d607",
     "Subject": "Campaign Two",
     "Name": "Campaign Two",
+    "FromName": "My Name",
+    "FromEmail": "myemail@example.com",
+    "ReplyTo": "myemail@example.com",
     "SentDate": "2010-10-06 16:20:00",
     "TotalRecipients": 11222
   }

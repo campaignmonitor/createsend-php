@@ -63,6 +63,9 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'CampaignID' => The id of the campaign
      *         'Subject' => The campaign subject
      *         'Name' => The name of the campaign
+     *         'FromName' => The from name for the campaign
+     *         'FromEmail' => The from email address for the campaign
+     *         'ReplyTo' => The reply to email address for the campaign
      *         'SentDate' => The sent data of the campaign
      *         'TotalRecipients' => The number of recipients of the campaign
      *     }
@@ -81,6 +84,9 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'CampaignID' => The id of the campaign
      *         'Name' => The name of the campaign
      *         'Subject' => The subject of the campaign
+     *         'FromName' => The from name for the campaign
+     *         'FromEmail' => The from email address for the campaign
+     *         'ReplyTo' => The reply to email address for the campaign
      *         'DateCreated' => The date the campaign was created
      *         'PreviewURL' => The preview url of the campaign
      *         'PreviewTextURL' => The preview url of the text version of the campaign
@@ -102,6 +108,9 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'CampaignID' => The id of the campaign
      *         'Name' => The name of the campaign
      *         'Subject' => The subject of the campaign
+     *         'FromName' => The from name for the campaign
+     *         'FromEmail' => The from email address for the campaign
+     *         'ReplyTo' => The reply to email address for the campaign
      *         'DateCreated' => The date the campaign was created
      *         'PreviewURL' => The preview url of the draft campaign
      *         'PreviewTextURL' => The preview url of the text version of the campaign
