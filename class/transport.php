@@ -89,8 +89,8 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
         curl_setopt($ch, CURLOPT_USERPWD, $call_options['credentials']);
         curl_setopt($ch, CURLOPT_USERAGENT, $call_options['userAgent']);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: '.$call_options['contentType']));
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, CS_REST_SOCKET_TIMEOUT * 1000);
-        curl_setopt($ch, CURLOPT_TIMEOUT_MS, CS_REST_CALL_TIMEOUT * 1000);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, CS_REST_SOCKET_TIMEOUT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, CS_REST_CALL_TIMEOUT);
 
         $headers = array();
         $inflate_response = false;
