@@ -1,5 +1,11 @@
 # createsend-php history
 
+## v2.5.1 - 14 Dec, 2012   (099dfd9)
+
+* Use CURLOPT_TIMEOUT and CURLOPT_CONNECTTIMEOUT constants instead of
+CURLOPT_TIMEOUT_MS and CURLOPT_CONNECTTIMEOUT_MS.
+* Added autoloading support when using Composer (PHP dependency management).
+
 ## v2.5.0 - 11 Dec, 2012   (ab270ff)
 
 * Added support for including from name, from email, and reply to email in
