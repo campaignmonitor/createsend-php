@@ -5,9 +5,19 @@ A php library which implements the complete functionality of the Campaign Monito
 
 ## Installation
 
-After downloading the wrapper simply include the relevant api class e.g
- 
-    require_once 'csrest_campaigns.php'   
+If you use [Composer](http://getcomposer.org/), you can add [campaignmonitor/createsend-php](https://packagist.org/packages/campaignmonitor/createsend-php) to your `composer.json` file:
+
+    {
+        "require": {
+            "campaignmonitor/createsend-php": "{version}"
+        }
+    }
+
+Otherwise you can simply [download](https://github.com/campaignmonitor/createsend-php/tags) the library and include it in your project.
+
+After you have installed the library, simply include the relevant API class e.g
+
+    require_once 'csrest_campaigns.php'
 
 ## Examples
 
@@ -22,6 +32,14 @@ var_dump results in each of the provided samples.
 ## Contributing
 1. Fork the repository
 2. Make your changes, including tests for your changes.
-3. Ensure that the build passes, by running `cd tests && php all_tests.php` (CI runs on: `5.3` and `5.4`)
+3. Ensure that the build passes, by running:
+    
+    ```
+    composer install --dev
+    cd tests && php all_tests.php && cd ..
+    ```
+
+    CI runs on: `5.3` and `5.4`.
+
 4. It should go without saying, but do not increment the version number in your commits.
 5. Submit a pull request.
