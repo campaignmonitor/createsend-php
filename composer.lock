@@ -1,0 +1,48 @@
+{
+    "hash": "426bcfcec3c2419b7b1cc8539a93d2eb",
+    "packages": [
+
+    ],
+    "packages-dev": [
+        {
+            "name": "lastcraft/simpletest",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lox/simpletest",
+                "reference": "1.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/lox/simpletest/zipball/1.1.0",
+                "reference": "1.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.5"
+            },
+            "time": "2012-06-11 22:22:54",
+            "type": "library",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Baker",
+                    "email": "marcus@lastcraft.com"
+                }
+            ],
+            "description": "Unit testing, mock objects and web testing framework for PHP built around test cases.",
+            "homepage": "http://simpletest.org/"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ]
+}

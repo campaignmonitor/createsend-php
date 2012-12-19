@@ -1,10 +1,7 @@
 <?php
 
-require_once 'simpletest/autorun.php';
-require_once '../class/transport.php';
-require_once '../class/serialisation.php';
-require_once '../class/log.php';
-require_once '../csrest_administrators.php';
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
 @Mock::generate('CS_REST_Log');
 @Mock::generate('CS_REST_NativeJsonSerialiser');

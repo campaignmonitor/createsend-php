@@ -15,7 +15,20 @@
     "require": {
         "php": ">=5.2.0"
     },
+    "require-dev": {
+        "lastcraft/simpletest": "~1.1"
+    },
     "autoload": {
-        "classmap": ["/","class/"]
+        "classmap": [
+            "csrest_administrators.php",
+            "csrest_campaigns.php",
+            "csrest_clients.php",
+            "csrest_general.php",
+            "csrest_lists.php",
+            "csrest_people.php",
+            "csrest_segments.php",
+            "csrest_subscribers.php",
+            "csrest_templates.php"
+        ]
     }
 }
