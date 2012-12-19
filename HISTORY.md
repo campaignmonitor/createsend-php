@@ -1,5 +1,10 @@
 # createsend-php history
 
+## v2.5.2 - 19 Dec, 2012   (0b6c9f3)
+
+* Removed simpletest source files, and added simpletest as a dev dependency.
+* Fixed autoloading with composer, so that only necessary classes are loaded.
+
 ## v2.5.1 - 14 Dec, 2012   (099dfd9)
 
 * Use CURLOPT_TIMEOUT and CURLOPT_CONNECTTIMEOUT constants instead of
