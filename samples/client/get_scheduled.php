@@ -3,7 +3,7 @@
 require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients(
-	'ClientID to get scheduled campaigns for', 
+	'ClientID to get scheduled campaigns for',
     'Your API Key');
 
 $result = $wrap->get_scheduled();

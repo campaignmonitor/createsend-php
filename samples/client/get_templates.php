@@ -3,7 +3,7 @@
 require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients(
-	'ClientID to get the templates of', 
+	'ClientID to get the templates of',
     'Your API Key');
 
 $result = $wrap->get_templates();

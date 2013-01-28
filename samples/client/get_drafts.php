@@ -3,7 +3,7 @@
 require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients(
-	'ClientID to get drafts for', 
+	'ClientID to get drafts for',
     'Your API Key');
 
 $result = $wrap->get_drafts();

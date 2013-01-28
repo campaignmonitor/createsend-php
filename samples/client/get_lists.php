@@ -3,7 +3,7 @@
 require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients(
-	'ClientID to get Lists for', 
+	'ClientID to get Lists for',
     'Your API Key');
 
 $result = $wrap->get_lists();

@@ -38,7 +38,7 @@ class CS_REST_People extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        	
+
         $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_client_id($client_id);
 
@@ -73,7 +73,7 @@ class CS_REST_People extends CS_REST_Wrapper_Base {
     /**
      * Updates details for an existing person associated with the specified client.
 	 * @param string $email The email address of the person to be updated
-     * @param array $person The updated person details to use for the update. 
+     * @param array $person The updated person details to use for the update.
      *     This array should be of the form
      *     array (
      *         'EmailAddress' => The new  email address
@@ -96,7 +96,7 @@ class CS_REST_People extends CS_REST_Wrapper_Base {
      *     'EmailAddress' => The email address of the person
      *     'Name' => The name of the person
      *     'Status' => The status of the person
-     *     'AccessLevel' => The access level of the person     
+     *     'AccessLevel' => The access level of the person
      *     )
      * }
      */

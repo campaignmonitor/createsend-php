@@ -3,7 +3,7 @@
 require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients(
-	'ClientID to get the suppression list of', 
+	'ClientID to get the suppression list of',
     'Your API Key');
 
 $result = $wrap->get_suppressionlist(1, 50, 'email', 'asc');

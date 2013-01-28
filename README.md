@@ -22,18 +22,18 @@ After you have installed the library, simply include the relevant API class e.g
 ## Examples
 
 Samples for creating or accessing all resources can be found in the samples directory.
-These samples can be used as the basis for your own application and provide an outline of 
-the expected inputs for each API call. 
+These samples can be used as the basis for your own application and provide an outline of
+the expected inputs for each API call.
 
-Further documentation of the inputs and outputs of each call can be found in the 
-documentation in each of the csrest_*.php files or simply by examining the 
+Further documentation of the inputs and outputs of each call can be found in the
+documentation in each of the csrest_*.php files or simply by examining the
 var_dump results in each of the provided samples.
 
 ## Contributing
 1. Fork the repository
 2. Make your changes, including tests for your changes.
 3. Ensure that the build passes, by running:
-    
+
     ```
     composer install --dev
     cd tests && php all_tests.php && cd ..

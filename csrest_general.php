@@ -28,7 +28,7 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
         $log = NULL,
         $serialiser = NULL,
         $transport = NULL) {
-        $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);        
+        $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
     }
 
     /**
@@ -75,7 +75,7 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
      * }
      */
     function get_apikey($username, $password, $site_url) {
-        return $this->get_request($this->_base_route.'apikey.json?siteurl='.$site_url, 
+        return $this->get_request($this->_base_route.'apikey.json?siteurl='.$site_url,
             array('credentials' => $username.':'.$password));
     }
 
@@ -121,7 +121,7 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
     function get_administrators() {
     	return $this->get_request($this->_base_route.'admins.json');
     }
-    
+
     /**
      * retrieves the email address of the primary contact for this account
      * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
@@ -130,7 +130,7 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
     function get_primary_contact() {
     	return $this->get_request($this->_base_route.'primarycontact.json');
     }
-    
+
     /**
      * assigns the primary contact for this account to the administrator with the specified email address
      * @param string $emailAddress the email address of the administrator designated to be the primary contact
