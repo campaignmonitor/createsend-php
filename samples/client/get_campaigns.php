@@ -3,7 +3,7 @@
 require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients(
-	'ClientID to get Campaigns for', 
+	'ClientID to get Campaigns for',
     'Your API Key');
 
 $result = $wrap->get_campaigns();

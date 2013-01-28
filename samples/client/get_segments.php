@@ -3,7 +3,7 @@
 require_once '../../csrest_clients.php';
 
 $wrap = new CS_REST_Clients(
-	'ClientID to get segments for', 
+	'ClientID to get segments for',
     'Your API Key');
 
 $result = $wrap->get_segments();

@@ -28,7 +28,7 @@ class CS_REST_Administrators extends CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function CS_REST_Administrators (    
+    function CS_REST_Administrators (
     $api_key,
     $protocol = 'https',
     $debug_level = CS_REST_LOG_NONE,
@@ -36,7 +36,7 @@ class CS_REST_Administrators extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        	
+
         $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->_admins_base_route = $this->_base_route.'admins';
     }
@@ -59,7 +59,7 @@ class CS_REST_Administrators extends CS_REST_Wrapper_Base {
     /**
      * Updates details for an existing administrator associated with the current account
 	 * @param string $email The email address of the administrator to be updated
-     * @param array $admin The updated administrator details to use for the update. 
+     * @param array $admin The updated administrator details to use for the update.
      *     This array should be of the form
      *     array (
      *         'EmailAddress' => The new email address

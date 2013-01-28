@@ -36,10 +36,10 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
         );
 
         $transport_result = array (
-            'code' => $response_code, 
+            'code' => $response_code,
             'response' => $raw_result
         );
-        
+
         $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
         $call_options['data'] = 'segment was serialised to this';
@@ -101,10 +101,10 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
         $call_options = $this->get_call_options($this->segment_base_route.'/active.json?date=');
 
         $transport_result = array (
-            'code' => $response_code, 
+            'code' => $response_code,
             'response' => $raw_result
         );
-        
+
         $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
@@ -114,15 +114,15 @@ class CS_REST_TestSegments extends CS_REST_TestBase {
 
         $this->assertIdentical($expected_result, $result);
     }
-    
+
     function testclear_rules() {
         $raw_result = '';
 
         $call_options = $this->get_call_options($this->segment_base_route.'/rules.json', 'DELETE');
 
-        $this->general_test('clear_rules', $call_options, $raw_result, $raw_result);        
+        $this->general_test('clear_rules', $call_options, $raw_result, $raw_result);
     }
-    
+
     function testdelete() {
         $raw_result = '';
 

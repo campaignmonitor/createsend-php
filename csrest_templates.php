@@ -37,7 +37,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        	
+
         $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_template_id($template_id);
     }
@@ -48,7 +48,7 @@ class CS_REST_Templates extends CS_REST_Wrapper_Base {
      * @access public
      */
     function set_template_id($template_id) {
-        $this->_templates_base_route = $this->_base_route.'templates/'.$template_id.'.json';            
+        $this->_templates_base_route = $this->_base_route.'templates/'.$template_id.'.json';
     }
 
     /**

@@ -27,14 +27,14 @@ class CS_REST_TestAdministrator extends CS_REST_TestBase {
         );
 
         $this->general_test_with_argument('add', $admin, $call_options,
-			$raw_result, $raw_result, 'administrator was serialised to this');
+		$raw_result, $raw_result, 'administrator was serialised to this');
     }
 
     function testupdate() {
         $raw_result = '';
         $email = 'test@test.com';
-		$serialised_admin = 'subscriber data';
-		
+	$serialised_admin = 'subscriber data';
+
         $call_options = $this->get_call_options(
             $this->admins_base_route.'.json?email='.urlencode($email), 'PUT');
 
@@ -44,19 +44,19 @@ class CS_REST_TestAdministrator extends CS_REST_TestBase {
         );
 
         $transport_result = array (
-            'code' => 200, 
+            'code' => 200,
             'response' => $raw_result
         );
-        
+
         $expected_result = new CS_REST_Wrapper_Result($raw_result, 200);
         $call_options['data'] = $serialised_admin;
-        
+
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $raw_result, $raw_result, $serialised_admin, 
+            $raw_result, $raw_result, $serialised_admin,
             $admin, 200);
 
         $result = $this->wrapper->update($email, $admin);
-         
+
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -70,10 +70,10 @@ class CS_REST_TestAdministrator extends CS_REST_TestBase {
             $this->admins_base_route.'.json?email='.urlencode($email), 'GET');
 
         $transport_result = array (
-            'code' => $response_code, 
+            'code' => $response_code,
             'response' => $raw_result
         );
-        
+
         $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
@@ -93,10 +93,10 @@ class CS_REST_TestAdministrator extends CS_REST_TestBase {
         $call_options = $this->get_call_options($this->admins_base_route.'.json?email='.urlencode($email), 'DELETE');
 
         $transport_result = array (
-            'code' => $response_code, 
+            'code' => $response_code,
             'response' => $raw_result
         );
-        
+
         $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,

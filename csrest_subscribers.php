@@ -38,7 +38,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        	
+
         $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_list_id($list_id);
 
@@ -142,12 +142,12 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      */
     function import($subscribers, $resubscribe, $queueSubscriptionBasedAutoResponders = false, $restartSubscriptionBasedAutoResponders = false) {
         $subscribers = array(
-		    'Resubscribe' => $resubscribe,
-			'QueueSubscriptionBasedAutoResponders' => $queueSubscriptionBasedAutoResponders,
-		    'Subscribers' => $subscribers,
+	    'Resubscribe' => $resubscribe,
+		'QueueSubscriptionBasedAutoResponders' => $queueSubscriptionBasedAutoResponders,
+	    'Subscribers' => $subscribers,
             'RestartSubscriptionBasedAutoresponders' => $restartSubscriptionBasedAutoResponders
         );
-        
+
         return $this->post_request($this->_subscribers_base_route.'/import.json', $subscribers);
     }
 
@@ -205,9 +205,9 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
     function unsubscribe($email) {
         // We need to build the subscriber data structure.
         $email = array(
-		    'EmailAddress' => $email 
+	    'EmailAddress' => $email
         );
-        
+
         return $this->post_request($this->_subscribers_base_route.'/unsubscribe.json', $email);
     }
 

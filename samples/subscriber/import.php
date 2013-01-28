@@ -59,15 +59,15 @@ if($result->was_successful()) {
     echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
     var_dump($result->response);
     echo '</pre>';
-    
+
     if($result->response->ResultData->TotalExistingSubscribers > 0) {
-        echo 'Updated '.$result->response->ResultData->TotalExistingSubscribers.' existing subscribers in the list';        
+        echo 'Updated '.$result->response->ResultData->TotalExistingSubscribers.' existing subscribers in the list';
     } else if($result->response->ResultData->TotalNewSubscribers > 0) {
         echo 'Added '.$result->response->ResultData->TotalNewSubscribers.' to the list';
-    } else if(count($result->response->ResultData->DuplicateEmailsInSubmission) > 0) { 
+    } else if(count($result->response->ResultData->DuplicateEmailsInSubmission) > 0) {
         echo $result->response->ResultData->DuplicateEmailsInSubmission.' were duplicated in the provided array.';
     }
-    
+
     echo 'The following emails failed to import correctly.<pre>';
     var_dump($result->response->ResultData->FailureDetails);
 }

@@ -52,7 +52,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        	
+
         $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_list_id($list_id);
     }
@@ -144,7 +144,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *           center.
      *     )
      * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the 
+     * @return CS_REST_Wrapper_Result A successful response will be the
      * personalisation tag of the newly created custom field
      */
     function create_custom_field($custom_field_details) {
@@ -184,8 +184,8 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
             'KeepExistingOptions' => $keep_existing,
             'Options' => $new_options
         );
-        
-        return $this->put_request($this->_lists_base_route.'customfields/'.rawurlencode($key).'/options.json', 
+
+        return $this->put_request($this->_lists_base_route.'customfields/'.rawurlencode($key).'/options.json',
             $options);
     }
 
@@ -275,10 +275,10 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_active_subscribers($added_since = '', $page_number = NULL, 
+    function get_active_subscribers($added_since = '', $page_number = NULL,
         $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
-            
-        return $this->get_request_paged($this->_lists_base_route.'active.json?date='.urlencode($added_since), 
+
+        return $this->get_request_paged($this->_lists_base_route.'active.json?date='.urlencode($added_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -315,10 +315,10 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_unconfirmed_subscribers($added_since = '', $page_number = NULL, 
+    function get_unconfirmed_subscribers($added_since = '', $page_number = NULL,
         $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
 
-        return $this->get_request_paged($this->_lists_base_route.'unconfirmed.json?date='.urlencode($added_since), 
+        return $this->get_request_paged($this->_lists_base_route.'unconfirmed.json?date='.urlencode($added_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -355,10 +355,10 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_bounced_subscribers($bounced_since = '', $page_number = NULL, 
+    function get_bounced_subscribers($bounced_since = '', $page_number = NULL,
         $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
-            
-        return $this->get_request_paged($this->_lists_base_route.'bounced.json?date='.urlencode($bounced_since), 
+
+        return $this->get_request_paged($this->_lists_base_route.'bounced.json?date='.urlencode($bounced_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -395,10 +395,10 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_unsubscribed_subscribers($unsubscribed_since = '', $page_number = NULL, 
+    function get_unsubscribed_subscribers($unsubscribed_since = '', $page_number = NULL,
         $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
-            
-        return $this->get_request_paged($this->_lists_base_route.'unsubscribed.json?date='.urlencode($unsubscribed_since), 
+
+        return $this->get_request_paged($this->_lists_base_route.'unsubscribed.json?date='.urlencode($unsubscribed_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -435,10 +435,10 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_deleted_subscribers($deleted_since = '', $page_number = NULL, 
+    function get_deleted_subscribers($deleted_since = '', $page_number = NULL,
         $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
-            
-        return $this->get_request_paged($this->_lists_base_route.'deleted.json?date='.urlencode($deleted_since), 
+
+        return $this->get_request_paged($this->_lists_base_route.'deleted.json?date='.urlencode($deleted_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -496,7 +496,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function get_stats() {
         return $this->get_request($this->_lists_base_route.'stats.json');
     }
-    
+
     /**
      * Gets the webhooks which are currently subcribed to event on this list
      * @access public
@@ -514,15 +514,15 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function get_webhooks() {
         return $this->get_request($this->_lists_base_route.'webhooks.json');
     }
-   
+
     /**
      * Creates a new webhook based on the provided details
      * @param array $webhook The details of the new webhook
      *     This array should be of the form
      *     array(
-     *         'Events' => array<string> The events to subscribe to. Valid events are 
-     *             CS_REST_LIST_WEBHOOK_SUBSCRIBE, 
-     *             CS_REST_LIST_WEBHOOK_DEACTIVATE, 
+     *         'Events' => array<string> The events to subscribe to. Valid events are
+     *             CS_REST_LIST_WEBHOOK_SUBSCRIBE,
+     *             CS_REST_LIST_WEBHOOK_DEACTIVATE,
      *             CS_REST_LIST_WEBHOOK_UPDATE
      *         'Url' => string The url of the page to POST the webhook events to
      *         'PayloadFormat' => The format to use when POSTing webhook event data, either
@@ -534,18 +534,18 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created webhook
      */
     function create_webhook($webhook) {
-        return $this->post_request($this->_lists_base_route.'webhooks.json', $webhook);    
+        return $this->post_request($this->_lists_base_route.'webhooks.json', $webhook);
     }
-    
+
     /**
      * Sends test events for the given webhook id
      * @param string $webhook_id The id of the webhook to test
      * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty. 
+     * @return CS_REST_Wrapper_Result A successful response will be empty.
      */
     function test_webhook($webhook_id) {
         return $this->get_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/test.json');
-    }    
+    }
 
     /**
      * Deletes an existing webhook from the system
@@ -556,7 +556,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function delete_webhook($webhook_id) {
         return $this->delete_request($this->_lists_base_route.'webhooks/'.$webhook_id.'.json');
     }
-    
+
     /**
      * Activates an existing deactivated webhook
      * @param string $webhook_id The id of the webhook to activate
@@ -566,7 +566,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     function activate_webhook($webhook_id) {
         return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/activate.json', '');
     }
-    
+
     /**
      * Deactivates an existing activated webhook
      * @param string $webhook_id The id of the webhook to deactivate

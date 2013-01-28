@@ -38,7 +38,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        	
+
         $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_client_id($client_id);
     }
@@ -152,7 +152,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * )
      */
     function get_lists_for_email($email_address) {
-        return $this->get_request($this->_clients_base_route . 
+        return $this->get_request($this->_clients_base_route .
           'listsforemail.json?email='.urlencode($email_address));
     }
 
@@ -197,10 +197,10 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL, 
+    function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL,
         $order_direction = NULL) {
-            
-        return $this->get_request_paged($this->_clients_base_route.'suppressionlist.json', 
+
+        return $this->get_request_paged($this->_clients_base_route.'suppressionlist.json',
             $page_number, $page_size, $order_field, $order_direction, '?');
     }
 
@@ -247,7 +247,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
      *     'ApiKey' => The clients API Key, THIS IS NOT THE CLIENT ID
-     *     'BasicDetails' => 
+     *     'BasicDetails' =>
      *     {
      *         'ClientID' => The id of the client
      *         'CompanyName' => The company name of the client
@@ -278,7 +278,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      *         'MarkupOnDesignSpamTest' => The markup applied per design and spam test
      *         'Currency' => The currency fees are paid in
      *         'ClientPays' => Whether client client pays for themselves
-     *     }     
+     *     }
      * }
      */
     function get() {
@@ -379,7 +379,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
 
     /**
      * Transfer credits to or from this client.
-     * 
+     *
      * @param array $transfer_data Details for the credit transfer. This array
      *   should be of the form:
      *     array(
@@ -409,7 +409,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
 
     /**
      * returns the people associated with this client.
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form 
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      *     array({
      *     		'EmailAddress' => the email address of the person
      *     		'Name' => the name of the person
@@ -419,8 +419,8 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      */
     function get_people() {
     	return $this->get_request($this->_clients_base_route.'people.json');
-    } 
-    
+    }
+
     /**
      * retrieves the email address of the primary contact for this client
      * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
@@ -429,7 +429,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     function get_primary_contact() {
     	return $this->get_request($this->_clients_base_route.'primarycontact.json');
     }
-    
+
     /**
      * assigns the primary contact for this client to the person with the specified email address
      * @param string $emailAddress the email address of the person designated to be the primary contact

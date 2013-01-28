@@ -31,10 +31,10 @@ class CS_REST_TestTemplates extends CS_REST_TestBase {
         );
 
         $transport_result = array (
-            'code' => $response_code, 
+            'code' => $response_code,
             'response' => $raw_result
         );
-        
+
         $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
 
         $call_options['data'] = 'template was serialised to this';
