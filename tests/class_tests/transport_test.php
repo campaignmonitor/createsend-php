@@ -9,8 +9,9 @@ require_once '../class/log.php';
 @Mock::generate('CS_REST_SocketWrapper');
 @Mock::generatePartial(
     'CS_REST_SocketTransport', 
-    'PartialSocketTransport', 
-array('_build_request', '_get_status_code'));
+    'PartialSocketTransport',
+    array('_build_request', '_get_status_code')
+);
 
 class CS_REST_TestSocketTransport extends UnitTestCase {
     var $mock_wrapper;
@@ -42,7 +43,7 @@ class CS_REST_TestSocketTransport extends UnitTestCase {
         $call_options = array(
             'method' => 'CONJURE',
             'route' => $protocol.'://'.$host.$path,
-            'host' => $host      
+            'host' => $host
         );
 
         $request = 'Get me some data!';

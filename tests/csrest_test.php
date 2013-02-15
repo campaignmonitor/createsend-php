@@ -42,8 +42,17 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     function get_call_options($route, $method = 'GET') {
+
+
+        # TODO: Get rid of this once all tests have been migrated to use auth rather than api_key
+        $auth_details = array('api_key' => $this->api_key);
+
+        if (isset($this->auth)) {
+            $auth_details = $this->auth;
+        }
+
         return array (
-		    'authdetails' => array('api_key' => $this->api_key),
+		    'authdetails' => $auth_details,
 		    'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
 		        ' PHPv'.phpversion().' over '.$this->transport_type.' with '.$this->serialisation_type,
 		    'contentType' => 'application/json; charset=utf-8',

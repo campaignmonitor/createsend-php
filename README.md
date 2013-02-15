@@ -33,12 +33,10 @@ TODO: Add instructions for getting authorize url
 
 TODO: Add instructions for exchanging code for access token and refresh token
 
-...
-
 Once you have an access token and refresh token for your user, you can authenticate and make further API calls like so:
 
 ```php
-require_once '../csrest_general.php';
+require_once 'csrest_general.php';
 
 $auth = array(
   'access_token' => 'your access token',
@@ -54,7 +52,7 @@ TODO: Add instructions for refreshing access tokens
 ### Using an API key
 
 ```php
-require_once '../csrest_general.php';
+require_once 'csrest_general.php';
 
 $auth = array('api_key' => 'your API key');
 $wrap = new CS_REST_General($auth);
@@ -73,6 +71,7 @@ Further documentation of the inputs and outputs of each call can be found in the
 documentation in each of the csrest_*.php files or simply by examining the 
 var_dump results in each of the provided samples.
 
+TODO: Update all existing samples to use OAuth by default.
 TODO: Add samples for authenticating using both OAuth and an API key.
 TODO: Write sample applications to demonstrate both these approaches.
 
@@ -80,7 +79,7 @@ TODO: Write sample applications to demonstrate both these approaches.
 1. Fork the repository
 2. Make your changes, including tests for your changes.
 3. Ensure that the build passes, by running:
-    
+
     ```
     composer install --dev
     cd tests && php all_tests.php && cd ..

@@ -23,7 +23,6 @@
             },
             "time": "2012-06-11 22:22:54",
             "type": "library",
-            "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-2.0+"
