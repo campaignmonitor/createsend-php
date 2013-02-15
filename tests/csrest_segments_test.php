@@ -7,13 +7,23 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 @Mock::generate('CS_REST_NativeJsonSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
-class CS_REST_TestSegments extends CS_REST_TestBase {
+class CS_REST_ApiKeyTestSegments extends CS_REST_TestSegments {
+    var $auth = array('api_key' => 'not a real api key');
+}
+
+class CS_REST_OAuthTestSegments extends CS_REST_TestSegments {
+    var $auth = array(
+        'access_token' => '7y872y3872i3eh',
+        'refresh_token' => 'kjw8qjd9ow8jo');
+}
+
+abstract class CS_REST_TestSegments extends CS_REST_TestBase {
     var $segment_id = 'not a real segment id';
     var $segment_base_route;
 
     function set_up_inner() {
         $this->segment_base_route = $this->base_route.'segments/'.$this->segment_id;
-        $this->wrapper = new CS_REST_Segments($this->segment_id, $this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_Segments($this->segment_id, $this->auth, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

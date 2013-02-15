@@ -16,7 +16,7 @@ class CS_REST_TestBase extends UnitTestCase {
 
     var $serialisation_type = 'mockjson';
     var $transport_type = 'mock_cURL';
-    var $api_key = 'not a real api key';
+    var $auth = NULL;
     var $protocol = 'hotpotatoes';
     var $api_host = 'api.test.createsend.com';
     var $log_level = CS_REST_LOG_NONE;
@@ -37,36 +37,27 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     function set_up_inner() {
-        $this->wrapper = new CS_REST_General($this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_General($this->auth, $this->protocol, $this->log_level,
             $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
     function get_call_options($route, $method = 'GET') {
-
-
-        # TODO: Get rid of this once all tests have been migrated to use auth rather than api_key
-        $auth_details = array('api_key' => $this->api_key);
-
-        if (isset($this->auth)) {
-            $auth_details = $this->auth;
-        }
-
         return array (
-		    'authdetails' => $auth_details,
-		    'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
-		        ' PHPv'.phpversion().' over '.$this->transport_type.' with '.$this->serialisation_type,
-		    'contentType' => 'application/json; charset=utf-8',
-			'deserialise' => true,
-			'host' => $this->api_host,
+            'authdetails' => $this->auth,
+            'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
+            ' PHPv'.phpversion().' over '.$this->transport_type.' with '.$this->serialisation_type,
+            'contentType' => 'application/json; charset=utf-8',
+            'deserialise' => true,
+            'host' => $this->api_host,
             'protocol' => $this->protocol,
-		    'route' => $route,
-		    'method' => $method
+            'route' => $route,
+            'method' => $method
         );
     }
 
     function setup_transport_and_serialisation($make_call_result, $call_options,
         $deserialise_result, $deserialise_input, $serialise_result = NULL, $serialise_input = NULL) {
-        	
+
         $this->mock_transport->setReturnValue('make_call', $make_call_result);
         $this->mock_transport->expectOnce('make_call', array(new IdenticalExpectation($call_options)));
 
@@ -83,17 +74,17 @@ class CS_REST_TestBase extends UnitTestCase {
         $from_deserialisation, $response_code = 200) {
 
         $transport_result = array (
-	        'code' => $response_code, 
-	        'response' => $from_transport
+            'code' => $response_code, 
+            'response' => $from_transport
         );
-        
+
         $expected_result = new CS_REST_Wrapper_Result($from_deserialisation, $response_code);
-         
+
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $from_deserialisation, $from_transport, NULL, NULL, $response_code);
 
         $result = $this->wrapper->$wrapper_function();
-         
+
         $this->assertIdentical($expected_result, $result);
     }
 
@@ -185,33 +176,33 @@ class CS_REST_TestGeneral extends CS_REST_TestBase {
     }
 
     function testget_primary_contact() {
-    	$raw_result = 'primary contact result';
-    	$deserialized = array('EmailAddress' => 'test@foo.bar');
-    	$call_options = $this->get_call_options($this->base_route.'primarycontact.json', 'GET');
-    
-    	$this->general_test('get_primary_contact', $call_options,
-    			$raw_result, $deserialized);
+        $raw_result = 'primary contact result';
+        $deserialized = array('EmailAddress' => 'test@foo.bar');
+        $call_options = $this->get_call_options($this->base_route.'primarycontact.json', 'GET');
+
+        $this->general_test('get_primary_contact', $call_options,
+            $raw_result, $deserialized);
     }
     
     function testset_primary_contact() {
-    	$raw_result = '';
-    	$response_code = 200;
-    	$email = 'test@foo.bar';
-    	$call_options = $this->get_call_options($this->base_route.'primarycontact.json?email=' . urlencode($email), 'PUT');
-    	$call_options['data'] = '';
-    	 
-    	$transport_result = array (
-    			'code' => $response_code,
-    			'response' => $raw_result
-    	);
-    	 
-    	$expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
-    	 
-    	$this->setup_transport_and_serialisation($transport_result, $call_options,
-    			$raw_result, $raw_result, '', '', $response_code);
-    	 
-    	$result = $this->wrapper->set_primary_contact($email);
-    	 
-    	$this->assertIdentical($expected_result, $result);
+        $raw_result = '';
+        $response_code = 200;
+        $email = 'test@foo.bar';
+        $call_options = $this->get_call_options($this->base_route.'primarycontact.json?email=' . urlencode($email), 'PUT');
+        $call_options['data'] = '';
+
+        $transport_result = array (
+            'code' => $response_code,
+            'response' => $raw_result
+        );
+
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, '', '', $response_code);
+
+        $result = $this->wrapper->set_primary_contact($email);
+
+        $this->assertIdentical($expected_result, $result);
     }
 }

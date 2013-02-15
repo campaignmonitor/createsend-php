@@ -11,7 +11,15 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
 
     /**
      * Constructor.
-     * @param $api_key string Your api key (Ignored for get_apikey requests)
+     * @param $auth_details array Authentication details to use for API calls.
+     *        This array must take one of the following forms:
+     *        If using OAuth to authenticate:
+     *        array(
+     *          'access_token' => 'your access token',
+     *          'refresh_token' => 'your refresh token')
+     *
+     *        Or if using an API key:
+     *        array('api_key' => 'your api key')
      * @param $protocol string The protocol to use for requests (http|https)
      * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
      * @param $host string The host to send API requests to. There is no need to change this
@@ -21,14 +29,14 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
      * @access public
      */
     function CS_REST_Wrapper_Base(
-        $api_key,
+        $auth_details,
         $protocol = 'https',
         $debug_level = CS_REST_LOG_NONE,
         $host = 'api.createsend.com',
         $log = NULL,
         $serialiser = NULL,
         $transport = NULL) {
-        $this->CS_REST_Wrapper_Base($api_key, $protocol, $debug_level, $host, $log, $serialiser, $transport);        
+        $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);        
     }
 
     /**

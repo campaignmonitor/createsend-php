@@ -7,13 +7,23 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 @Mock::generate('CS_REST_NativeJsonSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
-class CS_REST_TestSubscribers extends CS_REST_TestBase {
+class CS_REST_ApiKeyTestSubscribers extends CS_REST_TestSubscribers {
+    var $auth = array('api_key' => 'not a real api key');
+}
+
+class CS_REST_OAuthTestSubscribers extends CS_REST_TestSubscribers {
+    var $auth = array(
+        'access_token' => '7y872y3872i3eh',
+        'refresh_token' => 'kjw8qjd9ow8jo');
+}
+
+abstract class CS_REST_TestSubscribers extends CS_REST_TestBase {
     var $list_id = 'not a real list id';
     var $list_base_route;
 
     function set_up_inner() {
         $this->list_base_route = $this->base_route.'subscribers/'.$this->list_id;
-        $this->wrapper = new CS_REST_Subscribers($this->list_id, $this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_Subscribers($this->list_id, $this->auth, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

@@ -10,7 +10,7 @@ require_once '../class/log.php';
 class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     var $responses;
     var $deserialiser;
-    
+
     function setUp() {
     	$util_responses = array(
     			'clients' => array(
