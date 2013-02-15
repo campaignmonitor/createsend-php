@@ -43,7 +43,7 @@ class CS_REST_TestBase extends UnitTestCase {
 
     function get_call_options($route, $method = 'GET') {
         return array (
-		    'credentials' => $this->api_key.':nopass',
+		    'authdetails' => array('api_key' => $this->api_key),
 		    'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
 		        ' PHPv'.phpversion().' over '.$this->transport_type.' with '.$this->serialisation_type,
 		    'contentType' => 'application/json; charset=utf-8',
@@ -145,7 +145,7 @@ class CS_REST_TestGeneral extends CS_REST_TestBase {
         $site_url = 'unit.test.createsend.com';
 
         $call_options = $this->get_call_options($this->base_route.'apikey.json?siteurl='.$site_url);
-        $call_options['credentials'] = $username.':'.$password;
+        $call_options['authdetails'] = array('username' => $username, 'password' => $password);
 
         $transport_result = array (
             'code' => 200, 

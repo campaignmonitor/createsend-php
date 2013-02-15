@@ -85,14 +85,32 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
         curl_setopt($ch, CURLOPT_URL, $call_options['route']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($ch, CURLOPT_USERPWD, $call_options['credentials']);
+        $headers = array();
+        $headers[] = 'Content-Type: '.$call_options['contentType'];
+        
+
+        if (array_key_exists('authdetails', $call_options)) {
+            if (array_key_exists('username', $call_options['authdetails']) &&
+                array_key_exists('password', $call_options['authdetails'])) {
+                # Authenticating using basic auth for retrieving user's API key.
+                curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+                curl_setopt($ch, CURLOPT_USERPWD, $call_options['authdetails']['username'].$call_options['authdetails']['password']);
+            } elseif (array_key_exists('access_token', $call_options['authdetails'])) {
+                # Authenticating using OAuth.
+                $access_token = $call_options['authdetails']['access_token'];
+                $headers[] = 'Authorization: Bearer '.$access_token;
+            } elseif (array_key_exists('api_key', $call_options['authdetails'])) {
+                # Authenticating using an API key.
+                curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+                $api_key = $call_options['authdetails']['api_key'];
+                curl_setopt($ch, CURLOPT_USERPWD, $api_key.':nopass');
+            }
+        }
+
         curl_setopt($ch, CURLOPT_USERAGENT, $call_options['userAgent']);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: '.$call_options['contentType']));
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, CS_REST_SOCKET_TIMEOUT);
         curl_setopt($ch, CURLOPT_TIMEOUT, CS_REST_CALL_TIMEOUT);
 
-        $headers = array();
         $inflate_response = false;
         if($this->_curl_zlib) {
             $this->_log->log_message('curl+zlib support available. Requesting gzipped response.',
@@ -266,10 +284,28 @@ class CS_REST_SocketTransport extends CS_REST_BaseTransport {
     }
 
     function _build_request($call_options, $host, $path, $accept_gzip) {
+        $request_auth_details = '';
+
+        if (array_key_exists('authdetails', $call_options)) {
+            if (array_key_exists('username', $call_options['authdetails']) &&
+                array_key_exists('password', $call_options['authdetails'])) {
+                # Authenticating using basic auth for retrieving user's API key.
+                $request_auth_details .= 'Authorization: Basic '.base64_encode($call_options['authdetails']['username'].$call_options['authdetails']['password'])."\n";
+            } elseif (array_key_exists('access_token', $call_options['authdetails'])) {
+                # Authenticating using OAuth.
+                $access_token = $call_options['authdetails']['access_token'];
+                $request_auth_details .= 'Authorization: Bearer '.$access_token."\n";
+            } elseif (array_key_exists('api_key', $call_options['authdetails'])) {
+                # Authenticating using an API key.
+                $api_key = $call_options['authdetails']['api_key'];
+                $request_auth_details .= 'Authorization: Basic '.base64_encode($api_key.':nopass')."\n";
+            }
+        }
+
         $request =
 $call_options['method'].' '.$path." HTTP/1.1\n".
 'Host: '.$host."\n".
-'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+$request_auth_details.
 'User-Agent: '.$call_options['userAgent']."\n".
 "Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n";

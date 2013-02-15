@@ -75,8 +75,9 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
      * }
      */
     function get_apikey($username, $password, $site_url) {
-        return $this->get_request($this->_base_route.'apikey.json?siteurl='.$site_url, 
-            array('credentials' => $username.':'.$password));
+        return $this->get_request($this->_base_route.'apikey.json?siteurl='.$site_url,
+            array('authdetails' => array('username' => $username, 'password' => $password))
+        );
     }
 
     /**

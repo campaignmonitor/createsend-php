@@ -114,19 +114,19 @@ Server: Microsoft-IIS/7.0';
 
     function test_build_request_no_data_or_gzip() {
         $call_options = array(
-    	    'method' => 'CONJURE',
-    	    'credentials' => 'Chuck:Norris',
-    	    'userAgent' => 'Nozilla/ Firechuck',
-    	    'contentType' => 'application/visa'    	    
-    	    );
-    	     
-    	    $host = 'api.test.createsend.com';
-    	    $path = '/path/to/resource';
-    	     
-    	    $expected =
-    	    $call_options['method'].' '.$path." HTTP/1.1\n".
+            'method' => 'CONJURE',
+            'authdetails' => array('api_key' => 'chucknorris'),
+            'userAgent' => 'Nozilla/ Firechuck',
+            'contentType' => 'application/visa'
+        );
+
+        $host = 'api.test.createsend.com';
+        $path = '/path/to/resource';
+
+        $expected =
+        $call_options['method'].' '.$path." HTTP/1.1\n".
 'Host: '.$host."\n".
-'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+'Authorization: Basic '.base64_encode($call_options['authdetails']['api_key'].":nopass")."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
 "Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n\n\n";
@@ -137,74 +137,74 @@ Server: Microsoft-IIS/7.0';
     function test_build_request_no_data_with_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
-            'credentials' => 'Chuck:Norris',
+            'authdetails' => array('api_key' => 'chucknorris'),
             'userAgent' => 'Nozilla/ Firechuck',
-            'contentType' => 'application/visa'         
-            );
+            'contentType' => 'application/visa'
+        );
              
-            $host = 'api.test.createsend.com';
-            $path = '/path/to/resource';
+        $host = 'api.test.createsend.com';
+        $path = '/path/to/resource';
              
-            $expected =
-            $call_options['method'].' '.$path." HTTP/1.1\n".
+        $expected =
+        $call_options['method'].' '.$path." HTTP/1.1\n".
 'Host: '.$host."\n".
-'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+'Authorization: Basic '.base64_encode($call_options['authdetails']['api_key'].":nopass")."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
 "Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n".
 "Accept-Encoding: gzip\n\n\n";
-             
-            $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, true), $expected);
+
+        $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, true), $expected);
     }
 
     function test_build_request_with_data_no_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
-            'credentials' => 'Chuck:Norris',
+            'authdetails' => array('api_key' => 'chucknorris'),
             'userAgent' => 'Nozilla/ Firechuck',
             'contentType' => 'application/visa',
-            'data' => 'Send this to your bank for a new Credit Card!'      
-            );
+            'data' => 'Send this to your bank for a new Credit Card!'
+        );
 
-            $host = 'api.test.createsend.com';
-            $path = '/path/to/resource';
+        $host = 'api.test.createsend.com';
+        $path = '/path/to/resource';
 
-            $expected =
-            $call_options['method'].' '.$path." HTTP/1.1\n".
+        $expected =
+        $call_options['method'].' '.$path." HTTP/1.1\n".
 'Host: '.$host."\n".
-'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+'Authorization: Basic '.base64_encode($call_options['authdetails']['api_key'].":nopass")."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
 "Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n".
 'Content-Length: '.strlen($call_options['data'])."\n\n".
-            $call_options['data']."\n\n";
+        $call_options['data']."\n\n";
 
-            $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, false), $expected);
+        $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, false), $expected);
     }
 
     function test_build_request_with_data_and_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
-            'credentials' => 'Chuck:Norris',
+            'authdetails' => array('api_key' => 'chucknorris'),
             'userAgent' => 'Nozilla/ Firechuck',
             'contentType' => 'application/visa',
-            'data' => 'Send this to your bank for a new Credit Card!'      
-            );
+            'data' => 'Send this to your bank for a new Credit Card!'
+        );
 
-            $host = 'api.test.createsend.com';
-            $path = '/path/to/resource';
+        $host = 'api.test.createsend.com';
+        $path = '/path/to/resource';
 
-            $expected =
-            $call_options['method'].' '.$path." HTTP/1.1\n".
+        $expected =
+        $call_options['method'].' '.$path." HTTP/1.1\n".
 'Host: '.$host."\n".
-'Authorization: Basic '.base64_encode($call_options['credentials'])."\n".
+'Authorization: Basic '.base64_encode($call_options['authdetails']['api_key'].":nopass")."\n".
 'User-Agent: '.$call_options['userAgent']."\n".
 "Connection: Close\n".
 'Content-Type: '.$call_options['contentType']."\n".
 "Accept-Encoding: gzip\n".
 'Content-Length: '.strlen($call_options['data'])."\n\n".
-            $call_options['data']."\n\n";
+        $call_options['data']."\n\n";
 
-            $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, true), $expected);
+        $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, true), $expected);
     }
 }

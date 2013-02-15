@@ -88,7 +88,7 @@ class CS_REST_Wrapper_Base {
 
     /**
      * The default options to use for each API request.
-     * These can be overridded by passing in an array as the call_options argument
+     * These can be overridden by passing in an array as the call_options argument
      * to a single api request.
      * Valid options are:
      *
@@ -104,7 +104,19 @@ class CS_REST_Wrapper_Base {
 
     /**
      * Constructor.
-     * @param $api_key string Your api key (Ignored for get_apikey requests)
+     * @param $auth_details array Authentication details to use for API calls.
+     *        This array must take one of the following forms:
+     *        If using OAuth to authenticate:
+     *        array(
+     *          'access_token' => 'your access token',
+     *          'refresh_token' => 'your refresh token')
+     *
+     *        Or if using an API key:
+     *        array('api_key' => 'your api key')
+     *
+     *        Note that this method will continue to work in the deprecated
+     *        case when $auth_details is passed in as a string containing an
+     *        API key.
      * @param $protocol string The protocol to use for requests (http|https)
      * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
      * @param $host string The host to send API requests to. There is no need to change this
@@ -114,16 +126,21 @@ class CS_REST_Wrapper_Base {
      * @access public
      */
     function CS_REST_Wrapper_Base(
-        $api_key,
-        $protocol = 'https',
+        $auth_details,
+        $protocol = 'http',
         $debug_level = CS_REST_LOG_NONE,
         $host = 'api.createsend.com',
         $log = NULL,
         $serialiser = NULL,
         $transport = NULL) {
-            
+
+        if (is_string($auth_details)) {
+            # If $auth_details is a string, assume it is an API key
+            $auth_details = array('api_key' => $auth_details);
+        }
+
         $this->_log = is_null($log) ? new CS_REST_Log($debug_level) : $log;
-            
+
         $this->_protocol = $protocol;
         $this->_base_route = $protocol.'://'.$host.'/api/v3/';
 
@@ -138,11 +155,11 @@ class CS_REST_Wrapper_Base {
 
         $this->_serialiser = is_null($serialiser) ?
             CS_REST_SERIALISATION_get_available($this->_log) : $serialiser;
-            
+
         $this->_log->log_message('Using '.$this->_serialiser->get_type().' json serialising', get_class($this), CS_REST_LOG_WARNING);
 
         $this->_default_call_options = array (
-            'credentials' => $api_key.':nopass',
+            'authdetails' => $auth_details,
             'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
                 ' PHPv'.phpversion().' over '.$transport_type.' with '.$this->_serialiser->get_type(),
             'contentType' => 'application/json; charset=utf-8', 
