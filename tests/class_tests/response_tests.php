@@ -907,19 +907,19 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     		}
     	}
     }
-    
+
     function test_services_json_serializer() {
-    	$log = &new MockCS_REST_Log($this);
-    	$this->deserialiser = new CS_REST_ServicesJsonSerialiser($log);
-    	$this->do_test_response_deserialisation();
+        $log = new MockCS_REST_Log($this);
+        $this->deserialiser = new CS_REST_ServicesJsonSerialiser($log);
+        $this->do_test_response_deserialisation();
     }
 
     function test_services_native_serializer() {
-    	if(function_exists('json_decode') && function_exists('json_encode')):
-	    	$log = &new MockCS_REST_Log($this);
-	    	$this->deserialiser = new CS_REST_NativeJsonSerialiser($log);
-	    	$this->do_test_response_deserialisation();
-    	endif;
+        if(function_exists('json_decode') && function_exists('json_encode')):
+            $log = new MockCS_REST_Log($this);
+            $this->deserialiser = new CS_REST_NativeJsonSerialiser($log);
+            $this->do_test_response_deserialisation();
+        endif;
     }
     
     function assert_identical_ignoring_type($object, $expected, $message) {
@@ -935,7 +935,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                 foreach($expected as $k => $v) {
                     $this->assert_identical_ignoring_type($object->$k, $v, $message.' Checking '.$k);
                 }
-            }         
+            }
         } else {
             $this->assertEqual($expected, $object, $message.' Items are not equal');
         }

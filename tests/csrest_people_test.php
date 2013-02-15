@@ -13,7 +13,7 @@ class CS_REST_TestPeople extends CS_REST_TestBase {
 
     function set_up_inner() {
         $this->people_base_route = $this->base_route.'clients/'.$this->client_id . '/people';
-        $this->wrapper = &new CS_REST_People($this->client_id, $this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_People($this->client_id, $this->api_key, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

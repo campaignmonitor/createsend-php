@@ -13,7 +13,7 @@ class CS_REST_TestLists extends CS_REST_TestBase {
 
     function set_up_inner() {
         $this->list_base_route = $this->base_route.'lists/'.$this->list_id.'/';
-        $this->wrapper = &new CS_REST_Lists($this->list_id, $this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_Lists($this->list_id, $this->api_key, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

@@ -12,7 +12,7 @@ class CS_REST_TestAdministrator extends CS_REST_TestBase {
 
     function set_up_inner() {
         $this->admins_base_route = $this->base_route.'admins';
-        $this->wrapper = &new CS_REST_Administrators($this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_Administrators($this->api_key, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

@@ -24,9 +24,9 @@ class CS_REST_TestBase extends UnitTestCase {
     var $base_route;
 
     function setUp() {
-        $this->mock_log = &new MockCS_REST_Log();
-        $this->mock_serialiser = &new MockCS_REST_NativeJsonSerialiser();
-        $this->mock_transport = &new MockCS_REST_CurlTransport();
+        $this->mock_log = new MockCS_REST_Log();
+        $this->mock_serialiser = new MockCS_REST_NativeJsonSerialiser();
+        $this->mock_transport = new MockCS_REST_CurlTransport();
 
         $this->mock_transport->setReturnValue('get_type', $this->transport_type);
         $this->mock_serialiser->setReturnValue('get_type', $this->serialisation_type);
@@ -37,7 +37,7 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     function set_up_inner() {
-        $this->wrapper = &new CS_REST_General($this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_General($this->api_key, $this->protocol, $this->log_level,
             $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

@@ -13,7 +13,7 @@ class CS_REST_TestTemplates extends CS_REST_TestBase {
 
     function set_up_inner() {
         $this->template_base_route = $this->base_route.'templates/'.$this->template_id;
-        $this->wrapper = &new CS_REST_Templates($this->template_id, $this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_Templates($this->template_id, $this->api_key, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

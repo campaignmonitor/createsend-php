@@ -13,7 +13,7 @@ class CS_REST_TestCampaigns extends CS_REST_TestBase {
 
     function set_up_inner() {
         $this->campaign_base_route = $this->base_route.'campaigns/'.$this->campaign_id.'/';
-        $this->wrapper = &new CS_REST_Campaigns($this->campaign_id, $this->api_key, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_Campaigns($this->campaign_id, $this->api_key, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 

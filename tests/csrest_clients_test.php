@@ -23,7 +23,7 @@ abstract class CS_REST_TestClients extends CS_REST_TestBase {
 
     function set_up_inner() {
         $this->client_base_route = $this->base_route.'clients/'.$this->client_id.'/';
-        $this->wrapper = &new CS_REST_Clients($this->client_id, $this->auth, $this->protocol, $this->log_level,
+        $this->wrapper = new CS_REST_Clients($this->client_id, $this->auth, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
