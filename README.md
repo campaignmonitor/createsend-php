@@ -71,7 +71,6 @@ Further documentation of the inputs and outputs of each call can be found in the
 documentation in each of the csrest_*.php files or simply by examining the 
 var_dump results in each of the provided samples.
 
-TODO: Update all existing samples to use OAuth by default.
 TODO: Add samples for authenticating using both OAuth and an API key.
 TODO: Write sample applications to demonstrate both these approaches.
 
