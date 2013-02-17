@@ -2,7 +2,10 @@
 
 require_once '../../csrest_lists.php';
 
-$wrap = new CS_REST_Lists('List ID', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Lists('List ID', $auth);
 
 $result = $wrap->update_field_options('[CustomFieldKey]', 
     array('Option 1', 'Option 2'), true);
