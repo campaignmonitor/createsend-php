@@ -5,6 +5,7 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
 @Mock::generate('CS_REST_Log');
 @Mock::generate('CS_REST_NativeJsonSerialiser');
+@Mock::generate('CS_REST_DonNothingSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_TestBase extends UnitTestCase {
@@ -145,20 +146,6 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
         $result = CS_REST_General::authorize_url($client_id, $client_secret, $redirect_uri, $scope, $state);
 
         $this->assertIdentical($expected_result, $result);
-    }
-
-    function test_static_exchange_token() {
-        $client_id = 8998879;
-        $client_secret = 'iou0q9wud0q9wd0q9wid0q9iwd0q9wid0q9wdqwd';
-        $redirect_uri = 'http://example.com/auth';
-        $code = 'jdiwouo8uowi9o9o';
-
-        list($access_token, $expires_in, $refresh_token) =
-            CS_REST_General::exchange_token($client_id, $client_secret, $redirect_uri, $code);
-
-        $this->assertIdentical("SlAV32hkKG", $access_token);
-        $this->assertIdentical(1209600, $expires_in);
-        $this->assertIdentical("tGzv3JOkF0XG5Qx2TlKWIA", $refresh_token);
     }
 }
 
