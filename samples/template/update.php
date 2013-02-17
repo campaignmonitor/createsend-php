@@ -2,7 +2,10 @@
 
 require_once '../../csrest_templates.php';
 
-$wrap = new CS_REST_Templates('Template ID', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Templates('Template ID', $auth);
 
 $result = $wrap->update(array(
     'Name' => 'Template Name',
