@@ -2,7 +2,10 @@
 
 require_once '../../csrest_clients.php';
 
-$wrap = new CS_REST_Clients('Client ID', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Clients('Client ID', $auth);
 
 $transfer_details = array(
   'Credits' => 200,

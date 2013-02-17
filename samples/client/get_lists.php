@@ -2,9 +2,12 @@
 
 require_once '../../csrest_clients.php';
 
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
 $wrap = new CS_REST_Clients(
-	'ClientID to get Lists for', 
-    'Your API Key');
+    'ClientID to get Lists for', 
+    $auth);
 
 $result = $wrap->get_lists();
 
