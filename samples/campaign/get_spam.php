@@ -2,7 +2,10 @@
 
 require_once '../../csrest_campaigns.php';
 
-$wrap = new CS_REST_Campaigns('Campaign ID to get spam complaints for', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Campaigns('Campaign ID to get spam complaints for', $auth);
 $result = $wrap->get_spam('Get spam complaints since', 1, 50, 'email', 'asc');
 //$result = $wrap->get_spam(date('Y-m-d', strtotime('-30 days')), page, page size, order field, order direction);
 

@@ -2,7 +2,10 @@
 
 require_once '../../csrest_campaigns.php';
 
-$wrap = new CS_REST_Campaigns('Campaign ID to get the email client usage for', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Campaigns('Campaign ID to get the email client usage for', $auth);
 $result = $wrap->get_email_client_usage();
 
 echo "Result of GET /api/v3/campaigns/{id}/emailclientusage\n<br />";

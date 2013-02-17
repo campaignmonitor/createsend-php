@@ -2,7 +2,10 @@
 
 require_once '../../csrest_campaigns.php';
 
-$wrap = new CS_REST_Campaigns('Campaign ID to get recipients for', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Campaigns('Campaign ID to get recipients for', $auth);
 $result = $wrap->get_recipients(1, 50, 'email', 'asc');
 //$result = $wrap->get_recipients(page number, page size, order by, order direction);
 
