@@ -226,7 +226,7 @@ class CS_REST_Wrapper_Base {
     function _call($call_options, $method, $route, $data = NULL) {
         $call_options['route'] = $route;
         $call_options['method'] = $method;
-        
+
         if(!is_null($data)) {
             $call_options['data'] = $this->_serialiser->serialise($data);
         }

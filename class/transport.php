@@ -94,7 +94,7 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
                 array_key_exists('password', $call_options['authdetails'])) {
                 # Authenticating using basic auth for retrieving user's API key.
                 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-                curl_setopt($ch, CURLOPT_USERPWD, $call_options['authdetails']['username'].$call_options['authdetails']['password']);
+                curl_setopt($ch, CURLOPT_USERPWD, $call_options['authdetails']['username'].':'.$call_options['authdetails']['password']);
             } elseif (array_key_exists('access_token', $call_options['authdetails'])) {
                 # Authenticating using OAuth.
                 $access_token = $call_options['authdetails']['access_token'];
@@ -290,7 +290,7 @@ class CS_REST_SocketTransport extends CS_REST_BaseTransport {
             if (array_key_exists('username', $call_options['authdetails']) &&
                 array_key_exists('password', $call_options['authdetails'])) {
                 # Authenticating using basic auth for retrieving user's API key.
-                $request_auth_details .= 'Authorization: Basic '.base64_encode($call_options['authdetails']['username'].$call_options['authdetails']['password'])."\n";
+                $request_auth_details .= 'Authorization: Basic '.base64_encode($call_options['authdetails']['username'].':'.$call_options['authdetails']['password'])."\n";
             } elseif (array_key_exists('access_token', $call_options['authdetails'])) {
                 # Authenticating using OAuth.
                 $access_token = $call_options['authdetails']['access_token'];
