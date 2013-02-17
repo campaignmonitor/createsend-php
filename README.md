@@ -29,11 +29,7 @@ The Campaign Monitor API supports authentication using either OAuth or an API ke
 
 ### Using OAuth
 
-Depending on the environment you are developing in, you may wish to use a PHP OAuth library to get access tokens for your users.
-
-If you don't use an OAuth library, you will need to get access tokens for your users by following the instructions included in the Campaign Monitor API [documentation](http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth). This package provides functionality to help you do this, as described below.
-
-TODO: Write sample applications to demonstrate both these approaches.
+Depending on the environment you are developing in, you may wish to use a PHP OAuth library to get access tokens for your users. If you don't use an OAuth library, you will need to get access tokens for your users by following the instructions included in the Campaign Monitor API [documentation](http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth). This package provides functionality to help you do this, as described below. You may also wish to reference this [example application](https://gist.github.com/jdennes/4973318), which is implemented using [Slim](http://slimframework.com/) but could easily be adapted for use with any PHP framework.
 
 The first thing your application should do is redirect your user to the Campaign Monitor authorization URL where they will have the opportunity to approve your application to access their Campaign Monitor account. You can get this authorization URL by using the `CS_REST_General::authorize_url()` method, like so:
 
@@ -60,9 +56,9 @@ $result = CS_REST_General::exchange_token(
     'Client Secret for your application',
     'Redirect URI for your application',
     'A unique code for your user' # Get the code parameter from the query string
-)
+);
 
-if($result->was_successful()) {
+if ($result->was_successful()) {
     $access_token = $result->response->access_token;
     $expires_in = $result->response->expires_in;
     $refresh_token = $result->response->refresh_token;
