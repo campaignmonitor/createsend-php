@@ -86,7 +86,29 @@ $result = $wrap->get_clients();
 var_dump($result->response);
 ```
 
-TODO: Add instructions for refreshing access tokens
+All OAuth tokens have an expiry time, and can be renewed with a corresponding refresh token. If your access token expires when attempting to make an API call, you will receive an error response, so your code should handle this. Here's an example of how you could do this:
+
+```php
+require_once 'csrest_general.php';
+
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token'
+);
+$wrap = new CS_REST_General($auth);
+$result = $wrap->get_clients();
+if (!$result->was_successful()) {
+    # If you receive '121: Expired OAuth Token', refresh the access token
+    if ($result->response->Code == 121) {
+        list($new_access_token, $new_expires_in, $new_refresh_token) = 
+            $wrap->refresh_token();
+        # Save $new_access_token, $new_expires_in, and $new_refresh_token
+    }
+    # Make the call again
+    $result = $wrap->get_clients();
+}
+var_dump($result->response);
+```
 
 ### Using an API key
 

@@ -172,6 +172,41 @@ class CS_REST_Wrapper_Base {
     }
 
     /**
+     * Refresh the current OAuth token using the current refresh token.
+     * @access public
+     */
+    function refresh_token() {
+        if (!isset($this->_default_call_options['authdetails']) ||
+            !isset($this->_default_call_options['authdetails']['refresh_token'])) {
+            trigger_error(
+                '$this->auth_details[\'refresh_token\'] does not contain a refresh token.',
+                E_USER_ERROR);
+        }
+        $body = "grant_type=refresh_token&refresh_token=".urlencode(
+            $this->_default_call_options['authdetails']['refresh_token']);
+        $options = array('contentType' => 'application/x-www-form-urlencoded');
+        $wrap = new CS_REST_Wrapper_Base(
+            NULL, 'https', CS_REST_LOG_NONE, CS_HOST, NULL,
+            new CS_REST_DoNothingSerialiser(), NULL);
+
+        $result = $wrap->post_request(CS_OAUTH_TOKEN_URI, $body, $options);
+        if ($result->was_successful()) {
+            $access_token = $result->response->access_token;
+            $expires_in = $result->response->expires_in;
+            $refresh_token = $result->response->refresh_token;
+            $this->_default_call_options['authdetails'] = array(
+                'access_token' => $access_token,
+                'refresh_token' => $refresh_token
+            );
+        } else {
+            trigger_error(
+                'Error refreshing token. '.$result->response->error.': '.$result->response->error_description,
+                E_USER_ERROR);
+        }
+        return array($access_token, $expires_in, $refresh_token);
+    }
+
+    /**
      * @return boolean True if the wrapper is using SSL.
      * @access public
      */
