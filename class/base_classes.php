@@ -127,7 +127,7 @@ class CS_REST_Wrapper_Base {
      */
     function CS_REST_Wrapper_Base(
         $auth_details,
-        $protocol = 'http',
+        $protocol = 'https',
         $debug_level = CS_REST_LOG_NONE,
         $host = 'api.createsend.com',
         $log = NULL,
