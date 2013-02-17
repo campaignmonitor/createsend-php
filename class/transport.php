@@ -89,7 +89,8 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
         $headers[] = 'Content-Type: '.$call_options['contentType'];
         
 
-        if (array_key_exists('authdetails', $call_options)) {
+        if (array_key_exists('authdetails', $call_options) &&
+            isset($call_options['authdetails'])) {
             if (array_key_exists('username', $call_options['authdetails']) &&
                 array_key_exists('password', $call_options['authdetails'])) {
                 # Authenticating using basic auth for retrieving user's API key.
@@ -147,6 +148,7 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
         }
 
         $response = curl_exec($ch);
+
         if(!$response && $response !== '') {
             $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch),
                 get_class($this), CS_REST_LOG_ERROR);

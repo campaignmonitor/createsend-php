@@ -10,6 +10,65 @@ require_once dirname(__FILE__).'/class/base_classes.php';
 class CS_REST_General extends CS_REST_Wrapper_Base {
 
     /**
+     * Get the authorization URL for your application, given the application's
+     * Client ID, Client Secret, Redirect URI, Scope, and optional state data.
+     *
+     * @param $client_id int The Client ID of your registered OAuth application.
+     * @param $client_secret string The Client Secret of your registered OAuth application.
+     * @param $redirect_uri string The Redirect URI of your registered OAuth application.
+     * @param $scope string The comma-separated permission scope your application requires.
+     *        See http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth for details.
+     * @param $state string Optional state data to be included in the URL.
+     * @return string The authorization URL to which users of your application should be redirected.
+     * @access public
+     **/
+    public static function authorize_url(
+        $client_id, $client_secret, $redirect_uri, $scope, $state = NULL) {
+        $qs = "client_id=".urlencode($client_id);
+        $qs .= "&client_secret=".urlencode($client_secret);
+        $qs .= "&redirect_uri=".urlencode($redirect_uri);
+        $qs .= "&scope=".urlencode($scope);
+        if ($state) {
+            $qs .= "&state=".urlencode($state);
+        }
+        return CS_OAUTH_BASE_URI.'?'.$qs;
+    }
+
+    /**
+     * Exchange a provided OAuth code for an OAuth access token, 'expires in'
+     * value and refresh token.
+     *
+     * @param $client_id int The Client ID of your registered OAuth application.
+     * @param $client_secret string The Client Secret of your registered OAuth application.
+     * @param $redirect_uri string The Redirect URI of your registered OAuth application.
+     * @param $code string The unique OAuth code to be exchanged for an access token.
+     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * {
+     *     'access_token' => The access token to use for API calls
+     *     'expires_in' => The number of seconds until this access token expires
+     *     'refresh_token' => The refresh token to refresh the access token once it expires
+     * }
+     * @access public
+     **/
+    public static function exchange_token(
+        $client_id, $client_secret, $redirect_uri, $code) {
+
+        $body = "grant_type=authorization_code";
+        $body .= "&client_id=".urlencode($client_id);
+        $body .= "&client_secret=".urlencode($client_secret);
+        $body .= "&redirect_uri=".urlencode($redirect_uri);
+        $body .= "&code=".urlencode($code);
+
+        $options = array('contentType' => 'application/x-www-form-urlencoded');
+
+        $wrap = new CS_REST_Wrapper_Base(
+            NULL, 'https', CS_REST_LOG_NONE, CS_HOST, NULL,
+            new CS_REST_DoNothingSerialiser(), NULL);
+
+        return $wrap->post_request(CS_OAUTH_TOKEN_URI, $body, $options);
+    }
+
+    /**
      * Constructor.
      * @param $auth_details array Authentication details to use for API calls.
      *        This array must take one of the following forms:

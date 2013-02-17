@@ -172,31 +172,6 @@ class CS_REST_Wrapper_Base {
     }
 
     /**
-     * Get the authorization URL for your application, given the application's
-     * Client ID, Client Secret, Redirect URI, Scope, and optional state data.
-     *
-     * @param $client_id int The Client ID of your registered OAuth application.
-     * @param $client_secret string The Client Secret of your registered OAuth application.
-     * @param $redirect_uri string The Redirect URI of your registered OAuth application.
-     * @param $scope string The comma-separated permission scope your application requires.
-     *        See http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth for details.
-     * @param $state string Optional state data to be included in the URL.
-     * @return string The authorization URL to which users of your application should be redirected.
-     * @access public
-     **/
-    public static function authorize_url(
-        $client_id, $client_secret, $redirect_uri, $scope, $state = NULL) {
-        $qs = "client_id=".urlencode($client_id);
-        $qs .= "&client_secret=".urlencode($client_secret);
-        $qs .= "&redirect_uri=".urlencode($redirect_uri);
-        $qs .= "&scope=".urlencode($scope);
-        if ($state) {
-            $qs .= "&state=".urlencode($state);
-        }
-        return CS_OAUTH_BASE_URI.'?'.$qs;
-    }
-
-    /**
      * @return boolean True if the wrapper is using SSL.
      * @access public
      */

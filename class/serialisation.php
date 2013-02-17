@@ -25,6 +25,7 @@ class CS_REST_BaseSerialiser {
      * @param array $data All values of this array are checked for utf-8 encoding. 
      */
     function check_encoding($data) {
+
         foreach($data as $k => $v) {
             // If the element is a sub-array then recusively encode the array
             if(is_array($v)) {
@@ -43,6 +44,17 @@ class CS_REST_BaseSerialiser {
               
         return $data;
     }    
+}
+
+class CS_REST_DoNothingSerialiser extends CS_REST_BaseSerialiser {
+    function CS_REST_DoNothingSerialiser() {}
+    function get_type() { return 'do_nothing'; }
+    function serialise($data) { return $data; }
+    function deserialise($text) {
+        $data = json_decode($text);
+        return is_null($data) ? $text : $data;
+    }
+    function check_encoding($data) { return $data; }
 }
 
 class CS_REST_NativeJsonSerialiser extends CS_REST_BaseSerialiser {
@@ -69,7 +81,7 @@ class CS_REST_NativeJsonSerialiser extends CS_REST_BaseSerialiser {
 
         return $this->strip_surrounding_quotes(is_null($data) ? $text : $data);
     }
-    
+
     /** 
      * We've had sporadic reports of people getting ID's from create routes with the surrounding quotes present. 
      * There is no case where these should be present. Just get rid of it. 
@@ -78,7 +90,7 @@ class CS_REST_NativeJsonSerialiser extends CS_REST_BaseSerialiser {
         if(is_string($data)) {
             return trim($data, '"');
         }
-        
+
         return $data;
     }
 }

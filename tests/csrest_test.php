@@ -146,10 +146,24 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
 
         $this->assertIdentical($expected_result, $result);
     }
+
+    function test_static_exchange_token() {
+        $client_id = 8998879;
+        $client_secret = 'iou0q9wud0q9wd0q9wid0q9iwd0q9wid0q9wdqwd';
+        $redirect_uri = 'http://example.com/auth';
+        $code = 'jdiwouo8uowi9o9o';
+
+        list($access_token, $expires_in, $refresh_token) =
+            CS_REST_General::exchange_token($client_id, $client_secret, $redirect_uri, $code);
+
+        $this->assertIdentical("SlAV32hkKG", $access_token);
+        $this->assertIdentical(1209600, $expires_in);
+        $this->assertIdentical("tGzv3JOkF0XG5Qx2TlKWIA", $refresh_token);
+    }
 }
 
 abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
-    
+
     function testget_timezones() {
         $raw_result = 'some timezones';
         $deserialised = array('timezone1', 'timezone2');

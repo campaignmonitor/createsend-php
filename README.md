@@ -29,9 +29,50 @@ The Campaign Monitor API supports authentication using either OAuth or an API ke
 
 ### Using OAuth
 
-TODO: Add instructions for getting authorize url
+Depending on the environment you are developing in, you may wish to use a PHP OAuth library to get access tokens for your users.
 
-TODO: Add instructions for exchanging code for access token and refresh token
+If you don't use an OAuth library, you will need to get access tokens for your users by following the instructions included in the Campaign Monitor API [documentation](http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth). This package provides functionality to help you do this, as described below.
+
+The first thing your application should do is redirect your user to the Campaign Monitor authorization URL where they will have the opportunity to approve your application to access their Campaign Monitor account. You can get this authorization URL by using the `CS_REST_General::authorize_url()` method, like so:
+
+```php
+require_once 'csrest_general.php';
+
+$authorize_url = CS_REST_General::authorize_url(
+  'Client ID for your application',
+  'Client Secret for your application',
+  'Redirect URI for your application',
+  'The permission level your application requires',
+  'Optional state data to be included'
+);
+# Redirect your users to $authorize_url.
+```
+
+If your user approves your application, they will then be redirected to the `redirect_uri` you specified, which will include a `code` parameter, and optionally a `state` parameter in the query string. Your application should implement a handler which can exchange the code passed to it for an access token, using `CS_REST_General::exchange_token()` like so:
+
+```php
+require_once 'csrest_general.php';
+
+$result = CS_REST_General::exchange_token(
+  'Client ID for your application',
+  'Client Secret for your application',
+  'Redirect URI for your application',
+  'A unique code for your user' # Get the code parameter from the query string
+)
+
+if($result->was_successful()) {
+    $access_token = $result->response->access_token;
+    $expires_in = $result->response->expires_in;
+    $refresh_token = $result->response->refresh_token;
+    # Save $access_token, $expires_in, and $refresh_token.
+} else {
+    echo 'An error occurred:\n';
+    echo $result->response->error.': '.$result->response->error_description."\n";
+    # Handle error...
+}
+```
+
+At this point you have an access token and refresh token for your user which you should store somewhere convenient so that your application can look up these values when your user wants to make future Campaign Monitor API calls.
 
 Once you have an access token and refresh token for your user, you can authenticate and make further API calls like so:
 
