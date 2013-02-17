@@ -113,7 +113,42 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 }
 
-class CS_REST_TestGeneral extends CS_REST_TestBase {
+class CS_REST_ApiKeyTestGeneral extends CS_REST_TestGeneral {
+    var $auth = array('api_key' => 'not a real api key');
+}
+
+class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
+    var $auth = array(
+        'access_token' => '7y872y3872i3eh',
+        'refresh_token' => 'kjw8qjd9ow8jo');
+
+    function test_static_authorize_url_without_state() {
+        $client_id = 8998879;
+        $client_secret = 'iou0q9wud0q9wd0q9wid0q9iwd0q9wid0q9wdqwd';
+        $redirect_uri = 'http://example.com/auth';
+        $scope = 'ViewReports,CreateCampaigns,SendCampaigns';
+        $expected_result = "https://api.createsend.com/oauth?client_id=8998879&client_secret=iou0q9wud0q9wd0q9wid0q9iwd0q9wid0q9wdqwd&redirect_uri=http%3A%2F%2Fexample.com%2Fauth&scope=ViewReports%2CCreateCampaigns%2CSendCampaigns";
+
+        $result = CS_REST_General::authorize_url($client_id, $client_secret, $redirect_uri, $scope);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
+    function test_static_authorize_url_with_state() {
+        $client_id = 8998879;
+        $client_secret = 'iou0q9wud0q9wd0q9wid0q9iwd0q9wid0q9wdqwd';
+        $redirect_uri = 'http://example.com/auth';
+        $scope = 'ViewReports,CreateCampaigns,SendCampaigns';
+        $state = 89879287;
+        $expected_result = "https://api.createsend.com/oauth?client_id=8998879&client_secret=iou0q9wud0q9wd0q9wid0q9iwd0q9wid0q9wdqwd&redirect_uri=http%3A%2F%2Fexample.com%2Fauth&scope=ViewReports%2CCreateCampaigns%2CSendCampaigns&state=89879287";
+
+        $result = CS_REST_General::authorize_url($client_id, $client_secret, $redirect_uri, $scope, $state);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+}
+
+abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
     
     function testget_timezones() {
         $raw_result = 'some timezones';

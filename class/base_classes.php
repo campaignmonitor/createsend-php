@@ -5,7 +5,9 @@ require_once dirname(__FILE__).'/transport.php';
 require_once dirname(__FILE__).'/log.php';
 
 define('CS_REST_WRAPPER_VERSION', '2.5.2');
-
+define('CS_HOST', 'api.createsend.com');
+define('CS_OAUTH_BASE_URI', 'https://'.CS_HOST.'/oauth');
+define('CS_OAUTH_TOKEN_URI', CS_OAUTH_BASE_URI.'/token');
 define('CS_REST_WEBHOOK_FORMAT_JSON', 'json');
 define('CS_REST_WEBHOOK_FORMAT_XML', 'xml');
 
@@ -129,7 +131,7 @@ class CS_REST_Wrapper_Base {
         $auth_details,
         $protocol = 'https',
         $debug_level = CS_REST_LOG_NONE,
-        $host = 'api.createsend.com',
+        $host = CS_HOST,
         $log = NULL,
         $serialiser = NULL,
         $transport = NULL) {
@@ -167,6 +169,31 @@ class CS_REST_Wrapper_Base {
             'host' => $host,
             'protocol' => $protocol
         );
+    }
+
+    /**
+     * Get the authorization URL for your application, given the application's
+     * Client ID, Client Secret, Redirect URI, Scope, and optional state data.
+     *
+     * @param $client_id int The Client ID of your registered OAuth application.
+     * @param $client_secret string The Client Secret of your registered OAuth application.
+     * @param $redirect_uri string The Redirect URI of your registered OAuth application.
+     * @param $scope string The comma-separated permission scope your application requires.
+     *        See http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth for details.
+     * @param $state string Optional state data to be included in the URL.
+     * @return string The authorization URL to which users of your application should be redirected.
+     * @access public
+     **/
+    public static function authorize_url(
+        $client_id, $client_secret, $redirect_uri, $scope, $state = NULL) {
+        $qs = "client_id=".urlencode($client_id);
+        $qs .= "&client_secret=".urlencode($client_secret);
+        $qs .= "&redirect_uri=".urlencode($redirect_uri);
+        $qs .= "&scope=".urlencode($scope);
+        if ($state) {
+            $qs .= "&state=".urlencode($state);
+        }
+        return CS_OAUTH_BASE_URI.'?'.$qs;
     }
 
     /**
