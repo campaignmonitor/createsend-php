@@ -2,7 +2,10 @@
 
 require_once '../../csrest_segments.php';
 
-$wrap = new CS_REST_Segments('Segment ID', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Segments('Segment ID', $auth);
 
 $result = $wrap->get_subscribers('Added since', 1, 50, 'email', 'asc');
 //$result = $wrap->get_subscribers(date('Y-m-d', strtotime('-30 days')), 

@@ -2,7 +2,10 @@
 
 require_once '../../csrest_segments.php';
 
-$wrap = new CS_REST_Segments('Segment ID', 'Your API Key');
+$auth = array(
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh token');
+$wrap = new CS_REST_Segments('Segment ID', $auth);
 
 $result = $wrap->add_rule(array(
     'Subject' => 'EmailAddress',
