@@ -5,7 +5,6 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
 @Mock::generate('CS_REST_Log');
 @Mock::generate('CS_REST_NativeJsonSerialiser');
-@Mock::generate('CS_REST_DonNothingSerialiser');
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_TestBase extends UnitTestCase {

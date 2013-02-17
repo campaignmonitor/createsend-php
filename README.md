@@ -33,17 +33,19 @@ Depending on the environment you are developing in, you may wish to use a PHP OA
 
 If you don't use an OAuth library, you will need to get access tokens for your users by following the instructions included in the Campaign Monitor API [documentation](http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth). This package provides functionality to help you do this, as described below.
 
+TODO: Write sample applications to demonstrate both these approaches.
+
 The first thing your application should do is redirect your user to the Campaign Monitor authorization URL where they will have the opportunity to approve your application to access their Campaign Monitor account. You can get this authorization URL by using the `CS_REST_General::authorize_url()` method, like so:
 
 ```php
 require_once 'csrest_general.php';
 
 $authorize_url = CS_REST_General::authorize_url(
-  'Client ID for your application',
-  'Client Secret for your application',
-  'Redirect URI for your application',
-  'The permission level your application requires',
-  'Optional state data to be included'
+    'Client ID for your application',
+    'Client Secret for your application',
+    'Redirect URI for your application',
+    'The permission level your application requires',
+    'Optional state data to be included'
 );
 # Redirect your users to $authorize_url.
 ```
@@ -54,10 +56,10 @@ If your user approves your application, they will then be redirected to the `red
 require_once 'csrest_general.php';
 
 $result = CS_REST_General::exchange_token(
-  'Client ID for your application',
-  'Client Secret for your application',
-  'Redirect URI for your application',
-  'A unique code for your user' # Get the code parameter from the query string
+    'Client ID for your application',
+    'Client Secret for your application',
+    'Redirect URI for your application',
+    'A unique code for your user' # Get the code parameter from the query string
 )
 
 if($result->was_successful()) {
@@ -80,8 +82,8 @@ Once you have an access token and refresh token for your user, you can authentic
 require_once 'csrest_general.php';
 
 $auth = array(
-  'access_token' => 'your access token',
-  'refresh_token' => 'your refresh_token');
+    'access_token' => 'your access token',
+    'refresh_token' => 'your refresh_token');
 $wrap = new CS_REST_General($auth);
 
 $result = $wrap->get_clients();
@@ -111,9 +113,6 @@ the expected inputs for each API call.
 Further documentation of the inputs and outputs of each call can be found in the 
 documentation in each of the csrest_*.php files or simply by examining the 
 var_dump results in each of the provided samples.
-
-TODO: Add samples for authenticating using both OAuth and an API key.
-TODO: Write sample applications to demonstrate both these approaches.
 
 ## Contributing
 1. Fork the repository
