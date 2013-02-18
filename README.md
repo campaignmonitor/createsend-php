@@ -23,7 +23,7 @@ After you have installed the library, simply include the relevant API class, as 
 require_once 'csrest_campaigns.php'
 ```
 
-## Authentication
+## Authenticating
 
 The Campaign Monitor API supports authentication using either OAuth or an API key.
 

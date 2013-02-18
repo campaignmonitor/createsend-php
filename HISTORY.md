@@ -1,5 +1,24 @@
 # createsend-php history
 
+## v3.0.0 - Whenever this is released
+
+* Added support for authenticating using OAuth. See the [README](README.md#authenticating) for full usage instructions.
+  * This introduces some changes to how you authenticate using this library. You now authenticate by passing an `$auth` array as the first argument when creating instances of any classes which inherit from the `CS_REST_Wrapper_Base` class.
+
+      So in existing code, when you _previously_ would have authenticated using an API key as follows:
+
+      ```php
+      $wrap = new CS_REST_General('Your API Key');
+      $result = $wrap->get_clients();
+      ```
+
+      If you want to authenticate using an API key, you should _now_ do this:
+
+      ```php
+      $wrap = new CS_REST_General(array('api_key' => 'Your API Key'));
+      $result = $wrap->get_clients();
+      ```
+
 ## v2.5.2 - 19 Dec, 2012   (0b6c9f3)
 
 * Removed simpletest source files, and added simpletest as a dev dependency.
