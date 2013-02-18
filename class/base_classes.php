@@ -179,8 +179,9 @@ class CS_REST_Wrapper_Base {
         if (!isset($this->_default_call_options['authdetails']) ||
             !isset($this->_default_call_options['authdetails']['refresh_token'])) {
             trigger_error(
-                '$this->auth_details[\'refresh_token\'] does not contain a refresh token.',
+                'Error refreshing token. There is no refresh token set on this object.',
                 E_USER_ERROR);
+            return array(NULL, NULL, NULL);
         }
         $body = "grant_type=refresh_token&refresh_token=".urlencode(
             $this->_default_call_options['authdetails']['refresh_token']);

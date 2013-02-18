@@ -146,6 +146,32 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
 
         $this->assertIdentical($expected_result, $result);
     }
+
+    function test_refresh_token_error_when_refresh_token_null() {
+        $auth = array('access_token' => 'validaccesstoken', 'refresh_token' => NULL);
+        $this->wrapper = new CS_REST_General($auth, $this->protocol, $this->log_level,
+            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->expectError('Error refreshing token. There is no refresh token set on this object.');
+        list($new_access_token, $new_expires_in, $new_refresh_token) =
+            $this->wrapper->refresh_token();
+    }
+
+    function test_refresh_token_error_when_refresh_token_not_set() {
+        $auth = array('access_token' => 'validaccesstoken');
+        $this->wrapper = new CS_REST_General($auth, $this->protocol, $this->log_level,
+            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->expectError('Error refreshing token. There is no refresh token set on this object.');
+        list($new_access_token, $new_expires_in, $new_refresh_token) =
+            $this->wrapper->refresh_token();
+    }
+
+    function test_refresh_token_error_when_no_auth() {
+        $this->wrapper = new CS_REST_General(NULL, $this->protocol, $this->log_level,
+            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->expectError('Error refreshing token. There is no refresh token set on this object.');
+        list($new_access_token, $new_expires_in, $new_refresh_token) =
+            $this->wrapper->refresh_token();
+    }
 }
 
 abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
