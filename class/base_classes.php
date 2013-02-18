@@ -199,12 +199,13 @@ class CS_REST_Wrapper_Base {
                 'access_token' => $access_token,
                 'refresh_token' => $refresh_token
             );
+            return array($access_token, $expires_in, $refresh_token);
         } else {
             trigger_error(
                 'Error refreshing token. '.$result->response->error.': '.$result->response->error_description,
                 E_USER_ERROR);
+            return array(NULL, NULL, NULL);
         }
-        return array($access_token, $expires_in, $refresh_token);
     }
 
     /**
