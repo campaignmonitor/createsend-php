@@ -1,6 +1,6 @@
 # createsend-php history
 
-## v3.0.0 - Whenever this is released
+## v3.0.0 - 25 Mar, 2013 (0ec8f8f)
 
 * Added support for authenticating using OAuth. See the [README](README.md#authenticating) for full usage instructions.
   * This introduces some changes to how you authenticate using this library. You now authenticate by passing an `$auth` array as the first argument when creating instances of any classes which inherit from the `CS_REST_Wrapper_Base` class.
