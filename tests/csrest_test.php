@@ -242,7 +242,7 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
         $this->general_test('get_primary_contact', $call_options,
             $raw_result, $deserialized);
     }
-    
+
     function testset_primary_contact() {
         $raw_result = '';
         $response_code = 200;
@@ -261,6 +261,34 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
             $raw_result, $raw_result, '', '', $response_code);
 
         $result = $this->wrapper->set_primary_contact($email);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
+    function testset_external_session_url() {
+        $session_options = array(
+            'Email' => "exammple@example.com",
+            'Chrome' => "None",
+            'Url' => "/subscribers",
+            'IntegratorID' => "qw989q8wud98qwyd",
+            'ClientID' => "9q8uw9d8u9wud" );
+        $raw_result = '';
+        $response_code = 200;
+        $call_options = $this->get_call_options($this->base_route.'externalsession.json', 'PUT');
+        $call_options['data'] = 'session options were serialised to this';
+
+        $transport_result = array (
+            'code' => $response_code,
+            'response' => $raw_result
+        );
+
+        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $raw_result, $raw_result, 'session options were serialised to this',
+            $session_options, $response_code);
+
+        $result = $this->wrapper->external_session_url($session_options);
 
         $this->assertIdentical($expected_result, $result);
     }
