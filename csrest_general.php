@@ -189,21 +189,41 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
     }
     
     /**
-     * retrieves the email address of the primary contact for this account
+     * Retrieves the email address of the primary contact for this account
      * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
      * 		array('EmailAddress'=> email address of primary contact)
      */
     function get_primary_contact() {
     	return $this->get_request($this->_base_route.'primarycontact.json');
     }
-    
+
     /**
-     * assigns the primary contact for this account to the administrator with the specified email address
-     * @param string $emailAddress the email address of the administrator designated to be the primary contact
+     * Assigns the primary contact for this account to the administrator with the specified email address
+     * @param $emailAddress string The email address of the administrator designated to be the primary contact
      * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
      * 		array('EmailAddress'=> email address of primary contact)
      */
     function set_primary_contact($emailAddress) {
     	return $this->put_request($this->_base_route.'primarycontact.json?email=' . urlencode($emailAddress), '');
+    }
+
+    /**
+     * Get a URL which initiates a new external session for the user with the given email.
+     * Full details: http://www.campaignmonitor.com/api/account/#single_sign_on
+     *
+     * @param $session_options array Options for initiating the external login session.
+     *        This should be an array of the form:
+     *        array(
+     *          'Email' => 'The email address of the Campaign Monitor user for whom the login session should be created',
+     *          'Chrome' => 'Which 'chrome' to display - Must be either "all", "tabs", or "none"',
+     *          'Url' => 'The URL to display once logged in. e.g. "/subscribers/"',
+     *          'IntegratorID' => 'The Integrator ID. You need to contact Campaign Monitor support to get an Integrator ID.',
+     *          'ClientID' => 'The Client ID of the client which should be active once logged in to the Campaign Monitor account.' )
+     *
+     * @return CS_REST_Wrapper_Result A successful response will be an array of the form:
+     * 		array('SessionUrl'=> 'https://external1.createsend.com/cd/create/ABCDEF12/DEADBEEF?url=FEEDDAD1')
+     */
+    function external_session_url($session_options) {
+        return $this->put_request($this->_base_route.'externalsession.json', $session_options);
     }
 }
