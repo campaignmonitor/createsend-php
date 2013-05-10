@@ -3,7 +3,7 @@
     "type": "library",
     "description": "A php library which implements the complete functionality of the Campaign Monitor API.",
     "keywords": ["campaign", "monitor", "api"],
-    "homepage": "http://campaignmonitor.github.com/createsend-php/",
+    "homepage": "http://campaignmonitor.github.io/createsend-php/",
     "license": "MIT",
     "authors": [
         {

@@ -1,5 +1,9 @@
 {
-    "hash": "f2adebce4627e3132ab9ff4983dab408",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "eccad7521596b5fe0d81af51ab2f16a1",
     "packages": [
 
     ],
@@ -21,7 +25,6 @@
             "require": {
                 "php": ">=5.0.5"
             },
-            "time": "2012-06-11 22:22:54",
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -34,7 +37,8 @@
                 }
             ],
             "description": "Unit testing, mock objects and web testing framework for PHP built around test cases.",
-            "homepage": "http://simpletest.org/"
+            "homepage": "http://simpletest.org/",
+            "time": "2012-06-11 22:22:54"
         }
     ],
     "aliases": [
@@ -42,6 +46,12 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": [
+
+    ],
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": [
 
     ]
 }
