@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v3.1.1 - 3 Oct, 2013
+
+* Made it harder to accidentally email your subscribers when using the example code
+
 ## v3.1.0 - 15 Apr, 2013
 
 * Added support for [single sign on](http://www.campaignmonitor.com/api/account/#single_sign_on) which allows initiation of external login sessions to Campaign Monitor.
