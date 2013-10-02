@@ -10,7 +10,7 @@ $wrap = new CS_REST_Lists(NULL, $auth);
 $result = $wrap->create('Lists Client ID', array(
     'Title' => 'List Title',
     'UnsubscribePage' => 'List unsubscribe page',
-    'ConfirmedOptIn' => true,
+    'ConfirmedOptIn' => false,
     'ConfirmationSuccessPage' => 'List confirmation success page',
     'UnsubscribeSetting' => CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS
 ));
