@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v3.1.2 - 28 Oct, 2013
+
+* Only set the ```CURLOPT_CAINFO``` option if not already set globally via the ini system. 
+
 ## v3.1.1 - 3 Oct, 2013
 
 * Made it harder to accidentally email your subscribers when using the example code
