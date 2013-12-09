@@ -139,7 +139,7 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
                 break;
             case CS_REST_POST:
                 curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $call_options['data']);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, isset($call_options['data']) ? $call_options['data'] : '');
                 break;
             case CS_REST_DELETE:
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, CS_REST_DELETE);
