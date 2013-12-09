@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v3.1.3 - 10 Dec, 2013
+
+* Fixed a notice that was raised when unscheduling a campaign.
+
 ## v3.1.2 - 28 Oct, 2013
 
 * Only set the ```CURLOPT_CAINFO``` option if not already set globally via the ini system. 
