@@ -52,7 +52,7 @@ $result = $wrap->import(array(
 	        )
 	    )
 	)
-), true);
+), false);
 
 echo "Result of POST /api/v3/subscribers/{list id}/import.{format}\n<br />";
 if($result->was_successful()) {
