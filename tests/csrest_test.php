@@ -31,7 +31,7 @@ class CS_REST_TestBase extends UnitTestCase {
         $this->mock_transport->setReturnValue('get_type', $this->transport_type);
         $this->mock_serialiser->setReturnValue('get_type', $this->serialisation_type);
 
-        $this->base_route = $this->protocol.'://'.$this->api_host.'/api/v3/';
+        $this->base_route = $this->protocol.'://'.$this->api_host.'/api/v3.1/';
 
         $this->set_up_inner();
     }
@@ -195,29 +195,6 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
         $call_options = $this->get_call_options($this->base_route.'countries.json');
 
         $this->general_test('get_countries', $call_options, $raw_result, $deserialised);
-    }
-
-    function testget_apikey() {
-        $raw_result = 'another fake api key';
-        $username = 'username';
-        $password = 'password';
-        $site_url = 'unit.test.createsend.com';
-
-        $call_options = $this->get_call_options($this->base_route.'apikey.json?siteurl='.$site_url);
-        $call_options['authdetails'] = array('username' => $username, 'password' => $password);
-
-        $transport_result = array (
-            'code' => 200, 
-            'response' => $raw_result
-        );
-        
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, 200);
-                 
-        $this->setup_transport_and_serialisation($transport_result, $call_options,
-        $raw_result, $raw_result);
-
-        $result = $this->wrapper->get_apikey($username, $password, $site_url);
-        $this->assertIdentical($expected_result, $result);
     }
 
     function testget_clients() {

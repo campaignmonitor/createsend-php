@@ -10,7 +10,7 @@ $wrap = new CS_REST_General($auth);
 
 $result = $wrap->get_billing_details();
 
-echo "Result of /api/v3/billingdetails\n<br />";
+echo "Result of /api/v3.1/billingdetails\n<br />";
 if($result->was_successful()) {
     echo "Got billing details\n<br /><pre>";
     var_dump($result->response);

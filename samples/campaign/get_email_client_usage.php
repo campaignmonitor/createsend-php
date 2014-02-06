@@ -8,7 +8,7 @@ $auth = array(
 $wrap = new CS_REST_Campaigns('Campaign ID to get the email client usage for', $auth);
 $result = $wrap->get_email_client_usage();
 
-echo "Result of GET /api/v3/campaigns/{id}/emailclientusage\n<br />";
+echo "Result of GET /api/v3.1/campaigns/{id}/emailclientusage\n<br />";
 if($result->was_successful()) {
     echo "Got email client usage\n<br /><pre>";
     var_dump($result->response);

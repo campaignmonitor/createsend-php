@@ -13,7 +13,7 @@ $email_address = 'your_email_address@example.com';
 
 $result = $wrap->get_lists_for_email($email_address);
 
-echo "Result of /api/v3/clients/{id}/listsforemail\n<br />";
+echo "Result of /api/v3.1/clients/{id}/listsforemail\n<br />";
 if($result->was_successful()) {
     echo "Got lists to which email address ".$email_address." is subscribed\n<br /><pre>";
     var_dump($result->response);

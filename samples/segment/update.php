@@ -9,19 +9,27 @@ $wrap = new CS_REST_Segments('Segment ID', $auth);
 
 $result = $wrap->update(array(
     'Title' => 'Segment Title',
-    'Rules' => array(
+    'RuleGroups' => array(
         array(
-            'Subject' => 'EmailAddress',
-            'Clauses' => array('CONTAINS example.com')
+            'Rules' => array(
+                array(
+                    'RuleType' => 'EmailAddress',
+                    'Clause' => 'CONTAINS example.com'
+                )
+            )
         ),
         array(
-            'Subject' => '[customfield]',
-            'Clauses' => array('PROVIDED', 'EQUALS 1')
+            'Rules' => array(
+                array(
+                    'RuleType' => '[customfield]',
+                    'Clause' => 'EQUALS 1'
+                )
+            )
         )
     )
 ));
 
-echo "Result of PUT /api/v3/segments/{segmentID}\n<br />";
+echo "Result of PUT /api/v3.1/segments/{segmentID}\n<br />";
 if($result->was_successful()) {
     echo "Updated with code\n<br />".$result->http_status_code;
 } else {

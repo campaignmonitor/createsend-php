@@ -14,7 +14,7 @@ $transfer_details = array(
 
 $result = $wrap->transfer_credits($transfer_details);
 
-echo "Result of POST /api/v3/clients/{id}/credits\n<br />";
+echo "Result of POST /api/v3.1/clients/{id}/credits\n<br />";
 if($result->was_successful()) {
     echo "Transferred with response\n<br /><pre>";
     var_dump($result->response);

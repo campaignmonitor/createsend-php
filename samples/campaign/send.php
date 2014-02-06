@@ -12,7 +12,7 @@ $result = $wrap->send(array(
     'SendDate' => 'Date to send (yyyy-mm-dd or immediately)'
 ));
 
-echo "Result of POST /api/v3/campaigns/{id}/send\n<br />";
+echo "Result of POST /api/v3.1/campaigns/{id}/send\n<br />";
 if($result->was_successful()) {
     echo "Scheduled with code\n<br />".$result->http_status_code;
 } else {

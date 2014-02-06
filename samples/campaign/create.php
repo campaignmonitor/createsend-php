@@ -19,7 +19,7 @@ $result = $wrap->create('Campaigns Client ID', array(
     'SegmentIDs' => array('First Segment', 'Second Segment')
 ));
 
-echo "Result of POST /api/v3/campaigns/{clientID}\n<br />";
+echo "Result of POST /api/v3.1/campaigns/{clientID}\n<br />";
 if($result->was_successful()) {
     echo "Created with ID\n<br />".$result->response;
 } else {

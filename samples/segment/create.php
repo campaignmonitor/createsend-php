@@ -9,19 +9,31 @@ $wrap = new CS_REST_Segments(NULL, $auth);
 
 $result = $wrap->create('Segments List ID', array(
     'Title' => 'Segment Title',
-    'Rules' => array(
+    'RuleGroups' => array(
         array(
-            'Subject' => 'EmailAddress',
-            'Clauses' => array('CONTAINS example.com')
+            'Rules' => array(
+                array(
+                    'RuleType' => 'EmailAddress',
+                    'Clause' => 'CONTAINS example.com'
+                )
+            )
         ),
         array(
-            'Subject' => '[customfield]',
-            'Clauses' => array('PROVIDED', 'EQUALS 1')
+            'Rules' => array(
+                array(
+                    'RuleType' => '[customfield]',
+                    'Clause' => 'PROVIDED'
+                ),
+                array(
+                    'RuleType' => '[customfield]',
+                    'Clause' => 'EQUALS 1'
+                )
+            )
         )
     )
 ));
 
-echo "Result of POST /api/v3/segments/{listID}\n<br />";
+echo "Result of POST /api/v3.1/segments/{listID}\n<br />";
 if($result->was_successful()) {
     echo "Created with ID\n<br />".$result->response;
 } else {

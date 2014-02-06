@@ -18,7 +18,7 @@ $result = $wrap->update('Old Email Address', array(
     'Resubscribe' => true
 ));
 
-echo "Result of PUT /api/v3/subscribers/{list id}.{format}?email={email}\n<br />";
+echo "Result of PUT /api/v3.1/subscribers/{list id}.{format}?email={email}\n<br />";
 if($result->was_successful()) {
     echo "Subscribed with code ".$result->http_status_code;
 } else {

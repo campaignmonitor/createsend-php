@@ -8,7 +8,7 @@ $auth = array(
 $wrap = new CS_REST_Campaigns('Campaign ID to get lists for', $auth);
 $result = $wrap->get_lists_and_segments();
 
-echo "Result of GET /api/v3/campaigns/{id}/listsandsegments\n<br />";
+echo "Result of GET /api/v3.1/campaigns/{id}/listsandsegments\n<br />";
 if($result->was_successful()) {
     echo "Got lists and segments\n<br /><pre>";
     var_dump($result->response);

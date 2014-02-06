@@ -8,7 +8,7 @@ $auth = array(
 $wrap = new CS_REST_Subscribers('Your list ID', $auth);
 $result = $wrap->unsubscribe('Email Address');
 
-echo "Result of GET /api/v3/subscribers/{list id}/unsubscribe.{format}\n<br />";
+echo "Result of GET /api/v3.1/subscribers/{list id}/unsubscribe.{format}\n<br />";
 if($result->was_successful()) {
     echo "Unsubscribed with code ".$result->http_status_code;
 } else {

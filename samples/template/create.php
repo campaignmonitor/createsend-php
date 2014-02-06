@@ -13,7 +13,7 @@ $result = $wrap->create('Templates Client ID', array(
     'ZipFileURL' => 'Template Images Zip URL'
 ));
 
-echo "Result of POST /api/v3/templates/{clientID}\n<br />";
+echo "Result of POST /api/v3.1/templates/{clientID}\n<br />";
 if($result->was_successful()) {
     echo "Created with ID\n<br />".$result->response;
 } else {

@@ -11,7 +11,7 @@ $result = $wrap->send_preview(array(
     'test2@test.com'
 ), 'Fallback');
 
-echo "Result of POST /api/v3/campaigns/{id}/sendpreview\n<br />";
+echo "Result of POST /api/v3.1/campaigns/{id}/sendpreview\n<br />";
 if($result->was_successful()) {
     echo "Preview sent with code\n<br />".$result->http_status_code;
 } else {

@@ -54,7 +54,7 @@ $result = $wrap->import(array(
 	)
 ), false);
 
-echo "Result of POST /api/v3/subscribers/{list id}/import.{format}\n<br />";
+echo "Result of POST /api/v3.1/subscribers/{list id}/import.{format}\n<br />";
 if($result->was_successful()) {
     echo "Subscribed with results <pre>";
     var_dump($result->response);

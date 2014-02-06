@@ -23,7 +23,7 @@ $result = $wrap->create_webhook(array(
     'PayloadFormat' => CS_REST_WEBHOOK_FORMAT_JSON
 ));
 
-echo "Result of POST /api/v3/lists/{ID}/webhooks\n<br />";
+echo "Result of POST /api/v3.1/lists/{ID}/webhooks\n<br />";
 if($result->was_successful()) {
     echo "Created with ID\n<br />".$result->response;
 } else {

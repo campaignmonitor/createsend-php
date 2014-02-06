@@ -8,7 +8,7 @@ $auth = array(
 $wrap = new CS_REST_Subscribers('Your list ID', $auth);
 $result = $wrap->get('Email address');
 
-echo "Result of GET /api/v3/subscribers/{list id}.{format}?email={email}\n<br />";
+echo "Result of GET /api/v3.1/subscribers/{list id}.{format}?email={email}\n<br />";
 if($result->was_successful()) {
     echo "Got subscriber <pre>";
     var_dump($result->response);

@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v4.0.0 - 6 Feb, 2014
+
+* Updated to v3.1 API
+
 ## v3.1.3 - 10 Dec, 2013
 
 * Fixed a notice that was raised when unscheduling a campaign.

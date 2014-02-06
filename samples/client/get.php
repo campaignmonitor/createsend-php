@@ -8,7 +8,7 @@ $auth = array(
 $wrap = new CS_REST_Clients('Your client ID', $auth);
 $result = $wrap->get();
 
-echo "Result of GET /api/v3/clients/{id}\n<br />";
+echo "Result of GET /api/v3.1/clients/{id}\n<br />";
 if($result->was_successful()) {
     echo "Got client <pre>";
     var_dump($result->response);

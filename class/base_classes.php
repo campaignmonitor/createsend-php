@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/serialisation.php';
 require_once dirname(__FILE__).'/transport.php';
 require_once dirname(__FILE__).'/log.php';
 
-define('CS_REST_WRAPPER_VERSION', '3.1.3');
+define('CS_REST_WRAPPER_VERSION', '4.0.0');
 define('CS_HOST', 'api.createsend.com');
 define('CS_OAUTH_BASE_URI', 'https://'.CS_HOST.'/oauth');
 define('CS_OAUTH_TOKEN_URI', CS_OAUTH_BASE_URI.'/token');
@@ -144,7 +144,7 @@ class CS_REST_Wrapper_Base {
         $this->_log = is_null($log) ? new CS_REST_Log($debug_level) : $log;
 
         $this->_protocol = $protocol;
-        $this->_base_route = $protocol.'://'.$host.'/api/v3/';
+        $this->_base_route = $protocol.'://'.$host.'/api/v3.1/';
 
         $this->_log->log_message('Creating wrapper for '.$this->_base_route, get_class($this), CS_REST_LOG_VERBOSE);
 

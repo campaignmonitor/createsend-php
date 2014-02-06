@@ -8,7 +8,7 @@ $auth = array(
 $wrap = new CS_REST_Subscribers('Your list ID', $auth);
 $result = $wrap->delete('Email Address');
 
-echo "Result of DELETE /api/v3/subscribers/{list id}.{format}?email={emailAddress}\n<br />";
+echo "Result of DELETE /api/v3.1/subscribers/{list id}.{format}?email={emailAddress}\n<br />";
 if($result->was_successful()) {
     echo "Unsubscribed with code ".$result->http_status_code;
 } else {

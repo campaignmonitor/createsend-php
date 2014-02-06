@@ -7,12 +7,16 @@ $auth = array(
     'refresh_token' => 'your refresh token');
 $wrap = new CS_REST_Segments('Segment ID', $auth);
 
-$result = $wrap->add_rule(array(
-    'Subject' => 'EmailAddress',
-    'Clauses' => array('CONTAINS example.com')
+$result = $wrap->add_rulegroup(array(
+    'Rules' => array(
+        array(
+            'RuleType' => 'EmailAddress',
+            'Clause' => 'CONTAINS example.com'
+        )
+    )
 ));
 
-echo "Result of PUT /api/v3/segments/{segmentID}/rules\n<br />";
+echo "Result of PUT /api/v3.1/segments/{segmentID}/rules\n<br />";
 if($result->was_successful()) {
     echo "Updated with code\n<br />".$result->http_status_code;
 } else {

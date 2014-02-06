@@ -9,7 +9,7 @@ $wrap = new CS_REST_Segments('Segment ID', $auth);
 
 $result = $wrap->get();
 
-echo "Result of GET /api/v3/segments/{ID}\n<br />";
+echo "Result of GET /api/v3.1/segments/{ID}\n<br />";
 if($result->was_successful()) {
     echo "Got segment details\n<br /><pre>";
     var_dump($result->response);

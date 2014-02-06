@@ -13,7 +13,7 @@ $result = $wrap->update(array(
     'ZipFileURL' => 'Template Images Zip URL'
 ));
 
-echo "Result of PUT /api/v3/templates/{ID}\n<br />";
+echo "Result of PUT /api/v3.1/templates/{ID}\n<br />";
 if($result->was_successful()) {
     echo "Updated with code\n<br />".$result->http_status_code;
 } else {

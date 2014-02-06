@@ -13,7 +13,7 @@ $result = $wrap->set_basics(array(
     'Timezone' => 'Clients timezone'
 ));
 
-echo "Result of PUT /api/v3/clients/{id}/setbasics\n<br />";
+echo "Result of PUT /api/v3.1/clients/{id}/setbasics\n<br />";
 if($result->was_successful()) {
     echo "Updated with Code ".$result->http_status_code;
 } else {

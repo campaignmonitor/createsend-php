@@ -14,7 +14,7 @@ $result = $wrap->set_monthly_billing(array(
     'MonthlyScheme' => 'Basic' */
 ));
 
-echo "Result of PUT /api/v3/clients/{id}/setmonthlybilling\n<br />";
+echo "Result of PUT /api/v3.1/clients/{id}/setmonthlybilling\n<br />";
 if($result->was_successful()) {
     echo "Updated with Code ".$result->http_status_code;
 } else {

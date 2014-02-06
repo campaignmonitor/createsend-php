@@ -26,7 +26,7 @@ $result = $wrap->set_payg_billing(array(
 'MarkupOnDesignSpamTest' => 7 */
 ));
 
-echo "Result of PUT /api/v3/clients/{id}/setpaygbilling\n<br />";
+echo "Result of PUT /api/v3.1/clients/{id}/setpaygbilling\n<br />";
 if($result->was_successful()) {
     echo "Updated with Code ".$result->http_status_code;
 } else {

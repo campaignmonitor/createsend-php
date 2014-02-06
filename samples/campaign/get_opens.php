@@ -9,7 +9,7 @@ $wrap = new CS_REST_Campaigns('Campaign ID to get opens for', $auth);
 $result = $wrap->get_opens('Get opens since', 1, 50, 'email', 'asc');
 //$result = $wrap->get_opens(date('Y-m-d', strtotime('-30 days')), page, page size, order field, order direction);
 
-echo "Result of GET /api/v3/campaigns/{id}/opens\n<br />";
+echo "Result of GET /api/v3.1/campaigns/{id}/opens\n<br />";
 if($result->was_successful()) {
     echo "Got opens\n<br /><pre>";
     var_dump($result->response);

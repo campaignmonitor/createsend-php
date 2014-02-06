@@ -9,7 +9,7 @@ $wrap = new CS_REST_Lists('List ID', $auth);
 
 $result = $wrap->get_stats();
 
-echo "Result of GET /api/v3/lists/{ID}/stats\n<br />";
+echo "Result of GET /api/v3.1/lists/{ID}/stats\n<br />";
 if($result->was_successful()) {
     echo "Got list stats\n<br /><pre>";
     var_dump($result->response);

@@ -14,7 +14,7 @@ $emails = array(
 
 $result = $wrap->suppress($emails);
 
-echo "Result of PUT /api/v3/clients/{id}/suppress\n<br />";
+echo "Result of PUT /api/v3.1/clients/{id}/suppress\n<br />";
 if($result->was_successful()) {
     echo "Updated with Code ".$result->http_status_code;
 } else {

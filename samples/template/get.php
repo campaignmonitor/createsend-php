@@ -9,7 +9,7 @@ $wrap = new CS_REST_Templates('Template ID', $auth);
 
 $result = $wrap->get();
 
-echo "Result of GET /api/v3/templates/{ID}\n<br />";
+echo "Result of GET /api/v3.1/templates/{ID}\n<br />";
 if($result->was_successful()) {
     echo "Got template details\n<br /><pre>";
     var_dump($result->response);

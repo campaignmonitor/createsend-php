@@ -11,7 +11,7 @@ $wrap = new CS_REST_Clients(
 
 $result = $wrap->get_segments();
 
-echo "Result of /api/v3/clients/{id}/segments\n<br />";
+echo "Result of /api/v3.1/clients/{id}/segments\n<br />";
 if($result->was_successful()) {
     echo "Got segments\n<br /><pre>";
     var_dump($result->response);

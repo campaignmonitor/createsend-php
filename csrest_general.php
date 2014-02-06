@@ -129,23 +129,6 @@ class CS_REST_General extends CS_REST_Wrapper_Base {
     }
 
     /**
-     * Gets your API key
-     * @param string $username Your username
-     * @param string $password Your password
-     * @param string $site_url The url you use to login from
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
-     * {
-     *     'ApiKey' => string Your api key
-     * }
-     */
-    function get_apikey($username, $password, $site_url) {
-        return $this->get_request($this->_base_route.'apikey.json?siteurl='.$site_url,
-            array('authdetails' => array('username' => $username, 'password' => $password))
-        );
-    }
-
-    /**
      * Gets an array of clients
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form

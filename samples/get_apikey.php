@@ -6,7 +6,7 @@ $wrap = new CS_REST_General(NULL);
 
 $result = $wrap->get_apikey('Your username', 'Your password', 'account.test.createsend.com');
 
-echo "Result of /api/v3/apikey\n<br />";
+echo "Result of /api/v3.1/apikey\n<br />";
 if($result->was_successful()) {
     echo "Got API Key\n<br />".$result->response->ApiKey;
 } else {

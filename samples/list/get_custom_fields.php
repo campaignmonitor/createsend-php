@@ -9,7 +9,7 @@ $wrap = new CS_REST_Lists('List ID', $auth);
 
 $result = $wrap->get_custom_fields();
 
-echo "Result of GET /api/v3/lists/{ID}/customfields\n<br />";
+echo "Result of GET /api/v3.1/lists/{ID}/customfields\n<br />";
 if($result->was_successful()) {
     echo "Got custom fields\n<br /><pre>";
     var_dump($result->response);

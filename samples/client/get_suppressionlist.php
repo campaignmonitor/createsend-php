@@ -12,7 +12,7 @@ $wrap = new CS_REST_Clients(
 $result = $wrap->get_suppressionlist(1, 50, 'email', 'asc');
 //$result = $wrap->get_suppressionlist(page number, page size, order by, order direction);
 
-echo "Result of /api/v3/clients/{id}/suppressionlist\n<br />";
+echo "Result of /api/v3.1/clients/{id}/suppressionlist\n<br />";
 if($result->was_successful()) {
     echo "Got suppression list\n<br /><pre>";
     var_dump($result->response);

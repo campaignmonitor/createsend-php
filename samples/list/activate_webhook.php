@@ -9,7 +9,7 @@ $wrap = new CS_REST_Lists('List ID', $auth);
 
 $result = $wrap->activate_webhook('Webhook ID');
 
-echo "Result of PUT /api/v3/lists/{ID}/webhooks/{WHID}/activate\n<br />";
+echo "Result of PUT /api/v3.1/lists/{ID}/webhooks/{WHID}/activate\n<br />";
 if($result->was_successful()) {
     echo "Activated with code\n<br />".$result->http_status_code;
 } else {

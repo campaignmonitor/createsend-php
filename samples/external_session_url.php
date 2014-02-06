@@ -15,7 +15,7 @@ $result = $wrap->external_session_url(array(
     'ClientID' => 'The Client ID of the client which should be active once logged in to the Campaign Monitor account.'
 ));
 
-echo "Result of PUT /api/v3/externalsession\n<br />";
+echo "Result of PUT /api/v3.1/externalsession\n<br />";
 if($result->was_successful()) {
     echo "Succeeded with Code ".$result->http_status_code."\n<br /><pre>";
     var_dump($result->response);

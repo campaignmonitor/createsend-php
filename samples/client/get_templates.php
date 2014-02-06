@@ -11,7 +11,7 @@ $wrap = new CS_REST_Clients(
 
 $result = $wrap->get_templates();
 
-echo "Result of /api/v3/clients/{id}/templates\n<br />";
+echo "Result of /api/v3.1/clients/{id}/templates\n<br />";
 if($result->was_successful()) {
     echo "Got templates\n<br /><pre>";
     var_dump($result->response);

@@ -89,7 +89,7 @@ $result = $wrap->create_from_template('Campaigns Client ID', array(
     'TemplateContent' => $template_content
 ));
 
-echo "Result of POST /api/v3/campaigns/{clientID}/fromtemplate\n<br />";
+echo "Result of POST /api/v3.1/campaigns/{clientID}/fromtemplate\n<br />";
 if($result->was_successful()) {
     echo "Created with ID\n<br />".$result->response;
 } else {

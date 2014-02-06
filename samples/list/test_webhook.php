@@ -9,7 +9,7 @@ $wrap = new CS_REST_Lists('List ID', $auth);
 
 $result = $wrap->test_webhook('Webhook ID');
 
-echo "Result of POST /api/v3/lists/{ID}/webhooks/{WHID}/test\n<br />";
+echo "Result of POST /api/v3.1/lists/{ID}/webhooks/{WHID}/test\n<br />";
 if($result->was_successful()) {
     echo "Test was successful";
 } else {

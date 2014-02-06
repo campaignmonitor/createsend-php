@@ -1,16 +1,16 @@
 {
   "ActiveSubscribers": 0,
-  "Rules": [
+  "RuleGroups": [
     {
-      "Subject": "EmailAddress",
-      "Clauses": [
-        "CONTAINS @hello.com"
-      ]
-    },
-    {
-      "Subject": "Name",
-      "Clauses": [
-        "PROVIDED"
+      "Rules": [
+        {
+          "RuleType": "EmailAddress",
+          "Clause": "CONTAINS @hello.com"
+        },
+        {
+          "RuleType": "Name",
+          "Clause": "PROVIDED"
+        }
       ]
     }
   ],

@@ -15,7 +15,7 @@ $result = $wrap->create('Lists Client ID', array(
     'UnsubscribeSetting' => CS_REST_LIST_UNSUBSCRIBE_SETTING_ALL_CLIENT_LISTS
 ));
 
-echo "Result of POST /api/v3/lists/{clientID}\n<br />";
+echo "Result of POST /api/v3.1/lists/{clientID}\n<br />";
 if($result->was_successful()) {
     echo "Created with ID\n<br />".$result->response;
 } else {

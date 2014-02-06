@@ -9,7 +9,7 @@ $wrap = new CS_REST_Clients('Client ID to Delete', $auth);
 
 $result = $wrap->delete();
 
-echo "Result of DELETE /api/v3/clients/{id}\n<br />";
+echo "Result of DELETE /api/v3.1/clients/{id}\n<br />";
 if($result->was_successful()) {
     echo 'Deleted';
 } else {

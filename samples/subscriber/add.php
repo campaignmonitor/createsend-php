@@ -30,7 +30,7 @@ $result = $wrap->add(array(
     'Resubscribe' => true
 ));
 
-echo "Result of POST /api/v3/subscribers/{list id}.{format}\n<br />";
+echo "Result of POST /api/v3.1/subscribers/{list id}.{format}\n<br />";
 if($result->was_successful()) {
     echo "Subscribed with code ".$result->http_status_code;
 } else {

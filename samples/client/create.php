@@ -13,7 +13,7 @@ $result = $wrap->create(array(
     'Timezone' => 'Clients timezone'
 ));
 
-echo "Result of POST /api/v3/clients\n<br />";
+echo "Result of POST /api/v3.1/clients\n<br />";
 if($result->was_successful()) {
     echo "Created with ID\n<br />".$result->response;
 } else {

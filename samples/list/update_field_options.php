@@ -10,7 +10,7 @@ $wrap = new CS_REST_Lists('List ID', $auth);
 $result = $wrap->update_field_options('[CustomFieldKey]', 
     array('Option 1', 'Option 2'), true);
 
-echo "Result of PUT /api/v3/lists/{ID}/customfields/{fieldkey}/options\n<br />";
+echo "Result of PUT /api/v3.1/lists/{ID}/customfields/{fieldkey}/options\n<br />";
 if($result->was_successful()) {
     echo "Updated with code\n<br />".$result->http_status_code;
 } else {
