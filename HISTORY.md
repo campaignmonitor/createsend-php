@@ -3,6 +3,91 @@
 ## v4.0.0 - 6 Feb, 2014
 
 * Updated to v3.1 API
+* Added support for new segments structure
+  * Segment now includes a new `RuleGroups` member, instead of a `Rules` member.
+
+	    So for example, when you _previously_ would have created a segment like so:
+
+	    ```php
+		$result = $wrap->create('Segments List ID', array(
+			'Title' => 'Segment Title',
+			'Rules' => array(
+				array(
+					'Subject' => 'EmailAddress',
+					'Clauses' => array(
+						'CONTAINS example.com'
+					)
+				) ,
+				array(
+					'Subject' => '[customfield]',
+					'Clauses' => array(
+						'PROVIDED',
+						'EQUALS 1'
+					)
+				)
+			)
+		));
+	    ```
+	
+	    You would _now_ do this:
+	
+	    ```php
+		$result = $wrap->create('Segments List ID', array(
+			'Title' => 'Segment Title',
+			'RuleGroups' => array(
+				array(
+					'Rules' => array(
+						array(
+							'RuleType' => 'EmailAddress',
+							'Clause' => 'CONTAINS example.com'
+						)
+					)
+				) ,
+				array(
+					'Rules' => array(
+						array(
+							'RuleType' => '[customfield]',
+							'Clause' => 'PROVIDED'
+						) ,
+						array(
+							'RuleType' => '[customfield]',
+							'Clause' => 'EQUALS 1'
+						)
+					)
+				)
+			)
+		));
+    ```
+    
+  * The Add Rule call is now Add Rule Group, taking a `ruleGroup` argument instead of a `rule` argument.
+
+    ```php
+    function CS_REST_Segments->add_rulegroup($rulegroup)
+    ```
+
+    So for example, when you _previously_ would have added a rule like so:
+
+    ```php
+    $wrap = new CS_REST_Segments('Segment ID', $auth);
+	$result = $wrap->add_rule(array(
+	    'Subject' => 'EmailAddress',
+	    'Clauses' => array('CONTAINS example.com')
+	));
+    ```
+
+    You would _now_ do this:
+
+    ```php
+	$wrap = new CS_REST_Segments('Segment ID', $auth);
+	$result = $wrap->add_rulegroup(array(
+	    'Rules' => array(
+	        array(
+	            'RuleType' => 'EmailAddress',
+	            'Clause' => 'CONTAINS example.com'
+	        )
+	    )
+	));
+    ```
 
 ## v3.1.3 - 10 Dec, 2013
 
