@@ -88,6 +88,7 @@
 	    )
 	));
     ```
+* Removed the get_apikey method to promote usage of oAuth authentication
 
 ## v3.1.3 - 10 Dec, 2013
 
