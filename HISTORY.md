@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v4.0.1 - 30 May, 2014
+
+* Updated the class_exists check to no longer call __autoload
+
 ## v4.0.0 - 6 Feb, 2014
 
 * Updated to v3.1 API
