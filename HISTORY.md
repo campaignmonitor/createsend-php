@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v4.0.2 - 29 October, 2014
+
+* Updated constant definitions so PHP Notices aren't raised
+
 ## v4.0.1 - 30 May, 2014
 
 * Updated the class_exists check to no longer call __autoload
