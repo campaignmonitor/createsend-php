@@ -33,8 +33,8 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * @param int $debug_level The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
      * @param string $host The host to send API requests to. There is no need to change this
      * @param CS_REST_Log $log The logger to use. Used for dependency injection
-     * @param mixed|null $serialiser The serialiser to use. Used for dependency injection
-     * @param mixed|null $transport The transport to use. Used for dependency injection
+     * @param object|null $serialiser The serialiser to use. Used for dependency injection
+     * @param object|null $transport The transport to use. Used for dependency injection
      * @access public
      */
     function CS_REST_Subscribers (
@@ -86,9 +86,9 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
 
     /**
      * Updates an existing subscriber (email, name, state, or custom fields) in the specified list.
-	 * The update is performed even for inactive subscribers, but will return an error in the event of the
-	 * given email not existing in the list.
-	 * @param string $email The email address of the susbcriber to be updated
+     * The update is performed even for inactive subscribers, but will return an error in the event of the
+     * given email not existing in the list.
+      * @param string $email The email address of the susbcriber to be updated
      * @param array $subscriber The subscriber details to use for the update. Empty parameters will remain unchanged
      *     This array should be of the form
      *     array (
@@ -98,7 +98,7 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *             array(
      *                 'Key' => The custom fields personalisation tag
      *                 'Value' => The value for this subscriber
-	 *                 'Clear' => true/false (pass true to remove this custom field. in the case of a [multi-option, select many] field, pass an option in the 'Value' field to clear that option or leave Value blank to remove all options)
+     *                 'Clear' => true/false (pass true to remove this custom field. in the case of a [multi-option, select many] field, pass an option in the 'Value' field to clear that option or leave Value blank to remove all options)
      *             )
      *         )
      *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
