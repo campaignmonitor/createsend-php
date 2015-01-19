@@ -29,12 +29,12 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *
      *        Or if using an API key:
      *        array('api_key' => 'your api key')
-     * @param $protocol string The protocol to use for requests (http|https)
-     * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
-     * @param $host string The host to send API requests to. There is no need to change this
-     * @param $log CS_REST_Log The logger to use. Used for dependency injection
-     * @param $serialiser The serialiser to use. Used for dependency injection
-     * @param $transport The transport to use. Used for dependency injection
+     * @param string $protocol The protocol to use for requests (http|https)
+     * @param int $debug_level The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
+     * @param string $host The host to send API requests to. There is no need to change this
+     * @param CS_REST_Log $log The logger to use. Used for dependency injection
+     * @param mixed|null $serialiser The serialiser to use. Used for dependency injection
+     * @param mixed|null $transport The transport to use. Used for dependency injection
      * @access public
      */
     function CS_REST_Subscribers (
@@ -123,14 +123,14 @@ class CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      *                 array(
      *                     'Key' => The custom fields personalisation tag
      *                     'Value' => The value for this subscriber
-	 *                     'Clear' => true/false (pass true to remove this custom field. in the case of a [multi-option, select many] field, pass an option in the 'Value' field to clear that option or leave Value blank to remove all options)
+     *                     'Clear' => true/false (pass true to remove this custom field. in the case of a [multi-option, select many] field, pass an option in the 'Value' field to clear that option or leave Value blank to remove all options)
      *                 )
      *             )
      *         )
      *     )
-     * @param $resubscribe Whether we should resubscribe any existing subscribers
-	 * @param $queueSubscriptionBasedAutoResponders By default, subscription based auto responders do not trigger during an import. Pass a value of true to override this behaviour
-     * @param $restartSubscriptionBasedAutoResponders By default, subscription based auto responders will not be restarted
+     * @param bool $resubscribe Whether we should resubscribe any existing subscribers
+     * @param bool $queueSubscriptionBasedAutoResponders By default, subscription based auto responders do not trigger during an import. Pass a value of true to override this behaviour
+     * @param bool $restartSubscriptionBasedAutoResponders By default, subscription based auto responders will not be restarted
      * @access public
      * @return CS_REST_Wrapper_Result A successful response will be an object of the form
      * {
