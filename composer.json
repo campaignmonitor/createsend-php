@@ -28,7 +28,8 @@
             "csrest_people.php",
             "csrest_segments.php",
             "csrest_subscribers.php",
-            "csrest_templates.php"
+            "csrest_templates.php",
+            "csrest_transactional_classicemail.php",
         ]
     }
 }
