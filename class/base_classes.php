@@ -231,7 +231,20 @@ class CS_REST_Wrapper_Base {
     function get_request($route, $call_options = array()) {
         return $this->_call($call_options, CS_REST_GET, $route);
     }
-    
+
+    function get_request_with_params($route, $params) {
+      if(!is_null($params)) {
+        # http_build_query coerces booleans to 1 and 0, not helpful
+        foreach($params as $key=>$value) {
+          if(is_bool($value)) {
+            $params[$key] = ($value) ? 'true' : 'false';
+          }
+        }
+        $route = $route . '?' . http_build_query($params);
+      }
+      return $this->get_request($route);
+    }
+
     function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction,
         $join_char = '&') {      
         if(!is_null($page_number)) {
