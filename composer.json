@@ -30,6 +30,7 @@
             "csrest_subscribers.php",
             "csrest_templates.php",
             "csrest_transactional_classicemail.php",
+            "csrest_transactional_smartemail.php",
         ]
     }
 }
