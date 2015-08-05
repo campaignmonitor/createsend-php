@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v4.1.0 - 5 August, 2014
+
+* Added support for Transactional Email
+
 ## v4.0.2 - 29 October, 2014
 
 * Updated constant definitions so PHP Notices aren't raised
@@ -36,9 +40,9 @@
 			)
 		));
 	    ```
-	
+
 	    You would _now_ do this:
-	
+
 	    ```php
 		$result = $wrap->create('Segments List ID', array(
 			'Title' => 'Segment Title',
@@ -66,7 +70,7 @@
 			)
 		));
     ```
-    
+
   * The Add Rule call is now Add Rule Group, taking a `ruleGroup` argument instead of a `rule` argument.
 
     ```php
@@ -104,7 +108,7 @@
 
 ## v3.1.2 - 28 Oct, 2013
 
-* Only set the ```CURLOPT_CAINFO``` option if not already set globally via the ini system. 
+* Only set the ```CURLOPT_CAINFO``` option if not already set globally via the ini system.
 
 ## v3.1.1 - 3 Oct, 2013
 
