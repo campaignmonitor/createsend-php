@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v4.1.1 - 9 September, 2015
+
+* Fixed the transactional smart email call for get_list() so it now passes the client id
+
 ## v4.1.0 - 5 August, 2014
 
 * Added support for Transactional Email
