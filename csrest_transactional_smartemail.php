@@ -99,7 +99,7 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
      */
     function get_list($options = array()) {
         $data = array_merge($this->_client_id_param, $options);
-        return $this->get_request_with_params($this->_base_route . 'transactional/smartemail', $options);
+        return $this->get_request_with_params($this->_base_route . 'transactional/smartemail', $data);
     }
 
     /**
