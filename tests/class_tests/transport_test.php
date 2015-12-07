@@ -26,7 +26,7 @@ class CS_REST_TestSocketTransport extends UnitTestCase {
 
         $this->transport = new CS_REST_SocketTransport($this->mock_log, $this->mock_wrapper);
         $this->partial = new PartialSocketTransport($this);
-        $this->partial->CS_REST_SocketTransport($this->mock_log, $this->mock_wrapper);
+        $this->partial->__construct($this->mock_log, $this->mock_wrapper);
     }
 
     function test_make_call_http() {

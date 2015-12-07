@@ -51,7 +51,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function CS_REST_Lists (
+    function __construct (
     $list_id,
     $auth_details,
     $protocol = 'https',
@@ -60,8 +60,8 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        	
-        $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+
+        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_list_id($list_id);
     }
 
