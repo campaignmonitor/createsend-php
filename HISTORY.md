@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v5.0.0 - 8 December, 2015
+
+* Added PHP7 support
+
 ## v4.1.1 - 9 September, 2015
 
 * Fixed the transactional smart email call for get_list() so it now passes the client id
