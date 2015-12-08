@@ -45,7 +45,7 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function CS_REST_Transactional_SmartEmail (
+    function __construct (
     $smartemail_id,
     $auth_details,
     $client_id = NULL,
@@ -55,7 +55,7 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_client($client_id);
         $this->set_smartemail_id($smartemail_id);
     }

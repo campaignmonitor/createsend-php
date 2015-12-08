@@ -37,7 +37,7 @@ class CS_REST_Transactional_ClassicEmail extends CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function CS_REST_Transactional_ClassicEmail (
+    function __construct (
     $auth_details,
     $client_id = NULL,
     $protocol = 'https',
@@ -46,7 +46,7 @@ class CS_REST_Transactional_ClassicEmail extends CS_REST_Wrapper_Base {
     $log = NULL,
     $serialiser = NULL,
     $transport = NULL) {
-        $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_client($client_id);
     }
 
