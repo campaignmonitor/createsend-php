@@ -47,6 +47,7 @@ class CS_REST_BaseSerialiser {
 }
 
 class CS_REST_DoNothingSerialiser extends CS_REST_BaseSerialiser {
+    function __construct() {}
     function CS_REST_DoNothingSerialiser() {}
     function get_type() { return 'do_nothing'; }
     function serialise($data) { return $data; }
