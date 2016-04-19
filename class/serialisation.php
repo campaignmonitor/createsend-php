@@ -16,7 +16,7 @@ class CS_REST_BaseSerialiser {
 
     var $_log;
     
-    function __construct($log) {
+    function __construct($log = null) {
         $this->_log = $log;
     }
     
