@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v5.0.2 - 18 July, 2016
+
+* Prevent definition re-declarations
+
 ## v5.0.1 - 14 December, 2015
 
 * Changed the fatal error thrown when unable to communicate with the API into a catchable Exception
