@@ -53,6 +53,7 @@ if (!class_exists('CS_REST_BaseSerialiser')) {
 
 if (!class_exists('CS_REST_DoNothingSerialiser')) {
     class CS_REST_DoNothingSerialiser extends CS_REST_BaseSerialiser {
+    function __construct() {}
         function get_type() { return 'do_nothing'; }
         function serialise($data) { return $data; }
         function deserialise($text) {
