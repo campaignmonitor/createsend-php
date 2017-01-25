@@ -14,13 +14,13 @@ require_once '../class/log.php';
 );
 
 class CS_REST_TestSocketTransport extends UnitTestCase {
-    var $mock_wrapper;
-    var $mock_log;
+    public $mock_wrapper;
+    public $mock_log;
 
-    var $transport;
-    var $partial;
+    public $transport;
+    public $partial;
 
-    function setUp() {
+    public function setUp() {
         $this->mock_log = new MockCS_REST_Log($this);
         $this->mock_wrapper = new MockCS_REST_SocketWrapper($this);
 
@@ -29,15 +29,15 @@ class CS_REST_TestSocketTransport extends UnitTestCase {
         $this->partial->__construct($this->mock_log, $this->mock_wrapper);
     }
 
-    function test_make_call_http() {
+    public function test_make_call_http() {
         $this->make_call_base('http', 80, '');
     }
 
-    function test_make_call_https() {
+    public function test_make_call_https() {
         $this->make_call_base('https', 443, 'ssl://');
     }
 
-    function make_call_base($protocol, $port, $domain_prefix) {
+    public function make_call_base($protocol, $port, $domain_prefix) {
         $host = 'api.test.createsend.com';
         $path = '/path/to/stuff';
         $call_options = array(
@@ -88,11 +88,11 @@ Server: Microsoft-IIS/7.0';
         ), $this->partial->make_call($call_options));
     }
 
-    function test_get_type() {
+    public function test_get_type() {
         $this->assertIdentical($this->transport->get_type(), 'Socket');
     }
 
-    function test_get_status_code_200() {
+    public function test_get_status_code_200() {
         $headers =
 '
 HTTP/1.1 200 OK
@@ -103,7 +103,7 @@ Server: Microsoft-IIS/7.0';
         $this->assertIdentical($this->transport->_get_status_code($headers), '200');
     }
 
-    function test_get_status_code_404() {
+    public function test_get_status_code_404() {
         $headers =
 'HTTP/1.1 404 Not Found
 Cache-Control: private, s-maxage=0
@@ -113,7 +113,7 @@ Server: Microsoft-IIS/7.0';
         $this->assertIdentical($this->transport->_get_status_code($headers), '404');
     }
 
-    function test_build_request_no_data_or_gzip() {
+    public function test_build_request_no_data_or_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
             'authdetails' => array('api_key' => 'chucknorris'),
@@ -135,7 +135,7 @@ Server: Microsoft-IIS/7.0';
     	    $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, false), $expected);
     }
     
-    function test_build_request_no_data_with_gzip() {
+    public function test_build_request_no_data_with_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
             'authdetails' => array('api_key' => 'chucknorris'),
@@ -158,7 +158,7 @@ Server: Microsoft-IIS/7.0';
         $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, true), $expected);
     }
 
-    function test_build_request_with_data_no_gzip() {
+    public function test_build_request_with_data_no_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
             'authdetails' => array('api_key' => 'chucknorris'),
@@ -183,7 +183,7 @@ Server: Microsoft-IIS/7.0';
         $this->assertIdentical($this->transport->_build_request($call_options, $host, $path, false), $expected);
     }
 
-    function test_build_request_with_data_and_gzip() {
+    public function test_build_request_with_data_and_gzip() {
         $call_options = array(
             'method' => 'CONJURE',
             'authdetails' => array('api_key' => 'chucknorris'),

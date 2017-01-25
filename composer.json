@@ -19,20 +19,6 @@
         "lastcraft/simpletest": "~1.1"
     },
     "autoload": {
-        "classmap": [
-            "csrest_administrators.php",
-            "csrest_campaigns.php",
-            "csrest_clients.php",
-            "csrest_general.php",
-            "csrest_lists.php",
-            "csrest_people.php",
-            "csrest_segments.php",
-            "csrest_subscribers.php",
-            "csrest_templates.php",
-            "csrest_transactional_classicemail.php",
-            "csrest_transactional_smartemail.php",
-            "csrest_transactional_timeline.php"
-
-        ]
+        "psr-4": {"CsRest\\": "src/"}
     }
 }

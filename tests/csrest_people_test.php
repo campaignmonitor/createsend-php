@@ -8,26 +8,26 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_ApiKeyTestPeople extends CS_REST_TestPeople {
-    var $auth = array('api_key' => 'not a real api key');
+    public $auth = array('api_key' => 'not a real api key');
 }
 
 class CS_REST_OAuthTestPeople extends CS_REST_TestPeople {
-    var $auth = array(
+    public $auth = array(
         'access_token' => '7y872y3872i3eh',
         'refresh_token' => 'kjw8qjd9ow8jo');
 }
 
 abstract class CS_REST_TestPeople extends CS_REST_TestBase {
-    var $client_id = 'not a real client id';
-    var $people_base_route;
+    public $client_id = 'not a real client id';
+    public $people_base_route;
 
-    function set_up_inner() {
+    public function set_up_inner() {
         $this->people_base_route = $this->base_route.'clients/'.$this->client_id . '/people';
         $this->wrapper = new CS_REST_People($this->client_id, $this->auth, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
-    function testadd() {
+    public function testadd() {
         $raw_result = '';
 
         $call_options = $this->get_call_options($this->people_base_route.'.json', 'POST');
@@ -42,7 +42,7 @@ abstract class CS_REST_TestPeople extends CS_REST_TestBase {
 			$raw_result, $raw_result, 'person was serialised to this');
     }
 
-    function testupdate() {
+    public function testupdate() {
         $raw_result = '';
         $email = 'test@test.com';
 		$serialised_person = 'subscriber data';
@@ -73,7 +73,7 @@ abstract class CS_REST_TestPeople extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget() {
+    public function testget() {
         $raw_result = 'person details';
         $deserialised = array(1,2,34,5);
         $response_code = 200;
@@ -98,7 +98,7 @@ abstract class CS_REST_TestPeople extends CS_REST_TestBase {
     }
 
 
-    function testdelete() {
+    public function testdelete() {
         $raw_result = '';
         $response_code = 200;
         $email = 'test@test.com';

@@ -8,22 +8,22 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_TestBase extends UnitTestCase {
-    var $mock_log;
-    var $mock_serialiser;
-    var $mock_transport;
+    public $mock_log;
+    public $mock_serialiser;
+    public $mock_transport;
 
-    var $wrapper;
+    public $wrapper;
 
-    var $serialisation_type = 'mockjson';
-    var $transport_type = 'mock_cURL';
-    var $auth = NULL;
-    var $protocol = 'hotpotatoes';
-    var $api_host = 'api.test.createsend.com';
-    var $log_level = CS_REST_LOG_NONE;
+    public $serialisation_type = 'mockjson';
+    public $transport_type = 'mock_cURL';
+    public $auth = NULL;
+    public $protocol = 'hotpotatoes';
+    public $api_host = 'api.test.createsend.com';
+    public $log_level = CS_REST_LOG_NONE;
 
-    var $base_route;
+    public $base_route;
 
-    function setUp() {
+    public function setUp() {
         $this->mock_log = new MockCS_REST_Log();
         $this->mock_serialiser = new MockCS_REST_NativeJsonSerialiser();
         $this->mock_transport = new MockCS_REST_CurlTransport();
@@ -36,12 +36,12 @@ class CS_REST_TestBase extends UnitTestCase {
         $this->set_up_inner();
     }
 
-    function set_up_inner() {
+    public function set_up_inner() {
         $this->wrapper = new CS_REST_General($this->auth, $this->protocol, $this->log_level,
             $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
-    function get_call_options($route, $method = 'GET') {
+    public function get_call_options($route, $method = 'GET') {
         return array (
             'authdetails' => $this->auth,
             'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
@@ -55,7 +55,7 @@ class CS_REST_TestBase extends UnitTestCase {
         );
     }
 
-    function setup_transport_and_serialisation($make_call_result, $call_options,
+    public function setup_transport_and_serialisation($make_call_result, $call_options,
         $deserialise_result, $deserialise_input, $serialise_result = NULL, $serialise_input = NULL) {
 
         $this->mock_transport->setReturnValue('make_call', $make_call_result);
@@ -70,7 +70,7 @@ class CS_REST_TestBase extends UnitTestCase {
         }
     }
 
-    function general_test($wrapper_function, $call_options, $from_transport,
+    public function general_test($wrapper_function, $call_options, $from_transport,
         $from_deserialisation, $response_code = 200) {
 
         $transport_result = array (
@@ -88,7 +88,7 @@ class CS_REST_TestBase extends UnitTestCase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function general_test_with_argument($wrapper_function, $function_argument, $call_options,
+    public function general_test_with_argument($wrapper_function, $function_argument, $call_options,
         $from_transport, $from_deserialisation,
         $from_serialisation = 'serialised', $response_code = 200) {
 
@@ -114,15 +114,15 @@ class CS_REST_TestBase extends UnitTestCase {
 }
 
 class CS_REST_ApiKeyTestGeneral extends CS_REST_TestGeneral {
-    var $auth = array('api_key' => 'not a real api key');
+    public $auth = array('api_key' => 'not a real api key');
 }
 
 class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
-    var $auth = array(
+    public $auth = array(
         'access_token' => '7y872y3872i3eh',
         'refresh_token' => 'kjw8qjd9ow8jo');
 
-    function test_static_authorize_url_without_state() {
+    public function test_static_authorize_url_without_state() {
         $client_id = 8998879;
         $redirect_uri = 'http://example.com/auth';
         $scope = 'ViewReports,CreateCampaigns,SendCampaigns';
@@ -133,7 +133,7 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function test_static_authorize_url_with_state() {
+    public function test_static_authorize_url_with_state() {
         $client_id = 8998879;
         $redirect_uri = 'http://example.com/auth';
         $scope = 'ViewReports,CreateCampaigns,SendCampaigns';
@@ -145,7 +145,7 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function test_refresh_token_error_when_refresh_token_null() {
+    public function test_refresh_token_error_when_refresh_token_null() {
         $auth = array('access_token' => 'validaccesstoken', 'refresh_token' => NULL);
         $this->wrapper = new CS_REST_General($auth, $this->protocol, $this->log_level,
             $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
@@ -154,7 +154,7 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
             $this->wrapper->refresh_token();
     }
 
-    function test_refresh_token_error_when_refresh_token_not_set() {
+    public function test_refresh_token_error_when_refresh_token_not_set() {
         $auth = array('access_token' => 'validaccesstoken');
         $this->wrapper = new CS_REST_General($auth, $this->protocol, $this->log_level,
             $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
@@ -163,7 +163,7 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
             $this->wrapper->refresh_token();
     }
 
-    function test_refresh_token_error_when_no_auth() {
+    public function test_refresh_token_error_when_no_auth() {
         $this->wrapper = new CS_REST_General(NULL, $this->protocol, $this->log_level,
             $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
         $this->expectError('Error refreshing token. There is no refresh token set on this object.');
@@ -174,7 +174,7 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
 
 abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
 
-    function testget_timezones() {
+    public function testget_timezones() {
         $raw_result = 'some timezones';
         $deserialised = array('timezone1', 'timezone2');
         $call_options = $this->get_call_options($this->base_route.'timezones.json');
@@ -182,14 +182,14 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
         $this->general_test('get_timezones', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_systemdate() {
+    public function testget_systemdate() {
         $raw_result = 'system date';
         $call_options = $this->get_call_options($this->base_route.'systemdate.json');
 
         $this->general_test('get_systemdate', $call_options, $raw_result, $raw_result);
     }
 
-    function testget_countries() {
+    public function testget_countries() {
         $raw_result = 'some countries';
         $deserialised = array('Australia', 'Suid Afrika');
         $call_options = $this->get_call_options($this->base_route.'countries.json');
@@ -197,7 +197,7 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
         $this->general_test('get_countries', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_clients() {
+    public function testget_clients() {
         $raw_result = 'some clients';
         $deserialised = array('Curran & Hughes', 'Repsol');
         $call_options = $this->get_call_options($this->base_route.'clients.json');
@@ -205,13 +205,13 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
         $this->general_test('get_clients', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_billing_details() {
+    public function testget_billing_details() {
         $raw_result = 'billing details';
         $call_options = $this->get_call_options($this->base_route.'billingdetails.json');
         $this->general_test('get_billing_details', $call_options, $raw_result, $raw_result);
     }
 
-    function testget_primary_contact() {
+    public function testget_primary_contact() {
         $raw_result = 'primary contact result';
         $deserialized = array('EmailAddress' => 'test@foo.bar');
         $call_options = $this->get_call_options($this->base_route.'primarycontact.json', 'GET');
@@ -220,7 +220,7 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
             $raw_result, $deserialized);
     }
 
-    function testset_primary_contact() {
+    public function testset_primary_contact() {
         $raw_result = '';
         $response_code = 200;
         $email = 'test@foo.bar';
@@ -242,7 +242,7 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testset_external_session_url() {
+    public function testset_external_session_url() {
         $session_options = array(
             'Email' => "exammple@example.com",
             'Chrome' => "None",

@@ -4,7 +4,7 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 require_once __DIR__.'/../vendor/lastcraft/simpletest/mock_objects.php';
 
 class AllTests extends TestSuite {
-    function AllTests() {
+    public function AllTests() {
         $this->TestSuite('All Tests');
         $this->addFile('class_tests/transport_test.php');
         $this->addFile('class_tests/response_tests.php');

@@ -8,10 +8,10 @@ require_once '../class/log.php';
 @Mock::generate('CS_REST_Log');
 
 class CS_REST_TestResponseDeserialisation extends UnitTestCase {
-    var $responses;
-    var $deserialiser;
+    public $responses;
+    public $deserialiser;
 
-    function setUp() {
+    public function setUp() {
     	$util_responses = array(
     			'clients' => array(
     					array(
@@ -893,7 +893,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     }
 
     
-    function do_test_response_deserialisation() {
+    public function do_test_response_deserialisation() {
     	if(!is_null($this->deserialiser)) {
     		$response_dir = 'responses/';
     		foreach ($this->responses as $k => $v) {
@@ -908,13 +908,13 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     	}
     }
 
-    function test_services_json_serializer() {
+    public function test_services_json_serializer() {
         $log = new MockCS_REST_Log($this);
         $this->deserialiser = new CS_REST_ServicesJsonSerialiser($log);
         $this->do_test_response_deserialisation();
     }
 
-    function test_services_native_serializer() {
+    public function test_services_native_serializer() {
         if(function_exists('json_decode') && function_exists('json_encode')):
             $log = new MockCS_REST_Log($this);
             $this->deserialiser = new CS_REST_NativeJsonSerialiser($log);
@@ -922,7 +922,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
         endif;
     }
     
-    function assert_identical_ignoring_type($object, $expected, $message) {
+    public function assert_identical_ignoring_type($object, $expected, $message) {
         if(is_array($expected)) {
             if(isset($expected[0])) {
                 $this->assertIsA($object, 'array', $message.' Item is not an array');

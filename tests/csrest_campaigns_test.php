@@ -8,26 +8,26 @@ require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 @Mock::generate('CS_REST_CurlTransport');
 
 class CS_REST_ApiKeyTestCampaigns extends CS_REST_TestCampaigns {
-    var $auth = array('api_key' => 'not a real api key');
+    public $auth = array('api_key' => 'not a real api key');
 }
 
 class CS_REST_OAuthTestCampaigns extends CS_REST_TestCampaigns {
-    var $auth = array(
+    public $auth = array(
         'access_token' => '7y872y3872i3eh',
         'refresh_token' => 'kjw8qjd9ow8jo');
 }
 
 abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
-    var $campaign_id = 'not a real campaign id';
-    var $campaign_base_route;
+    public $campaign_id = 'not a real campaign id';
+    public $campaign_base_route;
 
-    function set_up_inner() {
+    public function set_up_inner() {
         $this->campaign_base_route = $this->base_route.'campaigns/'.$this->campaign_id.'/';
         $this->wrapper = new CS_REST_Campaigns($this->campaign_id, $this->auth, $this->protocol, $this->log_level,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
-    function testcreate() {
+    public function testcreate() {
         $raw_result = 'the new campaign id';
         $client_id = 'not a real client id';
         $response_code = 200;
@@ -58,7 +58,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testcreate_from_template() {
+    public function testcreate_from_template() {
         $raw_result = 'the new campaign id';
         $client_id = 'not a real client id';
         $response_code = 200;
@@ -139,7 +139,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testsend_preview() {
+    public function testsend_preview() {
         $raw_result = '';
         $response_code = 200;
 
@@ -173,7 +173,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testsend() {
+    public function testsend() {
         $raw_result = '';
 
         $call_options = $this->get_call_options(
@@ -189,7 +189,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             $raw_result, $raw_result, 'scheduling was serialised to this');
     }
 
-    function testdelete() {
+    public function testdelete() {
         $raw_result = '';
 
         $call_options = $this->get_call_options(
@@ -198,7 +198,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->general_test('delete', $call_options, $raw_result, $raw_result);
     }
 
-    function testget_recipients() {
+    public function testget_recipients() {
         $raw_result = 'some recipients';
         $deserialised = array('Recipient 1', 'Recipient 2');
         $call_options = $this->get_call_options($this->campaign_base_route.'recipients.json');
@@ -206,7 +206,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->general_test('get_recipients', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_bounces() {
+    public function testget_bounces() {
         $raw_result = 'some bounces';
         $since = '2020';
         $response_code = 200;
@@ -229,7 +229,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_lists_and_segments() {
+    public function testget_lists_and_segments() {
         $raw_result = 'some lists';
         $deserialised = array('List 1', 'List 2');
         $call_options = $this->get_call_options(
@@ -238,7 +238,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->general_test('get_lists_and_segments', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_summary() {
+    public function testget_summary() {
         $raw_result = 'campaign summary';
         $deserialised = array(1,2,3,4,5);
         $call_options = $this->get_call_options(
@@ -247,7 +247,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->general_test('get_summary', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_email_client_usage() {
+    public function testget_email_client_usage() {
         $raw_result = 'campaign email client usage';
         $deserialised = array(1,2,3,4,5);
         $call_options = $this->get_call_options(
@@ -256,7 +256,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->general_test('get_email_client_usage', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_opens() {
+    public function testget_opens() {
         $raw_result = 'some opens';
         $since = '2020';
         $response_code = 200;
@@ -279,7 +279,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_clicks() {
+    public function testget_clicks() {
         $raw_result = 'some clicks';
         $since = '2020';
         $response_code = 200;
@@ -302,7 +302,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_unsubscribes() {
+    public function testget_unsubscribes() {
         $raw_result = 'some unsubscribed';
         $since = '2020';
         $response_code = 200;
@@ -325,7 +325,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_spam() {
+    public function testget_spam() {
         $raw_result = 'some spam';
         $since = '2020';
         $response_code = 200;
@@ -348,7 +348,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testunschedule() {
+    public function testunschedule() {
         $raw_result = '';
         $response_code = 200;
 
