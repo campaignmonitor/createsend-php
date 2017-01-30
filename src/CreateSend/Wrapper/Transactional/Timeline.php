@@ -1,24 +1,29 @@
 <?php
 
+namespace CreateSend\Wrapper\Transactional;
+
+use CreateSend\Log\LogInterface;
+use CreateSend\Serializer\SerializerInterface;
+use CreateSend\Transport\TransportInterface;
+use CreateSend\Wrapper\Base;
+use CreateSend\Wrapper\Result;
+
 /**
  * Class to access transactional from the create send API.
  * @author philoye
  *
  */
-class CS_REST_Transactional_Timeline extends CS_REST_Wrapper_Base {
-
+class Timeline extends Base
+{
     /**
      * The client id to use for the timeline. Optional if using a client api key
      * @var array
-     * @access private
      */
-    public $_client_id_param;
+    private $_client_id_param;
 
     /**
      * Constructor.
-     * @param $client_id string The client id to send email on behalf of
-     *        Optional if using a client api key
-     * @param $auth_details array Authentication details to use for API calls.
+     * @param array $auth_details Authentication details to use for API calls.
      *        This array must take one of the following forms:
      *        If using OAuth to authenticate:
      *        array(
@@ -27,41 +32,35 @@ class CS_REST_Transactional_Timeline extends CS_REST_Wrapper_Base {
      *
      *        Or if using an API key:
      *        array('api_key' => 'your api key')
-     * @param $protocol string The protocol to use for requests (http|https)
-     * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
-     * @param $host string The host to send API requests to. There is no need to change this
-     * @param $log CS_REST_Log The logger to use. Used for dependency injection
-     * @param $serialiser The serialiser to use. Used for dependency injection
-     * @param $transport The transport to use. Used for dependency injection
-     * @access public
+     * @param string $client_id The client id to send email on behalf of
+     *        Optional if using a client api key
+     * @param LogInterface $log The logger to use. Used for dependency injection
+     * @param string $protocol The protocol to use for requests (http|https)
+     * @param SerializerInterface|string $host The host to send API requests to. There is no need to change this
+     * @param SerializerInterface $serialiser The serialiser to use. Used for dependency injection
+     * @param TransportInterface $transport The transport to use. Used for dependency injection
      */
-    function __construct (
-    $auth_details,
-    $client_id = NULL,
-    $protocol = 'https',
-    $debug_level = CS_REST_LOG_NONE,
-    $host = 'api.createsend.com',
-    $log = NULL,
-    $serialiser = NULL,
-    $transport = NULL) {
-        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+    public function __construct(
+        $auth_details, $client_id = null, LogInterface $log, $protocol = 'https', $host = CS_HOST, SerializerInterface $serialiser = null, TransportInterface $transport = null)
+    {
+        parent::__construct($auth_details, $protocol, $host, $log, $serialiser, $transport);
         $this->set_client($client_id);
     }
 
     /**
      * Change the client id used for calls after construction
      * Only required if using OAuth or an Account level API Key
-     * @param $client_id
-     * @access public
+     * @param string $client_id
      */
-    function set_client($client_id) {
-      $this->_client_id_param = array("clientID" => $client_id);
+    public function set_client($client_id)
+    {
+        $this->_client_id_param = array("clientID" => $client_id);
     }
 
     /**
      * Gets the list of sent messages
-     * @access public
-     * @param $params, array Parameters used to filter results
+     *
+     * @param array $query Parameters used to filter results
      *     This should be an array of the form
      *         array(
      *             "status" => string delivered|bounced|spam|all
@@ -71,7 +70,7 @@ class CS_REST_Transactional_Timeline extends CS_REST_Wrapper_Base {
      *             "smartEmaiLID" => string optional, smart email to filter by
      *             "group" => string optional, classic group name to filter by
      *         )
-     * @return CS_REST_Wrapper_Result A successful response will be an array of the form
+     * @return Result A successful response will be an array of the form
      *     array(
      *         array(
      *             "MessageID" => string
@@ -88,42 +87,43 @@ class CS_REST_Transactional_Timeline extends CS_REST_Wrapper_Base {
      *         )
      *     )
      */
-    function messages($query = array()) {
+    public function messages($query = array())
+    {
         $params = array_merge($this->_client_id_param, $query);
         return $this->get_request_with_params($this->_base_route . 'transactional/messages', $params);
     }
 
     /**
      * Gets the list of details of a sent message
-     * @access public
-     * @param $message_id, string Message ID to get the details for
-     * @return CS_REST_Wrapper_Result The details of the message
+     * @param $message_id , string Message ID to get the details for
+     * @param bool $show_details
+     * @return Result The details of the message
      */
-    function details($message_id, $show_details = false) {
+    public function details($message_id, $show_details = false)
+    {
         $params = array_merge($this->_client_id_param, array("statistics" => $show_details));
         return $this->get_request_with_params($this->_base_route . 'transactional/messages/' . $message_id, $params);
     }
 
     /**
      * Resend a sent message
-     * @access public
-     * @param $message_id, string Message ID to resend
-     * @return CS_REST_Wrapper_Result The details of the message
+     * @param $message_id , string Message ID to resend
+     * @return Result The details of the message
      *      array(
      *          "MessageID" => string
      *          "Recipient" => string
      *          "Status" => string
      *      )
      */
-    function resend($message_id) {
+    public function resend($message_id)
+    {
         $data = array_merge($this->_client_id_param);
-        return $this->post_request($this->_base_route.'transactional/messages/' . $message_id . '/resend', $data);
+        return $this->post_request($this->_base_route . 'transactional/messages/' . $message_id . '/resend', $data);
     }
 
     /**
      * Gets statistics for sends/bounces/opens/clicks
-     * @access public
-     * @param $params, array Parameters used to filter results
+     * @param array $query Parameters used to filter results
      *     This should be an array of the form
      *         array(
      *             "from" => iso-8601 date, optional, default 30 days ago
@@ -132,7 +132,7 @@ class CS_REST_Transactional_Timeline extends CS_REST_Wrapper_Base {
      *             "group" => string optional, classic group name to filter by
      *             "smartEmailID" => string optional. smart email to filter results by
      *         )
-     * @return CS_REST_Wrapper_Result A successful response will be an array of the form
+     * @return Result A successful response will be an array of the form
      *     array(
      *         array(
      *             "MessageID" => string
@@ -149,9 +149,10 @@ class CS_REST_Transactional_Timeline extends CS_REST_Wrapper_Base {
      *         )
      *     )
      */
-    function statistics($query = array()) {
+    public function statistics($query = array())
+    {
         $params = array_merge($this->_client_id_param, $query);
-        return $this->get_request_with_params($this->_base_route.'transactional/statistics', $params);
-    }
 
+        return $this->get_request_with_params($this->_base_route . 'transactional/statistics', $params);
+    }
 }

@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_lists.php';
+use CreateSend\Wrapper\Lists;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Lists('List ID', $auth);
+$wrap = new Lists('List ID', $auth);
 
 $result = $wrap->get_active_subscribers('Added since', 1, 50, 'email', 'asc');
 //$result = $wrap->get_active_subscribers(date('Y-m-d', strtotime('-30 days')), 

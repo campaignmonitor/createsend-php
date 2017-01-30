@@ -1,11 +1,14 @@
 <?php
 
+use CreateSend\Wrapper\People;
+use CreateSend\Wrapper\Result;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
-@Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_NativeJsonSerialiser');
-@Mock::generate('CS_REST_CurlTransport');
+@Mock::generate('CreateSend\CS_REST_Log');
+@Mock::generate('CreateSend\Serializer\CS_REST_NativeJsonSerialiser');
+@Mock::generate('CreateSend\Transport\CS_REST_CurlTransport');
 
 class CS_REST_ApiKeyTestPeople extends CS_REST_TestPeople {
     public $auth = array('api_key' => 'not a real api key');
@@ -23,8 +26,8 @@ abstract class CS_REST_TestPeople extends CS_REST_TestBase {
 
     public function set_up_inner() {
         $this->people_base_route = $this->base_route.'clients/'.$this->client_id . '/people';
-        $this->wrapper = new CS_REST_People($this->client_id, $this->auth, $this->protocol, $this->log_level,
-        $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = new People($this->client_id, $this->auth, $this->protocol,
+            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
     public function testadd() {
@@ -61,7 +64,7 @@ abstract class CS_REST_TestPeople extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, 200);
+        $expected_result = new Result($raw_result, 200);
         $call_options['data'] = $serialised_person;
         
         $this->setup_transport_and_serialisation($transport_result, $call_options,
@@ -87,10 +90,10 @@ abstract class CS_REST_TestPeople extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get($email);
 
@@ -110,10 +113,10 @@ abstract class CS_REST_TestPeople extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-        $raw_result, $raw_result, NULL, NULL, $response_code);
+        $raw_result, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->delete($email);
 

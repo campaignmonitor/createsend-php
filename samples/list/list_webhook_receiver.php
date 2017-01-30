@@ -1,10 +1,10 @@
 <?php
 
-require_once '../../class/serialisation.php';
-require_once '../../class/log.php';
+use CreateSend\Log\Log;
+use CreateSend\Log\LogInterface;
 
 // Get a serialiser for the webhook data - We assume here that we're dealing with json
-$serialiser = CS_REST_SERIALISATION_get_available(new CS_REST_Log(CS_REST_LOG_NONE));
+$serialiser = CreateSend\Serializer\CS_REST_SERIALISATION_get_available(new Log());
 
 // Read all the posted data from the input stream
 $raw_post = file_get_contents("php://input");
@@ -28,4 +28,3 @@ foreach ($deserialised_data->Events as $event) {
 }
 
 fclose($parsed_log);
-?>

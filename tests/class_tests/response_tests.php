@@ -1,14 +1,23 @@
 <?php
 
+use CreateSend\Serializer\SerializerInterface;
+use CreateSend\Serializer\ServicesJson;
+use CreateSend\Serializer\NativeJson;
+
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/../../vendor/lastcraft/simpletest/autorun.php';
-require_once '../class/serialisation.php';
-require_once '../class/log.php';
 
-@Mock::generate('CS_REST_Log');
+@Mock::generate('CreateSend\Log\Log');
 
 class CS_REST_TestResponseDeserialisation extends UnitTestCase {
+    /**
+     * @var array
+     */
     public $responses;
+
+    /**
+     * @var SerializerInterface
+     */
     public $deserialiser;
 
     public function setUp() {
@@ -909,15 +918,15 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     }
 
     public function test_services_json_serializer() {
-        $log = new MockCS_REST_Log($this);
-        $this->deserialiser = new CS_REST_ServicesJsonSerialiser($log);
+        $log = new MockCS_REST_Log_Log($this);
+        $this->deserialiser = new ServicesJson($log);
         $this->do_test_response_deserialisation();
     }
 
     public function test_services_native_serializer() {
         if(function_exists('json_decode') && function_exists('json_encode')):
-            $log = new MockCS_REST_Log($this);
-            $this->deserialiser = new CS_REST_NativeJsonSerialiser($log);
+            $log = new MockCS_REST_Log_Log($this);
+            $this->deserialiser = new NativeJson($log);
             $this->do_test_response_deserialisation();
         endif;
     }

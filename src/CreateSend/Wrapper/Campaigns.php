@@ -1,5 +1,11 @@
 <?php
 
+namespace CreateSend\Wrapper;
+
+use CreateSend\Log\LogInterface;
+use CreateSend\Serializer\SerializerInterface;
+use CreateSend\Transport\TransportInterface;
+
 /**
  * Class to access a campaigns resources from the create send API.
  * This class includes functions to create and send campaigns,
@@ -7,19 +13,18 @@
  * @author tobyb
  *
  */
-class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
-
+class Campaigns extends Base
+{
     /**
      * The base route of the campaigns resource.
      * @var string
-     * @access private
      */
-    public $_campaigns_base_route;
+    private $_campaigns_base_route;
 
     /**
      * Constructor.
-     * @param $campaign_id string The campaign id to access (Ignored for create requests)
-     * @param $auth_details array Authentication details to use for API calls.
+     * @param string $campaign_id The campaign id to access (Ignored for create requests)
+     * @param array $auth_details Authentication details to use for API calls.
      *        This array must take one of the following forms:
      *        If using OAuth to authenticate:
      *        array(
@@ -28,35 +33,33 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *
      *        Or if using an API key:
      *        array('api_key' => 'your api key')
-     * @param $protocol string The protocol to use for requests (http|https)
-     * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
-     * @param $host string The host to send API requests to. There is no need to change this
-     * @param $log CS_REST_Log The logger to use. Used for dependency injection
-     * @param $serialiser The serialiser to use. Used for dependency injection
-     * @param $transport The transport to use. Used for dependency injection
-     * @access public
+     * @param string $protocol The protocol to use for requests (http|https)
+     * @param string $host The host to send API requests to. There is no need to change this
+     * @param LogInterface $log The logger to use. Used for dependency injection
+     * @param SerializerInterface $serialiser The serialiser to use. Used for dependency injection
+     * @param TransportInterface $transport The transport to use. Used for dependency injection
      */
-    public function __construct (
-    $campaign_id,
-    $auth_details,
-    $protocol = 'https',
-    $debug_level = CS_REST_LOG_NONE,
-    $host = 'api.createsend.com',
-    $log = NULL,
-    $serialiser = NULL,
-    $transport = NULL) {
+    public function __construct(
+        $campaign_id,
+        $auth_details,
+        $protocol = 'https',
+        $host = CS_HOST,
+        LogInterface $log = null,
+        SerializerInterface $serialiser = null,
+        TransportInterface $transport = null)
+    {
 
-        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        parent::__construct($auth_details, $protocol, $host, $log, $serialiser, $transport);
         $this->set_campaign_id($campaign_id);
     }
 
     /**
      * Change the campaign id used for calls after construction
-     * @param $campaign_id
-     * @access public
+     * @param string $campaign_id
      */
-    public function set_campaign_id($campaign_id) {
-        $this->_campaigns_base_route = $this->_base_route.'campaigns/'.$campaign_id.'/';
+    public function set_campaign_id($campaign_id)
+    {
+        $this->_campaigns_base_route = $this->_base_route . 'campaigns/' . $campaign_id . '/';
     }
 
     /**
@@ -78,11 +81,11 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *         'ListIDs' => array<string> optional An array of list ids to send the campaign to
      *         'SegmentIDs' => array<string> optional An array of segment ids to send the campaign to.
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created campaign
+     * @return Result A successful response will be the ID of the newly created campaign
      */
-    public function create($client_id, $campaign_info) {
-        return $this->post_request($this->_base_route.'campaigns/'.$client_id.'.json', $campaign_info);
+    public function create($client_id, $campaign_info)
+    {
+        return $this->post_request($this->_base_route . 'campaigns/' . $client_id . '.json', $campaign_info);
     }
 
     /**
@@ -102,29 +105,29 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *         'TemplateID' => string required The ID of the template to use
      *         'TemplateContent' => array required The content which will be used to fill the editable areas of the template
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created campaign
+     * @return Result A successful response will be the ID of the newly created campaign
      */
-    public function create_from_template($client_id, $campaign_info) {
-        return $this->post_request($this->_base_route.'campaigns/'.$client_id.'/fromtemplate.json', $campaign_info);
+    public function create_from_template($client_id, $campaign_info)
+    {
+        return $this->post_request($this->_base_route . 'campaigns/' . $client_id . '/fromtemplate.json', $campaign_info);
     }
 
     /**
      * Sends a preview of an existing campaign to the specified recipients.
-     * @param array<string> $recipients The recipients to send the preview to.
+     * @param array <string> $recipients The recipients to send the preview to.
      * @param string $personalize How to personalize the campaign content. Valid options are:
      *     'Random': Choose a random campaign recipient and use their personalisation data
      *     'Fallback': Use the fallback terms specified in the campaign content
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    public function send_preview($recipients, $personalize = 'Random') {
+    public function send_preview($recipients, $personalize = 'Random')
+    {
         $preview_data = array(
             'PreviewRecipients' => $recipients,
             'Personalize' => $personalize
         );
 
-        return $this->post_request($this->_campaigns_base_route.'sendpreview.json', $preview_data);
+        return $this->post_request($this->_campaigns_base_route . 'sendpreview.json', $preview_data);
     }
 
     /**
@@ -136,30 +139,30 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *        'SendDate' => string required The date to send the campaign or 'immediately'.
      *                      The date should be in the format 'y-M-d'
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    public function send($schedule) {
-        return $this->post_request($this->_campaigns_base_route.'send.json', $schedule);
+    public function send($schedule)
+    {
+        return $this->post_request($this->_campaigns_base_route . 'send.json', $schedule);
     }
 
     /**
      * Unschedules the campaign, moving it back into the drafts. If the campaign has been sent or is
      * in the process of sending, this api request will fail.
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    public function unschedule() {
-        return $this->post_request($this->_campaigns_base_route.'unschedule.json', NULL);
+    public function unschedule()
+    {
+        return $this->post_request($this->_campaigns_base_route . 'unschedule.json', null);
     }
 
     /**
      * Deletes an existing campaign from the system
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    public function delete() {
-        return $this->delete_request(trim($this->_campaigns_base_route, '/').'.json');
+    public function delete()
+    {
+        return $this->delete_request(trim($this->_campaigns_base_route, '/') . '.json');
     }
 
     /**
@@ -168,8 +171,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -186,9 +188,10 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    public function get_recipients($page_number = NULL, $page_size = NULL, $order_field = NULL,
-        $order_direction = NULL) {
-        return $this->get_request_paged($this->_campaigns_base_route.'recipients.json', $page_number,
+    public function get_recipients($page_number = null, $page_size = null, $order_field = null,
+                                   $order_direction = null)
+    {
+        return $this->get_request_paged($this->_campaigns_base_route . 'recipients.json', $page_number,
             $page_size, $order_field, $order_direction, '?');
     }
 
@@ -199,8 +202,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -221,16 +223,16 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * }
      * )
      */
-    public function get_bounces($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL,
-        $order_direction = NULL) {
-        return $this->get_request_paged($this->_campaigns_base_route.'bounces.json?date='.urlencode($since),
+    public function get_bounces($since = '', $page_number = null, $page_size = null, $order_field = null,
+                                $order_direction = null)
+    {
+        return $this->get_request_paged($this->_campaigns_base_route . 'bounces.json?date=' . urlencode($since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
     /**
      * Gets the lists a campaign was sent to
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'Lists' =>  array(
      *         {
@@ -247,14 +249,14 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    public function get_lists_and_segments() {
-        return $this->get_request($this->_campaigns_base_route.'listsandsegments.json');
+    public function get_lists_and_segments()
+    {
+        return $this->get_request($this->_campaigns_base_route . 'listsandsegments.json');
     }
 
     /**
      * Gets a summary of all campaign reporting statistics
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'Recipients' => The total recipients of the campaign
      *     'TotalOpened' => The total number of opens recorded
@@ -271,14 +273,14 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     'SpamComplaints' => The number of recipients who marked the campaign as spam
      * }
      */
-    public function get_summary() {
-        return $this->get_request($this->_campaigns_base_route.'summary.json');
+    public function get_summary()
+    {
+        return $this->get_request($this->_campaigns_base_route . 'summary.json');
     }
 
     /**
      * Gets the email clients that subscribers used to open the campaign
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * array(
      *     {
      *         Client => The email client name
@@ -288,8 +290,9 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    public function get_email_client_usage() {
-      return $this->get_request($this->_campaigns_base_route.'emailclientusage.json');
+    public function get_email_client_usage()
+    {
+        return $this->get_request($this->_campaigns_base_route . 'emailclientusage.json');
     }
 
     /**
@@ -299,8 +302,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -325,9 +327,10 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    public function get_opens($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL,
-        $order_direction = NULL) {
-        return $this->get_request_paged($this->_campaigns_base_route.'opens.json?date='.urlencode($since),
+    public function get_opens($since = '', $page_number = null, $page_size = null, $order_field = null,
+                              $order_direction = null)
+    {
+        return $this->get_request_paged($this->_campaigns_base_route . 'opens.json?date=' . urlencode($since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -338,8 +341,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -365,9 +367,10 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    public function get_clicks($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL,
-        $order_direction = NULL) {
-        return $this->get_request_paged($this->_campaigns_base_route.'clicks.json?date='.urlencode($since),
+    public function get_clicks($since = '', $page_number = null, $page_size = null, $order_field = null,
+                               $order_direction = null)
+    {
+        return $this->get_request_paged($this->_campaigns_base_route . 'clicks.json?date=' . urlencode($since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -378,8 +381,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -398,9 +400,10 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    public function get_unsubscribes($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL,
-        $order_direction = NULL) {
-        return $this->get_request_paged($this->_campaigns_base_route.'unsubscribes.json?date='.urlencode($since),
+    public function get_unsubscribes($since = '', $page_number = null, $page_size = null, $order_field = null,
+                                     $order_direction = null)
+    {
+        return $this->get_request_paged($this->_campaigns_base_route . 'unsubscribes.json?date=' . urlencode($since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -411,8 +414,7 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'LIST', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -430,9 +432,10 @@ class CS_REST_Campaigns extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    public function get_spam($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL,
-        $order_direction = NULL) {
-        return $this->get_request_paged($this->_campaigns_base_route.'spam.json?date='.urlencode($since),
+    public function get_spam($since = '', $page_number = null, $page_size = null, $order_field = null,
+                             $order_direction = null)
+    {
+        return $this->get_request_paged($this->_campaigns_base_route . 'spam.json?date=' . urlencode($since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 }

@@ -1,11 +1,15 @@
 <?php
 
+use CreateSend\Wrapper\General;
+use CreateSend\Log\LogInterface;
+use CreateSend\Wrapper\Result;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
-@Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_NativeJsonSerialiser');
-@Mock::generate('CS_REST_CurlTransport');
+@Mock::generate('CreateSend\CS_REST_Log');
+@Mock::generate('CreateSend\Serializer\CS_REST_NativeJsonSerialiser');
+@Mock::generate('CreateSend\Transport\CS_REST_CurlTransport');
 
 class CS_REST_TestBase extends UnitTestCase {
     public $mock_log;
@@ -16,10 +20,10 @@ class CS_REST_TestBase extends UnitTestCase {
 
     public $serialisation_type = 'mockjson';
     public $transport_type = 'mock_cURL';
-    public $auth = NULL;
+    public $auth = null;
     public $protocol = 'hotpotatoes';
     public $api_host = 'api.test.createsend.com';
-    public $log_level = CS_REST_LOG_NONE;
+    public $log_level = LogInterface::LEVEL_NONE;
 
     public $base_route;
 
@@ -37,8 +41,7 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     public function set_up_inner() {
-        $this->wrapper = new CS_REST_General($this->auth, $this->protocol, $this->log_level,
-            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = new General($this->auth, $this->protocol, $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
     public function get_call_options($route, $method = 'GET') {
@@ -56,7 +59,7 @@ class CS_REST_TestBase extends UnitTestCase {
     }
 
     public function setup_transport_and_serialisation($make_call_result, $call_options,
-        $deserialise_result, $deserialise_input, $serialise_result = NULL, $serialise_input = NULL) {
+        $deserialise_result, $deserialise_input, $serialise_result = null, $serialise_input = null) {
 
         $this->mock_transport->setReturnValue('make_call', $make_call_result);
         $this->mock_transport->expectOnce('make_call', array(new IdenticalExpectation($call_options)));
@@ -78,10 +81,10 @@ class CS_REST_TestBase extends UnitTestCase {
             'response' => $from_transport
         );
 
-        $expected_result = new CS_REST_Wrapper_Result($from_deserialisation, $response_code);
+        $expected_result = new Result($from_deserialisation, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $from_deserialisation, $from_transport, NULL, NULL, $response_code);
+            $from_deserialisation, $from_transport, null, null, $response_code);
 
         $result = $this->wrapper->$wrapper_function();
 
@@ -97,7 +100,7 @@ class CS_REST_TestBase extends UnitTestCase {
             'response' => $from_transport
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($from_deserialisation, $response_code);
+        $expected_result = new Result($from_deserialisation, $response_code);
          
         if(!is_null($from_serialisation)) {
             $call_options['data'] = $from_serialisation;
@@ -128,7 +131,7 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
         $scope = 'ViewReports,CreateCampaigns,SendCampaigns';
         $expected_result = "https://api.createsend.com/oauth?client_id=8998879&redirect_uri=http%3A%2F%2Fexample.com%2Fauth&scope=ViewReports%2CCreateCampaigns%2CSendCampaigns";
 
-        $result = CS_REST_General::authorize_url($client_id, $redirect_uri, $scope);
+        $result = General::authorize_url($client_id, $redirect_uri, $scope);
 
         $this->assertIdentical($expected_result, $result);
     }
@@ -140,15 +143,14 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
         $state = 89879287;
         $expected_result = "https://api.createsend.com/oauth?client_id=8998879&redirect_uri=http%3A%2F%2Fexample.com%2Fauth&scope=ViewReports%2CCreateCampaigns%2CSendCampaigns&state=89879287";
 
-        $result = CS_REST_General::authorize_url($client_id, $redirect_uri, $scope, $state);
+        $result = General::authorize_url($client_id, $redirect_uri, $scope, $state);
 
         $this->assertIdentical($expected_result, $result);
     }
 
     public function test_refresh_token_error_when_refresh_token_null() {
-        $auth = array('access_token' => 'validaccesstoken', 'refresh_token' => NULL);
-        $this->wrapper = new CS_REST_General($auth, $this->protocol, $this->log_level,
-            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $auth = array('access_token' => 'validaccesstoken', 'refresh_token' => null);
+        $this->wrapper = new General($auth, $this->protocol, $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
         $this->expectError('Error refreshing token. There is no refresh token set on this object.');
         list($new_access_token, $new_expires_in, $new_refresh_token) =
             $this->wrapper->refresh_token();
@@ -156,16 +158,14 @@ class CS_REST_OAuthTestGeneral extends CS_REST_TestGeneral {
 
     public function test_refresh_token_error_when_refresh_token_not_set() {
         $auth = array('access_token' => 'validaccesstoken');
-        $this->wrapper = new CS_REST_General($auth, $this->protocol, $this->log_level,
-            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = new General($auth, $this->protocol, $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
         $this->expectError('Error refreshing token. There is no refresh token set on this object.');
         list($new_access_token, $new_expires_in, $new_refresh_token) =
             $this->wrapper->refresh_token();
     }
 
     public function test_refresh_token_error_when_no_auth() {
-        $this->wrapper = new CS_REST_General(NULL, $this->protocol, $this->log_level,
-            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = new General(null, $this->protocol, $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
         $this->expectError('Error refreshing token. There is no refresh token set on this object.');
         list($new_access_token, $new_expires_in, $new_refresh_token) =
             $this->wrapper->refresh_token();
@@ -232,7 +232,7 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
             'response' => $raw_result
         );
 
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, '', '', $response_code);
@@ -259,7 +259,7 @@ abstract class CS_REST_TestGeneral extends CS_REST_TestBase {
             'response' => $raw_result
         );
 
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'session options were serialised to this',

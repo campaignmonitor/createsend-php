@@ -1,13 +1,11 @@
 <?php
 
-require_once '../../csrest_clients.php';
+use CreateSend\Wrapper\Clients;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Clients(
-	'ClientID to get the templates of', 
-    $auth);
+$wrap = new Clients('ClientID to get the templates of', $auth);
 
 $result = $wrap->get_templates();
 

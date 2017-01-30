@@ -31,12 +31,12 @@ The Campaign Monitor API supports authentication using either OAuth or an API ke
 
 Depending on the environment you are developing in, you may wish to use a PHP OAuth library to get access tokens for your users. If you don't use an OAuth library, you will need to get access tokens for your users by following the instructions included in the Campaign Monitor API [documentation](http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth). This package provides functionality to help you do this, as described below. You may also wish to reference this [example application](https://gist.github.com/jdennes/4973318), which is implemented using [Slim](http://slimframework.com/) but could easily be adapted for use with any PHP framework.
 
-The first thing your application should do is redirect your user to the Campaign Monitor authorization URL where they will have the opportunity to approve your application to access their Campaign Monitor account. You can get this authorization URL by using the `CS_REST_General::authorize_url()` method, like so:
+The first thing your application should do is redirect your user to the Campaign Monitor authorization URL where they will have the opportunity to approve your application to access their Campaign Monitor account. You can get this authorization URL by using the `CreateSend\CS_REST_General::authorize_url()` method, like so:
 
 ```php
 require_once 'csrest_general.php';
 
-$authorize_url = CS_REST_General::authorize_url(
+$authorize_url = CreateSend\CS_REST_General::authorize_url(
     'Client ID for your application',
     'Redirect URI for your application',
     'The permission level your application requires',
@@ -45,12 +45,12 @@ $authorize_url = CS_REST_General::authorize_url(
 # Redirect your users to $authorize_url.
 ```
 
-If your user approves your application, they will then be redirected to the `redirect_uri` you specified, which will include a `code` parameter, and optionally a `state` parameter in the query string. Your application should implement a handler which can exchange the code passed to it for an access token, using `CS_REST_General::exchange_token()` like so:
+If your user approves your application, they will then be redirected to the `redirect_uri` you specified, which will include a `code` parameter, and optionally a `state` parameter in the query string. Your application should implement a handler which can exchange the code passed to it for an access token, using `CreateSend\CS_REST_General::exchange_token()` like so:
 
 ```php
 require_once 'csrest_general.php';
 
-$result = CS_REST_General::exchange_token(
+$result = CreateSend\CS_REST_General::exchange_token(
     'Client ID for your application',
     'Client Secret for your application',
     'Redirect URI for your application',
@@ -79,7 +79,7 @@ require_once 'csrest_general.php';
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh_token');
-$wrap = new CS_REST_General($auth);
+$wrap = new CreateSend\CS_REST_General($auth);
 
 $result = $wrap->get_clients();
 var_dump($result->response);
@@ -94,7 +94,7 @@ $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token'
 );
-$wrap = new CS_REST_General($auth);
+$wrap = new CreateSend\CS_REST_General($auth);
 $result = $wrap->get_clients();
 if (!$result->was_successful()) {
     # If you receive '121: Expired OAuth Token', refresh the access token
@@ -115,7 +115,7 @@ var_dump($result->response);
 require_once 'csrest_general.php';
 
 $auth = array('api_key' => 'your API key');
-$wrap = new CS_REST_General($auth);
+$wrap = new CreateSend\CS_REST_General($auth);
 
 $result = $wrap->get_clients();
 var_dump($result->response);

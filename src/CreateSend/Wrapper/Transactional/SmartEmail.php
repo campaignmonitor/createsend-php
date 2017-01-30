@@ -1,32 +1,36 @@
 <?php
 
+namespace CreateSend\Wrapper\Transactional;
+
+use CreateSend\Log\LogInterface;
+use CreateSend\Serializer\SerializerInterface;
+use CreateSend\Transport\TransportInterface;
+use CreateSend\Wrapper\Base;
+use CreateSend\Wrapper\Result;
+
 /**
  * Class to access transactional from the create send API.
  * @author philoye
  *
  */
-class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
-
+class SmartEmail extends Base
+{
     /**
      * The client id to use for this mailer. Optional if using a client api key.
      * @var array
-     * @access private
      */
-    public $_client_id_param;
+    private $_client_id_param;
 
     /**
      * The base route of the smartemail resource.
      * @var string
-     * @access private
      */
-    public $_smartemail_base_route;
+    private $_smartemail_base_route;
 
     /**
      * Constructor.
-     * @param $client_id string The client id to send email on behalf of
-     *        Optional if using a client api key
-     * @param $smartemail_id string The smart email id to access (Ignored for list requests)
-     * @param $auth_details array Authentication details to use for API calls.
+     * @param string $smartemail_id The smart email id to access (Ignored for list requests)
+     * @param array $auth_details Authentication details to use for API calls.
      *        This array must take one of the following forms:
      *        If using OAuth to authenticate:
      *        array(
@@ -35,25 +39,25 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
      *
      *        Or if using an API key:
      *        array('api_key' => 'your api key')
-     * @param $protocol string The protocol to use for requests (http|https)
-     * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
-     * @param $host string The host to send API requests to. There is no need to change this
-     * @param $log CS_REST_Log The logger to use. Used for dependency injection
-     * @param $serialiser The serialiser to use. Used for dependency injection
-     * @param $transport The transport to use. Used for dependency injection
-     * @access public
+     * @param string $client_id The client id to send email on behalf of
+     *        Optional if using a client api key
+     * @param string $protocol The protocol to use for requests (http|https)
+     * @param string $host The host to send API requests to. There is no need to change this
+     * @param LogInterface $log The logger to use. Used for dependency injection
+     * @param SerializerInterface $serialiser The serialiser to use. Used for dependency injection
+     * @param TransportInterface $transport The transport to use. Used for dependency injection
      */
-    function __construct (
-    $smartemail_id,
-    $auth_details,
-    $client_id = NULL,
-    $protocol = 'https',
-    $debug_level = CS_REST_LOG_NONE,
-    $host = 'api.createsend.com',
-    $log = NULL,
-    $serialiser = NULL,
-    $transport = NULL) {
-        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+    public function __construct(
+        $smartemail_id,
+        $auth_details,
+        $client_id = null,
+        $protocol = 'https',
+        $host = CS_HOST,
+        LogInterface $log = null,
+        SerializerInterface $serialiser = null,
+        TransportInterface $transport = null)
+    {
+        parent::__construct($auth_details, $protocol, $host, $log, $serialiser, $transport);
         $this->set_client($client_id);
         $this->set_smartemail_id($smartemail_id);
     }
@@ -61,31 +65,30 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
     /**
      * Change the client id used for calls after construction
      * Only required if using OAuth or an Account level API Key
-     * @param $client_id
-     * @access public
+     * @param string $client_id
      */
-    function set_client($client_id) {
-      $this->_client_id_param = array("clientID" => $client_id);
+    public function set_client($client_id)
+    {
+        $this->_client_id_param = array("clientID" => $client_id);
     }
 
     /**
      * Change the smart email id used for calls after construction
-     * @param $smartemail_id
-     * @access public
+     * @param string $smartemail_id
      */
-    function set_smartemail_id($smartemail_id) {
+    public function set_smartemail_id($smartemail_id)
+    {
         $this->_smartemail_base_route = $this->_base_route . 'transactional/smartEmail/' . $smartemail_id;
     }
 
     /**
      * Gets a list of smart emails
-     * @access public
-     * @param $options optional array Query params to filter list
+     * @param array $options optional array Query params to filter list
      *     This should be an array of the form
      *         array(
      *             "status" => "all|drafts|active"
      *         )
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      *     array(
      *        array (
      *             'ID' => string
@@ -95,7 +98,8 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
      *        )
      *     )
      */
-    function get_list($options = array()) {
+    public function get_list($options = array())
+    {
         $data = array_merge($this->_client_id_param, $options);
         return $this->get_request_with_params($this->_base_route . 'transactional/smartemail', $data);
     }
@@ -127,8 +131,7 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
      *             )
      *         )
      * @param boolean $add_to_list optional. Whether to add all recipients to the list specified for the smart email
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the include the details of the action, including a Message ID.
+     * @return Result A successful response will be the include the details of the action, including a Message ID.
      *      array(
      *          array(
      *              "MessageID" => string
@@ -137,15 +140,15 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
      *          )
      *      )
      */
-    function send($message, $add_to_list = true) {
+    public function send($message, $add_to_list = true)
+    {
         $data = array_merge($message, array("AddRecipientsToList" => $add_to_list));
         return $this->post_request($this->_smartemail_base_route . '/send.json', $data);
     }
 
     /**
      * Gets the details of Smart Email
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an array of the form
+     * @return Result A successful response will be an array of the form
      *     array(
      *        "SmartEmailID" => string
      *        "Name" => string
@@ -170,7 +173,8 @@ class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
      *        "AddRecipientsToList": string
      *    }
      */
-    function get_details() {
+    public function get_details()
+    {
         return $this->get_request($this->_smartemail_base_route);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-require_once '../../csrest_general.php';
+use CreateSend\Wrapper\General;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token'
 );
-$wrap = new CS_REST_General($auth);
+$wrap = new General($auth);
 $result = $wrap->get_clients();
 if (!$result->was_successful()) {
     # If you receive '121: Expired OAuth Token', refresh the access token

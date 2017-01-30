@@ -1,14 +1,14 @@
 <?php
 
+use CreateSend\Transport\Socket;
+
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/../../vendor/lastcraft/simpletest/autorun.php';
-require_once '../class/transport.php';
-require_once '../class/log.php';
 
-@Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_SocketWrapper');
+@Mock::generate('CreateSend\CS_REST_Log');
+@Mock::generate('CreateSend\Transport\CS_REST_SocketWrapper');
 @Mock::generatePartial(
-    'CS_REST_SocketTransport', 
+    'CreateSend\Transport\CS_REST_SocketTransport',
     'PartialSocketTransport',
     array('_build_request', '_get_status_code')
 );
@@ -21,10 +21,10 @@ class CS_REST_TestSocketTransport extends UnitTestCase {
     public $partial;
 
     public function setUp() {
-        $this->mock_log = new MockCS_REST_Log($this);
+        $this->mock_log = new MockCS_REST_Log_Log($this);
         $this->mock_wrapper = new MockCS_REST_SocketWrapper($this);
 
-        $this->transport = new CS_REST_SocketTransport($this->mock_log, $this->mock_wrapper);
+        $this->transport = new Socket($this->mock_log, $this->mock_wrapper);
         $this->partial = new PartialSocketTransport($this);
         $this->partial->__construct($this->mock_log, $this->mock_wrapper);
     }

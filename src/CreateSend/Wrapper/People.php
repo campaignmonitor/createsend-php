@@ -1,5 +1,11 @@
 <?php
 
+namespace CreateSend\Wrapper;
+
+use CreateSend\Log\LogInterface;
+use CreateSend\Serializer\SerializerInterface;
+use CreateSend\Transport\TransportInterface;
+
 /**
  * Class to access the person resources from the create send API.
  * This class includes functions to add and remove people,
@@ -7,19 +13,18 @@
  * @author tobyb
  *
  */
-class CS_REST_People extends CS_REST_Wrapper_Base {
-
+class People extends Base
+{
     /**
      * The base route of the people resource.
      * @var string
-     * @access private
      */
-    public $_people_base_route;
+    private $_people_base_route;
 
     /**
      * Constructor.
-     * @param $client_id string The client id that the people belong to
-     * @param $auth_details array Authentication details to use for API calls.
+     * @param string $client_id The client id that the people belong to
+     * @param array $auth_details Authentication details to use for API calls.
      *        This array must take one of the following forms:
      *        If using OAuth to authenticate:
      *        array(
@@ -28,36 +33,34 @@ class CS_REST_People extends CS_REST_Wrapper_Base {
      *
      *        Or if using an API key:
      *        array('api_key' => 'your api key')
-     * @param $protocol string The protocol to use for requests (http|https)
-     * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
-     * @param $host string The host to send API requests to. There is no need to change this
-     * @param $log CS_REST_Log The logger to use. Used for dependency injection
-     * @param $serialiser The serialiser to use. Used for dependency injection
-     * @param $transport The transport to use. Used for dependency injection
-     * @access public
+     * @param string $protocol The protocol to use for requests (http|https)
+     * @param string $host The host to send API requests to. There is no need to change this
+     * @param LogInterface $log The logger to use. Used for dependency injection
+     * @param SerializerInterface $serialiser The serialiser to use. Used for dependency injection
+     * @param TransportInterface $transport The transport to use. Used for dependency injection
      */
-    function __construct (
-    $client_id,
-    $auth_details,
-    $protocol = 'https',
-    $debug_level = CS_REST_LOG_NONE,
-    $host = 'api.createsend.com',
-    $log = NULL,
-    $serialiser = NULL,
-    $transport = NULL) {
+    public function __construct(
+        $client_id,
+        $auth_details,
+        $protocol = 'https',
+        $host = CS_HOST,
+        LogInterface $log = null,
+        SerializerInterface $serialiser = null,
+        TransportInterface $transport = null)
+    {
 
-        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        parent::__construct($auth_details, $protocol, $host, $log, $serialiser, $transport);
         $this->set_client_id($client_id);
 
     }
 
     /**
      * Change the client id used for calls after construction
-     * @param $client_id
-     * @access public
+     * @param string $client_id
      */
-    function set_client_id($client_id) {
-        $this->_people_base_route = $this->_base_route.'clients/'.$client_id . '/people';
+    public function set_client_id($client_id)
+    {
+        $this->_people_base_route = $this->_base_route . 'clients/' . $client_id . '/people';
     }
 
     /**
@@ -70,11 +73,12 @@ class CS_REST_People extends CS_REST_Wrapper_Base {
      *         'AccessLevel' => The access level of the new person. See http://www.campaignmonitor.com/api/clients/#setting_access_details for details
      *         'Password' => (optional) if not specified, an invitation will be sent to the person by email
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     *
+     * @return Result A successful response will be empty
      */
-    function add($person) {
-        return $this->post_request($this->_people_base_route.'.json', $person);
+    public function add($person)
+    {
+        return $this->post_request($this->_people_base_route . '.json', $person);
     }
 
     /**
@@ -88,17 +92,19 @@ class CS_REST_People extends CS_REST_Wrapper_Base {
      *         'AccessLevel' => the access level of the person
      *         'Password' => (optional) if specified, changes the password to the specified value
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     *
+     * @return Result A successful response will be empty
      */
-    function update($email, $person) {
-        return $this->put_request($this->_people_base_route.'.json?email='.urlencode($email), $person);
+    public function update($email, $person)
+    {
+        return $this->put_request($this->_people_base_route . '.json?email=' . urlencode($email), $person);
     }
 
     /**
      * Gets the details for a specific person
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     *
+     * @param string $email
+     * @return Result A successful response will be an object of the form
      * {
      *     'EmailAddress' => The email address of the person
      *     'Name' => The name of the person
@@ -107,18 +113,18 @@ class CS_REST_People extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get($email) {
-        return $this->get_request($this->_people_base_route.'.json?email='.urlencode($email));
+    public function get($email)
+    {
+        return $this->get_request($this->_people_base_route . '.json?email=' . urlencode($email));
     }
-
 
     /**
      * deletes the given person from the current client
      * @param string $email The email address of the person to delete
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    function delete($email) {
-        return $this->delete_request($this->_people_base_route.'.json?email='.urlencode($email));
+    public function delete($email)
+    {
+        return $this->delete_request($this->_people_base_route . '.json?email=' . urlencode($email));
     }
 }

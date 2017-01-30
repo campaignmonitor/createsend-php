@@ -1,9 +1,9 @@
 <?php
 
-require_once '../../csrest_general.php';
+use CreateSend\Wrapper\General;
 
 $auth = array('api_key' => 'your api key');
-$wrap = new CS_REST_General($auth);
+$wrap = new General($auth);
 
 $result = $wrap->get_clients();
 

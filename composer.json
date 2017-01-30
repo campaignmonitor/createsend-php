@@ -19,6 +19,7 @@
         "lastcraft/simpletest": "~1.1"
     },
     "autoload": {
-        "psr-4": {"CsRest\\": "src/"}
+        "psr-0": {"": "src/"},
+        "classMap": ["class/"]
     }
 }

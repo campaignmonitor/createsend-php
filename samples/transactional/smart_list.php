@@ -1,8 +1,10 @@
 <?php
-require_once "../../csrest_transactional_smartemail.php";
+
+use CreateSend\Log\Log;
+use CreateSend\Wrapper\Transactional\SmartEmail;
 
 $auth = array("api_key" => "Your API Key");
-$wrap = new CS_REST_Transactional_SmartEmail(NULL, $auth);
+$wrap = new SmartEmail(null, $auth, new Log());
 
 echo "\nGetting the list of smart emails...\n";
 

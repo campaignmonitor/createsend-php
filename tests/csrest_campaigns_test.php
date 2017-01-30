@@ -1,11 +1,14 @@
 <?php
 
+use CreateSend\Wrapper\Campaigns;
+use CreateSend\Wrapper\Result;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
-@Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_NativeJsonSerialiser');
-@Mock::generate('CS_REST_CurlTransport');
+@Mock::generate('CreateSend\CS_REST_Log');
+@Mock::generate('CreateSend\Serializer\CS_REST_NativeJsonSerialiser');
+@Mock::generate('CreateSend\Transport\CS_REST_CurlTransport');
 
 class CS_REST_ApiKeyTestCampaigns extends CS_REST_TestCampaigns {
     public $auth = array('api_key' => 'not a real api key');
@@ -23,8 +26,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
 
     public function set_up_inner() {
         $this->campaign_base_route = $this->base_route.'campaigns/'.$this->campaign_id.'/';
-        $this->wrapper = new CS_REST_Campaigns($this->campaign_id, $this->auth, $this->protocol, $this->log_level,
-        $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = new Campaigns($this->campaign_id, $this->auth, $this->protocol, $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
     public function testcreate() {
@@ -47,7 +49,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
         $call_options['data'] = 'campaign data was serialised to this';
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'campaign data was serialised to this', 
@@ -128,7 +130,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
         $call_options['data'] = 'campaign data was serialised to this';
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'campaign data was serialised to this', 
@@ -162,7 +164,7 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
         $call_options['data'] = 'campaign data was serialised to this';
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'campaign data was serialised to this', 
@@ -219,10 +221,10 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_bounces($since);
 
@@ -269,10 +271,10 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_opens($since);
 
@@ -292,10 +294,10 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_clicks($since);
 
@@ -315,10 +317,10 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_unsubscribes($since);
 
@@ -338,10 +340,10 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_spam($since);
 
@@ -359,10 +361,10 @@ abstract class CS_REST_TestCampaigns extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-        $raw_result, $raw_result, NULL, NULL, $response_code);
+        $raw_result, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->unschedule();
 

@@ -1,5 +1,11 @@
 <?php
 
+namespace CreateSend\Wrapper;
+
+use CreateSend\Log\LogInterface;
+use CreateSend\Serializer\SerializerInterface;
+use CreateSend\Transport\TransportInterface;
+
 defined('CS_REST_CUSTOM_FIELD_TYPE_TEXT') or define('CS_REST_CUSTOM_FIELD_TYPE_TEXT', 'Text');
 defined('CS_REST_CUSTOM_FIELD_TYPE_NUMBER') or define('CS_REST_CUSTOM_FIELD_TYPE_NUMBER', 'Number');
 defined('CS_REST_CUSTOM_FIELD_TYPE_MULTI_SELECTONE') or define('CS_REST_CUSTOM_FIELD_TYPE_MULTI_SELECTONE', 'MultiSelectOne');
@@ -21,19 +27,18 @@ defined('CS_REST_LIST_UNSUBSCRIBE_SETTING_ONLY_THIS_LIST') or define('CS_REST_LI
  * @author tobyb
  *
  */
-class CS_REST_Lists extends CS_REST_Wrapper_Base {
-
+class Lists extends Base
+{
     /**
      * The base route of the lists resource.
      * @var string
-     * @access private
      */
-    public $_lists_base_route;
+    private $_lists_base_route;
 
     /**
      * Constructor.
-     * @param $list_id string The list id to access (Ignored for create requests)
-     * @param $auth_details array Authentication details to use for API calls.
+     * @param string $list_id The list id to access (Ignored for create requests)
+     * @param array $auth_details Authentication details to use for API calls.
      *        This array must take one of the following forms:
      *        If using OAuth to authenticate:
      *        array(
@@ -42,35 +47,33 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *
      *        Or if using an API key:
      *        array('api_key' => 'your api key')
-     * @param $protocol string The protocol to use for requests (http|https)
-     * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
-     * @param $host string The host to send API requests to. There is no need to change this
-     * @param $log CS_REST_Log The logger to use. Used for dependency injection
-     * @param $serialiser The serialiser to use. Used for dependency injection
-     * @param $transport The transport to use. Used for dependency injection
-     * @access public
+     * @param string $protocol The protocol to use for requests (http|https)
+     * @param string $host The host to send API requests to. There is no need to change this
+     * @param LogInterface $log The logger to use. Used for dependency injection
+     * @param SerializerInterface $serialiser The serialiser to use. Used for dependency injection
+     * @param TransportInterface $transport The transport to use. Used for dependency injection
      */
-    function __construct (
-    $list_id,
-    $auth_details,
-    $protocol = 'https',
-    $debug_level = CS_REST_LOG_NONE,
-    $host = 'api.createsend.com',
-    $log = NULL,
-    $serialiser = NULL,
-    $transport = NULL) {
+    public function __construct(
+        $list_id,
+        $auth_details,
+        $protocol = 'https',
+        $host = CS_HOST,
+        LogInterface $log = null,
+        SerializerInterface $serialiser = null,
+        TransportInterface $transport = null)
+    {
 
-        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        parent::__construct($auth_details, $protocol, $host, $log, $serialiser, $transport);
         $this->set_list_id($list_id);
     }
 
     /**
      * Change the list id used for calls after construction
-     * @param $list_id
-     * @access public
+     * @param string $list_id
      */
-    function set_list_id($list_id) {
-        $this->_lists_base_route = $this->_base_route.'lists/'.$list_id.'/';
+    public function set_list_id($list_id)
+    {
+        $this->_lists_base_route = $this->_base_route . 'lists/' . $list_id . '/';
     }
 
     /**
@@ -90,17 +93,16 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *             CS_REST_LIST_UNSUBSCRIBE_SETTING_ONLY_THIS_LIST.
      *             See the documentation for details: http://www.campaignmonitor.com/api/lists/#creating_a_list
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created list
+     * @return Result A successful response will be the ID of the newly created list
      */
-    function create($client_id, $list_details) {
-        return $this->post_request($this->_base_route.'lists/'.$client_id.'.json', $list_details);
+    public function create($client_id, $list_details)
+    {
+        return $this->post_request($this->_base_route . 'lists/' . $client_id . '.json', $list_details);
     }
 
     /**
      * Updates the details of an existing list
      * Both the UnsubscribePage and the ConfirmationSuccessPage parameters are optional
-     * @param string $client_id The client to create the campaign for
      * @param array $list_details The list details to use during creation.
      *     This array should be of the form
      *     array(
@@ -122,11 +124,11 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *             whether active subscribers should be scrubbed against the
      *             suppression list.
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    function update($list_details) {
-        return $this->put_request(trim($this->_lists_base_route, '/').'.json', $list_details);
+    public function update($list_details)
+    {
+        return $this->put_request(trim($this->_lists_base_route, '/') . '.json', $list_details);
     }
 
     /**
@@ -150,12 +152,12 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *           not the field should be visible in the subscriber preference
      *           center.
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the
+     * @return Result A successful response will be the
      * personalisation tag of the newly created custom field
      */
-    function create_custom_field($custom_field_details) {
-        return $this->post_request($this->_lists_base_route.'customfields.json', $custom_field_details);
+    public function create_custom_field($custom_field_details)
+    {
+        return $this->post_request($this->_lists_base_route . 'customfields.json', $custom_field_details);
     }
 
     /**
@@ -169,55 +171,55 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *           not the field should be visible in the subscriber preference
      *           center.
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the
+     * @return Result A successful response will be the
      * personalisation tag of the updated custom field
      */
-    function update_custom_field($key, $custom_field_details) {
-        return $this->put_request($this->_lists_base_route.'customfields/'.rawurlencode($key).'.json',
+    public function update_custom_field($key, $custom_field_details)
+    {
+        return $this->put_request($this->_lists_base_route . 'customfields/' . rawurlencode($key) . '.json',
             $custom_field_details);
     }
 
     /**
      * Updates the optios for the given multi-optioned custom field
      * @param string $key The personalisation tag of the field to update
-     * @param array<string> $new_options The set of options to add to the custom field
+     * @param array $new_options The set of options to add to the custom field
      * @param boolean $keep_existing Whether to remove any existing options not contained in $new_options
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    function update_field_options($key, $new_options, $keep_existing) {
+    public function update_field_options($key, $new_options, $keep_existing)
+    {
         $options = array(
             'KeepExistingOptions' => $keep_existing,
             'Options' => $new_options
         );
 
-        return $this->put_request($this->_lists_base_route.'customfields/'.rawurlencode($key).'/options.json',
+        return $this->put_request($this->_lists_base_route . 'customfields/' . rawurlencode($key) . '/options.json',
             $options);
     }
 
     /**
      * Deletes an existing list from the system
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    function delete() {
-        return $this->delete_request(trim($this->_lists_base_route, '/').'.json');
+    public function delete()
+    {
+        return $this->delete_request(trim($this->_lists_base_route, '/') . '.json');
     }
 
     /**
      * Deletes an existing custom field from the system
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @param string $key
+     * @return Result A successful response will be empty
      */
-    function delete_custom_field($key) {
-        return $this->delete_request($this->_lists_base_route.'customfields/'.rawurlencode($key).'.json');
+    public function delete_custom_field($key)
+    {
+        return $this->delete_request($this->_lists_base_route . 'customfields/' . rawurlencode($key) . '.json');
     }
 
     /**
      * Gets a list of all custom fields defined for the current list
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * array(
      *     {
      *         'FieldName' => The name of the custom field
@@ -229,14 +231,14 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_custom_fields() {
-        return $this->get_request($this->_lists_base_route.'customfields.json');
+    public function get_custom_fields()
+    {
+        return $this->get_request($this->_lists_base_route . 'customfields.json');
     }
 
     /**
      * Gets a list of all segments defined for the current list
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * array(
      *     {
      *         'ListID' => The current list id
@@ -245,8 +247,9 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_segments() {
-        return $this->get_request($this->_lists_base_route.'segments.json');
+    public function get_segments()
+    {
+        return $this->get_request($this->_lists_base_route . 'segments.json');
     }
 
     /**
@@ -256,8 +259,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -282,10 +284,11 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_active_subscribers($added_since = '', $page_number = NULL,
-        $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+    public function get_active_subscribers($added_since = '', $page_number = null,
+                                    $page_size = null, $order_field = null, $order_direction = null)
+    {
 
-        return $this->get_request_paged($this->_lists_base_route.'active.json?date='.urlencode($added_since),
+        return $this->get_request_paged($this->_lists_base_route . 'active.json?date=' . urlencode($added_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -296,8 +299,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -322,22 +324,22 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_unconfirmed_subscribers($added_since = '', $page_number = NULL,
-        $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+    public function get_unconfirmed_subscribers($added_since = '', $page_number = null,
+                                         $page_size = null, $order_field = null, $order_direction = null)
+    {
 
-        return $this->get_request_paged($this->_lists_base_route.'unconfirmed.json?date='.urlencode($added_since),
+        return $this->get_request_paged($this->_lists_base_route . 'unconfirmed.json?date=' . urlencode($added_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
     /**
      * Gets all bounced subscribers who have bounced out since the given date
-     * @param string $added_since The date to start getting subscribers from
+     * @param string $bounced_since The date to start getting subscribers from
      * @param int $page_number The page number to get
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -362,22 +364,22 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_bounced_subscribers($bounced_since = '', $page_number = NULL,
-        $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+    public function get_bounced_subscribers($bounced_since = '', $page_number = null,
+                                     $page_size = null, $order_field = null, $order_direction = null)
+    {
 
-        return $this->get_request_paged($this->_lists_base_route.'bounced.json?date='.urlencode($bounced_since),
+        return $this->get_request_paged($this->_lists_base_route . 'bounced.json?date=' . urlencode($bounced_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
     /**
      * Gets all unsubscribed subscribers who have unsubscribed since the given date
-     * @param string $added_since The date to start getting subscribers from
+     * @param string $unsubscribed_since The date to start getting subscribers from
      * @param int $page_number The page number to get
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -402,10 +404,11 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_unsubscribed_subscribers($unsubscribed_since = '', $page_number = NULL,
-        $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+    public function get_unsubscribed_subscribers($unsubscribed_since = '', $page_number = null,
+                                          $page_size = null, $order_field = null, $order_direction = null)
+    {
 
-        return $this->get_request_paged($this->_lists_base_route.'unsubscribed.json?date='.urlencode($unsubscribed_since),
+        return $this->get_request_paged($this->_lists_base_route . 'unsubscribed.json?date=' . urlencode($unsubscribed_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
@@ -416,8 +419,7 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      * @param int $page_size The number of records per page
      * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
      * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ResultsOrderedBy' => The field the results are ordered by
      *     'OrderDirection' => The order direction
@@ -442,17 +444,17 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     )
      * }
      */
-    function get_deleted_subscribers($deleted_since = '', $page_number = NULL,
-        $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+    public function get_deleted_subscribers($deleted_since = '', $page_number = null,
+                                     $page_size = null, $order_field = null, $order_direction = null)
+    {
 
-        return $this->get_request_paged($this->_lists_base_route.'deleted.json?date='.urlencode($deleted_since),
+        return $this->get_request_paged($this->_lists_base_route . 'deleted.json?date=' . urlencode($deleted_since),
             $page_number, $page_size, $order_field, $order_direction);
     }
 
     /**
      * Gets the basic details of the current list
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'ListID' => The id of the list
      *     'Title' => The title of the list
@@ -465,14 +467,14 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *         CS_REST_LIST_UNSUBSCRIBE_SETTING_ONLY_THIS_LIST.
      * }
      */
-    function get() {
-        return $this->get_request(trim($this->_lists_base_route, '/').'.json');
+    public function get()
+    {
+        return $this->get_request(trim($this->_lists_base_route, '/') . '.json');
     }
 
     /**
      * Gets statistics for list subscriptions, deletions, bounces and unsubscriptions
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * {
      *     'TotalActiveSubscribers'
      *     'NewActiveSubscribersToday'
@@ -500,14 +502,14 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     'BouncesThisYear'
      * }
      */
-    function get_stats() {
-        return $this->get_request($this->_lists_base_route.'stats.json');
+    public function get_stats()
+    {
+        return $this->get_request($this->_lists_base_route . 'stats.json');
     }
 
     /**
      * Gets the webhooks which are currently subcribed to event on this list
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+     * @return Result A successful response will be an object of the form
      * array(
      *     {
      *         'WebhookID' => The if of
@@ -518,8 +520,9 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *     }
      * )
      */
-    function get_webhooks() {
-        return $this->get_request($this->_lists_base_route.'webhooks.json');
+    public function get_webhooks()
+    {
+        return $this->get_request($this->_lists_base_route . 'webhooks.json');
     }
 
     /**
@@ -537,50 +540,50 @@ class CS_REST_Lists extends CS_REST_Wrapper_Base {
      *             CS_REST_WEBHOOK_FORMAT_XML
      *         (xml or json)
      *     )
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be the ID of the newly created webhook
+     * @return Result A successful response will be the ID of the newly created webhook
      */
-    function create_webhook($webhook) {
-        return $this->post_request($this->_lists_base_route.'webhooks.json', $webhook);
+    public function create_webhook($webhook)
+    {
+        return $this->post_request($this->_lists_base_route . 'webhooks.json', $webhook);
     }
 
     /**
      * Sends test events for the given webhook id
      * @param string $webhook_id The id of the webhook to test
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty.
+     * @return Result A successful response will be empty.
      */
-    function test_webhook($webhook_id) {
-        return $this->get_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/test.json');
+    public function test_webhook($webhook_id)
+    {
+        return $this->get_request($this->_lists_base_route . 'webhooks/' . $webhook_id . '/test.json');
     }
 
     /**
      * Deletes an existing webhook from the system
      * @param string $webhook_id The id of the webhook to delete
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    function delete_webhook($webhook_id) {
-        return $this->delete_request($this->_lists_base_route.'webhooks/'.$webhook_id.'.json');
+    public function delete_webhook($webhook_id)
+    {
+        return $this->delete_request($this->_lists_base_route . 'webhooks/' . $webhook_id . '.json');
     }
 
     /**
      * Activates an existing deactivated webhook
      * @param string $webhook_id The id of the webhook to activate
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    function activate_webhook($webhook_id) {
-        return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/activate.json', '');
+    public function activate_webhook($webhook_id)
+    {
+        return $this->put_request($this->_lists_base_route . 'webhooks/' . $webhook_id . '/activate.json', '');
     }
 
     /**
      * Deactivates an existing activated webhook
      * @param string $webhook_id The id of the webhook to deactivate
-     * @access public
-     * @return CS_REST_Wrapper_Result A successful response will be empty
+     * @return Result A successful response will be empty
      */
-    function deactivate_webhook($webhook_id) {
-        return $this->put_request($this->_lists_base_route.'webhooks/'.$webhook_id.'/deactivate.json', '');
+    public function deactivate_webhook($webhook_id)
+    {
+        return $this->put_request($this->_lists_base_route . 'webhooks/' . $webhook_id . '/deactivate.json', '');
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-require_once '../../csrest_general.php';
+use CreateSend\Wrapper\General;
 
 $client_id = 8998879;
 $client_secret = 'iou0q9wud0q9wd0q9wid0q9iwd0q9wid0q9wdqwd';
 $redirect_uri = 'http://example.com/auth';
 $code = 'd92id09iwdwqw';
 
-$result = CS_REST_General::exchange_token($client_id, $client_secret, $redirect_uri, $code);
+$result = General::exchange_token($client_id, $client_secret, $redirect_uri, $code);
 
 if($result->was_successful()) {
     $access_token = $result->response->access_token;

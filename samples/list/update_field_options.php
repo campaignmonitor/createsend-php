@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_lists.php';
+use CreateSend\Wrapper\Lists;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Lists('List ID', $auth);
+$wrap = new Lists('List ID', $auth);
 
 $result = $wrap->update_field_options('[CustomFieldKey]', 
     array('Option 1', 'Option 2'), true);

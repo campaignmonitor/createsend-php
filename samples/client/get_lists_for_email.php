@@ -1,13 +1,11 @@
 <?php
 
-require_once '../../csrest_clients.php';
+use CreateSend\Wrapper\Clients;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Clients(
-    'ClientID to get Lists for',
-    $auth);
+$wrap = new Clients('ClientID to get Lists for', $auth);
 
 $email_address = 'your_email_address@example.com';
 

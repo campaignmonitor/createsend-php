@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_campaigns.php';
+use CreateSend\Wrapper\Campaigns;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Campaigns(NULL, $auth);
+$wrap = new Campaigns(null, $auth);
 
 $result = $wrap->create('Campaigns Client ID', array(
     'Subject' => 'Campaign Subject',

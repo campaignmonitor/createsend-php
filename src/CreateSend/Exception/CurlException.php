@@ -1,5 +1,7 @@
 <?php
 
+namespace CreateSend\Exception;
+
 class CurlException extends \RuntimeException
 {
     public function __construct($curlMessage, $errorCode)
