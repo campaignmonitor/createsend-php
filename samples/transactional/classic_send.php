@@ -1,8 +1,9 @@
 <?php
-require_once "../../csrest_transactional_classicemail.php";
+
+use CreateSend\Wrapper\Transactional\ClassicEmail;
 
 $auth = array("api_key" => "Your API Key");
-$wrap = new CS_REST_Transactional_ClassicEmail($auth, NULL);
+$wrap = new ClassicEmail($auth);
 
 echo "\nSending a simple message...\n";
 

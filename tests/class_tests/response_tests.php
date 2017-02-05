@@ -1,17 +1,26 @@
 <?php
 
+use CreateSend\Serializer\SerializerInterface;
+use CreateSend\Serializer\ServicesJson;
+use CreateSend\Serializer\NativeJson;
+
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/../../vendor/lastcraft/simpletest/autorun.php';
-require_once '../class/serialisation.php';
-require_once '../class/log.php';
 
-@Mock::generate('CS_REST_Log');
+@Mock::generate('CreateSend\Log\Log');
 
 class CS_REST_TestResponseDeserialisation extends UnitTestCase {
-    var $responses;
-    var $deserialiser;
+    /**
+     * @var array
+     */
+    public $responses;
 
-    function setUp() {
+    /**
+     * @var SerializerInterface
+     */
+    public $deserialiser;
+
+    public function setUp() {
     	$util_responses = array(
     			'clients' => array(
     					array(
@@ -893,7 +902,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     }
 
     
-    function do_test_response_deserialisation() {
+    public function do_test_response_deserialisation() {
     	if(!is_null($this->deserialiser)) {
     		$response_dir = 'responses/';
     		foreach ($this->responses as $k => $v) {
@@ -908,21 +917,21 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     	}
     }
 
-    function test_services_json_serializer() {
-        $log = new MockCS_REST_Log($this);
-        $this->deserialiser = new CS_REST_ServicesJsonSerialiser($log);
+    public function test_services_json_serializer() {
+        $log = new MockCS_REST_Log_Log($this);
+        $this->deserialiser = new ServicesJson($log);
         $this->do_test_response_deserialisation();
     }
 
-    function test_services_native_serializer() {
+    public function test_services_native_serializer() {
         if(function_exists('json_decode') && function_exists('json_encode')):
-            $log = new MockCS_REST_Log($this);
-            $this->deserialiser = new CS_REST_NativeJsonSerialiser($log);
+            $log = new MockCS_REST_Log_Log($this);
+            $this->deserialiser = new NativeJson($log);
             $this->do_test_response_deserialisation();
         endif;
     }
     
-    function assert_identical_ignoring_type($object, $expected, $message) {
+    public function assert_identical_ignoring_type($object, $expected, $message) {
         if(is_array($expected)) {
             if(isset($expected[0])) {
                 $this->assertIsA($object, 'array', $message.' Item is not an array');

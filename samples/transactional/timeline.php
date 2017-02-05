@@ -1,8 +1,10 @@
 <?php
-require_once "../../csrest_transactional_timeline.php";
+
+use CreateSend\Log\Log;
+use CreateSend\Wrapper\Transactional\Timeline;
 
 $auth = array("api_key" => "Your API Key");
-$wrap = new CS_REST_Transactional_Timeline($auth);
+$wrap = new Timeline($auth, new Log());
 
 
 echo "\nGetting the statistics with the default parameters...\n";
@@ -42,8 +44,8 @@ echo "\nGetting the most recent messages for a smart email, with all the options
 $result = $wrap->messages(array(
   "status" => 'all',
   "count" => 200,
-  "sentBeforeID" => NULL, # message ID
-  "sentAfterID" => NULL, # message ID
+  "sentBeforeID" => null, # message ID
+  "sentAfterID" => null, # message ID
   "smartEmailID" => '94b2a1a5-6754-416b-a87f-1edb81c460a2',
 ));
 $last_message_id = $result->response[0]->MessageID;
@@ -55,8 +57,8 @@ echo "\nGetting the most recent messages for a classic email, with all the optio
 $result = $wrap->messages(array(
   "status" => 'all',
   "count" => 200,
-  "sentBeforeID" => NULL, # message ID
-  "sentAfterID" => NULL, # message ID
+  "sentBeforeID" => null, # message ID
+  "sentAfterID" => null, # message ID
   "group" => 'PHP test group',
 ));
 $last_message_id = $result->response[0]->MessageID;

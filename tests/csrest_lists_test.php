@@ -1,33 +1,36 @@
 <?php
 
+use CreateSend\Wrapper\Lists;
+use CreateSend\Wrapper\Result;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
-@Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_NativeJsonSerialiser');
-@Mock::generate('CS_REST_CurlTransport');
+@Mock::generate('CreateSend\CS_REST_Log');
+@Mock::generate('CreateSend\Serializer\CS_REST_NativeJsonSerialiser');
+@Mock::generate('CreateSend\Transport\CS_REST_CurlTransport');
 
 class CS_REST_ApiKeyTestLists extends CS_REST_TestLists {
-    var $auth = array('api_key' => 'not a real api key');
+    public $auth = array('api_key' => 'not a real api key');
 }
 
 class CS_REST_OAuthTestLists extends CS_REST_TestLists {
-    var $auth = array(
+    public $auth = array(
         'access_token' => '7y872y3872i3eh',
         'refresh_token' => 'kjw8qjd9ow8jo');
 }
 
 abstract class CS_REST_TestLists extends CS_REST_TestBase {
-    var $list_id = 'not a real list id';
-    var $list_base_route;
+    public $list_id = 'not a real list id';
+    public $list_base_route;
 
-    function set_up_inner() {
+    public function set_up_inner() {
         $this->list_base_route = $this->base_route.'lists/'.$this->list_id.'/';
-        $this->wrapper = new CS_REST_Lists($this->list_id, $this->auth, $this->protocol, $this->log_level,
+        $this->wrapper = new Lists($this->list_id, $this->auth, $this->protocol,
         $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
-    function testcreate_without_unsubscribe_setting() {
+    public function testcreate_without_unsubscribe_setting() {
         $raw_result = 'the new list id';
         $client_id = 'not a real client id';
         $response_code = 200;
@@ -44,7 +47,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $call_options['data'] = 'list info was serialised to this';
         $this->setup_transport_and_serialisation($transport_result, $call_options,
@@ -55,7 +58,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testcreate_with_unsubscribe_setting() {
+    public function testcreate_with_unsubscribe_setting() {
         $raw_result = 'the new list id';
         $client_id = 'not a real client id';
         $response_code = 200;
@@ -73,7 +76,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $call_options['data'] = 'list info was serialised to this';
         $this->setup_transport_and_serialisation($transport_result, $call_options,
@@ -84,7 +87,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testupdate_without_unsubscribe_setting() {
+    public function testupdate_without_unsubscribe_setting() {
         $raw_result = '';
 
         $call_options = $this->get_call_options(trim($this->list_base_route, '/').'.json', 'PUT');
@@ -98,7 +101,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             $raw_result, $raw_result, 'list info was serialised to this');
     }
 
-    function testupdate_with_unsubscribe_setting() {
+    public function testupdate_with_unsubscribe_setting() {
         $raw_result = '';
 
         $call_options = $this->get_call_options(trim($this->list_base_route, '/').'.json', 'PUT');
@@ -113,7 +116,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             $raw_result, $raw_result, 'list info was serialised to this');
     }
 
-    function testupdate_with_unsubscribe_setting_and_supp_list_options() {
+    public function testupdate_with_unsubscribe_setting_and_supp_list_options() {
         $raw_result = '';
 
         $call_options = $this->get_call_options(trim($this->list_base_route, '/').'.json', 'PUT');
@@ -130,7 +133,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             $raw_result, $raw_result, 'list info was serialised to this');
     }
 
-    function testcreate_custom_field() {
+    public function testcreate_custom_field() {
         $raw_result = '';
 
         $call_options = $this->get_call_options($this->list_base_route.'customfields.json', 'POST');
@@ -144,7 +147,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $raw_result, $raw_result, 'custom field was serialised to this');
     }
 
-    function testupdate_custom_field() {
+    public function testupdate_custom_field() {
         $raw_result = '';
         $field_key = 'not a real custom field';
         $response_code = 200;
@@ -164,7 +167,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
 
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $call_options['data'] = 'options were serialised to this';
         $this->setup_transport_and_serialisation($transport_result, $call_options,
@@ -175,7 +178,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testupdate_field_options() {
+    public function testupdate_field_options() {
         $raw_result = '';
         $field_key = 'not a real custom field';
         $response_code = 200;
@@ -196,7 +199,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $call_options['data'] = 'options were serialised to this';
         $this->setup_transport_and_serialisation($transport_result, $call_options,
@@ -207,7 +210,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testdelete() {
+    public function testdelete() {
         $raw_result = '';
 
         $call_options = $this->get_call_options(trim($this->list_base_route, '/').'.json', 'DELETE');
@@ -215,7 +218,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test('delete', $call_options, $raw_result, $raw_result);
     }
 
-    function testdelete_custom_field() {
+    public function testdelete_custom_field() {
         $raw_result = '';
         $response_code = 200;
         $key = 'custom field key';
@@ -228,17 +231,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $raw_result, $raw_result, NULL, NULL, $response_code);
+            $raw_result, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->delete_custom_field($key);
 
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_custom_fields() {
+    public function testget_custom_fields() {
         $raw_result = 'some custom fields';
         $deserialised = array('Custom Field 1', 'Custom Field 2');
         $call_options = $this->get_call_options($this->list_base_route.'customfields.json');
@@ -246,7 +249,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test('get_custom_fields', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_segments() {
+    public function testget_segments() {
         $raw_result = 'some segments';
         $deserialised = array('Segment 1', 'Segment 2');
         $call_options = $this->get_call_options($this->list_base_route.'segments.json');
@@ -254,7 +257,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test('get_segments', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_active() {
+    public function testget_active() {
         $raw_result = 'some subscribers';
         $since = '2020';
         $response_code = 200;
@@ -266,17 +269,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_active_subscribers($since);
 
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_unconfirmed_subscribers() {
+    public function testget_unconfirmed_subscribers() {
         $raw_result = 'some subscribers';
         $since = '2020';
         $response_code = 200;
@@ -288,17 +291,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_unconfirmed_subscribers($since);
 
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_bounced() {
+    public function testget_bounced() {
         $raw_result = 'some subscribers';
         $since = '2020';
         $response_code = 200;
@@ -310,17 +313,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_bounced_subscribers($since);
 
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget_unsubscribed() {
+    public function testget_unsubscribed() {
         $raw_result = 'some subscribers';
         $since = '2020';
         $response_code = 200;
@@ -332,17 +335,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_unsubscribed_subscribers($since);
 
         $this->assertIdentical($expected_result, $result);
     }
 	
-	function testget_deleted() {
+	public function testget_deleted() {
         $raw_result = 'some subscribers';
         $since = '2020';
         $response_code = 200;
@@ -354,17 +357,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get_deleted_subscribers($since);
 
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget() {
+    public function testget() {
         $raw_result = 'list details';
         $deserialised = array(1,23,4,5,6,7);
         $call_options = $this->get_call_options(trim($this->list_base_route, '/').'.json');
@@ -372,7 +375,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test('get', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_stats() {
+    public function testget_stats() {
         $raw_result = 'list stats';
         $deserialised = array(1,23,4,5,6,7);
         $call_options = $this->get_call_options($this->list_base_route.'stats.json');
@@ -380,7 +383,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test('get_stats', $call_options, $raw_result, $deserialised);
     }
 
-    function testget_webhooks() {
+    public function testget_webhooks() {
         $raw_result = 'list webhooks';
         $deserialised = array(1,23,4,5,6,7);
         $call_options = $this->get_call_options($this->list_base_route.'webhooks.json');
@@ -388,7 +391,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->general_test('get_webhooks', $call_options, $raw_result, $deserialised);
     }
 
-    function testcreate_webhook() {
+    public function testcreate_webhook() {
         $raw_result = '';
 
         $call_options = $this->get_call_options($this->list_base_route.'webhooks.json', 'POST');
@@ -402,17 +405,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $raw_result, $raw_result, 'webhook was serialised to this');
     }
 
-    function testtest_webhook() {
+    public function testtest_webhook() {
         $raw_result = '';
 
         $webhook_id = 'not a real id';
         $call_options = $this->get_call_options($this->list_base_route.'webhooks/'.$webhook_id.'/test.json');
 
         $this->general_test_with_argument('test_webhook', $webhook_id, $call_options,
-            $raw_result, $raw_result, NULL);
+            $raw_result, $raw_result, null);
     }
 
-    function testdelete_webhook() {
+    public function testdelete_webhook() {
         $raw_result = '';
         $response_code = 200;
         $webhook_id = 'not a webhook id';
@@ -425,17 +428,17 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $raw_result, $raw_result, NULL, NULL, $response_code);
+            $raw_result, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->delete_webhook($webhook_id);
 
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testactivate_webhook() {
+    public function testactivate_webhook() {
         $raw_result = '';
         $response_code = 200;
         $webhook_id = 'not a webhook id';
@@ -449,7 +452,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, '', '', $response_code);
@@ -459,7 +462,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testdeeeeactivate_webhook() {
+    public function testdeeeeactivate_webhook() {
         $raw_result = '';
         $response_code = 200;
         $webhook_id = 'not a webhook id';
@@ -473,7 +476,7 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, '', '', $response_code);

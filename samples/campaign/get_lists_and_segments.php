@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_campaigns.php';
+use CreateSend\Wrapper\Campaigns;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Campaigns('Campaign ID to get lists for', $auth);
+$wrap = new Campaigns('Campaign ID to get lists for', $auth);
 $result = $wrap->get_lists_and_segments();
 
 echo "Result of GET /api/v3.1/campaigns/{id}/listsandsegments\n<br />";

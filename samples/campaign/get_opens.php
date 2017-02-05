@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_campaigns.php';
+use CreateSend\Wrapper\Campaigns;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Campaigns('Campaign ID to get opens for', $auth);
+$wrap = new Campaigns('Campaign ID to get opens for', $auth);
 $result = $wrap->get_opens('Get opens since', 1, 50, 'email', 'asc');
 //$result = $wrap->get_opens(date('Y-m-d', strtotime('-30 days')), page, page size, order field, order direction);
 

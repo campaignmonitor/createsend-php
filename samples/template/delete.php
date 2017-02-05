@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_templates.php';
+use CreateSend\Wrapper\Templates;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Templates('Template ID', $auth);
+$wrap = new Templates('Template ID', $auth);
 
 $result = $wrap->delete();
 

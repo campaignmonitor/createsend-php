@@ -1,11 +1,11 @@
 <?php
 
-require_once '../csrest_general.php';
+use CreateSend\Wrapper\General;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_General($auth);
+$wrap = new General($auth);
 
 $result = $wrap->external_session_url(array(
     'Email' => 'The email address of the Campaign Monitor user for whom the login session should be created',

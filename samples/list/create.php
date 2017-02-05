@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_lists.php';
+use CreateSend\Wrapper\Lists;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Lists(NULL, $auth);
+$wrap = new Lists(null, $auth);
 
 $result = $wrap->create('Lists Client ID', array(
     'Title' => 'List Title',

@@ -1,8 +1,9 @@
 <?php
-require_once "../../csrest_transactional_classicemail.php";
+
+use CreateSend\Wrapper\Transactional\ClassicEmail;
 
 $auth = array("api_key" => "Your API Key");
-$wrap = new CS_REST_Transactional_ClassicEmail($auth);
+$wrap = new ClassicEmail($auth);
 
 echo "Get the list of classic groups...\n";
 $result = $wrap->groups();

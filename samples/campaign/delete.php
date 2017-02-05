@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_campaigns.php';
+use CreateSend\Wrapper\Campaigns;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Campaigns('Campaign ID to Delete', $auth);
+$wrap = new Campaigns('Campaign ID to Delete', $auth);
 $result = $wrap->delete();
 
 echo "Result of DELETE /api/v3.1/campaigns/{id}\n<br />";

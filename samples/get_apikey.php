@@ -1,8 +1,8 @@
 <?php
 
-require_once '../csrest_general.php';
+use CreateSend\Wrapper\General;
 
-$wrap = new CS_REST_General(NULL);
+$wrap = new General(null);
 
 $result = $wrap->get_apikey('Your username', 'Your password', 'account.test.createsend.com');
 

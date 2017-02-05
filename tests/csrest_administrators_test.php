@@ -1,32 +1,35 @@
 <?php
 
+use CreateSend\Wrapper\Administrators;
+use CreateSend\Wrapper\Result;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
 
-@Mock::generate('CS_REST_Log');
-@Mock::generate('CS_REST_NativeJsonSerialiser');
-@Mock::generate('CS_REST_CurlTransport');
+@Mock::generate('CreateSend\CS_REST_Log');
+@Mock::generate('CreateSend\Serializer\CS_REST_NativeJsonSerialiser');
+@Mock::generate('CreateSend\Transport\CS_REST_CurlTransport');
 
 class CS_REST_ApiKeyTestAdministrator extends CS_REST_TestAdministrator {
-    var $auth = array('api_key' => 'not a real api key');
+    public $auth = array('api_key' => 'not a real api key');
 }
 
 class CS_REST_OAuthTestAdministrator extends CS_REST_TestAdministrator {
-    var $auth = array(
+    public $auth = array(
         'access_token' => '7y872y3872i3eh',
         'refresh_token' => 'kjw8qjd9ow8jo');
 }
 
 abstract class CS_REST_TestAdministrator extends CS_REST_TestBase {
-    var $admins_base_route;
+    public $admins_base_route;
 
-    function set_up_inner() {
+    public function set_up_inner() {
         $this->admins_base_route = $this->base_route.'admins';
-        $this->wrapper = new CS_REST_Administrators($this->auth, $this->protocol, $this->log_level,
-        $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = new Administrators($this->auth, $this->protocol,
+            $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
     }
 
-    function testadd() {
+    public function testadd() {
         $raw_result = '';
 
         $call_options = $this->get_call_options($this->admins_base_route.'.json', 'POST');
@@ -40,11 +43,12 @@ abstract class CS_REST_TestAdministrator extends CS_REST_TestBase {
 			$raw_result, $raw_result, 'administrator was serialised to this');
     }
 
-    function testupdate() {
+    public function testupdate() {
         $raw_result = '';
         $email = 'test@test.com';
-		$serialised_admin = 'subscriber data';
-		
+        $response_code = 200;
+        $serialised_admin = 'subscriber data';
+
         $call_options = $this->get_call_options(
             $this->admins_base_route.'.json?email='.urlencode($email), 'PUT');
 
@@ -54,23 +58,23 @@ abstract class CS_REST_TestAdministrator extends CS_REST_TestBase {
         );
 
         $transport_result = array (
-            'code' => 200, 
+            'code' => $response_code,
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, 200);
+        $expected_result = new Result($raw_result, $response_code);
         $call_options['data'] = $serialised_admin;
         
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, $serialised_admin, 
-            $admin, 200);
+            $admin, $response_code);
 
         $result = $this->wrapper->update($email, $admin);
          
         $this->assertIdentical($expected_result, $result);
     }
 
-    function testget() {
+    public function testget() {
         $raw_result = 'administrator details';
         $deserialised = array(1,2,34,5);
         $response_code = 200;
@@ -84,10 +88,10 @@ abstract class CS_REST_TestAdministrator extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+        $expected_result = new Result($deserialised, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-            $deserialised, $raw_result, NULL, NULL, $response_code);
+            $deserialised, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->get($email);
 
@@ -95,7 +99,7 @@ abstract class CS_REST_TestAdministrator extends CS_REST_TestBase {
     }
 
 
-    function testdelete() {
+    public function testdelete() {
         $raw_result = '';
         $response_code = 200;
         $email = 'test@test.com';
@@ -107,10 +111,10 @@ abstract class CS_REST_TestAdministrator extends CS_REST_TestBase {
             'response' => $raw_result
         );
         
-        $expected_result = new CS_REST_Wrapper_Result($raw_result, $response_code);
+        $expected_result = new Result($raw_result, $response_code);
 
         $this->setup_transport_and_serialisation($transport_result, $call_options,
-        $raw_result, $raw_result, NULL, NULL, $response_code);
+        $raw_result, $raw_result, null, null, $response_code);
 
         $result = $this->wrapper->delete($email);
 

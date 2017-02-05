@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_clients.php';
+use CreateSend\Wrapper\Clients;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Clients(NULL, $auth);
+$wrap = new Clients(null, $auth);
 
 $result = $wrap->create(array(
     'CompanyName' => 'Clients company name',

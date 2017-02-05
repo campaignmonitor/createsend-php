@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_segments.php';
+use CreateSend\Wrapper\Segments;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Segments(NULL, $auth);
+$wrap = new Segments(null, $auth);
 
 $result = $wrap->create('Segments List ID', array(
     'Title' => 'Segment Title',

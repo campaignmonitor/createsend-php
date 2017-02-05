@@ -90,13 +90,13 @@
   * The Add Rule call is now Add Rule Group, taking a `ruleGroup` argument instead of a `rule` argument.
 
     ```php
-    function CS_REST_Segments->add_rulegroup($rulegroup)
+    function CreateSend\CS_REST_Segments->add_rulegroup($rulegroup)
     ```
 
     So for example, when you _previously_ would have added a rule like so:
 
     ```php
-    $wrap = new CS_REST_Segments('Segment ID', $auth);
+    $wrap = new CreateSend\CS_REST_Segments('Segment ID', $auth);
 	$result = $wrap->add_rule(array(
 	    'Subject' => 'EmailAddress',
 	    'Clauses' => array('CONTAINS example.com')
@@ -106,7 +106,7 @@
     You would _now_ do this:
 
     ```php
-	$wrap = new CS_REST_Segments('Segment ID', $auth);
+	$wrap = new CreateSend\CS_REST_Segments('Segment ID', $auth);
 	$result = $wrap->add_rulegroup(array(
 	    'Rules' => array(
 	        array(
@@ -137,19 +137,19 @@
 ## v3.0.0 - 25 Mar, 2013
 
 * Added support for authenticating using OAuth. See the [README](README.md#authenticating) for full usage instructions.
-  * This introduces some changes to how you authenticate using this library. You now authenticate by passing an `$auth` array as the first argument when creating instances of any classes which inherit from the `CS_REST_Wrapper_Base` class.
+  * This introduces some changes to how you authenticate using this library. You now authenticate by passing an `$auth` array as the first argument when creating instances of any classes which inherit from the `CreateSend\Wrapper\Base` class.
 
       So in existing code, when you _previously_ would have authenticated using an API key as follows:
 
       ```php
-      $wrap = new CS_REST_General('Your API Key');
+      $wrap = new CreateSend\CS_REST_General('Your API Key');
       $result = $wrap->get_clients();
       ```
 
       If you want to authenticate using an API key, you should _now_ do this:
 
       ```php
-      $wrap = new CS_REST_General(array('api_key' => 'Your API Key'));
+      $wrap = new CreateSend\CS_REST_General(array('api_key' => 'Your API Key'));
       $result = $wrap->get_clients();
       ```
 
@@ -175,7 +175,7 @@ drafts, scheduled, and sent campaigns.
 
 ## v2.4.0 - 5 Nov, 2012
 
-* Added CS_REST_Campaigns.get_email_client_usage().
+* Added CreateSend\CS_REST_Campaigns.get_email_client_usage().
 * Added support for ReadsEmailWith field on subscriber objects.
 * Added support for retrieving unconfirmed subscribers for a list.
 * Added support for suppressing email addresses.
@@ -227,7 +227,7 @@ http://curl.haxx.se/docs/caextract.html
 
 ## v2.0.0 - 23 Aug, 2012
 
-* Removing deprecated method CS_REST_Clients.set_access().
+* Removing deprecated method CreateSend\CS_REST_Clients.set_access().
 * Removed traces of calling the API in a deprecated manner.
 
 ## v1.2.0 - 22 Aug, 2012

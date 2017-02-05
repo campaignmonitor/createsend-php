@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_campaigns.php';
+use CreateSend\Wrapper\Campaigns;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Campaigns('Campaign ID to Send', $auth);
+$wrap = new Campaigns('Campaign ID to Send', $auth);
 
 $result = $wrap->send(array(
     'ConfirmationEmail' => 'Confirmation Email Address',

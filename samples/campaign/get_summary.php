@@ -1,11 +1,11 @@
 <?php
 
-require_once '../../csrest_campaigns.php';
+use CreateSend\Wrapper\Campaigns;
 
 $auth = array(
     'access_token' => 'your access token',
     'refresh_token' => 'your refresh token');
-$wrap = new CS_REST_Campaigns('Campaign ID to get the summary of', $auth);
+$wrap = new Campaigns('Campaign ID to get the summary of', $auth);
 $result = $wrap->get_summary();
 
 echo "Result of GET /api/v3.1/campaigns/{id}/summary\n<br />";
