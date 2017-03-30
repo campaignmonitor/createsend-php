@@ -64,12 +64,8 @@ if (!class_exists('CS_REST_Events')) {
 
         /**
          * Tracks an event
-         * @param array $contact The details of the template
-         *     This should be an array of the form
-         *         array(
-         *             'ContactID' => array(
-         *                   'Email' => string required email in the form "user@example.com"
-         *         )
+         * @param string $email required email in the form "user@example.com"
+         * 
          * @param string $event_type. Name to group events by for reporting
          *    For example "Page View", "Order confirmation"
          * @param array $data optional. Event payload.
@@ -88,9 +84,9 @@ if (!class_exists('CS_REST_Events')) {
          *          )
          *      )
          */
-        function track($contact, $event_type, $data = NULL) {
-            if (!is_array($contact)) {
-                trigger_error('$contact needs to be set in and a valid array');
+        function track($email, $event_type, $data = NULL) {
+            if (!isset($email)) {
+                trigger_error('$email needs to be set in and a valid array');
 			    exit;
             }
             if (!isset($event_type)) {
@@ -101,8 +97,8 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$data needs to be a valid array');
 			    exit;
             } 
-            $data = array_merge($contact, $event_type, $data);
-            return $this->post_request($this->_events_base_route. 'track', $data);
+            $payload = array_merge(array('ContactID' => array('Email' => $email)), array('Name' => $event_type), array('Data' => $data));
+            return $this->post_request($this->_events_base_route. 'track', $payload);
         }
     }
 }
