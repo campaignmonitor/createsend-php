@@ -24,6 +24,7 @@
             "csrest_campaigns.php",
             "csrest_clients.php",
             "csrest_general.php",
+            "csrest_events.php",
             "csrest_lists.php",
             "csrest_people.php",
             "csrest_segments.php",
