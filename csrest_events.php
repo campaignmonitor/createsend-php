@@ -20,7 +20,7 @@ if (!class_exists('CS_REST_Events')) {
         /**
          * Constructor.
          * @param $client_id string The client id to send email on behalf of
-         *        Optional if using a client api key
+         * 
          * @param $auth_details array Authentication details to use for API calls.
          *        This array must take one of the following forms:
          *        If using OAuth to authenticate:
@@ -68,19 +68,22 @@ if (!class_exists('CS_REST_Events')) {
          * 
          * @param string $event_type. Name to group events by for reporting
          *    For example "Page View", "Order confirmation"
+         *
          * @param array $data optional. Event payload.
-         *      This should be an array, each property is optionals
+         *      This should be an array, with details of the event
          *          array(
-         *            RandomFieldName  => whether to track opens, defaults to true
-         *            RandomFieldURL => whether to track clicks, defaults to true
-         *            InlineCSS   => whether inline CSS, defaults to true
-         *            RandomArray => ID of a list to add all recipeints to
+         *              'RandomFieldObject''  => array(
+         *                                      'Example'' => 'test'
+         *                                  ),
+         *              'RandomFieldURL' => 'Example',
+         *              'RandomArray' => array(1,3,5,6,7),
          *          )
+         *
          * @access public
-         * @return CS_REST_Wrapper_Result A successful response will be the include the details of the action, including a Event ID.
+         * @return CS_REST_Wrapper_Result A successful response will include a Event ID.
          *      array(
          *          array(
-         *              "EventID" => string
+         *              'EventID' => 'string'
          *          )
          *      )
          */
