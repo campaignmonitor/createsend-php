@@ -100,7 +100,7 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$data needs to be a valid array');
 			    exit;
             } 
-            $payload = array_merge(array('ContactID' => array('Email' => $email)), array('Name' => $event_type), array('Data' => $data));
+            $payload = array_merge(array('ContactID' => array('Email' => $email)), array('EventType' => $event_type), array('Data' => $data));
             return $this->post_request($this->_events_base_route. 'track', $payload);
         }
     }
