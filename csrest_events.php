@@ -19,8 +19,7 @@ if (!class_exists('CS_REST_Events')) {
 
         /**
          * Constructor.
-         * @param $client_id string The client id to send email on behalf of
-         * 
+         *
          * @param $auth_details array Authentication details to use for API calls.
          *        This array must take one of the following forms:
          *        If using OAuth to authenticate:
@@ -30,6 +29,7 @@ if (!class_exists('CS_REST_Events')) {
          *
          *        Or if using an API key:
          *        array('api_key' => 'your api key')
+         * @param $client_id string The client id to send event to
          * @param $protocol string The protocol to use for requests (http|https)
          * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
          * @param $host string The host to send API requests to. There is no need to change this
