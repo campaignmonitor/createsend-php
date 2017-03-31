@@ -92,15 +92,19 @@ if (!class_exists('CS_REST_Events')) {
         function track($email, $event_type, $data = NULL) {
             if (!isset($email)) {
                 trigger_error('$email needs to be set');
+                return new CS_REST_Wrapper_Result(null, 400);
             }
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 trigger_error('$email needs to be a valid email address');
+                return new CS_REST_Wrapper_Result(null, 400);
             }
             if (!isset($event_type)) {
                 trigger_error('$event_type needs to be set');
+                return new CS_REST_Wrapper_Result(null, 400);
             }
             if (!is_array($data)){
                 trigger_error('$data needs to be a valid array');
+                return new CS_REST_Wrapper_Result(null, 400);
             } 
             $payload = array('ContactID' => array('Email' => $email), 'EventType' => $event_type, 'Data' => $data);
             return $this->post_request($this->_events_base_route. 'track', $payload);
