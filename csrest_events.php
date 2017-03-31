@@ -95,6 +95,10 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$email needs to be set');
 			    exit;
             }
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                trigger_error('$email needs to be a valid email address');
+			    exit;
+            }
             if (!isset($event_type)) {
                 trigger_error('$event_type needs to be set');
 			    exit;
@@ -103,8 +107,9 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$data needs to be a valid array');
 			    exit;
             } 
-            $payload = array_merge(array('ContactID' => array('Email' => $email)), array('EventType' => $event_type), array('Data' => $data));
+            $payload = array('ContactID' => array('Email' => $email), 'EventType' => $event_type, 'Data' => $data);
             return $this->post_request($this->_events_base_route. 'track', $payload);
         }
     }
 }
+
