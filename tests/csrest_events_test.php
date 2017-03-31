@@ -30,7 +30,7 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
     function testtrack() {
         $client_id = 'fakeclientid';
         $raw_result = 'the new event id';
-        $email = 'test_email.com';
+        $email = 'test@email.com';
         $name = 'Widget Man!';
         $data = array('ExampleField'=> 'Me');
         $response_code = 202;
