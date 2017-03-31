@@ -68,7 +68,7 @@ if (!class_exists('CS_REST_Events')) {
          * Tracks an event
          * @param string $email required email in the form "user@example.com"
          * 
-         * @param string $event_type. Name to group events by for reporting
+         * @param string $event_type. Name to group events by for reporting max length 500 
          *    For example "Page View", "Order confirmation"
          *
          * @param array $data optional. Event payload.
@@ -102,6 +102,10 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$event_type needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
+            if (strlen($event_type) > 501 ) {
+                trigger_error('$event_type needs to be shorter, max length is 500 character');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }   
             if (!is_array($data)){
                 trigger_error('$data needs to be a valid array');
                 return new CS_REST_Wrapper_Result(null, 400);
