@@ -3,7 +3,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
 
 /**
  * Class to send event data to the create send API.
- * @author philoye
+ * @author cameronn
  *
  */
 if (!class_exists('CS_REST_Events')) {
@@ -60,7 +60,6 @@ if (!class_exists('CS_REST_Events')) {
         function set_client_id($client_id) {
              if (!isset($client_id)) {
                 trigger_error('$client_id needs to be set');
-			    exit;
             }
             $this->_events_base_route = $this->_base_route.'events/'.$client_id.'/';
         }
@@ -83,7 +82,7 @@ if (!class_exists('CS_REST_Events')) {
          *          )
          *
          * @access public
-         * @return CS_REST_Wrapper_Result A successful response will include a Event ID.
+         * @return CS_REST_Wrapper_Result A successful response will include an Event ID.
          *      array(
          *          array(
          *              'EventID' => 'string'
@@ -93,19 +92,15 @@ if (!class_exists('CS_REST_Events')) {
         function track($email, $event_type, $data = NULL) {
             if (!isset($email)) {
                 trigger_error('$email needs to be set');
-			    exit;
             }
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 trigger_error('$email needs to be a valid email address');
-			    exit;
             }
             if (!isset($event_type)) {
                 trigger_error('$event_type needs to be set');
-			    exit;
             }
             if (!is_array($data)){
                 trigger_error('$data needs to be a valid array');
-			    exit;
             } 
             $payload = array('ContactID' => array('Email' => $email), 'EventType' => $event_type, 'Data' => $data);
             return $this->post_request($this->_events_base_route. 'track', $payload);
