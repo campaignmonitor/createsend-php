@@ -41,7 +41,7 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
             'ContactID' => array(
                 'Email' => 'test@email.com'
             ),
-            'Name' => 'Widget Man!',
+            'EventType' => 'Widget Man!',
             'Data' => array(
                 'ExampleField'=> 'Me'
             )
