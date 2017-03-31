@@ -52,13 +52,16 @@ if (!class_exists('CS_REST_Events')) {
         }
 
 
-
         /**
          * Change the client id used for calls after construction
          * @param $client_id
          * @access public
          */
         function set_client_id($client_id) {
+             if (!isset($client_id)) {
+                trigger_error('$client_id needs to be set');
+			    exit;
+            }
             $this->_events_base_route = $this->_base_route.'events/'.$client_id.'/';
         }
 
@@ -89,7 +92,7 @@ if (!class_exists('CS_REST_Events')) {
          */
         function track($email, $event_type, $data = NULL) {
             if (!isset($email)) {
-                trigger_error('$email needs to be set in and a valid array');
+                trigger_error('$email needs to be set');
 			    exit;
             }
             if (!isset($event_type)) {
