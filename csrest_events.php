@@ -58,7 +58,7 @@ if (!class_exists('CS_REST_Events')) {
          * @access public
          */
         function set_client_id($client_id) {
-             if (!isset($client_id)) {
+            if (!isset($client_id)) {
                 trigger_error('$client_id needs to be set');
             }
             $this->_events_base_route = $this->_base_route.'events/'.$client_id.'/';
