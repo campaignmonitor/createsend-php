@@ -68,7 +68,7 @@ if (!class_exists('CS_REST_Events')) {
          * Tracks an event
          * @param string $email required email in the form "user@example.com"
          * 
-         * @param string $event_type. Name to group events by for reporting max length 500 
+         * @param string $event_name. Name to group events by for reporting max length 1000 
          *    For example "Page View", "Order confirmation"
          *
          * @param array $data optional. Event payload.
@@ -89,7 +89,7 @@ if (!class_exists('CS_REST_Events')) {
          *          )
          *      )
          */
-        function track($email, $event_type, $data = NULL) {
+        function track($email, $event_name, $data = NULL) {
             if (!isset($email)) {
                 trigger_error('$email needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
@@ -98,19 +98,19 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$email needs to be a valid email address');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
-            if (!isset($event_type)) {
-                trigger_error('$event_type needs to be set');
+            if (!isset($event_name)) {
+                trigger_error('$event_name needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
-            if (strlen($event_type) > 501 ) {
-                trigger_error('$event_type needs to be shorter, max length is 500 character');
+            if (strlen($event_name) > 1000 ) {
+                trigger_error('$event_name needs to be shorter, max length is 1000 character');
                 return new CS_REST_Wrapper_Result(null, 400);
             }   
             if (!is_array($data)){
                 trigger_error('$data needs to be a valid array');
                 return new CS_REST_Wrapper_Result(null, 400);
             } 
-            $payload = array('ContactID' => array('Email' => $email), 'EventType' => $event_type, 'Data' => $data);
+            $payload = array('ContactID' => array('Email' => $email), 'EventName' => $event_name, 'Data' => $data);
             return $this->post_request($this->_events_base_route. 'track', $payload);
         }
     }

@@ -31,7 +31,7 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
         $client_id = 'fakeclientid';
         $raw_result = 'the new event id';
         $email = 'test@email.com';
-        $name = 'Widget Man!';
+        $event_name = 'Widget Man!';
         $data = array('ExampleField'=> 'Me');
         $response_code = 202;
 
@@ -41,7 +41,7 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
             'ContactID' => array(
                 'Email' => 'test@email.com'
             ),
-            'EventType' => 'Widget Man!',
+            'EventName' => $event_name,
             'Data' => array(
                 'ExampleField'=> 'Me'
             )
@@ -59,7 +59,7 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'event info was serialised to this', $event_info, $response_code);
 
-        $result = $this->wrapper->track($email, $name, $data);
+        $result = $this->wrapper->track($email, $event_name, $data);
 
         $this->assertIdentical($expected_result, $result);
 
