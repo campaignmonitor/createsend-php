@@ -106,10 +106,12 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$event_name needs to be shorter, max length is 1000 character');
                 return new CS_REST_Wrapper_Result(null, 400);
             }   
-            if (!is_array($data)){
+            if isset($data) {
+                if (!is_array($data)){
                 trigger_error('$data needs to be a valid array');
                 return new CS_REST_Wrapper_Result(null, 400);
-            } 
+                } 
+            }
             $payload = array('ContactID' => array('Email' => $email), 'EventName' => $event_name, 'Data' => $data);
             return $this->post_request($this->_events_base_route. 'track', $payload);
         }
