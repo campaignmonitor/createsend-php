@@ -74,7 +74,7 @@ if (!class_exists('CS_REST_Events')) {
          * @param array $data optional. Event payload.
          *      This should be an array, with details of the event
          *          array(
-         *              'RandomFieldObject''  => array(
+         *              'RandomFieldObject'  => array(
          *                                      'Example'' => 'test'
          *                                  ),
          *              'RandomFieldURL' => 'Example',
