@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../vendor/lastcraft/simpletest/autorun.php';
-require_once __DIR__.'/../vendor/lastcraft/simpletest/mock_objects.php';
+require_once __DIR__.'/../vendor/simpletest/simpletest/autorun.php';
+require_once __DIR__.'/../vendor/simpletest/simpletest/mock_objects.php';
 
 class AllTests extends TestSuite {
     function AllTests() {
@@ -17,5 +17,6 @@ class AllTests extends TestSuite {
         $this->addFile('csrest_segments_test.php');
         $this->addFile('csrest_people_test.php');
         $this->addFile('csrest_administrators_test.php');
+        $this->addFile('csrest_events_test.php');
     }
 }

@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v5.1.2 - 6th April, 2017
+
+* Added support for Behavioral Event data
+
 ## v5.0.2 - 18 July, 2016
 
 * Prevent definition re-declarations

@@ -9,17 +9,17 @@
     ],
     "packages-dev": [
         {
-            "name": "lastcraft/simpletest",
-            "version": "1.1.0",
+            "name": "simpletest/simpletest",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/lox/simpletest",
-                "reference": "1.1.0"
+                "url": "https://github.com/simpletest/simpletest",
+                "reference": "1.1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/lox/simpletest/zipball/1.1.0",
-                "reference": "1.1.0",
+                "url": "https://github.com/simpletest/simpletest/zipball/1.1.3",
+                "reference": "1.1.3",
                 "shasum": ""
             },
             "require": {
