@@ -2,6 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../vendor/simpletest/simpletest/autorun.php';
+require_once(__DIR__.'/../vendor/simpletest/simpletest/mock_objects.php');
 
 @Mock::generate('CS_REST_Log');
 @Mock::generate('CS_REST_NativeJsonSerialiser');
