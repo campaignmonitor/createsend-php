@@ -10,7 +10,7 @@
     cd tests && php all_tests.php && cd ..
     ```
 
-    The [Travis CI build](https://travis-ci.org/campaignmonitor/createsend-php) runs on PHP `5.3` and `5.4`.
+    The [Travis CI build](https://travis-ci.org/campaignmonitor/createsend-php) runs on PHP `5.3`, `5.4`, `5.5`, `5.6`, `7.0` and `hhvm`.
 
 5. It should go without saying, but do not increment the version number in your commits.
 6. [Submit a pull request](https://help.github.com/articles/using-pull-requests).

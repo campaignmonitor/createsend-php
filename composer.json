@@ -16,7 +16,7 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
-        "simpletest/simpletest": "~1.1.3"
+        "simpletest/simpletest": "~1.1.7"
     },
     "autoload": {
         "classmap": [

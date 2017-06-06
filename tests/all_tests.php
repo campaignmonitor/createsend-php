@@ -4,8 +4,8 @@ require_once __DIR__.'/../vendor/simpletest/simpletest/autorun.php';
 require_once __DIR__.'/../vendor/simpletest/simpletest/mock_objects.php';
 
 class AllTests extends TestSuite {
-    function AllTests() {
-        $this->TestSuite('All Tests');
+    function __construct() {
+        parent::__construct('All Tests');
         $this->addFile('class_tests/transport_test.php');
         $this->addFile('class_tests/response_tests.php');
         $this->addFile('csrest_test.php');
