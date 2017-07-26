@@ -7,7 +7,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author tobyb
  *
  */
-if (!class_exists('CS_REST_Templates')) {
+if (!@class_exists('CS_REST_Templates')) {
     class CS_REST_Templates extends CS_REST_Wrapper_Base {
 
         /**
@@ -57,7 +57,7 @@ if (!class_exists('CS_REST_Templates')) {
          * @access public
          */
         function set_template_id($template_id) {
-            $this->_templates_base_route = $this->_base_route.'templates/'.$template_id.'.json';            
+            $this->_templates_base_route = $this->_base_route.'templates/'.$template_id.'.json';
         }
 
         /**

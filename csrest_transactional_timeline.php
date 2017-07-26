@@ -6,7 +6,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author philoye
  *
  */
-if (!class_exists('CS_REST_Transactional_Timeline')) {
+if (!@class_exists('CS_REST_Transactional_Timeline')) {
     class CS_REST_Transactional_Timeline extends CS_REST_Wrapper_Base {
 
         /**
@@ -158,4 +158,3 @@ if (!class_exists('CS_REST_Transactional_Timeline')) {
 
     }
 }
-

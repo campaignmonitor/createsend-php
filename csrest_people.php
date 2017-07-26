@@ -8,7 +8,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author tobyb
  *
  */
-if (!class_exists('CS_REST_People')) {
+if (!@class_exists('CS_REST_People')) {
     class CS_REST_People extends CS_REST_Wrapper_Base {
 
         /**
@@ -82,7 +82,7 @@ if (!class_exists('CS_REST_People')) {
         /**
          * Updates details for an existing person associated with the specified client.
     	 * @param string $email The email address of the person to be updated
-         * @param array $person The updated person details to use for the update. 
+         * @param array $person The updated person details to use for the update.
          *     This array should be of the form
          *     array (
          *         'EmailAddress' => The new  email address
@@ -105,7 +105,7 @@ if (!class_exists('CS_REST_People')) {
          *     'EmailAddress' => The email address of the person
          *     'Name' => The name of the person
          *     'Status' => The status of the person
-         *     'AccessLevel' => The access level of the person     
+         *     'AccessLevel' => The access level of the person
          *     )
          * }
          */

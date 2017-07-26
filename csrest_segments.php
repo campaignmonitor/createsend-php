@@ -8,7 +8,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author tobyb
  *
  */
-if (!class_exists('CS_REST_Segments')) {
+if (!@class_exists('CS_REST_Segments')) {
     class CS_REST_Segments extends CS_REST_Wrapper_Base {
 
         /**
@@ -60,12 +60,12 @@ if (!class_exists('CS_REST_Segments')) {
         function set_segment_id($segment_id) {
             $this->_segments_base_route = $this->_base_route.'segments/'.$segment_id;
         }
-        
+
         /**
          * Creates a new segment on the given list with the provided details
          * @param int $list_id The list on which to create the segment
          * @param $segment_details The details of the new segment
-         *     This should be an array of the form 
+         *     This should be an array of the form
          *         array(
          *             'Title' => The title of the new segment
          *             'RuleGroups' => array(
@@ -83,12 +83,12 @@ if (!class_exists('CS_REST_Segments')) {
          */
         function create($list_id, $segment_details) {
             return $this->post_request($this->_base_route.'segments/'.$list_id.'.json', $segment_details);
-        }    
-        
+        }
+
         /**
          * Updates the current segment with the provided details. Calls to this route will clear any existing rules
          * @param $segment_details The new details for the segment
-         *     This should be an array of the form 
+         *     This should be an array of the form
          *         array(
          *             'Title' => The title of the new segment
          *             'RuleGroups' => array(
@@ -106,8 +106,8 @@ if (!class_exists('CS_REST_Segments')) {
          */
         function update($segment_details) {
             return $this->put_request($this->_segments_base_route.'.json', $segment_details);
-        }    
-        
+        }
+
         /**
          * Adds the given rule to the current segment
          * @param $rule The rule to add to the segment
@@ -125,7 +125,7 @@ if (!class_exists('CS_REST_Segments')) {
         function add_rulegroup($rulegroup) {
             return $this->post_request($this->_segments_base_route.'/rules.json', $rulegroup);
         }
-        
+
         /**
          * Gets the details of the current segment
          * @access public
@@ -164,10 +164,10 @@ if (!class_exists('CS_REST_Segments')) {
         function clear_rules() {
             return $this->delete_request($this->_segments_base_route.'/rules.json');
         }
-        
+
         /**
          * Gets a paged collection of subscribers which fall into the given segment
-         * @param string $subscribed_since The date to start getting subscribers from 
+         * @param string $subscribed_since The date to start getting subscribers from
          * @param int $page_number The page number to get
          * @param int $page_size The number of records per page
          * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
@@ -198,10 +198,10 @@ if (!class_exists('CS_REST_Segments')) {
          *     )
          * }
          */
-        function get_subscribers($subscribed_since = '', $page_number = NULL, 
+        function get_subscribers($subscribed_since = '', $page_number = NULL,
             $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
-                
-            return $this->get_request_paged($this->_segments_base_route.'/active.json?date='.urlencode($subscribed_since), 
+
+            return $this->get_request_paged($this->_segments_base_route.'/active.json?date='.urlencode($subscribed_since),
                 $page_number, $page_size, $order_field, $order_direction);
         }
     }

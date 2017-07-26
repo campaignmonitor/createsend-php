@@ -6,7 +6,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author philoye
  *
  */
-if (!class_exists('CS_REST_Transactional_ClassicEmail')) {
+if (!@class_exists('CS_REST_Transactional_ClassicEmail')) {
     class CS_REST_Transactional_ClassicEmail extends CS_REST_Wrapper_Base {
 
         /**
@@ -130,4 +130,3 @@ if (!class_exists('CS_REST_Transactional_ClassicEmail')) {
 
     }
 }
-

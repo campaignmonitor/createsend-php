@@ -6,7 +6,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author cameronn
  *
  */
-if (!class_exists('CS_REST_Events')) {
+if (!@class_exists('CS_REST_Events')) {
     class CS_REST_Events extends CS_REST_Wrapper_Base {
 
         /**
@@ -67,8 +67,8 @@ if (!class_exists('CS_REST_Events')) {
         /**
          * Tracks an event
          * @param string $email required email in the form "user@example.com"
-         * 
-         * @param string $event_name. Name to group events by for reporting max length 1000 
+         *
+         * @param string $event_name. Name to group events by for reporting max length 1000
          *    For example "Page View", "Order confirmation"
          *
          * @param array $data optional. Event payload.
@@ -105,16 +105,15 @@ if (!class_exists('CS_REST_Events')) {
             if (strlen($event_name) > 1000 ) {
                 trigger_error('$event_name needs to be shorter, max length is 1000 character');
                 return new CS_REST_Wrapper_Result(null, 400);
-            }   
+            }
             if (isset($data)) {
                 if (!is_array($data)){
                 trigger_error('$data needs to be a valid array');
                 return new CS_REST_Wrapper_Result(null, 400);
-                } 
+                }
             }
             $payload = array('ContactID' => array('Email' => $email), 'EventName' => $event_name, 'Data' => $data);
             return $this->post_request($this->_events_base_route. 'track', $payload);
         }
     }
 }
-
