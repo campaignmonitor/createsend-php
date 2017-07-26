@@ -7,7 +7,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  *
  */
 
-if (!class_exists('CS_REST_Transactional_SmartEmail')) {
+if (!@class_exists('CS_REST_Transactional_SmartEmail')) {
     class CS_REST_Transactional_SmartEmail extends CS_REST_Wrapper_Base {
 
         /**

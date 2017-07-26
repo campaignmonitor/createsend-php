@@ -8,7 +8,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author tobyb
  *
  */
-if (!class_exists('CS_REST_Clients')) {
+if (!@class_exists('CS_REST_Clients')) {
     class CS_REST_Clients extends CS_REST_Wrapper_Base {
 
         /**
@@ -47,7 +47,7 @@ if (!class_exists('CS_REST_Clients')) {
         $log = NULL,
         $serialiser = NULL,
         $transport = NULL) {
-            	
+
             parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
             $this->set_client_id($client_id);
         }
@@ -161,7 +161,7 @@ if (!class_exists('CS_REST_Clients')) {
          * )
          */
         function get_lists_for_email($email_address) {
-            return $this->get_request($this->_clients_base_route . 
+            return $this->get_request($this->_clients_base_route .
               'listsforemail.json?email='.urlencode($email_address));
         }
 
@@ -206,10 +206,10 @@ if (!class_exists('CS_REST_Clients')) {
          *     )
          * }
          */
-        function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL, 
+        function get_suppressionlist($page_number = NULL, $page_size = NULL, $order_field = NULL,
             $order_direction = NULL) {
-                
-            return $this->get_request_paged($this->_clients_base_route.'suppressionlist.json', 
+
+            return $this->get_request_paged($this->_clients_base_route.'suppressionlist.json',
                 $page_number, $page_size, $order_field, $order_direction, '?');
         }
 
@@ -256,7 +256,7 @@ if (!class_exists('CS_REST_Clients')) {
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
          *     'ApiKey' => The clients API Key, THIS IS NOT THE CLIENT ID
-         *     'BasicDetails' => 
+         *     'BasicDetails' =>
          *     {
          *         'ClientID' => The id of the client
          *         'CompanyName' => The company name of the client
@@ -287,7 +287,7 @@ if (!class_exists('CS_REST_Clients')) {
          *         'MarkupOnDesignSpamTest' => The markup applied per design and spam test
          *         'Currency' => The currency fees are paid in
          *         'ClientPays' => Whether client client pays for themselves
-         *     }     
+         *     }
          * }
          */
         function get() {
@@ -388,7 +388,7 @@ if (!class_exists('CS_REST_Clients')) {
 
         /**
          * Transfer credits to or from this client.
-         * 
+         *
          * @param array $transfer_data Details for the credit transfer. This array
          *   should be of the form:
          *     array(
@@ -418,7 +418,7 @@ if (!class_exists('CS_REST_Clients')) {
 
         /**
          * returns the people associated with this client.
-         * @return CS_REST_Wrapper_Result A successful response will be an object of the form 
+         * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          *     array({
          *     		'EmailAddress' => the email address of the person
          *     		'Name' => the name of the person
@@ -428,8 +428,8 @@ if (!class_exists('CS_REST_Clients')) {
          */
         function get_people() {
         	return $this->get_request($this->_clients_base_route.'people.json');
-        } 
-        
+        }
+
         /**
          * retrieves the email address of the primary contact for this client
          * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
@@ -438,7 +438,7 @@ if (!class_exists('CS_REST_Clients')) {
         function get_primary_contact() {
         	return $this->get_request($this->_clients_base_route.'primarycontact.json');
         }
-        
+
         /**
          * assigns the primary contact for this client to the person with the specified email address
          * @param string $emailAddress the email address of the person designated to be the primary contact

@@ -8,7 +8,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author pauld
  *
  */
-if (!class_exists('CS_REST_Administrators')) {
+if (!@class_exists('CS_REST_Administrators')) {
     class CS_REST_Administrators extends CS_REST_Wrapper_Base {
 
         /**
@@ -45,7 +45,7 @@ if (!class_exists('CS_REST_Administrators')) {
         $log = NULL,
         $serialiser = NULL,
         $transport = NULL) {
-            	
+
             parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
             $this->_admins_base_route = $this->_base_route.'admins';
         }
@@ -68,7 +68,7 @@ if (!class_exists('CS_REST_Administrators')) {
         /**
          * Updates details for an existing administrator associated with the current account
     	 * @param string $email The email address of the administrator to be updated
-         * @param array $admin The updated administrator details to use for the update. 
+         * @param array $admin The updated administrator details to use for the update.
          *     This array should be of the form
          *     array (
          *         'EmailAddress' => The new email address

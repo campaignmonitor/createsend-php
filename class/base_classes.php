@@ -16,7 +16,7 @@ defined('CS_REST_WEBHOOK_FORMAT_XML') or define('CS_REST_WEBHOOK_FORMAT_XML', 'x
  * @author tobyb
  *
  */
-if (!class_exists('CS_REST_Wrapper_Result')) {
+if (!@class_exists('CS_REST_Wrapper_Result')) {
     class CS_REST_Wrapper_Result {
         /**
          * The deserialised result of the API call
@@ -52,7 +52,7 @@ if (!class_exists('CS_REST_Wrapper_Result')) {
  * @author tobyb
  *
  */
-if (!class_exists('CS_REST_Wrapper_Base')) {
+if (!@class_exists('CS_REST_Wrapper_Base')) {
     class CS_REST_Wrapper_Base {
         /**
          * The protocol to use while accessing the api

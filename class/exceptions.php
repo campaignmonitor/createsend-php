@@ -1,5 +1,5 @@
 <?php
-if (!class_exists('CurlException')) {
+if (!@class_exists('CurlException')) {
 	class CurlException extends \RuntimeException
 	{
 	    public function __construct($curlMessage, $errorCode)

@@ -7,7 +7,7 @@ require_once dirname(__FILE__).'/class/base_classes.php';
  * @author tobyb
  *
  */
-if (!class_exists('CS_REST_General')) {
+if (!@class_exists('CS_REST_General')) {
     class CS_REST_General extends CS_REST_Wrapper_Base {
 
         /**
@@ -94,7 +94,7 @@ if (!class_exists('CS_REST_General')) {
             $log = NULL,
             $serialiser = NULL,
             $transport = NULL) {
-            $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);        
+            $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         }
 
         /**
@@ -171,7 +171,7 @@ if (!class_exists('CS_REST_General')) {
         function get_administrators() {
         	return $this->get_request($this->_base_route.'admins.json');
         }
-        
+
         /**
          * Retrieves the email address of the primary contact for this account
          * @return CS_REST_Wrapper_Result a successful response will be an array in the form:
