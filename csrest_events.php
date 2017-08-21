@@ -16,6 +16,27 @@ if (!class_exists('CS_REST_Events')) {
          */
         var $_events_base_route;
 
+        /**
+         * The type of event supports 'shopify', 'identify' and 'custom'
+         * @var string
+         * @access private
+         */
+        var $_event_type;
+
+        /**
+         * Client ID
+         * @var string
+         * @access private
+         */
+        var $_client_id;
+
+        /**
+         * Anonymous ID
+         * @var string
+         * @access private
+         */
+        var $_anonymous_id;
+
 
         /**
          * Constructor.
@@ -30,6 +51,7 @@ if (!class_exists('CS_REST_Events')) {
          *        Or if using an API key:
          *        array('api_key' => 'your api key')
          * @param $client_id string The client id to send event to
+         * @param $event_type string The event type we support - `custom`, `identify` and `shopify`
          * @param $protocol string The protocol to use for requests (http|https)
          * @param $debug_level int The level of debugging required CS_REST_LOG_NONE | CS_REST_LOG_ERROR | CS_REST_LOG_WARNING | CS_REST_LOG_VERBOSE
          * @param $host string The host to send API requests to. There is no need to change this
@@ -41,6 +63,7 @@ if (!class_exists('CS_REST_Events')) {
         function __construct (
         $auth_details,
         $client_id,
+        $event_type,
         $protocol = 'https',
         $debug_level = CS_REST_LOG_NONE,
         $host = 'api.createsend.com',
@@ -49,8 +72,11 @@ if (!class_exists('CS_REST_Events')) {
         $transport = NULL) {
             parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
             $this->set_client_id($client_id);
+            if (!isset($event_type)) {
+                trigger_error('$event_type should be one of \'custom\', \'identify\' or \'shopify\'');
+            }
+            $this->setEventType($event_type);
         }
-
 
         /**
          * Change the client id used for calls after construction
@@ -62,6 +88,41 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$client_id needs to be set');
             }
             $this->_events_base_route = $this->_base_route.'events/'.$client_id.'/';
+            $this->_client_id = $client_id;
+        }
+
+        /**
+         * Set the type of event that we support: 'custom', 'identify' and 'shopify'
+         * @param $event_type
+         * @access public
+         */
+        function setEventType($event_type) {
+            if (!isset($event_type)) {
+                trigger_error('$event_type needs to be set');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+
+            if (strcmp($event_type, "custom") != 0 &&
+                strcmp($event_type,"identify") != 0 &&
+                strcmp($event_type,"shopify") != 0) {
+                trigger_error('$event_type needs to be one of \'custom\', \'identify\' or \'shopify\'');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+            $this->_event_type = strtolower($event_type);
+        }
+
+        /**
+         * Set the anonymous ID
+         * @param $anonymous_id
+         * @access public
+         */
+        function setAnonymousID($anon_id) {
+            if (!isset($anon_id)) {
+                trigger_error('$anonymous_id needs to be set for identified events');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+
+            $this->_anonymous_id = strtolower($anon_id);
         }
 
         /**
@@ -89,7 +150,7 @@ if (!class_exists('CS_REST_Events')) {
          *          )
          *      )
          */
-        function track($email, $event_name, $data = NULL) {
+        function track($email, $event_name, $anon_id = NULL, $data = NULL) {
             if (!isset($email)) {
                 trigger_error('$email needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
@@ -112,8 +173,14 @@ if (!class_exists('CS_REST_Events')) {
                 return new CS_REST_Wrapper_Result(null, 400);
                 } 
             }
-            $payload = array('ContactID' => array('Email' => $email), 'EventName' => $event_name, 'Data' => $data);
-            return $this->post_request($this->_events_base_route. 'track', $payload);
+            if (strcmp($this->_event_type, "identify") == 0 && isset($anon_id)) {
+                $this->setAnonymousID($anon_id);
+                $payload = array('ContactID' => array('Email' => $email, 'AnonymousID' => $this->_anonymous_id), 'EventName' => $event_name, 'Data' => $data);
+            } else {
+                $payload = array('ContactID' => array('Email' => $email), 'EventName' => $event_name, 'Data' => $data);
+            }
+            $event_url = $this->_base_route . 'events/'. $this->_event_type . '/' . $this->_client_id . '/track';
+            return $this->post_request($event_url, $payload);
         }
     }
 }
