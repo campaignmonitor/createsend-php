@@ -3,7 +3,7 @@ require_once "../../csrest_events.php";
 
 $auth = array("api_key" => "sample api key");
 $client_id = "sample client id";
-$api_event_type = "shopify";
+$api_event_type = "identify";
 $wrap = new CS_REST_Events($auth, $client_id, $api_event_type);
 
 echo "\nSending a $api_event_type event...\n";

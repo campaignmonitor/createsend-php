@@ -21,21 +21,21 @@ if (!class_exists('CS_REST_Events')) {
          * @var string
          * @access private
          */
-        var $_event_type;
+        private $_event_type;
 
         /**
          * Client ID
          * @var string
          * @access private
          */
-        var $_client_id;
+        private $_client_id;
 
         /**
          * Anonymous ID
          * @var string
          * @access private
          */
-        var $_anonymous_id;
+        private $_anonymous_id;
 
 
         /**
@@ -93,8 +93,8 @@ if (!class_exists('CS_REST_Events')) {
 
         /**
          * Set the type of event that we support: 'custom', 'identify' and 'shopify'
-         * @param $event_type
-         * @access public
+         * @param $event_type string Event that we support: 'custom', 'identify' and 'shopify'
+         * @access private
          */
         function setEventType($event_type) {
             if (!isset($event_type)) {
@@ -111,18 +111,26 @@ if (!class_exists('CS_REST_Events')) {
             $this->_event_type = strtolower($event_type);
         }
 
+
         /**
-         * Set the anonymous ID
-         * @param $anonymous_id
+         * Get the name of event
          * @access public
+         */
+        function getEventType() {
+            return $this->_event_type;
+        }
+
+        /**
+         * Set the anonymous ID to use for non-identify events
+         * @param $anonymous_id string Anonymous ID to use for non-identify events
+         * @access private
          */
         function setAnonymousID($anon_id) {
             if (!isset($anon_id)) {
-                trigger_error('$anonymous_id needs to be set for identified events');
+                trigger_error('$anonymous_id needs to be set for identify events');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
-
-            $this->_anonymous_id = strtolower($anon_id);
+            $this->_anonymous_id = $anon_id;
         }
 
         /**
@@ -141,7 +149,7 @@ if (!class_exists('CS_REST_Events')) {
          *              'RandomFieldURL' => 'Example',
          *              'RandomArray' => array(1,3,5,6,7),
          *          )
-         *
+         * @param $anonymous_id string Anonymous ID to use for non-identify events
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will include an Event ID.
          *      array(
@@ -150,7 +158,8 @@ if (!class_exists('CS_REST_Events')) {
          *          )
          *      )
          */
-        function track($email, $event_name, $anon_id = NULL, $data = NULL) {
+        function track($email, $event_name, $anonymous_id = NULL, $data = NULL)
+        {
             if (!isset($email)) {
                 trigger_error('$email needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
@@ -163,24 +172,42 @@ if (!class_exists('CS_REST_Events')) {
                 trigger_error('$event_name needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
-            if (strlen($event_name) > 1000 ) {
+            if (strlen($event_name) > 1000) {
                 trigger_error('$event_name needs to be shorter, max length is 1000 character');
                 return new CS_REST_Wrapper_Result(null, 400);
-            }   
-            if (isset($data)) {
-                if (!is_array($data)){
-                trigger_error('$data needs to be a valid array');
-                return new CS_REST_Wrapper_Result(null, 400);
-                } 
             }
-            if (strcmp($this->_event_type, "identify") === 0 && isset($anon_id)) {
-                $this->setAnonymousID($anon_id);
+            if (isset($data)) {
+                if (!is_array($data)) {
+                    trigger_error('$data needs to be a valid array');
+                    return new CS_REST_Wrapper_Result(null, 400);
+                }
+            }
+            if (strcmp($this->_event_type, "identify") === 0 && !isset($anonymous_id)) {
+                trigger_error('$anonymous_id needs to be a valid string');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+
+            if (strcmp($this->_event_type, "identify") === 0 && isset($anonymous_id)) {
+                $this->setAnonymousID($anonymous_id);
                 $payload = array('ContactID' => array('Email' => $email, 'AnonymousID' => $this->_anonymous_id), 'EventName' => $event_name, 'Data' => $data);
             } else {
                 $payload = array('ContactID' => array('Email' => $email), 'EventName' => $event_name, 'Data' => $data);
             }
-            $event_url = $this->_base_route . 'events/'. $this->_event_type . '/' . $this->_client_id . '/track';
-            return $this->post_request($event_url, $payload);
+            return $this->sendTrack($payload);
+        }
+
+        /*
+         * Send track payload
+         * @param $payload array Payload to send to track endpoint
+         * @access private
+         */
+        function sendTrack($payload = NULL) {
+            if (isset($payload) && is_array($payload)) {
+                $event_url = $this->_base_route . 'events/' . $this->_event_type . '/' . $this->_client_id . '/track';
+                return $this->post_request($event_url, $payload);
+            }
+            trigger_error('$payload needs to be a valid array');
+            return new CS_REST_Wrapper_Result(null, 400);
         }
     }
 }
