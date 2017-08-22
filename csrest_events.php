@@ -102,9 +102,9 @@ if (!class_exists('CS_REST_Events')) {
                 return new CS_REST_Wrapper_Result(null, 400);
             }
 
-            if (strcmp($event_type, "custom") != 0 &&
-                strcmp($event_type,"identify") != 0 &&
-                strcmp($event_type,"shopify") != 0) {
+            if (strcmp($event_type, "custom") !== 0 &&
+                strcmp($event_type,"identify") !== 0 &&
+                strcmp($event_type,"shopify") !== 0) {
                 trigger_error('$event_type needs to be one of \'custom\', \'identify\' or \'shopify\'');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
@@ -173,7 +173,7 @@ if (!class_exists('CS_REST_Events')) {
                 return new CS_REST_Wrapper_Result(null, 400);
                 } 
             }
-            if (strcmp($this->_event_type, "identify") == 0 && isset($anon_id)) {
+            if (strcmp($this->_event_type, "identify") === 0 && isset($anon_id)) {
                 $this->setAnonymousID($anon_id);
                 $payload = array('ContactID' => array('Email' => $email, 'AnonymousID' => $this->_anonymous_id), 'EventName' => $event_name, 'Data' => $data);
             } else {

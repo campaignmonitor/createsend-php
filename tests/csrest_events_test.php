@@ -40,29 +40,20 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
 
         $call_options = $this->get_call_options($this->base_route.'events/'.$this->event_type.'/'.$this->client_id.'/track', 'POST');
 
-        if (strcmp($this->event_type, "identify") == 0) {
+        // Non `identify` event
+        $event_info = array (
+            'ContactID' => array(
+                'Email' => 'test@email.com',
+            ),
+            'EventName' => $event_name,
+            'Data' => array(
+                'ExampleField'=> 'Me'
+            )
+        );
+
+        if (strcmp($this->event_type, "identify") === 0) {
             // `Identify` event
-            $event_info = array (
-                'ContactID' => array(
-                    'Email' => 'test@email.com',
-                    'AnonymousID' => $anon_id,
-                ),
-                'EventName' => $event_name,
-                'Data' => array(
-                    'ExampleField'=> 'Me'
-                )
-            );
-        } else {
-            // Non `identify` event
-            $event_info = array (
-                'ContactID' => array(
-                    'Email' => 'test@email.com',
-                ),
-                'EventName' => $event_name,
-                'Data' => array(
-                    'ExampleField'=> 'Me'
-                )
-            );
+            $event_info['ContactID']['AnonymousID'] = $anon_id;
         }
 
         $transport_result = array (

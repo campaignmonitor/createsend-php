@@ -28,7 +28,7 @@ $event_data = array(
   "CardType" => "VISA",
 );
 
-if (strcmp($wrap->_event_type, "identify") == 0) {
+if (strcmp($wrap->_event_type, "identify") === 0) {
     // `Identify` event
     $anon_id = "abcd";
     $result = $wrap->track($contact, $event_type, $anon_id, $event_data);
