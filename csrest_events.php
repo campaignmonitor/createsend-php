@@ -37,6 +37,12 @@ if (!class_exists('CS_REST_Events')) {
          */
         private $_anonymous_id;
 
+        /**
+         * Indicates invalid Event Type
+         * @var bool
+         * @access private
+         */
+        private $_invalid_event_type;
 
         /**
          * Constructor.
@@ -96,7 +102,7 @@ if (!class_exists('CS_REST_Events')) {
          * @param $event_type string Event that we support: 'custom', 'identify' and 'shopify'
          * @access private
          */
-        function setEventType($event_type) {
+        private function setEventType($event_type) {
             if (!isset($event_type)) {
                 trigger_error('$event_type needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
@@ -106,6 +112,7 @@ if (!class_exists('CS_REST_Events')) {
                 strcmp($event_type,"identify") !== 0 &&
                 strcmp($event_type,"shopify") !== 0) {
                 trigger_error('$event_type needs to be one of \'custom\', \'identify\' or \'shopify\'');
+                $this->_invalid_event_type = true;
                 return new CS_REST_Wrapper_Result(null, 400);
             }
             $this->_event_type = strtolower($event_type);
@@ -125,7 +132,7 @@ if (!class_exists('CS_REST_Events')) {
          * @param $anonymous_id string Anonymous ID to use for non-identify events
          * @access private
          */
-        function setAnonymousID($anon_id) {
+        private function setAnonymousID($anon_id) {
             if (!isset($anon_id)) {
                 trigger_error('$anonymous_id needs to be set for identify events');
                 return new CS_REST_Wrapper_Result(null, 400);
@@ -183,7 +190,7 @@ if (!class_exists('CS_REST_Events')) {
                 }
             }
             if (strcmp($this->_event_type, "identify") === 0 && !isset($anonymous_id)) {
-                trigger_error('$anonymous_id needs to be a valid string');
+                trigger_error('$anonymous_id needs to be a valid string for identify event');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
 
@@ -201,7 +208,12 @@ if (!class_exists('CS_REST_Events')) {
          * @param $payload array Payload to send to track endpoint
          * @access private
          */
-        function sendTrack($payload = NULL) {
+        private function sendTrack($payload = NULL) {
+            if ($this->_invalid_event_type) {
+                trigger_error('$event_type must be one of \'identify\', \'custom\' or \'shopify\'');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+
             if (isset($payload) && is_array($payload)) {
                 $event_url = $this->_base_route . 'events/' . $this->_event_type . '/' . $this->_client_id . '/track';
                 return $this->post_request($event_url, $payload);
