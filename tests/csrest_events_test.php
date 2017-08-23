@@ -35,12 +35,13 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
         $email = 'test@email.com';
         $event_name = 'Widget Man!';
         $data = array('ExampleField'=> 'Me');
-        $anon_id = 'abcd';
+        $anon_id = 'anonid-0';
+        $user_id = 'userid-0';
         $response_code = 202;
 
         $call_options = $this->get_call_options($this->base_route.'events/'.$this->event_type.'/'.$this->client_id.'/track', 'POST');
 
-        // Non `identify` event
+        // `Non-identify` event (custom, shopify)
         $event_info = array (
             'ContactID' => array(
                 'Email' => 'test@email.com',
@@ -54,6 +55,7 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
         if (strcmp($this->event_type, "identify") === 0) {
             // `Identify` event
             $event_info['ContactID']['AnonymousID'] = $anon_id;
+            $event_info['ContactID']['UserID'] = $user_id;
         }
 
         $transport_result = array (
@@ -69,9 +71,9 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
             $raw_result, $raw_result, 'event info was serialised to this', $event_info, $response_code);
 
         if (strcmp($this->event_type, "identify") == 0) {
-            $result = $this->wrapper->track($email, $event_name, $anon_id, $data);
+            $result = $this->wrapper->track($email, $event_name, $anon_id, $user_id, $data);
         } else {
-            $result = $this->wrapper->track($email, $event_name, NULL, $data);
+            $result = $this->wrapper->track($email, $event_name, NULL, NULL, $data);
         }
 
         $this->assertIdentical($expected_result, $result);

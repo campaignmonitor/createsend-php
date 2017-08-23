@@ -38,11 +38,25 @@ if (!class_exists('CS_REST_Events')) {
         private $_anonymous_id;
 
         /**
-         * Indicates invalid Event Type
+         * User ID
+         * @var string
+         * @access private
+         */
+        private $_user_id;
+
+        /**
+         * Email address
+         * @var string
+         * @access private
+         */
+        private $_email;
+
+        /**
+         * Indicates invalid Event
          * @var bool
          * @access private
          */
-        private $_invalid_event_type;
+        private $_invalid_event = false;
 
         /**
          * Constructor.
@@ -112,32 +126,38 @@ if (!class_exists('CS_REST_Events')) {
                 strcmp($event_type,"identify") !== 0 &&
                 strcmp($event_type,"shopify") !== 0) {
                 trigger_error('$event_type needs to be one of \'custom\', \'identify\' or \'shopify\'');
-                $this->_invalid_event_type = true;
+                $this->_invalid_event = true;
                 return new CS_REST_Wrapper_Result(null, 400);
             }
             $this->_event_type = strtolower($event_type);
         }
 
 
+        /*
+         * Validate email address
+         * @param $email string email address
+         * @access private
+         */
+        private function validateEmail($email) {
+            if (!isset($email)) {
+                trigger_error('$email needs to be set');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                trigger_error('$email needs to be a valid email address');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+
+            return $email;
+        }
+
         /**
-         * Get the name of event
+         * Get the event type name
          * @access public
          */
         function getEventType() {
             return $this->_event_type;
-        }
-
-        /**
-         * Set the anonymous ID to use for non-identify events
-         * @param $anonymous_id string Anonymous ID to use for non-identify events
-         * @access private
-         */
-        private function setAnonymousID($anon_id) {
-            if (!isset($anon_id)) {
-                trigger_error('$anonymous_id needs to be set for identify events');
-                return new CS_REST_Wrapper_Result(null, 400);
-            }
-            $this->_anonymous_id = $anon_id;
         }
 
         /**
@@ -156,7 +176,8 @@ if (!class_exists('CS_REST_Events')) {
          *              'RandomFieldURL' => 'Example',
          *              'RandomArray' => array(1,3,5,6,7),
          *          )
-         * @param $anonymous_id string Anonymous ID to use for non-identify events
+         * @param $anonymous_id string Anonymous ID to use for identify events
+         * @param $user_id string User ID to use for identify events
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will include an Event ID.
          *      array(
@@ -165,16 +186,9 @@ if (!class_exists('CS_REST_Events')) {
          *          )
          *      )
          */
-        function track($email, $event_name, $anonymous_id = NULL, $data = NULL)
+        function track($email, $event_name, $anonymous_id = NULL, $user_id = NULL, $data = NULL)
         {
-            if (!isset($email)) {
-                trigger_error('$email needs to be set');
-                return new CS_REST_Wrapper_Result(null, 400);
-            }
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                trigger_error('$email needs to be a valid email address');
-                return new CS_REST_Wrapper_Result(null, 400);
-            }
+            // Basic validation
             if (!isset($event_name)) {
                 trigger_error('$event_name needs to be set');
                 return new CS_REST_Wrapper_Result(null, 400);
@@ -189,31 +203,95 @@ if (!class_exists('CS_REST_Events')) {
                     return new CS_REST_Wrapper_Result(null, 400);
                 }
             }
-            if (strcmp($this->_event_type, "identify") === 0 && !isset($anonymous_id)) {
-                trigger_error('$anonymous_id needs to be a valid string for identify event');
+
+            if (strcmp($this->_event_type, "identify") === 0) {
+                return $this->sendIdentifyTrack($email, $event_name, $anonymous_id, $user_id, $data);
+            } elseif (strcmp($this->_event_type, "custom") === 0 || strcmp($this->_event_type, "shopify") === 0) {
+                return $this->sendNonIdentifyTrack($email, $event_name, $data);
+            }
+
+            trigger_error('event type is invalid. Supported - custom, identify or shopify');
+            return new CS_REST_Wrapper_Result(null, 400);
+        }
+
+        /*
+         * Send identify track event
+         * @param $email string email address
+         * @param $event_name string event name
+         * @param $anonymousId string anonymous id
+         * @param $userId string user id
+         * @param $data array event data
+         * @access private
+         */
+        private function sendIdentifyTrack($email, $event_name, $anonymousId, $userId, $data) {
+            if (!isset($email)) {
+                trigger_error('email needs to be a set for identify event');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
+            $minRequiredParam = 1; // anonymous id / user id
+            $paramPresent = 0;
+            if (isset($anonymousId)) {
+                $paramPresent += 1;
+            }
+            if (isset($userId)) {
+                $paramPresent += 1;
+            }
+
+            if ($paramPresent < $minRequiredParam) {
+                trigger_error('at least one of: anonymous id, user id needs to be set and be a valid string for identify event');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
 
-            if (strcmp($this->_event_type, "identify") === 0 && isset($anonymous_id)) {
-                $this->setAnonymousID($anonymous_id);
-                $payload = array('ContactID' => array('Email' => $email, 'AnonymousID' => $this->_anonymous_id), 'EventName' => $event_name, 'Data' => $data);
-            } else {
-                $payload = array('ContactID' => array('Email' => $email), 'EventName' => $event_name, 'Data' => $data);
-            }
+            $this->_anonymous_id = $anonymousId;
+            $this->_email = $this->validateEmail($email);
+            $this->_user_id = $userId;
+
+            $payload = array(
+                'ContactID' =>
+                    array(
+                        'Email' => $this->_email,
+                        'AnonymousID' => $this->_anonymous_id,
+                        'UserID' => $this->_user_id,
+                    ),
+                'EventName' => $event_name,
+                'Data' => $data
+            );
             return $this->sendTrack($payload);
         }
 
         /*
-         * Send track payload
+         * Send non-identify track event (custom or shopify)
+         * @param $email string email
+         * @param $event_name string event name
+         * @param $data array event data
+         */
+        private function sendNonIdentifyTrack($email, $event_name, $data) {
+            $payload = array(
+                'ContactID' =>
+                    array(
+                        'Email' => $email
+                    ),
+                'EventName' => $event_name,
+                'Data' => $data
+            );
+            return $this->sendTrack($payload);
+        }
+
+        /*
+         * Send track event payload
          * @param $payload array Payload to send to track endpoint
          * @access private
          */
-        private function sendTrack($payload = NULL) {
-            if ($this->_invalid_event_type) {
+        private function sendTrack($payload) {
+            if ($this->_invalid_event) {
                 trigger_error('$event_type must be one of \'identify\', \'custom\' or \'shopify\'');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
-
+            // Basic validation before finally POST'ing
+            if (!isset($this->_base_route) || !isset($this->_event_type) || !isset($this->_client_id)) {
+                trigger_error('one of: $_base_route, $_event_type, $_client_id is missing during URL construction');
+                return new CS_REST_Wrapper_Result(null, 400);
+            }
             if (isset($payload) && is_array($payload)) {
                 $event_url = $this->_base_route . 'events/' . $this->_event_type . '/' . $this->_client_id . '/track';
                 return $this->post_request($event_url, $payload);
