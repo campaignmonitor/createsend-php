@@ -20,11 +20,13 @@ class CS_REST_OAuthTestEvents extends CS_REST_TestEvents {
 abstract class CS_REST_TestEvents extends CS_REST_TestBase {
     var $client_id = 'fakeclientid';
     var $events_base_route;
+    var $event_type = "identify";
 
     function set_up_inner() {
         $this->events_base_route =  $this->base_route.'events/'.$this->client_id.'/'; 
-        $this->wrapper = new CS_REST_Events($this->auth, $this->client_id, $this->protocol, $this->log_level,
-        $this->api_host, $this->mock_log, $this->mock_serialiser, $this->mock_transport);
+        $this->wrapper = new CS_REST_Events($this->auth, $this->client_id, $this->event_type, $this->protocol,
+                                            $this->log_level, $this->api_host, $this->mock_log,
+                                            $this->mock_serialiser, $this->mock_transport);
     }
    
     function testtrack() {
@@ -33,19 +35,28 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
         $email = 'test@email.com';
         $event_name = 'Widget Man!';
         $data = array('ExampleField'=> 'Me');
+        $anon_id = 'anonid-0';
+        $user_id = 'userid-0';
         $response_code = 202;
 
-        $call_options = $this->get_call_options($this->base_route.'events/'.$client_id.'/track', 'POST');
+        $call_options = $this->get_call_options($this->base_route.'events/'.$this->event_type.'/'.$this->client_id.'/track', 'POST');
 
+        // `Non-identify` event (custom, shopify)
         $event_info = array (
             'ContactID' => array(
-                'Email' => 'test@email.com'
+                'Email' => 'test@email.com',
             ),
             'EventName' => $event_name,
             'Data' => array(
                 'ExampleField'=> 'Me'
             )
         );
+
+        if (strcmp($this->event_type, "identify") === 0) {
+            // `Identify` event
+            $event_info['ContactID']['AnonymousID'] = $anon_id;
+            $event_info['ContactID']['UserID'] = $user_id;
+        }
 
         $transport_result = array (
             'code' => $response_code, 
@@ -59,7 +70,11 @@ abstract class CS_REST_TestEvents extends CS_REST_TestBase {
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $raw_result, $raw_result, 'event info was serialised to this', $event_info, $response_code);
 
-        $result = $this->wrapper->track($email, $event_name, $data);
+        if (strcmp($this->event_type, "identify") == 0) {
+            $result = $this->wrapper->track($email, $event_name, $anon_id, $user_id, $data);
+        } else {
+            $result = $this->wrapper->track($email, $event_name, NULL, NULL, $data);
+        }
 
         $this->assertIdentical($expected_result, $result);
 
