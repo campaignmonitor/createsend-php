@@ -194,7 +194,7 @@ if (!class_exists('CS_REST_Events')) {
                 return new CS_REST_Wrapper_Result(null, 400);
             }
             if (strlen($event_name) > 1000) {
-                trigger_error('$event_name needs to be shorter, max length is 1000 character');
+                trigger_error('$event_name needs to be shorter, max length is 1000 bytes');
                 return new CS_REST_Wrapper_Result(null, 400);
             }
             if (isset($data)) {
