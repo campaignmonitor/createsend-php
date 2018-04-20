@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v5.1.3 - 15th May, 2017
+
+* Changed local API timeout from 10 sec to 20 sec
+
 ## v5.1.2 - 15th May, 2017
 
 * Added support for Behavioral Event data
