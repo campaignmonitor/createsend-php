@@ -120,6 +120,8 @@ $wrap = new CS_REST_General($auth);
 $result = $wrap->get_clients();
 var_dump($result->response);
 ```
+## API Call Timeout
+You can set your local API call timeout time in createsend-php\class\transport.php line 11, in the CS_REST_CALL_TIMEOUT variable. Currently the default is 20 secs.
 
 ## Examples
 
