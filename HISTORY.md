@@ -1,5 +1,12 @@
 # createsend-php history
 
+## v6.0.0 - 23 May, 2018
+
+* Upgrades to Createsend API v3.2 which includes new breaking changes
+* Breaking: 'Consent to track' field is now mandatory for sending smart and classic transactionl emails
+* Breaking: 'Consent to track' field is now mandatory when adding or updating subscribers
+* Optional 'Include tracking preference' field when retrieving lists of subscribers
+
 ## v5.1.3 - 15th May, 2017
 
 * Changed local API timeout from 10 sec to 20 sec

@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/serialisation.php';
 require_once dirname(__FILE__).'/transport.php';
 require_once dirname(__FILE__).'/log.php';
 
-defined('CS_REST_WRAPPER_VERSION') or define('CS_REST_WRAPPER_VERSION', '5.1.3');
+defined('CS_REST_WRAPPER_VERSION') or define('CS_REST_WRAPPER_VERSION', '6.0.0');
 defined('CS_HOST') or define('CS_HOST', 'api.createsend.com');
 defined('CS_OAUTH_BASE_URI') or define('CS_OAUTH_BASE_URI', 'https://'.CS_HOST.'/oauth');
 defined('CS_OAUTH_TOKEN_URI') or define('CS_OAUTH_TOKEN_URI', CS_OAUTH_BASE_URI.'/token');
@@ -146,7 +146,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
             $this->_log = is_null($log) ? new CS_REST_Log($debug_level) : $log;
 
             $this->_protocol = $protocol;
-            $this->_base_route = $protocol.'://'.$host.'/api/v3.1/';
+            $this->_base_route = $protocol.'://'.$host.'/api/v3.2/';
 
             $this->_log->log_message('Creating wrapper for '.$this->_base_route, get_class($this), CS_REST_LOG_VERBOSE);
 
@@ -230,7 +230,13 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
             return $this->_call($call_options, CS_REST_DELETE, $route);
         }
 
-        function get_request($route, $call_options = array()) {
+        function get_request($route, $include_tracking_pref=false, $call_options = array()) {
+            
+            if(!is_null($include_tracking_pref)) {
+                $route .= '&includeTrackingPreference='.($include_tracking_pref ? "true" : "false");
+            }
+
+
             return $this->_call($call_options, CS_REST_GET, $route);
         }
 
@@ -247,7 +253,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
           return $this->get_request($route);
         }
 
-        function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction,
+        function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref,
             $join_char = '&') {
             if(!is_null($page_number)) {
                 $route .= $join_char.'page='.$page_number;
@@ -269,7 +275,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
                 $join_char = '&';
             }
 
-            return $this->get_request($route);
+            return $this->get_request($route, $include_tracking_pref);
         }
 
         /**

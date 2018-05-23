@@ -105,10 +105,15 @@ if (!class_exists('CS_REST_Transactional_ClassicEmail')) {
          *          )
          *      )
          */
-        function send($message, $group = NULL, $add_to_list_ID = NULL, $options = array()) {
-            $group_param = array( "Group" => $group);
-            $add_to_list_param = array( "AddRecipientsToListID" => $add_to_list_ID);
-            $data = array_merge($this->_client_id_param, $message, $group_param, $add_to_list_param, $options);
+        function send($message, $group = NULL, $consent_to_track, $add_to_list_ID = NULL, $options = array()) {
+            $all_params = array(
+                "Group" => $group,
+                "AddRecipientsToListID" => $add_to_list_ID,
+                "ConsentToTrack" => $consent_to_track
+            );
+            $data = array_merge(
+                $this->_client_id_param, $message, $all_params, $options
+            );
             return $this->post_request($this->_base_route.'transactional/classicemail/send', $data);
         }
 
