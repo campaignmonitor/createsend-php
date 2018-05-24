@@ -286,7 +286,7 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_active_subscribers($added_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref=false) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'active.json?date='.urlencode($added_since), 
                 $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
@@ -327,7 +327,7 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_unconfirmed_subscribers($added_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref=false) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
 
             return $this->get_request_paged($this->_lists_base_route.'unconfirmed.json?date='.urlencode($added_since), 
                 $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
@@ -368,7 +368,7 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_bounced_subscribers($bounced_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref=false) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'bounced.json?date='.urlencode($bounced_since), 
                 $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
@@ -409,7 +409,7 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_unsubscribed_subscribers($unsubscribed_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref=false) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'unsubscribed.json?date='.urlencode($unsubscribed_since), 
                 $page_number, $page_size, $order_field, $order_direction,$include_tracking_pref);
@@ -450,7 +450,7 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_deleted_subscribers($deleted_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref=false) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'deleted.json?date='.urlencode($deleted_since), 
                 $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);

@@ -179,7 +179,7 @@ if (!class_exists('CS_REST_Subscribers')) {
          *     )
          * }
          */
-        function get($email, $include_tracking_pref) {
+        function get($email, $include_tracking_pref = NULL) {
             return $this->get_request($this->_subscribers_base_route.'.json?email='.urlencode($email), $include_tracking_pref);
         }
 

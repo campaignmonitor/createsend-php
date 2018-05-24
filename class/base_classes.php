@@ -171,6 +171,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
                 'host' => $host,
                 'protocol' => $protocol
             );
+
         }
 
         /**
@@ -230,12 +231,12 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
             return $this->_call($call_options, CS_REST_DELETE, $route);
         }
 
-        function get_request($route, $include_tracking_pref=false, $call_options = array()) {
+        function get_request($route, $include_tracking_pref = NULL, $call_options = array()) {
             
-            if(!is_null($include_tracking_pref)) {
+            if(isset($include_tracking_pref)
+                    && is_bool($include_tracking_pref)) {
                 $route .= '&includeTrackingPreference='.($include_tracking_pref ? "true" : "false");
             }
-
 
             return $this->_call($call_options, CS_REST_GET, $route);
         }
@@ -253,7 +254,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
           return $this->get_request($route);
         }
 
-        function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref,
+        function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref = NULL,
             $join_char = '&') {
             if(!is_null($page_number)) {
                 $route .= $join_char.'page='.$page_number;

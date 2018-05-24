@@ -200,7 +200,7 @@ if (!class_exists('CS_REST_Segments')) {
          * }
          */
         function get_subscribers($subscribed_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NUL, $include_tracking_pref=false) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_segments_base_route.'/active.json?date='.urlencode($subscribed_since), 
                 $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
