@@ -30,17 +30,20 @@ abstract class CS_REST_TestSubscribers extends CS_REST_TestBase {
     function testadd() {
         $raw_result = '';
 
+
         $call_options = $this->get_call_options($this->list_base_route.'.json', 'POST');
 
         $subscriber = array (
             'Email' => 'test@test.com',
             'Name' => 'Widget Man!',
-            'CustomFields' => array(array(1,2), array(3,4))
+            'CustomFields' => array(array(1,2), array(3,4)),
+            'ConsentToTrack' => 'yes'
         );
 
         $this->general_test_with_argument('add', $subscriber, $call_options,
 			$raw_result, $raw_result, 'subscriber was serialised to this');
     }
+
 
     function testupdate() {
         $raw_result = '';
@@ -53,7 +56,8 @@ abstract class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $subscriber = array (
             'Email' => 'test2@test.com',
             'Name' => 'Widget Man!',
-            'CustomFields' => array(array(1,2), array(3,4))
+            'CustomFields' => array(array(1,2), array(3,4)),
+            'ConsentToTrack' => 'unchanged',
         );
 
         $transport_result = array (
@@ -86,12 +90,14 @@ abstract class CS_REST_TestSubscribers extends CS_REST_TestBase {
             array (
     	            'Email' => 'test@test.com',
     	            'Name' => 'Widget Man!',
-    	            'CustomFields' => array(array(1,2), array(3,4))
+    	            'CustomFields' => array(array(1,2), array(3,4)),
+                    'ConsentToTrack' => 'no',
             ),
             array (
                     'Email' => 'test@test.com',
                     'Name' => 'Widget Man!',
-                    'CustomFields' => array(array(1,2), array(3,4))
+                    'CustomFields' => array(array(1,2), array(3,4)),
+                    'ConsentToTrack' => 'yes',
             )
         );
 
@@ -124,9 +130,10 @@ abstract class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $deserialised = array(1,2,34,5);
         $response_code = 200;
         $email = 'test@test.com';
+        $tracking_pref = 'true';
 
         $call_options = $this->get_call_options(
-            $this->list_base_route.'.json?email='.urlencode($email), 'GET');
+            $this->list_base_route.'.json?email='.urlencode($email).'&includeTrackingPreference='.$tracking_pref, 'GET');
 
         $transport_result = array (
             'code' => $response_code, 
@@ -138,7 +145,7 @@ abstract class CS_REST_TestSubscribers extends CS_REST_TestBase {
         $this->setup_transport_and_serialisation($transport_result, $call_options,
             $deserialised, $raw_result, NULL, NULL, $response_code);
 
-        $result = $this->wrapper->get($email);
+        $result = $this->wrapper->get($email, true);
 
         $this->assertIdentical($expected_result, $result);
     }
