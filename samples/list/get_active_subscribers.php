@@ -7,7 +7,9 @@ $auth = array(
     'refresh_token' => 'your refresh token');
 $wrap = new CS_REST_Lists('List ID', $auth);
 
-$result = $wrap->get_active_subscribers('Added since', 1, 50, 'email', 'asc');
+//The 6th argument will return the tracking preference of the subscribers - 'ConsentToTrack'
+$result = $wrap->get_active_subscribers('Added since', 1, 50, 'email', 'asc', true);
+
 //$result = $wrap->get_active_subscribers(date('Y-m-d', strtotime('-30 days')), 
 //  page number, page size, order by, order direction);
 
