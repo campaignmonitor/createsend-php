@@ -276,6 +276,31 @@ abstract class CS_REST_TestLists extends CS_REST_TestBase {
         $this->assertIdentical($expected_result, $result);
     }
 
+    function testget_active_tracking() {
+        $raw_result = 'some subscribers';
+        $since = '2020';
+        $response_code = 200;
+        $deserialised = array('Subscriber 1', 'Subscriber 2');
+        $tracking_pref = 'true';
+
+        $call_options = $this->get_call_options($this->list_base_route.'active.json?date='.$since.'&includeTrackingPreference='.$tracking_pref);
+
+        $transport_result = array (
+            'code' => $response_code, 
+            'response' => $raw_result
+        );
+        
+        $expected_result = new CS_REST_Wrapper_Result($deserialised, $response_code);
+
+        $this->setup_transport_and_serialisation($transport_result, $call_options,
+            $deserialised, $raw_result, NULL, NULL, $response_code);
+
+        $result = $this->wrapper->get_active_subscribers($since, null, null, null, null, true);
+
+        $this->assertIdentical($expected_result, $result);
+    }
+
+
     function testget_unconfirmed_subscribers() {
         $raw_result = 'some subscribers';
         $since = '2020';

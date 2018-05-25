@@ -75,6 +75,7 @@ if (!class_exists('CS_REST_Subscribers')) {
          *                 'Value' => The value for this subscriber
          *             )
          *         )
+         *         'ConsentToTrack' => Subscriber tracking preference ("yes", "no")
          *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
          *         'RestartSubscriptionBasedAutoResponders' => Whether we should restart subscription based auto responders which are sent when the subscriber first subscribes to a list.
          *     )
@@ -102,6 +103,7 @@ if (!class_exists('CS_REST_Subscribers')) {
          *                 'Clear' => true/false (pass true to remove this custom field. in the case of a [multi-option, select many] field, pass an option in the 'Value' field to clear that option or leave Value blank to remove all options)
          *             )
          *         )
+         *         'ConsentToTrack' => Subscriber tracking preference ("yes", "no")
          *         'Resubscribe' => Whether we should resubscribe this subscriber if they already exist in the list
          *         'RestartSubscriptionBasedAutoResponders' => Whether we should restart subscription based auto responders which are sent when the subscriber first subscribes to a list.
          *     )
@@ -177,8 +179,8 @@ if (!class_exists('CS_REST_Subscribers')) {
          *     )
          * }
          */
-        function get($email) {
-            return $this->get_request($this->_subscribers_base_route.'.json?email='.urlencode($email));
+        function get($email, $include_tracking_pref = NULL) {
+            return $this->get_request($this->_subscribers_base_route.'.json?email='.urlencode($email), $include_tracking_pref);
         }
 
         /**

@@ -258,6 +258,7 @@ if (!class_exists('CS_REST_Lists')) {
          * @param int $page_size The number of records per page
          * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+         * @param boolean $include_tracking_pref Whether or not to return the ConsentToTrack value (true, false)
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
@@ -285,10 +286,10 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_active_subscribers($added_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'active.json?date='.urlencode($added_since), 
-                $page_number, $page_size, $order_field, $order_direction);
+                $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
         }
 
         /**
@@ -298,6 +299,7 @@ if (!class_exists('CS_REST_Lists')) {
          * @param int $page_size The number of records per page
          * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+         * @param boolean $include_tracking_pref Whether or not to return the ConsentToTrack value (true, false)
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
@@ -325,10 +327,10 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_unconfirmed_subscribers($added_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
 
             return $this->get_request_paged($this->_lists_base_route.'unconfirmed.json?date='.urlencode($added_since), 
-                $page_number, $page_size, $order_field, $order_direction);
+                $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
         }
 
         /**
@@ -338,6 +340,7 @@ if (!class_exists('CS_REST_Lists')) {
          * @param int $page_size The number of records per page
          * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+         * @param boolean $include_tracking_pref Whether or not to return the ConsentToTrack value (true, false)
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
@@ -365,10 +368,10 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_bounced_subscribers($bounced_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'bounced.json?date='.urlencode($bounced_since), 
-                $page_number, $page_size, $order_field, $order_direction);
+                $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
         }
 
         /**
@@ -378,6 +381,7 @@ if (!class_exists('CS_REST_Lists')) {
          * @param int $page_size The number of records per page
          * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+         * @param boolean $include_tracking_pref Whether or not to return the ConsentToTrack value (true, false)
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
@@ -405,10 +409,10 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_unsubscribed_subscribers($unsubscribed_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'unsubscribed.json?date='.urlencode($unsubscribed_since), 
-                $page_number, $page_size, $order_field, $order_direction);
+                $page_number, $page_size, $order_field, $order_direction,$include_tracking_pref);
         }
 
         /**
@@ -418,6 +422,7 @@ if (!class_exists('CS_REST_Lists')) {
          * @param int $page_size The number of records per page
          * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+         * @param boolean $include_tracking_pref Whether or not to return the ConsentToTrack value (true, false)
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
@@ -445,10 +450,10 @@ if (!class_exists('CS_REST_Lists')) {
          * }
          */
         function get_deleted_subscribers($deleted_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_lists_base_route.'deleted.json?date='.urlencode($deleted_since), 
-                $page_number, $page_size, $order_field, $order_direction);
+                $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
         }
 
         /**

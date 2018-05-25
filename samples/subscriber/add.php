@@ -27,6 +27,7 @@ $result = $wrap->add(array(
             'Value' => 'Option 2'
         )
     ),
+    'ConsentToTrack' => 'yes',
     'Resubscribe' => true
 ));
 

@@ -172,6 +172,7 @@ if (!class_exists('CS_REST_Segments')) {
          * @param int $page_size The number of records per page
          * @param string $order_field The field to order the record set by ('EMAIL', 'NAME', 'DATE')
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+         * @param boolean $include_tracking_pref Whether or not to return the ConsentToTrack value (true, false)
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
@@ -199,10 +200,10 @@ if (!class_exists('CS_REST_Segments')) {
          * }
          */
         function get_subscribers($subscribed_since = '', $page_number = NULL, 
-            $page_size = NULL, $order_field = NULL, $order_direction = NULL) {
+            $page_size = NULL, $order_field = NULL, $order_direction = NULL, $include_tracking_pref = NULL) {
                 
             return $this->get_request_paged($this->_segments_base_route.'/active.json?date='.urlencode($subscribed_since), 
-                $page_number, $page_size, $order_field, $order_direction);
+                $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref);
         }
     }
 }

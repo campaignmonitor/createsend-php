@@ -15,6 +15,7 @@ $result = $wrap->update('Old Email Address', array(
             'Value' => 'Field Value'
         )
     ),
+    'ConsentToTrack' => 'unchanged',
     'Resubscribe' => true
 ));
 

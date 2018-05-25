@@ -48,6 +48,8 @@ $complex_message = array(
 );
 $group_name = "PHP test group"; # optional, great for reporting, should not be unique message
 $add_recipients_to_subscriber_list_ID = "6d0366fcee146ab9bdaf3247446bbfdd"; # optional, make sure you have permission
+$consent_to_track = 'yes'; # Valid: 'yes', 'no', 'unchanged'
+
 $options = array(
   "TrackOpens" => true,
   "TrackClicks" => true,

@@ -47,7 +47,9 @@ $complex_message = array(
 );
 
 $add_recipients_to_subscriber_list = true;
-$result = $wrap->send($complex_message, $add_recipients_to_subscriber_list);
+$consent_to_track = 'yes'; # Valid: 'yes', 'no', 'unchanged'
+
+$result = $wrap->send($complex_message, $consent_to_track, $add_recipients_to_subscriber_list);
 echo "\nSent! Here's the response:\n";
 var_dump($result->response);
 
