@@ -156,7 +156,7 @@ if (!class_exists('CS_REST_Transactional_SmartEmail')) {
          *        "SmartEmailID" => string
          *        "Name" => string
          *        "CreatedAt" => string
-         *        "Status" => stirng
+         *        "Status" => string
          *        "Properties" => array (
          *            "From" =. string
          *            "ReplyTo" => string
