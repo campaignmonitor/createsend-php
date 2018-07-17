@@ -44,6 +44,7 @@ if (!class_exists('CS_REST_BaseTransport')) {
     class CS_REST_BaseTransport {
         
         var $_log;
+        var $retry = 0;
         
         function __construct($log) {
             $this->_log = $log;
@@ -167,11 +168,19 @@ if (!class_exists('CS_REST_CurlTransport')) {
             $response = curl_exec($ch);
 
             if(!$response && $response !== '') {
-                $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch),
-                    get_class($this), CS_REST_LOG_ERROR);
+                
+                // Handle retries
+                if ($this->retry < 3) {
+                    $this->retry++;
+                    
+                    return $this->make_call($call_options)
+                } else {
+                    $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch),
+                        get_class($this), CS_REST_LOG_ERROR);
 
-                require_once dirname(__FILE__).'/exceptions.php';
-                throw new CurlException(curl_error($ch), curl_errno($ch));
+                    require_once dirname(__FILE__).'/exceptions.php';
+                    throw new CurlException(curl_error($ch), curl_errno($ch));
+                }
             }
             
             list( $headers, $result ) = $this->split_and_inflate($response, $inflate_response);
@@ -189,6 +198,9 @@ if (!class_exists('CS_REST_CurlTransport')) {
 
             curl_close($ch);
 
+            // Set retry to 0
+            $this->retry = 0;
+            
             return $result;
         }
     }
