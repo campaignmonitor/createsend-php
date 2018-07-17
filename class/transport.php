@@ -173,7 +173,7 @@ if (!class_exists('CS_REST_CurlTransport')) {
                 if ($this->retry < 3) {
                     $this->retry++;
                     
-                    return $this->make_call($call_options)
+                    return $this->make_call($call_options);
                 } else {
                     $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch),
                         get_class($this), CS_REST_LOG_ERROR);
