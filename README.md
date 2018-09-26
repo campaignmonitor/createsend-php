@@ -5,7 +5,14 @@ A PHP library which implements the complete functionality of the [Campaign Monit
 
 ## Installation
 
-If you use [Composer](http://getcomposer.org/), you can add [campaignmonitor/createsend-php](https://packagist.org/packages/campaignmonitor/createsend-php) to your `composer.json` file:
+### Composer
+If you use [Composer](http://getcomposer.org/), you can run the following command from the root of your project:
+
+```
+composer require campaignmonitor/createsend-php
+```
+
+Or add [campaignmonitor/createsend-php](https://packagist.org/packages/campaignmonitor/createsend-php) to your `composer.json` file:
 
 ```json
 {
@@ -15,6 +22,13 @@ If you use [Composer](http://getcomposer.org/), you can add [campaignmonitor/cre
 }
 ```
 
+Followed by running:
+
+```
+composer update
+```
+
+### Manual Installation
 Otherwise you can simply [download](https://github.com/campaignmonitor/createsend-php/tags) the library and include it in your project.
 
 After you have installed the library, simply include the relevant API class, as follows:
