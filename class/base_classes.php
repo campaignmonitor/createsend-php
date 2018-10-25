@@ -232,7 +232,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
         }
 
         function get_request($route, $include_tracking_pref = NULL, $call_options = array()) {
-            
+
             if(isset($include_tracking_pref)
                     && is_bool($include_tracking_pref)) {
                 $route .= '&includeTrackingPreference='.($include_tracking_pref ? "true" : "false");
@@ -255,27 +255,34 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
         }
 
         function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref = NULL,
-            $join_char = '&') {
+            $join_char = 'deprecated') {
+            // Stores our query values
+            $query = [];
+            // Extract any initial queries in the route into our local query
+            if(strpos($route, '?') !== false) {
+                $parts = parse_url($route);
+                $route = current(explode('?', $route));
+                if(array_key_exists('query', $parts) && !empty($parts['query'])) {
+                    parse_str($parts['query'], $query);
+                }
+            }
+            // Now selectively add supplied vars to the query
             if(!is_null($page_number)) {
-                $route .= $join_char.'page='.$page_number;
-                $join_char = '&';
+                $query['page'] = $page_number;
             }
-
             if(!is_null($page_size)) {
-                $route .= $join_char.'pageSize='.$page_size;
-                $join_char = '&';
+                $query['pageSize'] = $page_size;
             }
-
             if(!is_null($order_field)) {
-                $route .= $join_char.'orderField='.$order_field;
-                $join_char = '&';
+                $query['orderField'] = $order_field;
             }
-
             if(!is_null($order_direction)) {
-                $route .= $join_char.'orderDirection='.$order_direction;
-                $join_char = '&';
+                $query['orderDirection'] = $order_direction;
             }
-
+            // If we ended up with a query, add it back to the route
+            if(!empty($query)) {
+                $route .= '?'.http_build_query($query);
+            }
             return $this->get_request($route, $include_tracking_pref);
         }
 
