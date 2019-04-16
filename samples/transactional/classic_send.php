@@ -55,7 +55,7 @@ $options = array(
   "TrackClicks" => true,
   "InlineCSS" => true,
 ); # all are true by default, but you can override
-$result = $wrap->send($complex_message, $group_name, $add_recipients_to_subscriber_list_ID, $options);
+$result = $wrap->send($complex_message, $group_name, $consent_to_track, $add_recipients_to_subscriber_list_ID, $options);
 echo "\nSent! Here's the response:\n";
 var_dump($result->response);
 
