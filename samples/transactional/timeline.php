@@ -1,8 +1,9 @@
 <?php
 require_once "../../csrest_transactional_timeline.php";
 
+$client_id = "Your Client ID";
 $auth = array("api_key" => "Your API Key");
-$wrap = new CS_REST_Transactional_Timeline($auth);
+$wrap = new CS_REST_Transactional_Timeline($auth, $client_id);
 
 
 echo "\nGetting the statistics with the default parameters...\n";

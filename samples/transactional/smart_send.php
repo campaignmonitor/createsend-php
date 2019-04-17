@@ -13,7 +13,8 @@ $simple_message = array(
     "username" => "janebloggs"
   ),
 );
-$result = $wrap->send($simple_message);
+$consent_to_track = 'yes'; # Valid: 'yes', 'no', 'unchanged'
+$result = $wrap->send($simple_message, $consent_to_track);
 echo "\nSent! Here's the response:\n";
 var_dump($result->response);
 

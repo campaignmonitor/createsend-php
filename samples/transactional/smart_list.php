@@ -1,8 +1,9 @@
 <?php
 require_once "../../csrest_transactional_smartemail.php";
 
+$client_id = "Your Client ID";
 $auth = array("api_key" => "Your API Key");
-$wrap = new CS_REST_Transactional_SmartEmail(NULL, $auth);
+$wrap = new CS_REST_Transactional_SmartEmail(NULL, $auth, $client_id);
 
 echo "\nGetting the list of smart emails...\n";
 
