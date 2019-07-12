@@ -1,9 +1,5 @@
 <?php
 
-if (!class_exists('Services_JSON', false)) {
-    require_once dirname(__FILE__).'/services_json.php';
-}
-
 if(!function_exists("CS_REST_SERIALISATION_get_available")) {
     function CS_REST_SERIALISATION_get_available($log) { 
         $log->log_message('Getting serialiser', __FUNCTION__, CS_REST_LOG_VERBOSE);
@@ -107,6 +103,10 @@ if (!class_exists('CS_REST_ServicesJsonSerialiser')) {
         
         function __construct($log) {
             parent::__construct($log);
+            if (!class_exists('Services_JSON', false)) {
+                require_once dirname(__FILE__).'/services_json.php';
+            }
+
             $this->_serialiser = new Services_JSON();
         }
 
