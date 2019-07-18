@@ -15,5 +15,7 @@ matrix:
     - php: hhvm
       dist: trusty
 
-before_script: composer install --dev
+before_script: 
+  - composer install --dev
+  - curl -sSfL -o ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar
 script: cd tests && php all_tests.php && cd ..
