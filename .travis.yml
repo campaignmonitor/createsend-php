@@ -14,8 +14,6 @@ matrix:
       dist: trusty
     - php: hhvm
       dist: trusty
-      env:
-        - HHVMPHP7=1
 
 before_script: composer install --dev
 script: cd tests && php all_tests.php && cd ..
