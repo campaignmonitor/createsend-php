@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/serialisation.php';
 require_once dirname(__FILE__).'/transport.php';
 require_once dirname(__FILE__).'/log.php';
 
-defined('CS_REST_WRAPPER_VERSION') or define('CS_REST_WRAPPER_VERSION', '6.0.0');
+defined('CS_REST_WRAPPER_VERSION') or define('CS_REST_WRAPPER_VERSION', '6.0.1');
 defined('CS_HOST') or define('CS_HOST', 'api.createsend.com');
 defined('CS_OAUTH_BASE_URI') or define('CS_OAUTH_BASE_URI', 'https://'.CS_HOST.'/oauth');
 defined('CS_OAUTH_TOKEN_URI') or define('CS_OAUTH_TOKEN_URI', CS_OAUTH_BASE_URI.'/token');
@@ -164,7 +164,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
 
             $this->_default_call_options = array (
                 'authdetails' => $auth_details,
-                'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
+                'userAgent' => 'createsend-php v'.CS_REST_WRAPPER_VERSION.
                     ' PHPv'.phpversion().' over '.$transport_type.' with '.$this->_serialiser->get_type(),
                 'contentType' => 'application/json; charset=utf-8',
                 'deserialise' => true,
