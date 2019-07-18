@@ -257,7 +257,7 @@ if (!class_exists('CS_REST_Wrapper_Base')) {
         function get_request_paged($route, $page_number, $page_size, $order_field, $order_direction, $include_tracking_pref = NULL,
             $join_char = 'deprecated') {
             // Stores our query values
-            $query = [];
+            $query = array();
             // Extract any initial queries in the route into our local query
             if(strpos($route, '?') !== false) {
                 $parts = parse_url($route);
