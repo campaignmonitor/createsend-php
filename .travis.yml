@@ -12,7 +12,7 @@ matrix:
       dist: trusty
     - php: 7.0
       dist: trusty
-    - hhvm
+    - php: hhvm
       dist: trusty
 
 before_script: composer install --dev
