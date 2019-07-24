@@ -45,7 +45,7 @@ class CS_REST_TestBase extends UnitTestCase {
     function get_call_options($route, $method = 'GET') {
         return array (
             'authdetails' => $this->auth,
-            'userAgent' => 'CS_REST_Wrapper v'.CS_REST_WRAPPER_VERSION.
+            'userAgent' => 'createsend-php v'.CS_REST_WRAPPER_VERSION.
             ' PHPv'.phpversion().' over '.$this->transport_type.' with '.$this->serialisation_type,
             'contentType' => 'application/json; charset=utf-8',
             'deserialise' => true,
