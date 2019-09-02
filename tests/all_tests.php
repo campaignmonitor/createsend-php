@@ -18,5 +18,7 @@ class AllTests extends TestSuite {
         $this->addFile('csrest_people_test.php');
         $this->addFile('csrest_administrators_test.php');
         $this->addFile('csrest_events_test.php');
+        $this->addFile('csrest_journeys_test.php');
+        $this->addFile('csrest_journey_emails_test.php');
     }
 }

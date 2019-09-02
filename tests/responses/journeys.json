@@ -1,0 +1,14 @@
+[
+	{
+	    "ListID": "abcabcabcacbabcabcabcabcabc",
+	    "JourneyID": "12345678901234567890",
+	    "Name": "Journey One",
+	    "Status": "Active"
+	},
+	{
+	    "ListID": "defdefdedefdefdefdefdefdefdef",
+	    "JourneyID": "09876543210987654321",
+	    "Name": "Journey Two",
+	    "Status": "Active"
+	}
+]

@@ -448,5 +448,24 @@ if (!class_exists('CS_REST_Clients')) {
         function set_primary_contact($emailAddress) {
         	return $this->put_request($this->_clients_base_route.'primarycontact.json?email=' . urlencode($emailAddress), '');
         }
+
+
+
+          /**
+         * Gets a list of journeys for the current client
+         * @access public
+         * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+         * array(
+         *     {
+          *     'ListID' => The id of the list
+         *     'JourneyID' => The id of the journey
+         *     'Name' => Name of the journey
+         *     'Status' => Status of the journey
+         *     }
+         * )
+         */
+        function get_journeys() {
+            return $this->get_request($this->_clients_base_route.'journeys.json');
+        }
     }
 }
