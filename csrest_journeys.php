@@ -78,7 +78,7 @@ if (!class_exists('CS_REST_Journeys')) {
          *               'EmailID' => The ID of the email attached to the journey
          *               'Name' => The name of the email attached to the journey
          *               'Bounced' => The number of recipients who bounced
-         *               'Clicks' => The total number of recorded clicks
+         *               'Clicked' => The total number of recorded clicks
          *               'Opened' => The total number of recorded opens
          *               'Sent' => The total recipients of the journey email
          *               'UniqueOpened' => The number of recipients who opened
