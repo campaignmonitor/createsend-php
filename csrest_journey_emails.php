@@ -225,10 +225,10 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          *     'NumberOfPages' => The total number of pages for this collection
          *     'Results' => array(
          *         {
-					'EmailAddress' => The email address of the subscriber who unsubscribed
-					'BounceType' => The bounce type 
-					'Date' => The date of the bounce
-					'Reason' => The reason for the bounce 
+		 *			'EmailAddress' => The email address of the subscriber who unsubscribed
+		 *			'BounceType' => The bounce type 
+		 *			'Date' => The date of the bounce
+		 *			'Reason' => The reason for the bounce 
          *         }
          *     )
          * }
@@ -238,8 +238,6 @@ if (!class_exists('CS_REST_JourneyEmails')) {
         	return $this->get_request_paged($this->_journey_emails_base_route.'/bounces.json?date='.urlencode($since), $page_number, 
                 $page_size, $order_direction);
         }
-
-
 	}
 
 }
