@@ -40,8 +40,6 @@ class CS_REST_TestBase extends UnitTestCase {
         $this->wrapper = new CS_REST_General($this->auth, $this->protocol, $this->log_level,
                                              $this->api_host, $this->mock_log, $this->mock_serialiser,
                                              $this->mock_transport);
-
-
     }
 
     function get_call_options($route, $method = 'GET') {

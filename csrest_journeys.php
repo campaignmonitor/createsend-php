@@ -69,29 +69,28 @@ if (!class_exists('CS_REST_Journeys')) {
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
-         *       'JourneyID' => 
-         *       'Name' => 
-         *       'TriggerType' => 
-         *       'Status' => 
+         *       'JourneyID' => The journey id 
+         *       'Name' => The name of the journey
+         *       'TriggerType' => The method in which the journey was triggered
+         *       'Status' => The status of the journey
          *       'Emails' => array(
          *           {
-         *               'EmailID' => String
-         *               'Name' => String
-         *               'Bounced' => Int
-         *               'Clicked' => Int 
-         *               'Opened' => Int
-         *               'Sent' => Int 
-         *               'UniqueOpened' => Int
-         *               'Unsubscribed' => Int
+         *               'EmailID' => The ID of the email attached to the journey
+         *               'Name' => The name of the email attached to the journey
+         *               'Bounced' => The number of recipients who bounced
+         *               'Clicks' => The total number of recorded clicks
+         *               'Opened' => The total number of recorded opens
+         *               'Sent' => The total recipients of the journey email
+         *               'UniqueOpened' => The number of recipients who opened
+         *               'Unsubscribed' => The number of recipients who unsubscribed
          *           }
          *         )
          *
          */
-
+ 
         function get_journey_summary() {        
             return $this->get_request(trim($this->_journeys_base_route, '/').'.json');
         }
-
 	}
 
 }

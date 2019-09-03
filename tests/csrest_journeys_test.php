@@ -34,8 +34,5 @@ abstract class CS_REST_TestJourneys extends CS_REST_TestBase {
         $deserialised = array(1,23,4,5);
         $call_options = $this->get_call_options(trim($this->journey_base_route, '/').'.json');
         $this->general_test('get_journey_summary', $call_options, $raw_result, $deserialised);
-        
     }
-
-   
 }
