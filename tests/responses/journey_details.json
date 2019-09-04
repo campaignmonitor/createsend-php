@@ -1,0 +1,18 @@
+{
+    "JourneyID": "183e5a8818d6202e95f1fa747b924226",
+    "Name": "welcome active folks",
+    "TriggerType": "Enters Segment",
+    "Status": "Active",
+    "Emails": [
+        {
+            "EmailID": "383ec87ea1129ebc5e539a2db35c3200",
+            "Name": "email",
+            "Bounced": 0,
+            "Clicked": 0,
+            "Opened": 1,
+            "Sent": 14,
+            "UniqueOpened": 1,
+            "Unsubscribed": 0
+        }
+    ]
+}

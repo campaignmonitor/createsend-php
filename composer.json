@@ -32,8 +32,9 @@
             "csrest_templates.php",
             "csrest_transactional_classicemail.php",
             "csrest_transactional_smartemail.php",
-            "csrest_transactional_timeline.php"
-
+            "csrest_transactional_timeline.php",
+            "csrest_journeys.php",
+            "csrest_journey_emails.php"
         ]
     }
 }

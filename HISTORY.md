@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v6.1.0 - 3rd September, 2019
+
+* Added support for the Journeys API (https://www.campaignmonitor.com/api/journeys/)
+
 ## v6.0.0 - 23 May, 2018
 
 * Upgrades to Createsend API v3.2 which includes new breaking changes
