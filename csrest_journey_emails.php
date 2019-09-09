@@ -94,7 +94,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
 
         function get_journey_recipients($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/recipients.json?date='.urlencode($since), $page_number, 
-                $page_size, $order_direction);
+                $page_size, NULL, $order_direction);
         }
 
 
@@ -133,7 +133,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
 
         function get_journey_opens($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {
         	return $this->get_request_paged($this->_journey_emails_base_route.'/opens.json?date='.urlencode($since), $page_number, 
-                $page_size, $order_direction);
+                $page_size, NULL, $order_direction);
         }
 
         /**
@@ -172,7 +172,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
 
         function get_journey_clicks($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/clicks.json?date='.urlencode($since), $page_number, 
-                $page_size, $order_direction);
+                $page_size, NULL, $order_direction);
         }
 
         /**
@@ -203,7 +203,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          */
         function get_journey_unsubscribes($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/unsubscribes.json?date='.urlencode($since), $page_number, 
-                $page_size, $order_direction);
+                $page_size, NULL, $order_direction);
         }
 
         /**
@@ -236,7 +236,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
 
         function get_journey_bounces($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/bounces.json?date='.urlencode($since), $page_number, 
-                $page_size, $order_direction);
+                $page_size, NULL, $order_direction);
         }
 	}
 
