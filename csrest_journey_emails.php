@@ -71,6 +71,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * @param string $since The date to start getting bounces from
          * @param int $page_number The page number to get
          * @param int $page_size The number of records per page
+         * @param string $order_field Not used 
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
@@ -92,9 +93,10 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * }
          */
 
-        function get_journey_recipients($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
+        function get_journey_recipients($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+            $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/recipients.json?date='.urlencode($since), $page_number, 
-                $page_size, NULL, $order_direction);
+                $page_size, $order_field, $order_direction);
         }
 
 
@@ -103,6 +105,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * @param string $since The date to start getting bounces from
          * @param int $page_number The page number to get
          * @param int $page_size The number of records per page
+         * @param string $order_field Not used 
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
@@ -131,9 +134,10 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * }
          */
 
-        function get_journey_opens($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {
+        function get_journey_opens($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+            $order_direction = NULL) {
         	return $this->get_request_paged($this->_journey_emails_base_route.'/opens.json?date='.urlencode($since), $page_number, 
-                $page_size, NULL, $order_direction);
+                $page_size, $order_field, $order_direction);
         }
 
         /**
@@ -141,6 +145,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * @param string $since The date to start getting bounces from
          * @param int $page_number The page number to get
          * @param int $page_size The number of records per page
+         * @param string $order_field Not used 
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
@@ -170,9 +175,10 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * }
          */
 
-        function get_journey_clicks($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
+        function get_journey_clicks($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+            $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/clicks.json?date='.urlencode($since), $page_number, 
-                $page_size, NULL, $order_direction);
+                $page_size, $order_field, $order_direction);
         }
 
         /**
@@ -180,6 +186,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * @param string $since The date to start getting bounces from
          * @param int $page_number The page number to get
          * @param int $page_size The number of records per page
+         * @param string $order_field Not used 
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
@@ -201,9 +208,10 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          *     )
          * }
          */
-        function get_journey_unsubscribes($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
+        function get_journey_unsubscribes($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+            $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/unsubscribes.json?date='.urlencode($since), $page_number, 
-                $page_size, NULL, $order_direction);
+                $page_size, $order_field, $order_direction);
         }
 
         /**
@@ -211,6 +219,7 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * @param string $since The date to start getting bounces from
          * @param int $page_number The page number to get
          * @param int $page_size The number of records per page
+         * @param string $order_field Not used 
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
@@ -234,9 +243,10 @@ if (!class_exists('CS_REST_JourneyEmails')) {
          * }
          */
 
-        function get_journey_bounces($since = '', $page_number = NULL, $page_size = NULL, $order_direction = NULL) {        
+        function get_journey_bounces($since = '', $page_number = NULL, $page_size = NULL, $order_field = NULL, 
+            $order_direction = NULL) {        
         	return $this->get_request_paged($this->_journey_emails_base_route.'/bounces.json?date='.urlencode($since), $page_number, 
-                $page_size, NULL, $order_direction);
+                $page_size, $order_field, $order_direction);
         }
 	}
 
