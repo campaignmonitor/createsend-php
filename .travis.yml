@@ -13,6 +13,7 @@ matrix:
     - php: 7.1
     - php: 7.2
     - php: 7.3
+    - php: 7.4
     - php: hhvm-3.30
 
 before_script: composer install --dev
