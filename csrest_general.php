@@ -23,8 +23,9 @@ if (!class_exists('CS_REST_General')) {
          * @access public
          **/
         public static function authorize_url(
-            $client_id, $redirect_uri, $scope, $state = NULL) {
-            $qs = "client_id=".urlencode($client_id);
+            $type, $client_id, $redirect_uri, $scope, $state = NULL) {
+            $qs = "type=".$type;
+            $qs .= "&client_id=".urlencode($client_id);
             $qs .= "&redirect_uri=".urlencode($redirect_uri);
             $qs .= "&scope=".urlencode($scope);
             if ($state) {
