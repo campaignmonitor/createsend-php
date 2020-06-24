@@ -28,7 +28,8 @@ $result = $wrap->import(array(
 	            'Key' => 'Multi Option Field 1',
 	            'Value' => 'Option 2'
 	        )
-            )
+            ),
+	    'ConsentToTrack' => 'yes',
 	),
 	array(
 	    'EmailAddress' => '2nd Subscriber email',
@@ -50,7 +51,8 @@ $result = $wrap->import(array(
 	            'Key' => 'Multi Option Field 1',
 	            'Value' => 'Option 2'
 	        )
-	    )
+	    ),
+	    'ConsentToTrack' => 'yes',
 	)
 ), false);
 
