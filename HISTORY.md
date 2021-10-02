@@ -2,7 +2,7 @@
 
 ## v6.1.2 - 2nd Oct, 2021
 
-* Changed local API timeout from 20 secs to 120 secs
+* Changed local API timeout from 20 secs to 120 secs to cater for changes on get segment subscribers API endpoint.
 
 ## v6.1.1 - 6th May, 2020
 
