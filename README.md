@@ -1,7 +1,5 @@
-# createsend [![Build Status](https://secure.travis-ci.org/campaignmonitor/createsend-php.png)][travis]
+# createsend [![Build Status](https://app.travis-ci.com/campaignmonitor/createsend-php.svg?branch=master)](https://app.travis-ci.com/campaignmonitor/createsend-php)
 A PHP library which implements the complete functionality of the [Campaign Monitor API](http://www.campaignmonitor.com/api/).
-
-[travis]: http://travis-ci.org/campaignmonitor/createsend-php
 
 ## Installation
 
