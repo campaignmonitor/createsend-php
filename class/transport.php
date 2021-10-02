@@ -5,10 +5,10 @@ defined('CS_REST_POST') or define('CS_REST_POST', 'POST');
 defined('CS_REST_PUT') or define('CS_REST_PUT', 'PUT');
 defined('CS_REST_DELETE') or define('CS_REST_DELETE', 'DELETE');
 if (false === defined('CS_REST_SOCKET_TIMEOUT')) {
-    define('CS_REST_SOCKET_TIMEOUT', 20);
+    define('CS_REST_SOCKET_TIMEOUT', 120);
 }
 if (false === defined('CS_REST_CALL_TIMEOUT')) {
-    define('CS_REST_CALL_TIMEOUT', 20);
+    define('CS_REST_CALL_TIMEOUT', 120);
 }
 
 if(!function_exists("CS_REST_TRANSPORT_get_available")) {    
