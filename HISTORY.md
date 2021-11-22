@@ -1,5 +1,14 @@
 # createsend-php history
 
+## v7.0.0 - 22nd Nov, 2021
+
+* Upgrades to Createsend API v3.3 which includes new breaking changes
+* Breaking: client sent campaigns endpoint is now paginated and filtered
+* Added new client tags endpoint
+* Added support for returning campaign name as part of sent, draft and scheduled campaign endpoints
+* Added support for returning campaign name as part of campaign summary endpoint
+* Added sample script for get client tags endpoint
+
 ## v6.1.2 - 2nd Oct, 2021
 
 * Changed local API timeout from 20 secs to 120 secs to cater for changes on get segment subscribers API endpoint.
