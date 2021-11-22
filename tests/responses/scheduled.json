@@ -10,7 +10,8 @@
     "ReplyTo": "myemail@example.com",
     "DateCreated": "2011-05-24 10:37:00",
     "PreviewURL": "http://createsend.com/t/r-DD543521A87C9B8B",
-    "PreviewTextURL": "http://createsend.com/t/r-DD543521A87C9B8B/t"
+    "PreviewTextURL": "http://createsend.com/t/r-DD543521A87C9B8B/t",
+    "Tags": ["Tag1", "Tag2"]
   },
   {
     "DateScheduled": "2011-05-29 11:20:00",
@@ -23,6 +24,7 @@
     "ReplyTo": "myemail@example.com",
     "DateCreated": "2011-05-24 10:39:00",
     "PreviewURL": "http://createsend.com/t/r-DD913521A87C9B8B",
-    "PreviewTextURL": "http://createsend.com/t/r-DD913521A87C9B8B/t"
+    "PreviewTextURL": "http://createsend.com/t/r-DD913521A87C9B8B/t",
+    "Tags": []
   }
 ]

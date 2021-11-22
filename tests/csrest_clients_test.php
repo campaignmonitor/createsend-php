@@ -161,6 +161,14 @@ abstract class CS_REST_TestClients extends CS_REST_TestBase {
         $this->general_test('get_templates', $call_options, $raw_result, $deserialised);
     }
 
+    function testget_tags() {
+        $raw_result = 'some tags';
+        $deserialised = array('Tag One', 'Tag Two');
+        $call_options = $this->get_call_options($this->client_base_route.'tags.json');
+
+        $this->general_test('get_tags', $call_options, $raw_result, $deserialised);
+    }
+
     function testget() {
         $raw_result = 'client data';
         $deserialised = array('CompanyName' => 'Widget Land');

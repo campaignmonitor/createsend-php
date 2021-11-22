@@ -77,32 +77,45 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     					)
     			),
     			'create_client' => '32a381c49a2df99f1d0c6f3c112352b9',
-    			'campaigns' => array(
-    					array(
-    							'WebVersionURL' => 'http://hello.createsend.com/t/ViewEmail/r/765E86829575EE2C/C67FD2F38AC4859C/',
-  							  'WebVersionTextURL' => 'http://createsend.com/t/r-765E86829575EE2C/t',
-    							'CampaignID' => 'fc0ce7105baeaf97f47c99be31d02a91',
-    							'Subject' => 'Campaign One',
-    							'Name' => 'Campaign One',
-                  'FromName' => 'My Name',
-                  'FromEmail' => 'myemail@example.com',
-                  'ReplyTo' => 'myemail@example.com',
-    							'SentDate' => '2010-10-12 12:58:00',
-    							'TotalRecipients' => 2245
-    					),
-    					array(
-    							'WebVersionURL' => 'http://hello.createsend.com/t/ViewEmail/r/DD543566A87C9B8B/C67FD2F38AC4859C/',
-    							'WebVersionTextURL' => 'http://createsend.com/t/r-DD543566A87C9B8B/t',
-    							'CampaignID' => '072472b88c853ae5dedaeaf549a8d607',
-    							'Subject' => 'Campaign Two',
-    							'Name' => 'Campaign Two',
-                  'FromName' => 'My Name',
-                  'FromEmail' => 'myemail@example.com',
-                  'ReplyTo' => 'myemail@example.com',
-    							'SentDate' => '2010-10-06 16:20:00',
-    							'TotalRecipients' => 11222
-    					)
-    			),
+
+                'campaigns' => array(
+                    'Results' => array(
+                        array(
+                            'WebVersionURL' => 'http://hello.createsend.com/t/ViewEmail/r/765E86829575EE2C/C67FD2F38AC4859C/',
+                            'WebVersionTextURL' => 'http://createsend.com/t/r-765E86829575EE2C/t',
+                            'CampaignID' => 'fc0ce7105baeaf97f47c99be31d02a91',
+                            'Subject' => 'Campaign One',
+                            'Name' => 'Campaign One',
+                            'FromName' => 'My Name',
+                            'FromEmail' => 'myemail@example.com',
+                            'ReplyTo' => 'myemail@example.com',
+                            'SentDate' => '2010-10-12 12:58:00',
+                            'TotalRecipients' => 2245,
+                            'Tags' => array(
+                                'Tag1', 'Tag2'
+                            )
+                        ),
+                        array(
+                            'WebVersionURL' => 'http://hello.createsend.com/t/ViewEmail/r/DD543566A87C9B8B/C67FD2F38AC4859C/',
+                            'WebVersionTextURL' => 'http://createsend.com/t/r-DD543566A87C9B8B/t',
+                            'CampaignID' => '072472b88c853ae5dedaeaf549a8d607',
+                            'Subject' => 'Campaign Two',
+                            'Name' => 'Campaign Two',
+                            'FromName' => 'My Name',
+                            'FromEmail' => 'myemail@example.com',
+                            'ReplyTo' => 'myemail@example.com',
+                            'SentDate' => '2010-10-06 16:20:00',
+                            'TotalRecipients' => 11222
+                        )
+                    ),
+                    'ResultsOrderedBy' => 'SentDate',
+                    'OrderDirection' => "desc",
+                    'PageNumber' => 1,
+                    'PageSize' => 2,
+                    'RecordsOnThisPage' => 2,
+                    'TotalNumberOfRecords' => 49,
+                    'NumberOfPages' => 25
+                ),
     			'scheduled' => array(
     					array(
     							"DateScheduled" => "2011-05-25 10:40:00",
@@ -115,7 +128,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                   'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2011-05-24 10:37:00",
     							"PreviewURL" => "http://createsend.com/t/r-DD543521A87C9B8B",
-  							  "PreviewTextURL" => "http://createsend.com/t/r-DD543521A87C9B8B/t"
+  							  "PreviewTextURL" => "http://createsend.com/t/r-DD543521A87C9B8B/t",
+                            "Tags" => array("Tag1", "Tag2")
     					),
     					array(
     							"DateScheduled" => "2011-05-29 11:20:00",
@@ -128,7 +142,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                   'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2011-05-24 10:39:00",
     							"PreviewURL" => "http://createsend.com/t/r-DD913521A87C9B8B",
-    							"PreviewTextURL" => "http://createsend.com/t/r-DD913521A87C9B8B/t"
+    							"PreviewTextURL" => "http://createsend.com/t/r-DD913521A87C9B8B/t",
+                            "Tags" => array()
     					)
     			),
     			'drafts' => array(
@@ -141,7 +156,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                   'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2010-08-19 16:08:00",
     							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/",
-    							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t"
+    							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t",
+                            "Tags" => array()
     					),
     					array(
     							"CampaignID" => "2e928e982065d92627139208c8c01db1",
@@ -152,7 +168,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                   'ReplyTo' => 'myemail@example.com',
     							"DateCreated" => "2010-08-19 16:08:00",
     							"PreviewURL" => "http://hello.createsend.com/t/ViewEmail/r/E97A7BB2E6983DA1/C67FD2F38AC4859C/",
-    							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t"
+    							"PreviewTextURL" => "http://createsend.com/t/r-E97A7BB2E6983DA1/t",
+                            "Tags" => array("Tag1", "Tag2")
     					)
     			),
     			'lists' => array(
@@ -217,7 +234,17 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     					"RecordsOnThisPage" => 5,
     					"TotalNumberOfRecords" => 5,
     					"NumberOfPages" => 1
-    			)
+    			),
+                'tags' => array(
+                    array(
+                        'Name' => 'Tag One',
+                        'NumberOfCampaigns' => 120,
+                    ),
+                    array(
+                        'Name' => 'Tag Two',
+                        'NumberOfCampaigns' => 62,
+                    )
+                )
     	);
 
     	$subscriber_responses = array(
@@ -551,6 +578,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
     					'NumberOfPages' => 1
     			),
     			'campaign_summary' => array(
+                        'Name' => 'Campaign One',
     					'Recipients' => 5,
     					'TotalOpened' => 10,
     					'Clicks' => 0,

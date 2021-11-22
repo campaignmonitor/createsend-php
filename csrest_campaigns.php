@@ -258,6 +258,7 @@ if (!class_exists('CS_REST_Campaigns')) {
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
+         *     'Name' => The name of the campaign
          *     'Recipients' => The total recipients of the campaign
          *     'TotalOpened' => The total number of opens recorded
          *     'Clicks' => The total number of recorded clicks
