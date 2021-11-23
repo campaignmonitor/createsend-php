@@ -114,7 +114,7 @@ if (!class_exists('CS_REST_Clients')) {
             $query = !empty($query) ? '?'.http_build_query($query) : '';
 
             return $this->get_request_paged($this->_clients_base_route.'campaigns.json'.$query,
-                $page_number, $page_size, null, $order_direction);
+                $page_number, $page_size, NULL, $order_direction);
         }
 
         /**
