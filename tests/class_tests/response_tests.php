@@ -105,7 +105,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                         'FromEmail' => 'myemail@example.com',
                         'ReplyTo' => 'myemail@example.com',
                         'SentDate' => '2010-10-06 16:20:00',
-                        'TotalRecipients' => 11222
+                        'TotalRecipients' => 11222,
+                        'Tags' => array()
                     )
                 ),
                 'ResultsOrderedBy' => 'SentDate',
