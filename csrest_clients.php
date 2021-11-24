@@ -96,19 +96,19 @@ if (!class_exists('CS_REST_Clients')) {
          *     )
          * }
          */
-        function get_campaigns($tags = NULL, $page_number = NULL, $page_size = NULL, $order_direction = NULL, $sentFromDate = NULL, $sentToDate = NULL) {
+        function get_campaigns($tags = NULL, $page_number = NULL, $page_size = NULL, $order_direction = NULL, $sent_from_date = NULL, $sent_to_date = NULL) {
             if(!is_null($tags)) {
                 $query['tags'] = is_array($tags)
                     ? implode(',', $tags)
                     : $tags;
             }
 
-            if(!is_null($sentFromDate)) {
-                $query['sentFromDate'] = $sentFromDate;
+            if(!is_null($sent_from_date)) {
+                $query['sentFromDate'] = $sent_from_date;
             }
 
-            if(!is_null($sentToDate)) {
-                $query['sentToDate'] = $sentToDate;
+            if(!is_null($sent_to_date)) {
+                $query['sentToDate'] = $sent_to_date;
             }
 
             $query = !empty($query) ? '?'.http_build_query($query) : '';
