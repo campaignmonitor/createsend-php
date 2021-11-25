@@ -67,8 +67,8 @@ if (!class_exists('CS_REST_Clients')) {
          * @param int $page_number The page number to get
          * @param int $page_size The number of records per page
          * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
-         * @param string $sentFromDate Only include campaigns after this date, in the format YYYY-MM-DD
-         * @param string $sentToDate Only include campaigns before this date, in the format YYYY-MM-DD
+         * @param string $sent_from_date Only include campaigns after this date, in the format YYYY-MM-DD
+         * @param string $sent_to_date Only include campaigns before this date, in the format YYYY-MM-DD
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
          * {
