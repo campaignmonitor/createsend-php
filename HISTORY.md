@@ -5,7 +5,7 @@
 * Upgrades to Createsend API v3.3 which includes new breaking changes
 * Breaking: client sent campaigns endpoint is now paginated and filtered
 * Added new client tags endpoint
-* Added support for returning campaign name as part of sent, draft and scheduled campaign endpoints
+* Added support for returning campaign tags as part of sent, draft and scheduled campaign endpoints
 * Added support for returning campaign name as part of campaign summary endpoint
 * Added sample script for get client tags endpoint
 
