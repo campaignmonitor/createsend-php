@@ -11,7 +11,7 @@ $result = $wrap->get_bounced_subscribers('Bounced Since', 1, 50, 'email', 'asc')
 //$result = $wrap->get_bounced_subscribers(date('Y-m-d', strtotime('-30 days')), 
 //  page number, page size, order by, order direction);
 
-echo "Result of GET /api/v3.1/lists/{ID}/bounced\n<br />";
+echo "Result of GET /api/v3.3/lists/{ID}/bounced\n<br />";
 if($result->was_successful()) {
     echo "Got subscribers\n<br /><pre>";
     var_dump($result->response);

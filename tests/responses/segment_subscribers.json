@@ -3,14 +3,16 @@
     {
       "EmailAddress": "personone@example.com",
       "Name": "Person One",
-      "Date": "2010-10-27 13:13:00",
+      "StateChangedDate": "2010-10-27 13:13:00",
+      "ListJoinedDate": "2010-10-27 13:13:00",
       "State": "Active",
       "CustomFields": []
     },
     {
       "EmailAddress": "persontwo@example.com",
       "Name": "Person Two",
-      "Date": "2010-10-27 13:13:00",
+      "StateChangedDate": "2010-10-27 13:13:00",
+      "ListJoinedDate": "2010-10-27 13:13:00",
       "State": "Active",
       "CustomFields": []
     }

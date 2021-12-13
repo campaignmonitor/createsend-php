@@ -254,7 +254,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs+7t8787Y@example.com",
                         "Name" => "Person One",
-                        "Date" => "2010-10-25 10:28:00",
+                        "StateChangedDate" => "2010-10-25 10:28:00",
+                        "ListJoinedDate" => "2010-10-25 10:28:00",
                         "State" => "Active",
                         "CustomFields" => array(
                             array(
@@ -274,7 +275,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs+7878787y8ggg@example.com",
                         "Name" => "Person Two",
-                        "Date" => "2010-10-25 12:17:00",
+                        "StateChangedDate" => "2010-10-25 12:17:00",
+                        "ListJoinedDate" => "2010-10-25 12:17:00",
                         "State" => "Active",
                         "CustomFields" => array(
                             array(
@@ -286,7 +288,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs+7890909i0ggg@example.com",
                         "Name" => "Person Three",
-                        "Date" => "2010-10-25 12:52:00",
+                        "StateChangedDate" => "2010-10-25 12:52:00",
+                        "ListJoinedDate" => "2010-10-25 12:52:00",
                         "State" => "Active",
                         "CustomFields" => array(
                             array(
@@ -298,14 +301,16 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs@example.com",
                         "Name" => "Person Four",
-                        "Date" => "2010-10-27 13:13:00",
+                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
                     ),
                     array(
                         "EmailAddress" => "joey@example.com",
                         "Name" => "Person Five",
-                        "Date" => "2010-10-27 13:13:00",
+                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
                     )
@@ -346,7 +351,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
             'subscriber_details' => array(
                 'EmailAddress' => 'subscriber@example.com',
                 'Name' => 'Subscriber One',
-                'Date' => '2010-10-25 10:28:00',
+                'StateChangedDate' => '2010-10-25 10:28:00',
+                'ListJoinedDate' => '2010-10-25 10:28:00',
                 'State' => 'Active',
                 'CustomFields' => array(
                     array(
@@ -471,7 +477,8 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'bouncedsubscriber@example.com',
                         'Name' => 'Bounced One',
-                        'Date' => '2010-10-25 13:11:00',
+                        'StateChangedDate' => '2010-10-25 13:11:00',
+                        'ListJoinedDate' => '2010-10-25 13:11:00',
                         'State' => 'Bounced',
                         'CustomFields' => array()
                     )
@@ -484,19 +491,139 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                 'TotalNumberOfRecords' => 1,
                 'NumberOfPages' => 1
             ),
+            'deleted_subscribers' => array(
+                'Results' => array(
+                    array(
+                        'EmailAddress' => 'subs+7t8787Y@example.com',
+                        'Name' => 'Person One',
+                        'StateChangedDate' => '2010-10-25 10:28:00',
+                        'ListJoinedDate' => '2010-10-25 10:28:00',
+                        'State' => 'Deleted',
+                        'CustomFields' => array(
+                            array(
+                                "Key" => "website",
+                                "Value" => "http://example.com"
+                            ),
+                            array(
+                                "Key" => "age",
+                                "Value" => "24"
+                            ),
+                            array(
+                                "Key" => "subscription date",
+                                "Value" => "2010-03-09"
+                            ),
+                        ),
+                        'ReadsEmailWith' => 'Gmail'
+                    ),
+                    array(
+                        'EmailAddress' => 'subs+7878787y8ggg@example.com',
+                        'Name' => 'Person Two',
+                        'StateChangedDate' => '2010-10-25 12:17:00',
+                        'ListJoinedDate' => '2010-10-25 10:28:00',
+                        'State' => 'Deleted',
+                        'CustomFields' => array(
+                            array(
+                                "Key" => "website",
+                                "Value" => "http://subdomain.example.com"
+                            ),
+                        ),
+                        'ReadsEmailWith' => 'Gmail'
+                    ),
+                    array(
+                        'EmailAddress' => 'subs+7890909i0ggg@example.com',
+                        'Name' => 'Person Three',
+                        'StateChangedDate' => '2010-10-25 12:52:00',
+                        'ListJoinedDate' => '2010-10-25 10:28:00',
+                        'State' => 'Deleted',
+                        'CustomFields' => array(
+                            array(
+                                "Key" => "website",
+                                "Value" => "http://subdomain.example.com"
+                            ),
+                        ),
+                        'ReadsEmailWith' => ''
+                    ),
+                    array(
+                        'EmailAddress' => 'subs@example.com',
+                        'Name' => 'Person Four',
+                        'StateChangedDate' => '2010-10-27 13:13:00',
+                        'ListJoinedDate' => '2010-10-25 10:28:00',
+                        'State' => 'Deleted',
+                        'CustomFields' => array(),
+                        'ReadsEmailWith' => ''
+                    ),
+                    array(
+                        'EmailAddress' => 'joey@example.com',
+                        'Name' => 'Person Five',
+                        'StateChangedDate' => '2010-10-27 13:13:00',
+                        'ListJoinedDate' => '2010-10-25 10:28:00',
+                        'State' => 'Deleted',
+                        'CustomFields' => array(),
+                        'ReadsEmailWith' => 'Gmail'
+                    )
+                ),
+                'ResultsOrderedBy' => 'email',
+                'OrderDirection' => 'asc',
+                'PageNumber' => 1,
+                'PageSize' => 1000,
+                'RecordsOnThisPage' => 5,
+                'TotalNumberOfRecords' => 5,
+                'NumberOfPages' => 1
+            ),
+            'unconfirmed_subscribers' => array(
+                'Results' => array(
+                   array(
+                        'EmailAddress' => 'subs+7878787y8ggg@example.com',
+                        'Name' => 'Person Two',
+                        'StateChangedDate' => '2010-10-25 12:17:00',
+                        'ListJoinedDate' => '2010-10-25 10:28:00',
+                        'State' => 'Unconfirmed',
+                        'CustomFields' => array(
+                            array(
+                                "Key" => "website",
+                                "Value" => "http://subdomain.example.com"
+                            ),
+                        ),
+                        'ReadsEmailWith' => 'Gmail'
+                    ),
+                    array(
+                        'EmailAddress' => 'subs+7890909i0ggg@example.com',
+                        'Name' => 'Person Three',
+                        'StateChangedDate' => '2010-10-25 12:52:00',
+                        'ListJoinedDate' => '2010-10-25 10:28:00',
+                        'State' => 'Unconfirmed',
+                        'CustomFields' => array(
+                            array(
+                                "Key" => "website",
+                                "Value" => "http://subdomain.example.com"
+                            ),
+                        ),
+                        'ReadsEmailWith' => ''
+                    )
+                ),
+                'ResultsOrderedBy' => 'email',
+                'OrderDirection' => 'asc',
+                'PageNumber' => 1,
+                'PageSize' => 1000,
+                'RecordsOnThisPage' => 2,
+                'TotalNumberOfRecords' => 2,
+                'NumberOfPages' => 1
+            ),
             'unsubscribed_subscribers' => array(
                 "Results" => array(
                     array(
                         "EmailAddress" => "subscriber@example.com",
                         "Name" => "Unsub One",
-                        "Date" => "2010-10-25 13:11:00",
+                        "StateChangedDate" => "2010-10-25 13:11:00",
+                        "ListJoinedDate" => "2010-10-25 13:11:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
                     ),
                     array(
                         "EmailAddress" => "subscriberone@example.com",
                         "Name" => "Subscriber",
-                        "Date" => "2010-10-25 13:04:00",
+                        "StateChangedDate" => "2010-10-25 13:04:00",
+                        "ListJoinedDate" => "2010-10-25 13:04:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array(
                             array(
@@ -508,21 +635,24 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "example+1@example.com",
                         "Name" => "Example One",
-                        "Date" => "2010-10-26 10:56:00",
+                        "StateChangedDate" => "2010-10-26 10:56:00",
+                        "ListJoinedDate" => "2010-10-26 10:56:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
                     ),
                     array(
                         "EmailAddress" => "example+2@example.com",
                         "Name" => "Example Two",
-                        "Date" => "2010-10-26 10:56:00",
+                        "StateChangedDate" => "2010-10-26 10:56:00",
+                        "ListJoinedDate" => "2010-10-26 10:56:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
                     ),
                     array(
                         "EmailAddress" => "example+3@example.com",
                         "Name" => "Example Three",
-                        "Date" => "2010-10-26 10:56:00",
+                        "StateChangedDate" => "2010-10-26 10:56:00",
+                        "ListJoinedDate" => "2010-10-26 10:56:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
                     )
@@ -853,14 +983,16 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "personone@example.com",
                         "Name" => "Person One",
-                        "Date" => "2010-10-27 13:13:00",
+                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
                     ),
                     array(
                         "EmailAddress" => "persontwo@example.com",
                         "Name" => "Person Two",
-                        "Date" => "2010-10-27 13:13:00",
+                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
                     )
@@ -920,7 +1052,6 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
             $template_responses
         );
     }
-
     
     function do_test_response_deserialisation() {
     	if(!is_null($this->deserialiser)) {

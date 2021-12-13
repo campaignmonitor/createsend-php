@@ -3,14 +3,16 @@
     {
       "EmailAddress": "subscriber@example.com",
       "Name": "Unsub One",
-      "Date": "2010-10-25 13:11:00",
+      "StateChangedDate": "2010-10-25 13:11:00",
+      "ListJoinedDate": "2010-10-25 13:11:00",
       "State": "Unsubscribed",
       "CustomFields": []
     },
     {
       "EmailAddress": "subscriberone@example.com",
       "Name": "Subscriber",
-      "Date": "2010-10-25 13:04:00",
+      "StateChangedDate": "2010-10-25 13:04:00",
+      "ListJoinedDate": "2010-10-25 13:04:00",
       "State": "Unsubscribed",
       "CustomFields": [
         {
@@ -22,21 +24,24 @@
     {
       "EmailAddress": "example+1@example.com",
       "Name": "Example One",
-      "Date": "2010-10-26 10:56:00",
+      "StateChangedDate": "2010-10-26 10:56:00",
+      "ListJoinedDate": "2010-10-26 10:56:00",
       "State": "Unsubscribed",
       "CustomFields": []
     },
     {
       "EmailAddress": "example+2@example.com",
       "Name": "Example Two",
-      "Date": "2010-10-26 10:56:00",
+      "StateChangedDate": "2010-10-26 10:56:00",
+      "ListJoinedDate": "2010-10-26 10:56:00",
       "State": "Unsubscribed",
       "CustomFields": []
     },
     {
       "EmailAddress": "example+3@example.com",
       "Name": "Example Three",
-      "Date": "2010-10-26 10:56:00",
+      "StateChangedDate": "2010-10-26 10:56:00",
+      "ListJoinedDate": "2010-10-26 10:56:00",
       "State": "Unsubscribed",
       "CustomFields": []
     }
