@@ -3,7 +3,7 @@
     {
       "EmailAddress": "subs+7t8787Y@example.com",
       "Name": "Person One",
-      "StateChangedDate": "2010-10-25 10:28:00",
+      "Date": "2010-10-25 10:28:00",
       "ListJoinedDate": "2010-10-25 10:28:00",
       "State": "Active",
       "CustomFields": [
@@ -25,7 +25,7 @@
     {
       "EmailAddress": "subs+7878787y8ggg@example.com",
       "Name": "Person Two",
-      "StateChangedDate": "2010-10-25 12:17:00",
+      "Date": "2010-10-25 12:17:00",
       "ListJoinedDate": "2010-10-25 12:17:00",
       "State": "Active",
       "CustomFields": [
@@ -39,7 +39,7 @@
     {
       "EmailAddress": "subs+7890909i0ggg@example.com",
       "Name": "Person Three",
-      "StateChangedDate": "2010-10-25 12:52:00",
+      "Date": "2010-10-25 12:52:00",
       "ListJoinedDate": "2010-10-25 12:52:00",
       "State": "Active",
       "CustomFields": [
@@ -53,7 +53,7 @@
     {
       "EmailAddress": "subs@example.com",
       "Name": "Person Four",
-      "StateChangedDate": "2010-10-27 13:13:00",
+      "Date": "2010-10-27 13:13:00",
       "ListJoinedDate": "2010-10-27 13:13:00",
       "State": "Active",
       "CustomFields": [],
@@ -62,7 +62,7 @@
     {
       "EmailAddress": "joey@example.com",
       "Name": "Person Five",
-      "StateChangedDate": "2010-10-27 13:13:00",
+      "Date": "2010-10-27 13:13:00",
       "ListJoinedDate": "2010-10-27 13:13:00",
       "State": "Active",
       "CustomFields": [],

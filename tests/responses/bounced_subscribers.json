@@ -3,7 +3,7 @@
     {
       "EmailAddress": "bouncedsubscriber@example.com",
       "Name": "Bounced One",
-      "StateChangedDate": "2010-10-25 13:11:00",
+      "Date": "2010-10-25 13:11:00",
       "ListJoinedDate": "2010-10-25 13:11:00",
       "State": "Bounced",
       "CustomFields": [],

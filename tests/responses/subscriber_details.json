@@ -1,7 +1,7 @@
 {
   "EmailAddress": "subscriber@example.com",
   "Name": "Subscriber One",
-  "StateChangedDate": "2010-10-25 10:28:00",
+  "Date": "2010-10-25 10:28:00",
   "ListJoinedDate": "2010-10-25 10:28:00",
   "State": "Active",
   "CustomFields": [

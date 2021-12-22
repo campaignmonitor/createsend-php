@@ -169,7 +169,7 @@ if (!class_exists('CS_REST_Subscribers')) {
          * {
          *     'EmailAddress' => The subscriber email address
          *     'Name' => The subscribers name
-         *     'StateChangedDate' => The date when the status of subscriber last changed.
+         *     'Date' => The date when the status of subscriber last changed.
          *     'ListJoinedDate' => The date the subscriber was first added to the list
          *     'State' => The current state of the subscriber
          *     'CustomFields' => array(

@@ -254,7 +254,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs+7t8787Y@example.com",
                         "Name" => "Person One",
-                        "StateChangedDate" => "2010-10-25 10:28:00",
+                        "Date" => "2010-10-25 10:28:00",
                         "ListJoinedDate" => "2010-10-25 10:28:00",
                         "State" => "Active",
                         "CustomFields" => array(
@@ -275,7 +275,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs+7878787y8ggg@example.com",
                         "Name" => "Person Two",
-                        "StateChangedDate" => "2010-10-25 12:17:00",
+                        "Date" => "2010-10-25 12:17:00",
                         "ListJoinedDate" => "2010-10-25 12:17:00",
                         "State" => "Active",
                         "CustomFields" => array(
@@ -288,7 +288,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs+7890909i0ggg@example.com",
                         "Name" => "Person Three",
-                        "StateChangedDate" => "2010-10-25 12:52:00",
+                        "Date" => "2010-10-25 12:52:00",
                         "ListJoinedDate" => "2010-10-25 12:52:00",
                         "State" => "Active",
                         "CustomFields" => array(
@@ -301,7 +301,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subs@example.com",
                         "Name" => "Person Four",
-                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "Date" => "2010-10-27 13:13:00",
                         "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
@@ -309,7 +309,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "joey@example.com",
                         "Name" => "Person Five",
-                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "Date" => "2010-10-27 13:13:00",
                         "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
@@ -351,7 +351,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
             'subscriber_details' => array(
                 'EmailAddress' => 'subscriber@example.com',
                 'Name' => 'Subscriber One',
-                'StateChangedDate' => '2010-10-25 10:28:00',
+                'Date' => '2010-10-25 10:28:00',
                 'ListJoinedDate' => '2010-10-25 10:28:00',
                 'State' => 'Active',
                 'CustomFields' => array(
@@ -477,7 +477,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'bouncedsubscriber@example.com',
                         'Name' => 'Bounced One',
-                        'StateChangedDate' => '2010-10-25 13:11:00',
+                        'Date' => '2010-10-25 13:11:00',
                         'ListJoinedDate' => '2010-10-25 13:11:00',
                         'State' => 'Bounced',
                         'CustomFields' => array()
@@ -496,7 +496,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'subs+7t8787Y@example.com',
                         'Name' => 'Person One',
-                        'StateChangedDate' => '2010-10-25 10:28:00',
+                        'Date' => '2010-10-25 10:28:00',
                         'ListJoinedDate' => '2010-10-25 10:28:00',
                         'State' => 'Deleted',
                         'CustomFields' => array(
@@ -518,7 +518,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'subs+7878787y8ggg@example.com',
                         'Name' => 'Person Two',
-                        'StateChangedDate' => '2010-10-25 12:17:00',
+                        'Date' => '2010-10-25 12:17:00',
                         'ListJoinedDate' => '2010-10-25 10:28:00',
                         'State' => 'Deleted',
                         'CustomFields' => array(
@@ -532,7 +532,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'subs+7890909i0ggg@example.com',
                         'Name' => 'Person Three',
-                        'StateChangedDate' => '2010-10-25 12:52:00',
+                        'Date' => '2010-10-25 12:52:00',
                         'ListJoinedDate' => '2010-10-25 10:28:00',
                         'State' => 'Deleted',
                         'CustomFields' => array(
@@ -546,7 +546,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'subs@example.com',
                         'Name' => 'Person Four',
-                        'StateChangedDate' => '2010-10-27 13:13:00',
+                        'Date' => '2010-10-27 13:13:00',
                         'ListJoinedDate' => '2010-10-25 10:28:00',
                         'State' => 'Deleted',
                         'CustomFields' => array(),
@@ -555,7 +555,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'joey@example.com',
                         'Name' => 'Person Five',
-                        'StateChangedDate' => '2010-10-27 13:13:00',
+                        'Date' => '2010-10-27 13:13:00',
                         'ListJoinedDate' => '2010-10-25 10:28:00',
                         'State' => 'Deleted',
                         'CustomFields' => array(),
@@ -575,7 +575,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                    array(
                         'EmailAddress' => 'subs+7878787y8ggg@example.com',
                         'Name' => 'Person Two',
-                        'StateChangedDate' => '2010-10-25 12:17:00',
+                        'Date' => '2010-10-25 12:17:00',
                         'ListJoinedDate' => '2010-10-25 10:28:00',
                         'State' => 'Unconfirmed',
                         'CustomFields' => array(
@@ -589,7 +589,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         'EmailAddress' => 'subs+7890909i0ggg@example.com',
                         'Name' => 'Person Three',
-                        'StateChangedDate' => '2010-10-25 12:52:00',
+                        'Date' => '2010-10-25 12:52:00',
                         'ListJoinedDate' => '2010-10-25 10:28:00',
                         'State' => 'Unconfirmed',
                         'CustomFields' => array(
@@ -614,7 +614,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subscriber@example.com",
                         "Name" => "Unsub One",
-                        "StateChangedDate" => "2010-10-25 13:11:00",
+                        "Date" => "2010-10-25 13:11:00",
                         "ListJoinedDate" => "2010-10-25 13:11:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
@@ -622,7 +622,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "subscriberone@example.com",
                         "Name" => "Subscriber",
-                        "StateChangedDate" => "2010-10-25 13:04:00",
+                        "Date" => "2010-10-25 13:04:00",
                         "ListJoinedDate" => "2010-10-25 13:04:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array(
@@ -635,7 +635,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "example+1@example.com",
                         "Name" => "Example One",
-                        "StateChangedDate" => "2010-10-26 10:56:00",
+                        "Date" => "2010-10-26 10:56:00",
                         "ListJoinedDate" => "2010-10-26 10:56:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
@@ -643,7 +643,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "example+2@example.com",
                         "Name" => "Example Two",
-                        "StateChangedDate" => "2010-10-26 10:56:00",
+                        "Date" => "2010-10-26 10:56:00",
                         "ListJoinedDate" => "2010-10-26 10:56:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
@@ -651,7 +651,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "example+3@example.com",
                         "Name" => "Example Three",
-                        "StateChangedDate" => "2010-10-26 10:56:00",
+                        "Date" => "2010-10-26 10:56:00",
                         "ListJoinedDate" => "2010-10-26 10:56:00",
                         "State" => "Unsubscribed",
                         "CustomFields" => array()
@@ -983,7 +983,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "personone@example.com",
                         "Name" => "Person One",
-                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "Date" => "2010-10-27 13:13:00",
                         "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
@@ -991,7 +991,7 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                     array(
                         "EmailAddress" => "persontwo@example.com",
                         "Name" => "Person Two",
-                        "StateChangedDate" => "2010-10-27 13:13:00",
+                        "Date" => "2010-10-27 13:13:00",
                         "ListJoinedDate" => "2010-10-27 13:13:00",
                         "State" => "Active",
                         "CustomFields" => array()
