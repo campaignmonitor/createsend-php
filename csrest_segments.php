@@ -187,7 +187,8 @@ if (!class_exists('CS_REST_Segments')) {
          *         {
          *             'EmailAddress' => The email address of the subscriber
          *             'Name' => The name of the subscriber
-         *             'Date' => The date that the subscriber was added to the list
+         *             'Date' => The date when the status of subscriber last changed.
+         *             'ListJoinedDate' => The date the subscriber was first added to the list
          *             'State' => The current state of the subscriber, will be 'Active'
          *             'CustomFields' => array (
          *                 {

@@ -1,6 +1,6 @@
 # createsend-php history
 
-## v7.0.0 - 22nd Nov, 2021
+## v7.0.0 - 15th Dec, 2021
 
 * Upgrades to Createsend API v3.3 which includes new breaking changes
 * Breaking: client sent campaigns endpoint is now paginated and filtered
@@ -8,6 +8,14 @@
 * Added support for returning campaign tags as part of sent, draft and scheduled campaign endpoints
 * Added support for returning campaign name as part of campaign summary endpoint
 * Added sample script for get client tags endpoint
+* Adding support for returning ListJoinedDate for each subscriber. 
+  * List.Active()
+  * List.Bounced()
+  * List.Unsubscribed()
+  * List.Unconfirmed()
+  * List.Deleted()
+  * Segment.Subscribers()
+  * Subscriber.Get()
 
 ## v6.1.2 - 2nd Oct, 2021
 

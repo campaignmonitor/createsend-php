@@ -11,7 +11,7 @@ $result = $wrap->get_unsubscribed_subscribers('Unsubscribed Since', 1, 50, 'emai
 //$result = $wrap->get_bounced_subscribers(date('Y-m-d', strtotime('-30 days')), 
 //  page number, page size, order by, order direction);
 
-echo "Result of GET /api/v3.1/lists/{ID}/unsubscribed\n<br />";
+echo "Result of GET /api/v3.3/lists/{ID}/unsubscribed\n<br />";
 if($result->was_successful()) {
     echo "Got subscribers\n<br /><pre>";
     var_dump($result->response);

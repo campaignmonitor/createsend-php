@@ -273,7 +273,8 @@ if (!class_exists('CS_REST_Lists')) {
          *         {
          *             'EmailAddress' => The email address of the subscriber
          *             'Name' => The name of the subscriber
-         *             'Date' => The date that the subscriber was added to the list
+         *             'Date' => The date when the status of subscriber last changed (ie: becomes active)
+         *             'ListJoinedDate' => The date the subscriber was first added to the list
          *             'State' => The current state of the subscriber, will be 'Active'
          *             'CustomFields' => array (
          *                 {
@@ -314,7 +315,8 @@ if (!class_exists('CS_REST_Lists')) {
          *         {
          *             'EmailAddress' => The email address of the subscriber
          *             'Name' => The name of the subscriber
-         *             'Date' => The date that the subscriber was added to the list
+         *             'Date' => The date when the status of subscriber last changed (ie: becomes unconfirmed)  
+         *             'ListJoinedDate' => The date the subscriber was first added to the list
          *             'State' => The current state of the subscriber, will be 'Unconfirmed'
          *             'CustomFields' => array (
          *                 {
@@ -355,7 +357,8 @@ if (!class_exists('CS_REST_Lists')) {
          *         {
          *             'EmailAddress' => The email address of the subscriber
          *             'Name' => The name of the subscriber
-         *             'Date' => The date that the subscriber bounced out of the list
+         *             'Date' => The date when the status of subscriber last changed (ie: becomes bounced)
+         *             'ListJoinedDate' => The date the subscriber was first added to the list
          *             'State' => The current state of the subscriber, will be 'Bounced'
          *             'CustomFields' => array (
          *                 {
@@ -396,7 +399,8 @@ if (!class_exists('CS_REST_Lists')) {
          *         {
          *             'EmailAddress' => The email address of the subscriber
          *             'Name' => The name of the subscriber
-         *             'Date' => The date that the subscriber was unsubscribed from the list
+         *             'Date' => The date when the status of subscriber last changed (ie: becomes unsubscribed)   
+         *             'ListJoinedDate' => The date the subscriber was first added to the list
          *             'State' => The current state of the subscriber, will be 'Unsubscribed'
          *             'CustomFields' => array (
          *                 {
@@ -437,7 +441,8 @@ if (!class_exists('CS_REST_Lists')) {
          *         {
          *             'EmailAddress' => The email address of the subscriber
          *             'Name' => The name of the subscriber
-         *             'Date' => The date that the subscriber was deleted from the list
+         *             'Date' => The date when the status of subscriber last changed (ie: becomes deleted)   
+         *             'ListJoinedDate' => The date the subscriber was first added to the list
          *             'State' => The current state of the subscriber, will be 'Deleted'
          *             'CustomFields' => array (
          *                 {
