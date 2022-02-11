@@ -3,6 +3,8 @@ require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../vendor/simpletest/simpletest/autorun.php';
 require_once __DIR__.'/../vendor/simpletest/simpletest/mock_objects.php';
 
+// Running simpletest, you would need to run this using PHP version 7.3 or lower
+
 class AllTests extends TestSuite {
     function __construct() {
         parent::__construct('All Tests');

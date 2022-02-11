@@ -11,7 +11,7 @@ $wrap = new CS_REST_Clients(
 
 $result = $wrap->get_scheduled();
 
-echo "Result of /api/v3.1/clients/{id}/scheduled\n<br />";
+echo "Result of /api/v3.3/clients/{id}/scheduled\n<br />";
 if($result->was_successful()) {
     echo "Got scheduled campaigns\n<br /><pre>";
     var_dump($result->response);

@@ -13,7 +13,7 @@ $result = $wrap->get_active_subscribers('Added since', 1, 50, 'email', 'asc', tr
 //$result = $wrap->get_active_subscribers(date('Y-m-d', strtotime('-30 days')), 
 //  page number, page size, order by, order direction);
 
-echo "Result of GET /api/v3.1/lists/{ID}/active\n<br />";
+echo "Result of GET /api/v3.3/lists/{ID}/active\n<br />";
 if($result->was_successful()) {
     echo "Got subscribers\n<br /><pre>";
     var_dump($result->response);

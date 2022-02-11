@@ -63,25 +63,58 @@ if (!class_exists('CS_REST_Clients')) {
 
         /**
          * Gets a list of sent campaigns for the current client
+         * @param string|array $tags The array or comma separated string of tags to filter by
+         * @param int $page_number The page number to get
+         * @param int $page_size The number of records per page
+         * @param string $order_direction The direction to order the record set ('ASC', 'DESC')
+         * @param string $sent_from_date Only include campaigns after this date, in the format YYYY-MM-DD
+         * @param string $sent_to_date Only include campaigns before this date, in the format YYYY-MM-DD
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be an object of the form
-         * array(
-         *     {
-         *         'WebVersionURL' => The web version url of the campaign
-         *         'WebVersionTextURL' => The web version url of the text version of the campaign
-         *         'CampaignID' => The id of the campaign
-         *         'Subject' => The campaign subject
-         *         'Name' => The name of the campaign
-         *         'FromName' => The from name for the campaign
-         *         'FromEmail' => The from email address for the campaign
-         *         'ReplyTo' => The reply to email address for the campaign
-         *         'SentDate' => The sent data of the campaign
-         *         'TotalRecipients' => The number of recipients of the campaign
-         *     }
-         * )
+         * {
+         *     'ResultsOrderedBy' => The field the results are ordered by
+         *     'OrderDirection' => The order direction
+         *     'PageNumber' => The page number for the result set
+         *     'PageSize' => The page size used
+         *     'RecordsOnThisPage' => The number of records returned
+         *     'TotalNumberOfRecords' => The total number of records available
+         *     'NumberOfPages' => The total number of pages for this collection
+         *     'Results' => array(
+         *         {
+         *             'WebVersionURL' => The web version url of the campaign
+         *             'WebVersionTextURL' => The web version url of the text version of the campaign
+         *             'CampaignID' => The id of the campaign
+         *             'Subject' => The campaign subject
+         *             'Name' => The name of the campaign
+         *             'FromName' => The from name for the campaign
+         *             'FromEmail' => The from email address for the campaign
+         *             'ReplyTo' => The reply to email address for the campaign
+         *             'SentDate' => The sent data of the campaign
+         *             'TotalRecipients' => The number of recipients of the campaign
+         *             'Tags' => An array of the tags associated with the campaign
+         *         }
+         *     )
+         * }
          */
-        function get_campaigns() {
-            return $this->get_request($this->_clients_base_route.'campaigns.json');
+        function get_campaigns($tags = NULL, $page_number = NULL, $page_size = NULL, $order_direction = NULL, $sent_from_date = NULL, $sent_to_date = NULL) {
+            if(!is_null($tags)) {
+                $query['tags'] = is_array($tags)
+                    ? implode(',', $tags)
+                    : $tags;
+            }
+
+            if(!is_null($sent_from_date)) {
+                $query['sentFromDate'] = $sent_from_date;
+            }
+
+            if(!is_null($sent_to_date)) {
+                $query['sentToDate'] = $sent_to_date;
+            }
+
+            $query = !empty($query) ? '?'.http_build_query($query) : '';
+
+            return $this->get_request_paged($this->_clients_base_route.'campaigns.json'.$query,
+                $page_number, $page_size, NULL, $order_direction);
         }
 
         /**
@@ -101,6 +134,7 @@ if (!class_exists('CS_REST_Clients')) {
          *         'PreviewTextURL' => The preview url of the text version of the campaign
          *         'DateScheduled' => The date the campaign is scheduled to be sent
          *         'ScheduledTimeZone' => The time zone in which the campaign is scheduled to be sent at 'DateScheduled'
+         *         'Tags' => An array of the tags associated with the campaign
          *     }
          * )
          */
@@ -123,6 +157,7 @@ if (!class_exists('CS_REST_Clients')) {
          *         'DateCreated' => The date the campaign was created
          *         'PreviewURL' => The preview url of the draft campaign
          *         'PreviewTextURL' => The preview url of the text version of the campaign
+         *         'Tags' => An array of the tags associated with the campaign
          *     }
          * )
          */
@@ -248,6 +283,21 @@ if (!class_exists('CS_REST_Clients')) {
          */
         function get_templates() {
             return $this->get_request($this->_clients_base_route.'templates.json');
+        }
+
+        /**
+         * Get all the tags the current client has access to
+         * @access public
+         * @return CS_REST_Wrapper_Result A successful response will be an object of the form
+         * array(
+         *     {
+         *         'Name' => The name of the tag
+         *         'NumberOfCampaigns' => The number of campaigns the tag is used on
+         *     }
+         * )
+         */
+        function get_tags() {
+            return $this->get_request($this->_clients_base_route.'tags.json');
         }
 
         /**

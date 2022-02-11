@@ -11,7 +11,7 @@ $wrap = new CS_REST_Clients(
 
 $result = $wrap->get_campaigns();
 
-echo "Result of /api/v3.1/clients/{id}/campaigns\n<br />";
+echo "Result of /api/v3.3/clients/{id}/campaigns\n<br />";
 if($result->was_successful()) {
     echo "Got campaigns\n<br /><pre>";
     var_dump($result->response);

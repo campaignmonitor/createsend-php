@@ -31,7 +31,7 @@ class CS_REST_TestBase extends UnitTestCase {
         $this->mock_transport->setReturnValue('get_type', $this->transport_type);
         $this->mock_serialiser->setReturnValue('get_type', $this->serialisation_type);
 
-        $this->base_route = $this->protocol.'://'.$this->api_host.'/api/v3.2/';
+        $this->base_route = $this->protocol.'://'.$this->api_host.'/api/v3.3/';
 
         $this->set_up_inner();
     }
