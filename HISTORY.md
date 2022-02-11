@@ -1,6 +1,6 @@
 # createsend-php history
 
-## v7.0.0 - 15th Dec, 2021
+## v7.0.0 - 11th Feb, 2022
 
 * Upgrades to Createsend API v3.3 which includes new breaking changes
 * Breaking: client sent campaigns endpoint is now paginated and filtered
