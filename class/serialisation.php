@@ -35,7 +35,7 @@ if (!class_exists('CS_REST_BaseSerialiser')) {
                     if((function_exists('mb_detect_encoding') && mb_detect_encoding($v) !== 'UTF-8') || 
                        (function_exists('mb_check_encoding') && !mb_check_encoding($v, 'UTF-8'))) {
                         // The string is using some other encoding, make sure we utf-8 encode
-                        $v = utf8_encode($v);       
+                        $v = mb_convert_encoding($v, 'UTF-8', mb_list_encodings());       
                     }
                     
                     $data[$k] = $v;
