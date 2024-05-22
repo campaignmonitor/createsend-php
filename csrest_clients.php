@@ -245,7 +245,7 @@ if (!class_exists('CS_REST_Clients')) {
             $order_direction = NULL) {
                 
             return $this->get_request_paged($this->_clients_base_route.'suppressionlist.json', 
-                $page_number, $page_size, $order_field, $order_direction, '?');
+                $page_number, $page_size, $order_field, $order_direction, NULL, '?');
         }
 
         /**
