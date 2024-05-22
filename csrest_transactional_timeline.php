@@ -101,10 +101,12 @@ if (!class_exists('CS_REST_Transactional_Timeline')) {
          * @param $message_id, string Message ID to get the details for
          * @return CS_REST_Wrapper_Result The details of the message
          */
-        function details($message_id, $show_details = false) {
-            $params = array_merge($this->_client_id_param, array("statistics" => $show_details));
+        function details($message_id, $show_details = false, $exclude_message_body = false) {
+            $params = array_merge($this->_client_id_param, 
+                array("statistics" => $show_details, "excludemessagebody" => $exclude_message_body));
             return $this->get_request_with_params($this->_base_route . 'transactional/messages/' . $message_id, $params);
         }
+
 
         /**
          * Resend a sent message
