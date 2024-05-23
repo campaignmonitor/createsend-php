@@ -1,52 +1,49 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6810a171a6fbbf05f7f1156b79fdd3d",
+    "content-hash": "6db634ff2e953f25b2c5a00c581aca3b",
     "packages": [],
     "packages-dev": [
         {
             "name": "simpletest/simpletest",
-            "version": "v1.1.7",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simpletest/simpletest.git",
-                "reference": "2f8c466c114bdb9c11028a0c3e6d1380ae6a18dc"
+                "reference": "5aac57cf3b6efd1fe29f2cbc138e410cbc89e184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simpletest/simpletest/zipball/2f8c466c114bdb9c11028a0c3e6d1380ae6a18dc",
-                "reference": "2f8c466c114bdb9c11028a0c3e6d1380ae6a18dc",
+                "url": "https://api.github.com/repos/simpletest/simpletest/zipball/5aac57cf3b6efd1fe29f2cbc138e410cbc89e184",
+                "reference": "5aac57cf3b6efd1fe29f2cbc138e410cbc89e184",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.0.5"
+                "php": ">=7.1 || ^8.0"
             },
-            "replace": {
-                "lastcraft/simpletest": "self.version",
-                "vierbergenlars/simpletest": "self.version"
+            "require-dev": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "ext-tidy": "*"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "."
+                    "src/"
+                ],
+                "exclude-from-classmap": [
+                    "/test"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.0+"
+                "LGPL-2.0-or-later"
             ],
             "authors": [
-                {
-                    "name": "Lars Vierbergen",
-                    "email": "vierbergenlars@gmail.com"
-                },
-                {
-                    "name": "Lachlan Donald",
-                    "email": "lachlan@ljd.cc"
-                },
                 {
                     "name": "Marcus Baker",
                     "email": "marcus@lastcraft.com",
@@ -67,9 +64,20 @@
                 {
                     "name": "Edward Z. Yang",
                     "role": "Original developer"
+                },
+                {
+                    "name": "Lachlan Donald",
+                    "email": "lachlan@ljd.cc"
+                },
+                {
+                    "name": "Lars Vierbergen",
+                    "email": "vierbergenlars@gmail.com"
+                },
+                {
+                    "name": "Jens A. Koch"
                 }
             ],
-            "description": "Unit testing, mock objects and web testing framework for PHP built around test cases.",
+            "description": "SimpleTest is a framework for unit testing, web site testing and mock objects for PHP.",
             "homepage": "http://simpletest.org/",
             "keywords": [
                 "SimpleTest",
@@ -78,16 +86,23 @@
                 "testing",
                 "unit-test"
             ],
-            "time": "2015-09-21T18:19:52+00:00"
+            "support": {
+                "issues": "https://github.com/simpletest/simpletest/issues",
+                "source": "https://github.com/simpletest/simpletest/tree/main"
+            },
+            "time": "2023-10-01T18:06:11+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "simpletest/simpletest": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
 }
