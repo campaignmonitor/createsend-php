@@ -4,44 +4,35 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6db634ff2e953f25b2c5a00c581aca3b",
+    "content-hash": "044b4a206e79d17a9a149f5869a31efa",
     "packages": [],
     "packages-dev": [
         {
             "name": "simpletest/simpletest",
-            "version": "dev-main",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simpletest/simpletest.git",
-                "reference": "5aac57cf3b6efd1fe29f2cbc138e410cbc89e184"
+                "reference": "4fb6006517a1428785a0ea704fbedcc675421ec4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simpletest/simpletest/zipball/5aac57cf3b6efd1fe29f2cbc138e410cbc89e184",
-                "reference": "5aac57cf3b6efd1fe29f2cbc138e410cbc89e184",
+                "url": "https://api.github.com/repos/simpletest/simpletest/zipball/4fb6006517a1428785a0ea704fbedcc675421ec4",
+                "reference": "4fb6006517a1428785a0ea704fbedcc675421ec4",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1 || ^8.0"
+                "php": "^7.1"
             },
-            "require-dev": {
-                "ext-dom": "*",
-                "ext-mbstring": "*",
-                "ext-tidy": "*"
-            },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "src/"
-                ],
-                "exclude-from-classmap": [
-                    "/test"
+                    "."
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.0-or-later"
+                "LGPL-2.0+"
             ],
             "authors": [
                 {
@@ -77,7 +68,7 @@
                     "name": "Jens A. Koch"
                 }
             ],
-            "description": "SimpleTest is a framework for unit testing, web site testing and mock objects for PHP.",
+            "description": "Unit testing, mock objects and web testing framework for PHP built around test cases.",
             "homepage": "http://simpletest.org/",
             "keywords": [
                 "SimpleTest",
@@ -88,16 +79,14 @@
             ],
             "support": {
                 "issues": "https://github.com/simpletest/simpletest/issues",
-                "source": "https://github.com/simpletest/simpletest/tree/main"
+                "source": "https://github.com/simpletest/simpletest/tree/master"
             },
-            "time": "2023-10-01T18:06:11+00:00"
+            "time": "2019-09-17T15:08:22+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "simpletest/simpletest": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
