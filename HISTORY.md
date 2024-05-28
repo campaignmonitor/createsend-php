@@ -1,5 +1,11 @@
 # createsend-php history
 
+## v7.1.0 - 28th May, 2024
+
+* Update simpletest/simpletest package to verison 1.2.0
+* Update test suite to support PHP 7
+* Update package to support PHP 8
+
 ## v7.0.0 - 11th Feb, 2022
 
 * Upgrades to Createsend API v3.3 which includes new breaking changes
