@@ -114,6 +114,8 @@ defined('SERVICES_JSON_SUPPRESS_ERRORS') or define('SERVICES_JSON_SUPPRESS_ERROR
 if (!class_exists('Services_JSON')) {
     class Services_JSON
     {
+        public int $use = 0;
+
        /**
         * constructs a new JSON instance
         *

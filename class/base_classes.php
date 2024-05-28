@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/serialisation.php';
 require_once dirname(__FILE__).'/transport.php';
 require_once dirname(__FILE__).'/log.php';
 
-defined('CS_REST_WRAPPER_VERSION') or define('CS_REST_WRAPPER_VERSION', '7.0.0');
+defined('CS_REST_WRAPPER_VERSION') or define('CS_REST_WRAPPER_VERSION', '7.1.0');
 defined('CS_HOST') or define('CS_HOST', 'api.createsend.com');
 defined('CS_OAUTH_BASE_URI') or define('CS_OAUTH_BASE_URI', 'https://'.CS_HOST.'/oauth');
 defined('CS_OAUTH_TOKEN_URI') or define('CS_OAUTH_TOKEN_URI', CS_OAUTH_BASE_URI.'/token');

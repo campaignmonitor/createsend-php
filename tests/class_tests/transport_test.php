@@ -26,7 +26,8 @@ class CS_REST_TestSocketTransport extends UnitTestCase {
 
         $this->transport = new CS_REST_SocketTransport($this->mock_log, $this->mock_wrapper);
         $this->partial = new PartialSocketTransport($this);
-        $this->partial->__construct($this->mock_log, $this->mock_wrapper);
+        $this->partial->_log = $this->mock_log;
+        $this->partial->_socket_wrapper = $this->mock_wrapper;
     }
 
     function test_make_call_http() {
@@ -57,7 +58,7 @@ Server: Microsoft-IIS/7.0';
         $status = '200';
 
 
-        $this->partial->setReturnValue('_build_request', $request);
+        $this->partial->returns('_build_request', $request);
         $this->partial->expectOnce('_build_request',
             array(
                 new IdenticalExpectation($call_options),
@@ -67,7 +68,7 @@ Server: Microsoft-IIS/7.0';
             )
         );
 
-        $this->mock_wrapper->setReturnValue('open', true);
+        $this->mock_wrapper->returns('open', true);
         $this->mock_wrapper->expectOnce('open',
             array(
                 new IdenticalExpectation($domain_prefix.$host),
@@ -77,9 +78,9 @@ Server: Microsoft-IIS/7.0';
 
         $this->mock_wrapper->expectOnce('write', array(new IdenticalExpectation($request)));
 
-        $this->mock_wrapper->setReturnValue('read', $response);
+        $this->mock_wrapper->returns('read', $response);
 
-        $this->partial->setReturnValue('_get_status_code', $status);
+        $this->partial->returns('_get_status_code', $status);
         $this->partial->expectOnce('_get_status_code', array(new IdenticalExpectation($headers)));
 
         $this->assertIdentical(array (

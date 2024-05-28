@@ -28,8 +28,8 @@ class CS_REST_TestBase extends UnitTestCase {
         $this->mock_serialiser = new MockCS_REST_NativeJsonSerialiser();
         $this->mock_transport = new MockCS_REST_CurlTransport();
 
-        $this->mock_transport->setReturnValue('get_type', $this->transport_type);
-        $this->mock_serialiser->setReturnValue('get_type', $this->serialisation_type);
+        $this->mock_transport->returns('get_type', $this->transport_type);
+        $this->mock_serialiser->returns('get_type', $this->serialisation_type);
 
         $this->base_route = $this->protocol.'://'.$this->api_host.'/api/v3.3/';
 
@@ -59,14 +59,14 @@ class CS_REST_TestBase extends UnitTestCase {
     function setup_transport_and_serialisation($make_call_result, $call_options,
         $deserialise_result, $deserialise_input, $serialise_result = NULL, $serialise_input = NULL) {
 
-        $this->mock_transport->setReturnValue('make_call', $make_call_result);
+        $this->mock_transport->returns('make_call', $make_call_result);
         $this->mock_transport->expectOnce('make_call', array(new IdenticalExpectation($call_options)));
 
-        $this->mock_serialiser->setReturnValue('deserialise', $deserialise_result);
+        $this->mock_serialiser->returns('deserialise', $deserialise_result);
         $this->mock_serialiser->expectOnce('deserialise', array(new IdenticalExpectation($deserialise_input)));
 
         if(!is_null($serialise_result)) {
-            $this->mock_serialiser->setReturnValue('serialise', $serialise_result);
+            $this->mock_serialiser->returns('serialise', $serialise_result);
             $this->mock_serialiser->expectOnce('serialise', array(new IdenticalExpectation($serialise_input)));
         }
     }

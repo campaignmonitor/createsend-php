@@ -134,7 +134,7 @@ abstract class CS_REST_TestSegments extends CS_REST_TestBase {
         $this->setup_transport_and_serialisation($transport_result, $call_options,
         $deserialised, $raw_result, NULL, NULL, $response_code);
 
-        $result = $this->wrapper->get_subscribers(null, null, null, null, null, false);
+        $result = $this->wrapper->get_subscribers('', null, null, null, null, false);
 
         $this->assertIdentical($expected_result, $result);
     }
