@@ -10,6 +10,15 @@ if (false === defined('CS_REST_SOCKET_TIMEOUT')) {
 if (false === defined('CS_REST_CALL_TIMEOUT')) {
     define('CS_REST_CALL_TIMEOUT', 120);
 }
+if (false === defined('CS_REST_PROXY')) {
+  define('CS_REST_PROXY', '');
+}
+if (false === defined('CS_REST_PROXY_PORT')) {
+  define('CS_REST_PROXY_PORT', '');
+}
+if (false === defined('CS_REST_NO_PROXY')) {
+  define('CS_REST_NO_PROXY', '');
+}
 
 if(!function_exists("CS_REST_TRANSPORT_get_available")) {    
     function CS_REST_TRANSPORT_get_available($requires_ssl, $log) {
@@ -163,6 +172,11 @@ if (!class_exists('CS_REST_CurlTransport')) {
             if(count($headers) > 0) {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             }
+
+            // Add proxy settings.
+            curl_setopt($ch, CURLOPT_PROXY, CS_REST_PROXY);
+            curl_setopt($ch, CURLOPT_PROXYPORT, CS_REST_PROXY_PORT);
+            curl_setopt($ch, CURLOPT_NOPROXY, CS_REST_NO_PROXY);
 
             $response = curl_exec($ch);
 
