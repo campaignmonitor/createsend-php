@@ -8,7 +8,6 @@
   },
   "BillingDetails": {
      "CanPurchaseCredits": true,
-     "MarkupOnDesignSpamTest": 0.0,
      "ClientPays": true,
      "BaseRatePerRecipient": 1.0,
      "MarkupPerRecipient": 0.0,

@@ -12,7 +12,6 @@ $wrap = new CS_REST_Clients('Your client ID', $auth);
  *
  * MarkupOnDelivery
  * MarkupPerRecipient
- * MarkupOnDesignSpamTest
  *
  * fields
  */
@@ -22,8 +21,7 @@ $result = $wrap->set_payg_billing(array(
     'MarkupPercentage' => 100,
     'CanPurchaseCredits' => false/*,
 'MarkupOnDelivery' => 4,
-'MarkupPerRecipient' => 3,
-'MarkupOnDesignSpamTest' => 7 */
+'MarkupPerRecipient' => 3 */
 ));
 
 echo "Result of PUT /api/v3.1/clients/{id}/setpaygbilling\n<br />";
