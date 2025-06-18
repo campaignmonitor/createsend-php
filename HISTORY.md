@@ -1,5 +1,9 @@
 # createsend-php history
 
+## v7.1.1 - 18th Jun, 2025
+
+* Removed now redundant parameter ```MarkupOnDesignSpamTest``` from client.set_payg_billing
+
 ## v7.1.0 - 28th May, 2024
 
 * Update simpletest/simpletest package to verison 1.2.0
