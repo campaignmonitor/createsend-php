@@ -334,7 +334,6 @@ if (!class_exists('CS_REST_Clients')) {
          *         'BaseDesignSpamTestRate' => The base fee payable per design and spam test
          *         'MarkupOnDelivery' => The markup applied per campaign
          *         'MarkupPerRecipient' => The markup applied per campaign recipient
-         *         'MarkupOnDesignSpamTest' => The markup applied per design and spam test
          *         'Currency' => The currency fees are paid in
          *         'ClientPays' => Whether client client pays for themselves
          *     }     
@@ -410,7 +409,6 @@ if (!class_exists('CS_REST_Clients')) {
          *             'CanPurchaseCredits' => Whether the client can purchase credits
          *             'MarkupOnDelivery' => The markup applied per campaign
          *             'MarkupPerRecipient' => The markup applied per campaign recipient
-         *             'MarkupOnDesignSpamTest' => The markup applied per design and spam test
          *         )
          * @access public
          * @return CS_REST_Wrapper_Result A successful response will be empty

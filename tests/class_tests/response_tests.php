@@ -66,7 +66,6 @@ class CS_REST_TestResponseDeserialisation extends UnitTestCase {
                 ),
                 'BillingDetails' => array(
                     'CanPurchaseCredits' => true,
-                    'MarkupOnDesignSpamTest' => 0,
                     'ClientPays' => true,
                     'BaseRatePerRecipient' => 1,
                     'MarkupPerRecipient' => 0,
