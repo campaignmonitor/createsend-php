@@ -187,8 +187,9 @@ if (!class_exists('CS_REST_CurlTransport')) {
     		    'response' => $result
             );
 
-            curl_close($ch);
-
+            if (PHP_VERSION_ID < 80000) {
+                curl_close($ch);
+            }
             return $result;
         }
     }
